@@ -10,10 +10,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- JSZip Library para empacotar as imagens em lote em um único arquivo ZIP -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-    <!-- Google Fonts (Suporte global para múltiplos scripts: Latim, Cirílico, Árabe, Devanagari, Asiáticos) -->
+    <!-- Google Fonts (Suporte global para múltiplos scripts incluindo Barlow Black) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;600;800;900&family=Noto+Sans+JP:wght@700;900&family=Noto+Sans+KR:wght@700;900&family=Noto+Sans+SC:wght@700;900&family=Noto+Sans+TC:wght@700;900&family=Noto+Sans:wght@700;900&family=Rubik+Mono+One&family=Teko:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Barlow:ital,wght@0,400;0,900;1,400;1,900&family=Inter:wght@400;600;800;900&family=Noto+Sans+JP:wght@700;900&family=Noto+Sans+KR:wght@700;900&family=Noto+Sans+SC:wght@700;900&family=Noto+Sans+TC:wght@700;900&family=Noto+Sans:wght@700;900&family=Rubik+Mono+One&family=Teko:wght@700&display=swap" rel="stylesheet">
     
     <style>
         body {
@@ -46,8 +46,8 @@
                 <i class="fa-solid fa-earth-americas text-xl text-white"></i>
             </div>
             <div>
-                <h1 class="font-black text-lg tracking-wider bg-gradient-to-r from-white via-slate-100 to-slate-400 bg-clip-text text-transparent">THUMBGRID ViralFX</h1>
-                <p class="text-xs text-indigo-400 font-medium">Localizador Avançado de Thumbnails</p>
+                <h1 class="font-black text-lg tracking-wider bg-gradient-to-r from-white via-slate-100 to-slate-400 bg-clip-text text-transparent">THUMBGRID GLOBAL</h1>
+                <p class="text-xs text-indigo-400 font-medium">Localizador Avançado de Thumbnails para 16 Países</p>
             </div>
         </div>
         
@@ -168,10 +168,11 @@
                             <label class="block text-xs text-slate-400 font-semibold mb-1">Fonte Principal</label>
                             <select id="fontFamilySelect" onchange="requestRenderAll()" 
                                 class="w-full bg-slate-900 border border-slate-800 rounded-lg px-3 py-2 text-xs focus:outline-none focus:ring-1 focus:ring-indigo-500 text-white font-semibold">
+                                <option value="'Barlow', sans-serif" selected>Barlow Black (Premium / Arredondada)</option>
                                 <option value="'Anton', 'Noto Sans', sans-serif">Anton (Impactante / YouTube)</option>
                                 <option value="'Rubik Mono One', sans-serif">Rubik Mono One (Gorda / Moderna)</option>
                                 <option value="'Teko', sans-serif">Teko (Condensada / Gamer)</option>
-                                <option value="'Inter', sans-serif" selected>Inter Black (Limpa / Premium)</option>
+                                <option value="'Inter', sans-serif">Inter Black (Limpa / Premium)</option>
                             </select>
                         </div>
 
@@ -192,6 +193,15 @@
                                     <input type="number" id="t1StrokeWidth" value="8" min="0" max="25" oninput="requestRenderAll()" class="w-full bg-slate-900 text-xs border border-slate-800 rounded px-2 py-1">
                                 </div>
                             </div>
+                            <!-- Global Toggles Line 1 -->
+                            <div class="flex gap-2">
+                                <button id="globalBold1Btn" onclick="toggleGlobalStyle('bold1')" class="flex-1 bg-slate-900 border border-slate-800 text-slate-400 py-1.5 px-2 rounded-lg text-xs font-bold transition flex items-center justify-center gap-1.5">
+                                    <i class="fa-solid fa-bold text-[10px]"></i> Negrito
+                                </button>
+                                <button id="globalItalic1Btn" onclick="toggleGlobalStyle('italic1')" class="flex-1 bg-slate-900 border border-slate-800 text-slate-400 py-1.5 px-2 rounded-lg text-xs font-bold transition flex items-center justify-center gap-1.5">
+                                    <i class="fa-solid fa-italic text-[10px]"></i> Itálico
+                                </button>
+                            </div>
                         </div>
 
                         <div class="space-y-3 border-t border-slate-800/50 pt-3">
@@ -209,6 +219,15 @@
                                     <label class="block text-[10px] text-slate-500 mb-0.5">Larg. Borda</label>
                                     <input type="number" id="t2StrokeWidth" value="8" min="0" max="25" oninput="requestRenderAll()" class="w-full bg-slate-900 text-xs border border-slate-800 rounded px-2 py-1">
                                 </div>
+                            </div>
+                            <!-- Global Toggles Line 2 -->
+                            <div class="flex gap-2">
+                                <button id="globalBold2Btn" onclick="toggleGlobalStyle('bold2')" class="flex-1 bg-slate-900 border border-slate-800 text-slate-400 py-1.5 px-2 rounded-lg text-xs font-bold transition flex items-center justify-center gap-1.5">
+                                    <i class="fa-solid fa-bold text-[10px]"></i> Negrito
+                                </button>
+                                <button id="globalItalic2Btn" onclick="toggleGlobalStyle('italic2')" class="flex-1 bg-slate-900 border border-slate-800 text-slate-400 py-1.5 px-2 rounded-lg text-xs font-bold transition flex items-center justify-center gap-1.5">
+                                    <i class="fa-solid fa-italic text-[10px]"></i> Itálico
+                                </button>
                             </div>
                         </div>
 
@@ -387,6 +406,31 @@
                             </div>
                         </div>
 
+                        <!-- Style controls for fine-tuning -->
+                        <div class="space-y-3 pt-3 border-t border-slate-800/60">
+                            <span class="text-[11px] font-black uppercase text-slate-500 tracking-wider block">Estilos do Texto Superior</span>
+                            <div class="flex gap-2">
+                                <button id="indBold1Btn" onclick="toggleIndividualStyle('bold1')" class="flex-1 bg-slate-950 border border-slate-800 text-slate-400 py-1.5 px-2 rounded-lg text-xs font-bold transition flex items-center justify-center gap-1.5">
+                                    <i class="fa-solid fa-bold text-[10px]"></i> Negrito
+                                </button>
+                                <button id="indItalic1Btn" onclick="toggleIndividualStyle('italic1')" class="flex-1 bg-slate-950 border border-slate-800 text-slate-400 py-1.5 px-2 rounded-lg text-xs font-bold transition flex items-center justify-center gap-1.5">
+                                    <i class="fa-solid fa-italic text-[10px]"></i> Itálico
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="space-y-3 pt-2">
+                            <span class="text-[11px] font-black uppercase text-slate-500 tracking-wider block">Estilos do Texto Inferior</span>
+                            <div class="flex gap-2">
+                                <button id="indBold2Btn" onclick="toggleIndividualStyle('bold2')" class="flex-1 bg-slate-950 border border-slate-800 text-slate-400 py-1.5 px-2 rounded-lg text-xs font-bold transition flex items-center justify-center gap-1.5">
+                                    <i class="fa-solid fa-bold text-[10px]"></i> Negrito
+                                </button>
+                                <button id="indItalic2Btn" onclick="toggleIndividualStyle('italic2')" class="flex-1 bg-slate-950 border border-slate-800 text-slate-400 py-1.5 px-2 rounded-lg text-xs font-bold transition flex items-center justify-center gap-1.5">
+                                    <i class="fa-solid fa-italic text-[10px]"></i> Itálico
+                                </button>
+                            </div>
+                        </div>
+
                         <!-- Specific scale/formatting with separate sliders for superior and inferior lines -->
                         <div class="space-y-4 pt-4 border-t border-slate-800/80">
                             <div>
@@ -555,7 +599,7 @@
             setupInteractiveCanvasEvents();
         }
 
-        // Initialize state with individual line scales
+        // Initialize state with individual line scales and active bold status
         function initDefaultLayout() {
             const val1 = "ESTRATÉGIA SECRETA";
             const val2 = "REVELADA HOJE";
@@ -576,6 +620,10 @@
                     fontScale1: lang.fontScale, // individual fine-tuning scale for line 1
                     fontScale2: lang.fontScale, // individual fine-tuning scale for line 2
                     textAlignment: lang.rtl ? "right" : "center",
+                    bold1: true,
+                    italic1: false,
+                    bold2: true,
+                    italic2: false,
                 };
             });
 
@@ -591,6 +639,7 @@
                 document.getElementById("globalT2XLabel").textContent = "640px";
                 applyGlobalAlignment('center');
             }
+            updateStyleTogglesUI();
         }
 
         // Custom notification system instead of alert()
@@ -710,6 +759,10 @@
             data.text2Pos = { x: 640, y: 390 };
             data.fontScale1 = defaultLangScale;
             data.fontScale2 = defaultLangScale;
+            data.bold1 = true;
+            data.italic1 = false;
+            data.bold2 = true;
+            data.italic2 = false;
 
             document.getElementById("overrideText1").value = data.text1;
             document.getElementById("overrideText2").value = data.text2;
@@ -719,15 +772,24 @@
             document.getElementById("indScaleSlider2").value = defaultLangScale;
             document.getElementById("scaleLabel2").textContent = defaultLangScale.toFixed(2) + "x";
 
+            updateStyleTogglesUI();
             renderIndividualEditorCanvas();
             showToast("Ajustes individuais restaurados para o padrão.", "info");
         }
 
         // Helper to calculate exact geometric boundaries of text to perform flawless hit tests
-        function getTextBoundingBox(ctx, text, pos, fontSize, alignment, scaleFactor = 1.0) {
+        function getTextBoundingBox(ctx, text, pos, fontSize, alignment, scaleFactor = 1.0, isText1 = true, countryId = currentCountryId) {
             ctx.save();
             const fontSelected = document.getElementById("fontFamilySelect").value;
-            ctx.font = `900 ${fontSize}px ${fontSelected}`;
+            const data = styleData[countryId];
+            
+            // Extract styles correctly based on line check
+            const isItalic = isText1 ? data.italic1 : data.italic2;
+            const isBold = isText1 ? data.bold1 : data.bold2;
+            const style = isItalic ? "italic" : "normal";
+            const weight = isBold ? "900" : "400";
+
+            ctx.font = `${style} ${weight} ${fontSize}px ${fontSelected}`;
             ctx.textAlign = alignment;
             ctx.textBaseline = "middle";
 
@@ -817,8 +879,8 @@
             const t2Size = Math.floor(100 * scale2);
 
             // Fetch boxes (always in 1280x720 base coordinates for consistent state representation)
-            boundingBoxes.text1 = getTextBoundingBox(ctx, data.text1, data.text1Pos, t1Size, data.textAlignment, 1.0);
-            boundingBoxes.text2 = getTextBoundingBox(ctx, data.text2, data.text2Pos, t2Size, data.textAlignment, 1.0);
+            boundingBoxes.text1 = getTextBoundingBox(ctx, data.text1, data.text1Pos, t1Size, data.textAlignment, 1.0, true, countryId);
+            boundingBoxes.text2 = getTextBoundingBox(ctx, data.text2, data.text2Pos, t2Size, data.textAlignment, 1.0, false, countryId);
 
             // TEXT LAYER 1
             if (data.text1) {
@@ -826,7 +888,11 @@
                 ctx.textBaseline = "middle";
                 ctx.lineJoin = "round";
                 ctx.lineCap = "round";
-                ctx.font = `900 ${t1Size * scaleFactor}px ${fontSelected}`;
+                
+                // Assemble styles correctly
+                const style1 = data.italic1 ? "italic" : "normal";
+                const weight1 = data.bold1 ? "900" : "400";
+                ctx.font = `${style1} ${weight1} ${t1Size * scaleFactor}px ${fontSelected}`;
                 ctx.textAlign = data.textAlignment;
                 
                 ctx.fillStyle = document.getElementById("t1Color").value;
@@ -855,7 +921,11 @@
                 ctx.textBaseline = "middle";
                 ctx.lineJoin = "round";
                 ctx.lineCap = "round";
-                ctx.font = `900 ${t2Size * scaleFactor}px ${fontSelected}`;
+                
+                // Assemble styles correctly
+                const style2 = data.italic2 ? "italic" : "normal";
+                const weight2 = data.bold2 ? "900" : "400";
+                ctx.font = `${style2} ${weight2} ${t2Size * scaleFactor}px ${fontSelected}`;
                 ctx.textAlign = data.textAlignment;
                 
                 ctx.fillStyle = document.getElementById("t2Color").value;
@@ -1079,6 +1149,7 @@
             hoveredTarget = null;
             isDragging = false;
 
+            updateStyleTogglesUI();
             renderIndividualEditorCanvas();
         }
 
@@ -1507,6 +1578,69 @@ US, ES, FR, ID, AR, HI, RU, DE, JA, IT, KO, TH, VN, TR, PL, TW.`;
             requestRenderAll();
         }
 
+        function toggleGlobalStyle(property) {
+            if (!styleData[currentCountryId]) return;
+            const currentVal = !styleData[currentCountryId][property];
+            
+            LANGUAGES.forEach(lang => {
+                if (styleData[lang.id]) {
+                    styleData[lang.id][property] = currentVal;
+                }
+            });
+            
+            updateStyleTogglesUI();
+            requestRenderAll();
+            showToast("Estilo global atualizado com sucesso!", "success");
+        }
+
+        function toggleIndividualStyle(property) {
+            if (!styleData[currentCountryId]) return;
+            styleData[currentCountryId][property] = !styleData[currentCountryId][property];
+            
+            updateStyleTogglesUI();
+            renderIndividualEditorCanvas();
+        }
+
+        function updateStyleTogglesUI() {
+            const currentData = styleData[currentCountryId];
+            if (!currentData) return;
+
+            // Global buttons state
+            updateButtonState("globalBold1Btn", currentData.bold1);
+            updateButtonState("globalItalic1Btn", currentData.italic1);
+            updateButtonState("globalBold2Btn", currentData.bold2);
+            updateButtonState("globalItalic2Btn", currentData.italic2);
+
+            // Individual buttons state
+            updateButtonState("indBold1Btn", currentData.bold1);
+            updateButtonState("indItalic1Btn", currentData.italic1);
+            updateButtonState("indBold2Btn", currentData.bold2);
+            updateButtonState("indItalic2Btn", currentData.italic2);
+        }
+
+        function updateButtonState(btnId, isActive) {
+            const btn = document.getElementById(btnId);
+            if (!btn) return;
+            
+            if (isActive) {
+                // Indigo/Active style
+                btn.className = btn.className
+                    .replace(/bg-slate-900|bg-slate-950/g, 'bg-indigo-600')
+                    .replace(/text-slate-400/g, 'text-white')
+                    .replace(/border-slate-800/g, 'border-indigo-400/20');
+                if (!btn.className.includes('bg-indigo-600')) {
+                    btn.classList.add('bg-indigo-600', 'text-white');
+                }
+            } else {
+                // Slate/Default style
+                const defaultBg = btnId.startsWith('global') ? 'bg-slate-900' : 'bg-slate-950';
+                btn.className = btn.className
+                    .replace(/bg-indigo-600/g, defaultBg)
+                    .replace(/text-white/g, 'text-slate-400')
+                    .replace(/border-indigo-400\/20/g, 'border-slate-800');
+            }
+        }
+
         function syncCurrentLayoutToAll() {
             const sourceData = styleData[currentCountryId];
             
@@ -1518,6 +1652,10 @@ US, ES, FR, ID, AR, HI, RU, DE, JA, IT, KO, TH, VN, TR, PL, TW.`;
                     styleData[lang.id].textAlignment = sourceData.textAlignment;
                     styleData[lang.id].fontScale1 = sourceData.fontScale1 !== undefined ? sourceData.fontScale1 : sourceData.fontScale;
                     styleData[lang.id].fontScale2 = sourceData.fontScale2 !== undefined ? sourceData.fontScale2 : sourceData.fontScale;
+                    styleData[lang.id].bold1 = sourceData.bold1;
+                    styleData[lang.id].italic1 = sourceData.italic1;
+                    styleData[lang.id].bold2 = sourceData.bold2;
+                    styleData[lang.id].italic2 = sourceData.italic2;
                 }
             });
 
@@ -1535,8 +1673,9 @@ US, ES, FR, ID, AR, HI, RU, DE, JA, IT, KO, TH, VN, TR, PL, TW.`;
             document.getElementById("globalT2XLabel").textContent = sourceData.text2Pos.x + "px";
 
             applyGlobalAlignment(sourceData.textAlignment);
+            updateStyleTogglesUI();
 
-            showToast("Layout e coordenadas aplicados em todas as 16 thumbnails com sucesso!", "success");
+            showToast("Layout e estilos aplicados em todas as 16 thumbnails com sucesso!", "success");
             requestRenderAll();
         }
 
