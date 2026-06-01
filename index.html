@@ -8,6 +8,8 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- JSZip Library para empacotar as imagens em lote em um único arquivo ZIP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
     <!-- Google Fonts (Suporte global para múltiplos scripts: Latim, Cirílico, Árabe, Devanagari, Asiáticos) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -301,8 +303,8 @@
                 </div>
                 <button onclick="downloadAllThumbnails()" 
                     class="w-full bg-emerald-500 hover:bg-emerald-600 text-slate-950 text-sm font-black py-3 px-4 rounded-xl transition shadow-lg shadow-emerald-500/10 flex items-center justify-center gap-2">
-                    <i class="fa-solid fa-cloud-arrow-down text-lg"></i>
-                    EXPORTAR 16 THUMBNAILS (PNG)
+                    <i class="fa-solid fa-file-zipper text-lg"></i>
+                    EXPORTAR ZIP (16 IMAGENS)
                 </button>
             </div>
         </aside>
@@ -1330,16 +1332,50 @@ US, ES, FR, ID, AR, HI, RU, DE, JA, IT, KO, TH, VN, TR, PL, TW.`;
             link.click();
         }
 
-        // Downloader pipeline
-        function downloadAllThumbnails() {
-            let delay = 0;
-            LANGUAGES.forEach((lang, index) => {
-                setTimeout(() => {
-                    downloadCountryPNG(lang.id);
-                }, delay);
-                delay += 300; // anti-clogging gap
-            });
-            showToast("Iniciando exportação em lote de todas as 16 thumbnails...", "success");
+        // Downloader pipeline utilizando JSZip para empacotar todas as 16 imagens
+        async function downloadAllThumbnails() {
+            const btn = document.querySelector("button[onclick='downloadAllThumbnails()']");
+            const originalHtml = btn.innerHTML;
+            btn.disabled = true;
+            btn.innerHTML = `<i class="fa-solid fa-spinner animate-spin mr-2"></i> Compactando ZIP...`;
+            showToast("Renderizando e empacotando as 16 thumbnails. Aguarde...", "info");
+
+            try {
+                const zip = new JSZip();
+
+                for (const lang of LANGUAGES) {
+                    const tempCanvas = document.createElement("canvas");
+                    tempCanvas.width = 1280;
+                    tempCanvas.height = 720;
+                    
+                    // Renderiza em alta resolução de produção
+                    drawThumbnailOnCanvas(tempCanvas, lang.id, 1280, 720, false);
+                    
+                    // Converte o canvas para Blob assincronamente
+                    const blob = await new Promise(resolve => tempCanvas.toBlob(resolve, "image/png"));
+                    const filename = `thumb_${lang.code}_${lang.name.replace(/\s+/g, '_')}.png`;
+                    
+                    // Adiciona o arquivo correspondente ao ZIP
+                    zip.file(filename, blob);
+                }
+
+                // Gera o arquivo ZIP binário assincronamente
+                const content = await zip.generateAsync({ type: "blob" });
+                
+                // Dispara o download nativo do arquivo compactado único
+                const link = document.createElement("a");
+                link.download = "thumbnails_globais.zip";
+                link.href = URL.createObjectURL(content);
+                link.click();
+                
+                showToast("Download do arquivo ZIP iniciado com sucesso!", "success");
+            } catch (err) {
+                console.error("Erro ao tentar empacotar o ZIP:", err);
+                showToast("Erro inesperado ao gerar o pacote compactado.", "error");
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = originalHtml;
+            }
         }
 
         function toggleApiHelp() {
