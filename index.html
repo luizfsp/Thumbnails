@@ -404,7 +404,7 @@
                     <div class="xl:col-span-2 flex flex-col items-center justify-center bg-slate-900 border border-slate-800 rounded-2xl p-6">
                         <div class="flex justify-between items-center w-full mb-4">
                             <div class="flex items-center gap-2">
-                                <span id="currentEditingFlag" class="text-2xl">🇺🇸</span>
+                                <span id="currentEditingFlag" class="inline-flex items-center"></span>
                                 <div>
                                     <h4 class="font-black text-sm" id="currentEditingCountryName">United States - English</h4>
                                     <p class="text-[10px] text-slate-400">Passe o mouse sobre os textos e arraste a caixa pontilhada azul para ajustar a posição</p>
@@ -498,7 +498,7 @@
                                 <div class="grid grid-cols-2 gap-2">
                                     <div>
                                         <label class="block text-[9px] text-slate-500 mb-0.5">Borda Ext.</label>
-                                        <input type="color" id="indT1StrokeOuter" onchange="updateIndividualStyle('t1StrokeOuter', this.value)" class="w-full h-7 bg-transparent cursor-pointer border border-slate-800 rounded">
+                                        <input type="color" id="indT1StrokeOuter" onchange="updateIndividualStyle('indT1StrokeOuter', this.value)" class="w-full h-7 bg-transparent cursor-pointer border border-slate-800 rounded">
                                     </div>
                                     <div>
                                         <label class="block text-[9px] text-slate-500 mb-0.5">Larg. Ext.</label>
@@ -610,22 +610,22 @@
     <script>
         // Target countries configured per system request
         const LANGUAGES = [
-            { id: "us", code: "US", name: "United States", lang: "English", flag: "🇺🇸", rtl: false, fontScale: 0.85 },
-            { id: "es", code: "ES", name: "Spain / LatAm", lang: "Spanish", flag: "🇪🇸", rtl: false, fontScale: 0.9 },
-            { id: "fr", code: "FR", name: "France", lang: "French", flag: "🇫🇷", rtl: false, fontScale: 0.75 },
-            { id: "id", code: "ID", name: "Indonesia", lang: "Indonesian", flag: "🇮🇩", rtl: false, fontScale: 0.75 },
-            { id: "ar", code: "ar", name: "Egypt / Gulf", lang: "Arabic", flag: "🇸🇦", rtl: true, fontScale: 0.95 },
-            { id: "hi", code: "HI", name: "India", lang: "Hindi", flag: "🇮🇳", rtl: false, fontScale: 0.95 },
-            { id: "ru", code: "RU", name: "Russia", lang: "Russian", flag: "🇷🇺", rtl: false, fontScale: 0.8 },
-            { id: "de", code: "DE", name: "Germany", lang: "German", flag: "🇩🇪", rtl: false, fontScale: 0.75 },
-            { id: "ja", code: "JA", name: "Japan", lang: "Japanese", flag: "🇯🇵", rtl: false, fontScale: 1.05 },
-            { id: "it", code: "IT", name: "Italy", lang: "Italian", flag: "🇮🇹", rtl: false, fontScale: 0.9 },
-            { id: "ko", code: "KO", name: "South Korea", lang: "Korean", flag: "🇰🇷", rtl: false, fontScale: 1.05 },
-            { id: "th", code: "TH", name: "Thailand", lang: "Thai", flag: "🇹🇭", rtl: false, fontScale: 0.95 },
-            { id: "vn", code: "VN", name: "Vietnam", lang: "Vietnamese", flag: "🇻🇳", rtl: false, fontScale: 0.9 },
-            { id: "tr", code: "TR", name: "Turkey", lang: "Turkish", flag: "🇹🇷", rtl: false, fontScale: 0.9 },
-            { id: "pl", code: "PL", name: "Poland", lang: "Polish", flag: "🇵🇱", rtl: false, fontScale: 0.75 },
-            { id: "tw", code: "TW", name: "Taiwan", lang: "Traditional Chinese", flag: "🇹🇼", rtl: false, fontScale: 1.05 }
+            { id: "us", code: "US", flagCode: "us", name: "United States", lang: "English", rtl: false, fontScale: 0.85 },
+            { id: "es", code: "ES", flagCode: "es", name: "Spain / LatAm", lang: "Spanish", rtl: false, fontScale: 0.9 },
+            { id: "fr", code: "FR", flagCode: "fr", name: "France", lang: "French", rtl: false, fontScale: 0.75 },
+            { id: "id", code: "ID", flagCode: "id", name: "Indonesia", lang: "Indonesian", fontScale: 0.75 },
+            { id: "ar", code: "ar", flagCode: "sa", name: "Egypt / Gulf", lang: "Arabic", rtl: true, fontScale: 0.95 },
+            { id: "hi", code: "HI", flagCode: "in", name: "India", lang: "Hindi", rtl: false, fontScale: 0.95 },
+            { id: "ru", code: "RU", flagCode: "ru", name: "Russia", lang: "Russian", rtl: false, fontScale: 0.8 },
+            { id: "de", code: "DE", flagCode: "de", name: "Germany", lang: "German", rtl: false, fontScale: 0.75 },
+            { id: "ja", code: "JA", flagCode: "jp", name: "Japan", lang: "Japanese", rtl: false, fontScale: 1.05 },
+            { id: "it", code: "IT", flagCode: "it", name: "Italy", lang: "Italian", rtl: false, fontScale: 0.9 },
+            { id: "ko", code: "KO", flagCode: "kr", name: "South Korea", lang: "Korean", rtl: false, fontScale: 1.05 },
+            { id: "th", code: "TH", flagCode: "th", name: "Thailand", lang: "Thai", rtl: false, fontScale: 0.95 },
+            { id: "vn", code: "VN", flagCode: "vn", name: "Vietnam", lang: "Vietnamese", rtl: false, fontScale: 0.9 },
+            { id: "tr", code: "TR", flagCode: "tr", name: "Turkey", lang: "Turkish", rtl: false, fontScale: 0.9 },
+            { id: "pl", code: "PL", flagCode: "pl", name: "Poland", lang: "Polish", rtl: false, fontScale: 0.75 },
+            { id: "tw", code: "TW", flagCode: "tw", name: "Taiwan", lang: "Traditional Chinese", rtl: false, fontScale: 1.05 }
         ];
 
         // Fallback local translations for the default starting template text (ESTRATÉGIA SECRETA / REVELADA HOJE)
@@ -655,7 +655,7 @@
             "fr": { text1: "100 SECRETS", text2: "QUE VOUS NE SAVIEZ PAS" },
             "id": { text1: "100 RAHASIA", text2: "YANG TIDAK KAMU KETAHUI" },
             "ar": { text1: "100 سر", text2: "لم تكن تعرفها" },
-            "hi": { text1: "100 रहस्य", text2: "जो आप नहीं जानते थे" },
+            "hi": { text1: "100 रहस्य", text2: "जो आप não जानते थे" },
             "ru": { text1: "100 СЕКРЕТОВ", text2: "О КОТОРЫХ ВЫ НЕ ЗНАЛИ" },
             "de": { text1: "100 GEHEIMNISSE", text2: "DIE DU NICHT WUSSTEST" },
             "ja": { text1: "あなたが知らない", text2: "100ของความลับ" },
@@ -689,7 +689,24 @@
         // Specific styling structures that can be adjusted PER country
         let styleData = {};
 
+        // Cross-platform Flag Preloading pipeline (CORS supported)
+        const flagImages = {};
+        function preloadFlags() {
+            LANGUAGES.forEach(lang => {
+                const img = new Image();
+                img.crossOrigin = "anonymous"; // Prevents canvas staining when downloading ZIP
+                img.src = `https://flagcdn.com/w40/${lang.flagCode}.png`;
+                img.onload = () => {
+                    requestRenderAll();
+                };
+                flagImages[lang.id] = img;
+            });
+        }
+
         function initApp() {
+            // Preload cross-platform flag assets
+            preloadFlags();
+
             // Apply default layout on start (Clean Black screen with custom text styles)
             initDefaultLayout();
 
@@ -699,7 +716,7 @@
             LANGUAGES.forEach(lang => {
                 const opt = document.createElement("option");
                 opt.value = lang.id;
-                opt.textContent = `${lang.flag} ${lang.name} - ${lang.lang}`;
+                opt.textContent = `${lang.code} - ${lang.name} (${lang.lang})`;
                 select.appendChild(opt);
             });
 
@@ -1298,7 +1315,15 @@
                 
                 ctx.fillStyle = "#ffffff";
                 ctx.font = `bold ${16}px 'Inter', sans-serif`;
-                ctx.fillText(`${langInfo.flag} ${langInfo.code}`, 30, 15 + (27 * scaleFactor));
+                
+                // Draw flag using FlagCDN image instead of emoji!
+                const flagImg = flagImages[countryId];
+                if (flagImg && flagImg.complete) {
+                    ctx.drawImage(flagImg, 25, 20, 24 * scaleFactor, 16 * scaleFactor);
+                    ctx.fillText(langInfo.code.toUpperCase(), 58, 20 + (10 * scaleFactor));
+                } else {
+                    ctx.fillText(langInfo.code.toUpperCase(), 30, 15 + (27 * scaleFactor));
+                }
                 ctx.restore();
             }
         }
@@ -1317,7 +1342,7 @@
                 header.className = "flex justify-between items-center";
                 header.innerHTML = `
                     <div class="flex items-center gap-2">
-                        <span class="text-xl">${lang.flag}</span>
+                        <img src="https://flagcdn.com/w40/${lang.flagCode}.png" class="w-6 h-4 object-cover rounded shadow-sm border border-slate-800/50" alt="${lang.name}">
                         <div>
                             <h4 class="font-bold text-xs text-slate-200">${lang.name}</h4>
                             <p class="text-[9px] text-slate-500">${lang.lang}</p>
@@ -1365,7 +1390,8 @@
             currentCountryId = countryId;
             const lang = LANGUAGES.find(l => l.id === countryId);
             
-            document.getElementById("currentEditingFlag").textContent = lang.flag;
+            // Set editing indicator header using FlagCDN
+            document.getElementById("currentEditingFlag").innerHTML = `<img src="https://flagcdn.com/w40/${lang.flagCode}.png" class="w-8 h-5 object-cover rounded shadow-sm border border-slate-700/50 inline-block mr-2" alt="">`;
             document.getElementById("currentEditingCountryName").textContent = `${lang.name} - ${lang.lang}`;
             document.getElementById("currentEditingCode").textContent = lang.code;
             document.getElementById("countryEditorSelect").value = countryId;
