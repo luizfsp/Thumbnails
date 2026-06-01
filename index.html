@@ -465,7 +465,7 @@
             "id": { text1: "STRATEGI RAHASIA", text2: "TERUNGKAP HARI INI" },
             "ar": { text1: "استراتيجية سرية", text2: "تم الكشف عنها اليوم" },
             "hi": { text1: "गुप्त रणनीति", text2: "आज खुलासा हुआ" },
-            "ru": { text1: "СЕКРЕТНАЯ СТРАТЕГИЯ", text2: "РАСКРЫТА СЕГОДНЯ" },
+            "ru": { text1: "СЕКРЕТНАЯ СТРАТЕГИЯ", text2: "РАСКРЫTA СЕГОДНЯ" },
             "de": { text1: "GEHEIME STRATEGIE", text2: "HEUTE ENTHÜLLT" },
             "ja": { text1: "秘密の戦略", text2: "本日ついに公開！" },
             "it": { text1: "STRATEGIA SEGRETA", text2: "SVELATA OGGI" },
@@ -1151,7 +1151,8 @@
 
         // AI Integration to perform cultural translation and copy localization
         async function translateAllWithAI() {
-            const apiKey = document.getElementById("apiKeyInput").value.trim();
+            const envApiKey = ""; // Mandated by Gemini API guidelines
+            let apiKey = document.getElementById("apiKeyInput").value.trim() || envApiKey;
             const ptText1 = document.getElementById("ptText1").value.trim();
             const ptText2 = document.getElementById("ptText2").value.trim();
 
@@ -1240,7 +1241,8 @@ US, ES, FR, ID, AR, HI, RU, DE, JA, IT, KO, TH, VN, TR, PL, TW.`;
                         })
                     });
 
-                    if (response.status === 429 && retryCount < 3) {
+                    // Retries up to 5 times with delay of 1s, 2s, 4s, 8s, 16s. Do not log retries.
+                    if (response.status === 429 && retryCount < 5) {
                         const delay = Math.pow(2, retryCount) * 1000;
                         await new Promise(resolve => setTimeout(resolve, delay));
                         return makeApiCall(retryCount + 1);
@@ -1249,12 +1251,28 @@ US, ES, FR, ID, AR, HI, RU, DE, JA, IT, KO, TH, VN, TR, PL, TW.`;
                 };
 
                 const res = await makeApiCall();
+                
+                // Assert API status is healthy, otherwise fetch error payload to show exactly what broke
+                if (!res.ok) {
+                    const errData = await res.json().catch(() => ({}));
+                    const errMsg = errData.error?.message || `Erro HTTP ${res.status}`;
+                    throw new Error(errMsg);
+                }
+
                 const result = await res.json();
                 
                 const candidate = result.candidates?.[0];
                 if (candidate && candidate.content?.parts?.[0]?.text) {
-                    const parsedJson = JSON.parse(candidate.content.parts[0].text);
-                    if (parsedJson.translations) {
+                    // Sanitize potential backticks wrap (```json) returned by API
+                    let rawText = candidate.content.parts[0].text.trim();
+                    if (rawText.startsWith("```json")) {
+                        rawText = rawText.replace(/^```json/, "").replace(/```$/, "").trim();
+                    } else if (rawText.startsWith("```")) {
+                        rawText = rawText.replace(/^```/, "").replace(/```$/, "").trim();
+                    }
+
+                    const parsedJson = JSON.parse(rawText);
+                    if (parsedJson.translations && Array.isArray(parsedJson.translations)) {
                         parsedJson.translations.forEach(t => {
                             const langId = t.code.toLowerCase();
                             if (styleData[langId]) {
@@ -1267,11 +1285,15 @@ US, ES, FR, ID, AR, HI, RU, DE, JA, IT, KO, TH, VN, TR, PL, TW.`;
                         loadCountryToEditor(currentCountryId);
                         requestRenderAll();
                         showToast("Localização com Inteligência Artificial concluída!", "success");
+                    } else {
+                        throw new Error("Formato de resposta inválido retornado pela IA.");
                     }
+                } else {
+                    throw new Error("Resposta da IA está vazia ou não pôde ser gerada.");
                 }
             } catch (err) {
                 console.error("AI Generation Error", err);
-                showToast("Erro na conexão com a API do Gemini. Verifique sua chave ou tente novamente.", "error");
+                showToast(`Falha na IA: ${err.message || "Erro desconhecido"}`, "error");
             } finally {
                 btn.disabled = false;
                 btn.innerHTML = originalHtml;
