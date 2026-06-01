@@ -640,7 +640,7 @@
             "hi": { text1: "100 रहस्य", text2: "जो आप नहीं जानते थे" },
             "ru": { text1: "100 СЕКРЕТОВ", text2: "О КОТОРЫХ ВЫ НЕ ЗНАЛИ" },
             "de": { text1: "100 GEHEIMNISSE", text2: "DIE DU NICHT WUSSTEST" },
-            "ja": { text1: "あなたが知らない", text2: "100の秘密" },
+            "ja": { text1: "あなたが知らない", text2: "100ของความลับ" },
             "it": { text1: "100 SEGRETI", text2: "CHE NON SAPEVI" },
             "ko": { text1: "당신이 몰랐던", text2: "100가지 비밀" },
             "th": { text1: "100 ความลับ", text2: "ที่คุณไม่เคยรู้" },
@@ -892,6 +892,14 @@
             showToast("Ajustes individuais restaurados para o padrão.", "info");
         }
 
+        // Helper to resolve Canvas mixed LTR/RTL (BiDi) bugs with numbers
+        function resolveBidi(text, isRtl) {
+            if (!isRtl || !text) return text;
+            // Envolve sequências de números com isoladores de direção LTR (\u2066 e \u2069)
+            // Isso impede que o motor de renderização do canvas divida os dígitos do número (ex: "100") ao redor de caracteres árabes.
+            return text.replace(/([0-9]+)/g, '\u2066$1\u2069');
+        }
+
         // Helper to calculate exact geometric boundaries of text to perform flawless hit tests
         function getTextBoundingBox(ctx, text, pos, fontSize, alignment, scaleFactor = 1.0, isText1 = true, countryId = currentCountryId) {
             ctx.save();
@@ -916,7 +924,10 @@
                 ctx.direction = 'ltr';
             }
 
-            const metrics = ctx.measureText(text);
+            // Aplica a correção de isolamento bidirecional para manter números LTR intactos
+            const processedText = resolveBidi(text, langInfo && langInfo.rtl);
+
+            const metrics = ctx.measureText(processedText);
             const textWidth = metrics.width;
             
             // Approximate height using font size metric
@@ -1037,23 +1048,26 @@
                 const posX = data.text1Pos.x * scaleFactor;
                 const posY = data.text1Pos.y * scaleFactor;
 
+                // Aplica a resolução BiDi para corrigir bugs de números com texto RTL no Canvas
+                const processedText = resolveBidi(data.text1, langInfo.rtl);
+
                 // 1. Draw Outer Border
                 if (outerW > 0) {
                     ctx.strokeStyle = outerCol;
                     ctx.lineWidth = innerW + (outerW * 2);
-                    ctx.strokeText(data.text1, posX, posY);
+                    ctx.strokeText(processedText, posX, posY);
                 }
 
                 // 2. Draw Inner Border
                 if (innerW > 0) {
                     ctx.strokeStyle = innerCol;
                     ctx.lineWidth = innerW;
-                    ctx.strokeText(data.text1, posX, posY);
+                    ctx.strokeText(processedText, posX, posY);
                 }
 
                 // 3. Draw Interior Fill
                 ctx.fillStyle = fillCol;
-                ctx.fillText(data.text1, posX, posY);
+                ctx.fillText(processedText, posX, posY);
                 ctx.restore();
             }
 
@@ -1089,23 +1103,26 @@
                 const posX = data.text2Pos.x * scaleFactor;
                 const posY = data.text2Pos.y * scaleFactor;
 
+                // Aplica a resolução BiDi para corrigir bugs de números com texto RTL no Canvas
+                const processedText = resolveBidi(data.text2, langInfo.rtl);
+
                 // 1. Draw Outer Border
                 if (outerW > 0) {
                     ctx.strokeStyle = outerCol;
                     ctx.lineWidth = innerW + (outerW * 2);
-                    ctx.strokeText(data.text2, posX, posY);
+                    ctx.strokeText(processedText, posX, posY);
                 }
 
                 // 2. Draw Inner Border
                 if (innerW > 0) {
                     ctx.strokeStyle = innerCol;
                     ctx.lineWidth = innerW;
-                    ctx.strokeText(data.text2, posX, posY);
+                    ctx.strokeText(processedText, posX, posY);
                 }
 
                 // 3. Draw Interior Fill
                 ctx.fillStyle = fillCol;
-                ctx.fillText(data.text2, posX, posY);
+                ctx.fillText(processedText, posX, posY);
                 ctx.restore();
             }
 
@@ -1390,6 +1407,7 @@
                 }
             }
 
+            // Mouse down handler
             function handleMouseDown(clientX, clientY) {
                 const mousePos = getMousePos({ clientX, clientY });
                 
