@@ -592,22 +592,22 @@
     <script>
         // Target countries configured per system request
         const LANGUAGES = [
-            { id: "us", code: "US", name: "United States", lang: "English", flag: "🇺🇸", rtl: false, fontScale: 1.0 },
-            { id: "es", code: "ES", name: "Spain / LatAm", lang: "Spanish", flag: "🇪🇸", rtl: false, fontScale: 1.0 },
-            { id: "fr", code: "FR", name: "France", lang: "French", flag: "🇫🇷", rtl: false, fontScale: 1.0 },
-            { id: "id", code: "ID", name: "Indonesia", lang: "Indonesian", flag: "🇮🇩", rtl: false, fontScale: 1.0 },
-            { id: "ar", code: "ar", name: "Egypt / Gulf", lang: "Arabic", flag: "🇸🇦", rtl: true, fontScale: 1.1 },
-            { id: "hi", code: "HI", name: "India", lang: "Hindi", flag: "🇮🇳", rtl: false, fontScale: 1.05 },
-            { id: "ru", code: "RU", name: "Russia", lang: "Russian", flag: "🇷🇺", rtl: false, fontScale: 0.95 },
-            { id: "de", code: "DE", name: "Germany", lang: "German", flag: "🇩🇪", rtl: false, fontScale: 0.85 },
-            { id: "ja", code: "JA", name: "Japan", lang: "Japanese", flag: "🇯🇵", rtl: false, fontScale: 1.15 },
-            { id: "it", code: "IT", name: "Italy", lang: "Italian", flag: "🇮🇹", rtl: false, fontScale: 1.0 },
-            { id: "ko", code: "KO", name: "South Korea", lang: "Korean", flag: "🇰🇷", rtl: false, fontScale: 1.1 },
-            { id: "th", code: "TH", name: "Thailand", lang: "Thai", flag: "🇹🇭", rtl: false, fontScale: 1.1 },
-            { id: "vn", code: "VN", name: "Vietnam", lang: "Vietnamese", flag: "🇻🇳", rtl: false, fontScale: 1.0 },
-            { id: "tr", code: "TR", name: "Turkey", lang: "Turkish", flag: "🇹🇷", rtl: false, fontScale: 1.0 },
-            { id: "pl", code: "PL", name: "Poland", lang: "Polish", flag: "🇵🇱", rtl: false, fontScale: 0.9 },
-            { id: "tw", code: "TW", name: "Taiwan", lang: "Traditional Chinese", flag: "🇹🇼", rtl: false, fontScale: 1.2 }
+            { id: "us", code: "US", name: "United States", lang: "English", flag: "🇺🇸", rtl: false, fontScale: 0.85 },
+            { id: "es", code: "ES", name: "Spain / LatAm", lang: "Spanish", flag: "🇪🇸", rtl: false, fontScale: 0.9 },
+            { id: "fr", code: "FR", name: "France", lang: "French", flag: "🇫🇷", rtl: false, fontScale: 0.75 },
+            { id: "id", code: "ID", name: "Indonesia", lang: "Indonesian", flag: "🇮🇩", rtl: false, fontScale: 0.75 },
+            { id: "ar", code: "ar", name: "Egypt / Gulf", lang: "Arabic", flag: "🇸🇦", rtl: true, fontScale: 0.95 },
+            { id: "hi", code: "HI", name: "India", lang: "Hindi", flag: "🇮🇳", rtl: false, fontScale: 0.95 },
+            { id: "ru", code: "RU", name: "Russia", lang: "Russian", flag: "🇷🇺", rtl: false, fontScale: 0.8 },
+            { id: "de", code: "DE", name: "Germany", lang: "German", flag: "🇩🇪", rtl: false, fontScale: 0.75 },
+            { id: "ja", code: "JA", name: "Japan", lang: "Japanese", flag: "🇯🇵", rtl: false, fontScale: 1.05 },
+            { id: "it", code: "IT", name: "Italy", lang: "Italian", flag: "🇮🇹", rtl: false, fontScale: 0.9 },
+            { id: "ko", code: "KO", name: "South Korea", lang: "Korean", flag: "🇰🇷", rtl: false, fontScale: 1.05 },
+            { id: "th", code: "TH", name: "Thailand", lang: "Thai", flag: "🇹🇭", rtl: false, fontScale: 0.95 },
+            { id: "vn", code: "VN", name: "Vietnam", lang: "Vietnamese", flag: "🇻🇳", rtl: false, fontScale: 0.9 },
+            { id: "tr", code: "TR", name: "Turkey", lang: "Turkish", flag: "🇹🇷", rtl: false, fontScale: 0.9 },
+            { id: "pl", code: "PL", name: "Poland", lang: "Polish", flag: "🇵🇱", rtl: false, fontScale: 0.75 },
+            { id: "tw", code: "TW", name: "Taiwan", lang: "Traditional Chinese", flag: "🇹🇼", rtl: false, fontScale: 1.05 }
         ];
 
         // Fallback local translations for the default starting template text (ESTRATÉGIA SECRETA / REVELADA HOJE)
@@ -632,22 +632,22 @@
 
         // Fallback localized translations for continuous sentence "100 SEGREDOS" / "QUE VOCÊ NÃO SABIA"
         const fallbackTimeskipTranslations = {
-    "us": { text1: "100 SECRETS", text2: "THAT YOU DIDN'T KNOW" },
-    "es": { text1: "100 SECRETOS", text2: "QUE NO SABÍAS" },
-    "fr": { text1: "100 SECRETS", text2: "QUE VOUS NE SAVIEZ PAS" },
-    "id": { text1: "100 RAHASIA", text2: "YANG TIDAK KAMU KETAHUI" },
-    "ar": { text1: "100 سر", text2: "لم تكن تعرفها" },
-    "hi": { text1: "100 रहस्य", text2: "जो आप नहीं जानते थे" },
-    "ru": { text1: "100 СЕКРЕТОВ", text2: "О КОТОРЫХ ВЫ НЕ ЗНАЛИ" },
-    "de": { text1: "100 GEHEIMNISSE", text2: "DIE DU NICHT WUSSTEST" },
-    "ja": { text1: "あなたが知らない", text2: "100の秘密" },
-    "it": { text1: "100 SEGRETI", text2: "CHE NON SAPEVI" },
-    "ko": { text1: "당신이 몰랐던", text2: "100가지 비밀" },
-    "th": { text1: "100 ความลับ", text2: "ที่คุณไม่เคยรู้" },
-    "vn": { text1: "100 BÍ MẬT", text2: "MÀ BẠN KHÔNG BIẾT" },
-    "tr": { text1: "BİLMEDİĞİNİZ", text2: "100 SIR" },
-    "pl": { text1: "100 SEKRETÓW", text2: "O KTÓRYCH NIE WIEDZIAŁEŚ" },
-    "tw": { text1: "你不知道的", text2: "100個秘密" }
+            "us": { text1: "100 SECRETS", text2: "THAT YOU DIDN'T KNOW" },
+            "es": { text1: "100 SECRETOS", text2: "QUE NO SABÍAS" },
+            "fr": { text1: "100 SECRETS", text2: "QUE VOUS NE SAVIEZ PAS" },
+            "id": { text1: "100 RAHASIA", text2: "YANG TIDAK KAMU KETAHUI" },
+            "ar": { text1: "100 سر", text2: "لم تكن تعرفها" },
+            "hi": { text1: "100 रहस्य", text2: "जो आप नहीं जानते थे" },
+            "ru": { text1: "100 СЕКРЕТОВ", text2: "О КОТОРЫХ ВЫ НЕ ЗНАЛИ" },
+            "de": { text1: "100 GEHEIMNISSE", text2: "DIE DU NICHT WUSSTEST" },
+            "ja": { text1: "あなたが知らない", text2: "100の秘密" },
+            "it": { text1: "100 SEGRETI", text2: "CHE NON SAPEVI" },
+            "ko": { text1: "당신이 몰랐던", text2: "100가지 비밀" },
+            "th": { text1: "100 ความลับ", text2: "ที่คุณไม่เคยรู้" },
+            "vn": { text1: "100 BÍ MẬT", text2: "MÀ BẠN KHÔNG BIẾT" },
+            "tr": { text1: "BİLMEDİĞİNİZ", text2: "100 SIR" },
+            "pl": { text1: "100 SEKRETÓW", text2: "O KTÓRYCH NIE WIEDZIAŁEŚ" },
+            "tw": { text1: "你不知道的", text2: "100個秘密" }
         };
 
         // UI & Render State
@@ -1456,7 +1456,7 @@
 
                     LANGUAGES.forEach(lang => {
                         // If they are translating our standard dummy continuous sentence
-                        if ((clean1 === "O NOVO TIMESKIP" || clean1.includes("TIMESKIP")) && (clean2 === "DOS CHAPÉUS DE PALHA" || clean2.includes("CHAPÉUS")) && fallbackTimeskipTranslations[lang.id]) {
+                        if ((clean1 === "100 SEGREDOS" || clean1.includes("SEGREDOS")) && (clean2 === "QUE VOCÊ NÃO SABIA" || clean2.includes("SABIA")) && fallbackTimeskipTranslations[lang.id]) {
                             styleData[lang.id].text1 = fallbackTimeskipTranslations[lang.id].text1;
                             styleData[lang.id].text2 = fallbackTimeskipTranslations[lang.id].text2;
                         } else if (clean1 === "ESTRATÉGIA SECRETA" && clean2 === "REVELADA HOJE" && fallbackTranslations[lang.id]) {
@@ -1761,7 +1761,7 @@ US, ES, FR, ID, AR, HI, RU, DE, JA, IT, KO, TH, VN, TR, PL, TW.`;
             
             updateStyleTogglesUI();
             requestRenderAll();
-            showToast("Estilo global atualizado com sucesso!", "success");
+            showToast("Estilo global updated successfully!", "success");
         }
 
         function toggleIndividualStyle(property) {
