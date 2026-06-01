@@ -5,15 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Global Thumbnail Studio | ViralFX</title>
     <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="[https://cdn.tailwindcss.com](https://cdn.tailwindcss.com)"></script>
     <!-- FontAwesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="[https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css](https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css)">
     <!-- JSZip Library para empacotar as imagens em lote em um único arquivo ZIP -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="[https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js](https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js)"></script>
     <!-- Google Fonts (Suporte global para múltiplos scripts incluindo Barlow Black) -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Barlow:ital,wght@0,400;0,900;1,400;1,900&family=Inter:wght@400;600;800;900&family=Noto+Sans+JP:wght@700;900&family=Noto+Sans+KR:wght@700;900&family=Noto+Sans+SC:wght@700;900&family=Noto+Sans+TC:wght@700;900&family=Noto+Sans:wght@700;900&family=Rubik+Mono+One&family=Teko:wght@700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="[https://fonts.googleapis.com](https://fonts.googleapis.com)">
+    <link rel="preconnect" href="[https://fonts.gstatic.com](https://fonts.gstatic.com)" crossorigin>
+    <link href="[https://fonts.googleapis.com/css2?family=Anton&family=Barlow:ital,wght@0,400;0,900;1,400;1,900&family=Inter:wght@400;600;800;900&family=Noto+Sans+JP:wght@700;900&family=Noto+Sans+KR:wght@700;900&family=Noto+Sans+SC:wght@700;900&family=Noto+Sans+TC:wght@700;900&family=Noto+Sans:wght@700;900&family=Rubik+Mono+One&family=Teko:wght@700&display=swap](https://fonts.googleapis.com/css2?family=Anton&family=Barlow:ital,wght@0,400;0,900;1,400;1,900&family=Inter:wght@400;600;800;900&family=Noto+Sans+JP:wght@700;900&family=Noto+Sans+KR:wght@700;900&family=Noto+Sans+SC:wght@700;900&family=Noto+Sans+TC:wght@700;900&family=Noto+Sans:wght@700;900&family=Rubik+Mono+One&family=Teko:wght@700&display=swap)" rel="stylesheet">
     
     <style>
         body {
@@ -498,7 +498,7 @@
                                 <div class="grid grid-cols-2 gap-2">
                                     <div>
                                         <label class="block text-[9px] text-slate-500 mb-0.5">Borda Ext.</label>
-                                        <input type="color" id="indT1StrokeOuter" onchange="updateIndividualStyle('indT1StrokeOuter', this.value)" class="w-full h-7 bg-transparent cursor-pointer border border-slate-800 rounded">
+                                        <input type="color" id="indT1StrokeOuter" onchange="updateIndividualStyle('t1StrokeOuter', this.value)" class="w-full h-7 bg-transparent cursor-pointer border border-slate-800 rounded">
                                     </div>
                                     <div>
                                         <label class="block text-[9px] text-slate-500 mb-0.5">Larg. Ext.</label>
@@ -957,10 +957,10 @@
         }
 
         // Helper to resolve Canvas mixed LTR/RTL (BiDi) bugs with numbers
+        // SUBSTITUÍDO: Utiliza os caracteres clássicos e infalíveis de Override de Direção LTR: LRO (\u202D) e PDF (\u202C).
+        // Isso impede que o motor do Firefox fatiasse os dígitos do número ao redor de caracteres árabes.
         function resolveBidi(text, isRtl) {
             if (!isRtl || !text) return text;
-            // Envolve sequências de números com o Override de Direção LTR (\u202D e \u202C)
-            // Isso força o motor de renderização (especialmente o Gecko/Firefox) a tratar os dígitos de forma contínua e LTR.
             return text.replace(/([0-9]+)/g, '\u202D$1\u202C');
         }
 
@@ -1305,27 +1305,7 @@
                 ctx.restore();
             }
 
-            // WATERMARK IN GRID MODE CARDS (only on small cards)
-            if (width < 1000) {
-                ctx.save();
-                ctx.fillStyle = "rgba(15, 23, 42, 0.85)";
-                ctx.beginPath();
-                ctx.roundRect(15, 15, 150 * scaleFactor, 55 * scaleFactor, 8);
-                ctx.fill();
-                
-                ctx.fillStyle = "#ffffff";
-                ctx.font = `bold ${16}px 'Inter', sans-serif`;
-                
-                // Draw flag using FlagCDN image instead of emoji!
-                const flagImg = flagImages[countryId];
-                if (flagImg && flagImg.complete) {
-                    ctx.drawImage(flagImg, 25, 20, 24 * scaleFactor, 16 * scaleFactor);
-                    ctx.fillText(langInfo.code.toUpperCase(), 58, 20 + (10 * scaleFactor));
-                } else {
-                    ctx.fillText(langInfo.code.toUpperCase(), 30, 15 + (27 * scaleFactor));
-                }
-                ctx.restore();
-            }
+            // REMOVED internal Canvas watermark inside this block to prevent overlaps and redundancy
         }
 
         function renderGrid() {
@@ -1342,7 +1322,7 @@
                 header.className = "flex justify-between items-center";
                 header.innerHTML = `
                     <div class="flex items-center gap-2">
-                        <img src="https://flagcdn.com/w40/${lang.flagCode}.png" class="w-6 h-4 object-cover rounded shadow-sm border border-slate-800/50" alt="${lang.name}">
+                        <img src="[https://flagcdn.com/w40/$](https://flagcdn.com/w40/$){lang.flagCode}.png" class="w-6 h-4 object-cover rounded shadow-sm border border-slate-800/50" alt="${lang.name}">
                         <div>
                             <h4 class="font-bold text-xs text-slate-200">${lang.name}</h4>
                             <p class="text-[9px] text-slate-500">${lang.lang}</p>
@@ -1423,14 +1403,6 @@
         function goToCountryDetail(countryId) {
             switchTab("editor");
             loadCountryToEditor(countryId);
-        }
-
-        function requestRenderAll() {
-            if (activeTab === "grid") {
-                renderGrid();
-            } else {
-                renderIndividualEditorCanvas();
-            }
         }
 
         // FLAWLESS BOUNDING-BOX DRAG AND DROP MECHANISM
