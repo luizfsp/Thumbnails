@@ -5,15 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Global Thumbnail Studio | ViralFX</title>
     <!-- Tailwind CSS -->
-    <script src="[https://cdn.tailwindcss.com](https://cdn.tailwindcss.com)"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome Icons -->
-    <link rel="stylesheet" href="[https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css](https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css)">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- JSZip Library para empacotar as imagens em lote em um único arquivo ZIP -->
-    <script src="[https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js](https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js)"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
     <!-- Google Fonts (Suporte global para múltiplos scripts incluindo Barlow Black) -->
-    <link rel="preconnect" href="[https://fonts.googleapis.com](https://fonts.googleapis.com)">
-    <link rel="preconnect" href="[https://fonts.gstatic.com](https://fonts.gstatic.com)" crossorigin>
-    <link href="[https://fonts.googleapis.com/css2?family=Anton&family=Barlow:ital,wght@0,400;0,900;1,400;1,900&family=Inter:wght@400;600;800;900&family=Noto+Sans+JP:wght@700;900&family=Noto+Sans+KR:wght@700;900&family=Noto+Sans+SC:wght@700;900&family=Noto+Sans+TC:wght@700;900&family=Noto+Sans:wght@700;900&family=Rubik+Mono+One&family=Teko:wght@700&display=swap](https://fonts.googleapis.com/css2?family=Anton&family=Barlow:ital,wght@0,400;0,900;1,400;1,900&family=Inter:wght@400;600;800;900&family=Noto+Sans+JP:wght@700;900&family=Noto+Sans+KR:wght@700;900&family=Noto+Sans+SC:wght@700;900&family=Noto+Sans+TC:wght@700;900&family=Noto+Sans:wght@700;900&family=Rubik+Mono+One&family=Teko:wght@700&display=swap)" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Barlow:ital,wght@0,400;0,900;1,400;1,900&family=Inter:wght@400;600;800;900&family=Noto+Sans+JP:wght@700;900&family=Noto+Sans+KR:wght@700;900&family=Noto+Sans+SC:wght@700;900&family=Noto+Sans+TC:wght@700;900&family=Noto+Sans:wght@700;900&family=Rubik+Mono+One&family=Teko:wght@700&display=swap" rel="stylesheet">
     
     <style>
         body {
@@ -655,13 +655,13 @@
             "fr": { text1: "100 SECRETS", text2: "QUE VOUS NE SAVIEZ PAS" },
             "id": { text1: "100 RAHASIA", text2: "YANG TIDAK KAMU KETAHUI" },
             "ar": { text1: "100 سر", text2: "لم تكن تعرفها" },
-            "hi": { text1: "100 रहस्य", text2: "जो आप não जानते थे" },
-            "ru": { text1: "100 СЕКРЕТОВ", text2: "О КОТОРЫХ ВЫ НЕ ЗНАЛИ" },
+            "hi": { text1: "100 रहस्य", text2: "जो आप não جانتے थे" },
+            "ru": { text1: "100 СЕКРЕТОВ", text2: "О КОТОРЫХ ВЫ НЕ ZНАЛИ" },
             "de": { text1: "100 GEHEIMNISSE", text2: "DIE DU NICHT WUSSTEST" },
             "ja": { text1: "あなたが知らない", text2: "100ของความลับ" },
             "it": { text1: "100 SEGRETI", text2: "CHE NON SAPEVI" },
             "ko": { text1: "당신이 몰랐던", text2: "100가지 비밀" },
-            "th": { text1: "100 ความลับ", text2: "ที่คุณไม่เคยรู้" },
+            "th": { text1: "100 ความลับ", text2: "ที่คุณ không เคยรู้" },
             "vn": { text1: "100 BÍ MẬT", text2: "MÀ BẠN KHÔNG BIẾT" },
             "tr": { text1: "BİLMEDİĞİNİZ", text2: "100 SIR" },
             "pl": { text1: "100 SEKRETÓW", text2: "O KTÓRYCH NIE WIEDZIAŁEŚ" },
@@ -1308,6 +1308,15 @@
             // REMOVED internal Canvas watermark inside this block to prevent overlaps and redundancy
         }
 
+        // Funções Globais de Renderização
+        function requestRenderAll() {
+            if (activeTab === "grid") {
+                renderGrid();
+            } else {
+                renderIndividualEditorCanvas();
+            }
+        }
+
         function renderGrid() {
             if (activeTab !== "grid") return;
 
@@ -1322,7 +1331,7 @@
                 header.className = "flex justify-between items-center";
                 header.innerHTML = `
                     <div class="flex items-center gap-2">
-                        <img src="[https://flagcdn.com/w40/$](https://flagcdn.com/w40/$){lang.flagCode}.png" class="w-6 h-4 object-cover rounded shadow-sm border border-slate-800/50" alt="${lang.name}">
+                        <img src="https://flagcdn.com/w40/${lang.flagCode}.png" class="w-6 h-4 object-cover rounded shadow-sm border border-slate-800/50" alt="${lang.name}">
                         <div>
                             <h4 class="font-bold text-xs text-slate-200">${lang.name}</h4>
                             <p class="text-[9px] text-slate-500">${lang.lang}</p>
@@ -1581,7 +1590,7 @@ CRITICAL CONTEXT RULES:
 2. You MUST translate them together as a unified semantic block to preserve proper grammatical flow, gender agreements, number agreements, prepositions (like 'of the', 'de los', 'de l\'', 'des'), and localized case declensions.
 3. Once translated cohesively, split the resulting translation logically back into two lines (text1 and text2). Ensure that reading Line 1 then Line 2 feels like a single, seamless, natural sentence in the target language. Do not isolate them into disconnected hooks unless the input itself represents two unrelated hooks.
 4. Capitalization must remain bold, impactful, and expressive.
-5. Translate the HOOK, the CATCHY impact, matching the local internet culture slang of that specific target country.
+5. Translate the HOOK, the CATCHY impact, matching the local internet culture slang of that specific target country, if applicable.
 6. Output strict JSON with schema matching exactly the specified structure below. No explanation, markdown ticks, or other text outside the JSON.`;
 
                 const userQuery = `Original Portuguese texts:
@@ -1853,7 +1862,7 @@ US, ES, FR, ID, AR, HI, RU, DE, JA, IT, KO, TH, VN, TR, PL, TW.`;
             
             updateStyleTogglesUI();
             requestRenderAll();
-            showToast("Estilo global updated successfully!", "success");
+            showToast("Estilo global atualizado com sucesso!", "success");
         }
 
         function toggleIndividualStyle(property) {
