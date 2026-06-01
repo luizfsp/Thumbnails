@@ -895,9 +895,9 @@
         // Helper to resolve Canvas mixed LTR/RTL (BiDi) bugs with numbers
         function resolveBidi(text, isRtl) {
             if (!isRtl || !text) return text;
-            // Envolve sequências de números com isoladores de direção LTR (\u2066 e \u2069)
-            // Isso impede que o motor de renderização do canvas divida os dígitos do número (ex: "100") ao redor de caracteres árabes.
-            return text.replace(/([0-9]+)/g, '\u2066$1\u2069');
+            // Envolve sequências de números com o Override de Direção LTR (\u202D e \u202C)
+            // Isso força o motor de renderização (especialmente o Gecko/Firefox) a tratar os dígitos de forma contínua e LTR.
+            return text.replace(/([0-9]+)/g, '\u202D$1\u202C');
         }
 
         // Helper to calculate exact geometric boundaries of text to perform flawless hit tests
