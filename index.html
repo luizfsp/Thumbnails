@@ -46,7 +46,7 @@
                 <i class="fa-solid fa-earth-americas text-xl text-white"></i>
             </div>
             <div>
-                <h1 class="font-black text-lg tracking-wider bg-gradient-to-r from-white via-slate-100 to-slate-400 bg-clip-text text-transparent">THUMBGRID viralFX</h1>
+                <h1 class="font-black text-lg tracking-wider bg-gradient-to-r from-white via-slate-100 to-slate-400 bg-clip-text text-transparent">THUMBGRID ViralFX</h1>
                 <p class="text-xs text-indigo-400 font-medium">Localizador Avançado de Thumbnails</p>
             </div>
         </div>
@@ -387,14 +387,23 @@
                             </div>
                         </div>
 
-                        <!-- Specific scale/formatting -->
+                        <!-- Specific scale/formatting with separate sliders for superior and inferior lines -->
                         <div class="space-y-4 pt-4 border-t border-slate-800/80">
                             <div>
                                 <div class="flex justify-between text-xs mb-1">
-                                    <span class="text-slate-400 font-semibold">Tamanho Fonte Geral</span>
-                                    <span id="scaleLabel" class="text-indigo-400 font-mono">1.0x</span>
+                                    <span class="text-slate-400 font-semibold text-xs text-slate-300">Tam. Fonte Texto Superior</span>
+                                    <span id="scaleLabel1" class="text-indigo-400 font-mono">1.00x</span>
                                 </div>
-                                <input type="range" id="indScaleSlider" min="0.4" max="1.8" step="0.05" value="1.0" oninput="applyOverride()"
+                                <input type="range" id="indScaleSlider1" min="0.4" max="1.8" step="0.05" value="1.0" oninput="applyOverride()"
+                                    class="w-full accent-indigo-500 bg-slate-800 h-1 rounded-lg cursor-pointer">
+                            </div>
+
+                            <div>
+                                <div class="flex justify-between text-xs mb-1">
+                                    <span class="text-slate-400 font-semibold text-xs text-slate-300">Tam. Fonte Texto Inferior</span>
+                                    <span id="scaleLabel2" class="text-indigo-400 font-mono">1.00x</span>
+                                </div>
+                                <input type="range" id="indScaleSlider2" min="0.4" max="1.8" step="0.05" value="1.0" oninput="applyOverride()"
                                     class="w-full accent-indigo-500 bg-slate-800 h-1 rounded-lg cursor-pointer">
                             </div>
 
@@ -546,7 +555,7 @@
             setupInteractiveCanvasEvents();
         }
 
-        // Initialize state without mock themes, completely black background
+        // Initialize state with individual line scales
         function initDefaultLayout() {
             const val1 = "ESTRATÉGIA SECRETA";
             const val2 = "REVELADA HOJE";
@@ -564,7 +573,8 @@
                     text2: val2,
                     text1Pos: { x: 640, y: 220 }, // Base layout coordinates on 1280x720 canvas
                     text2Pos: { x: 640, y: 390 },
-                    fontScale: lang.fontScale, // individual fine-tuning scale
+                    fontScale1: lang.fontScale, // individual fine-tuning scale for line 1
+                    fontScale2: lang.fontScale, // individual fine-tuning scale for line 2
                     textAlignment: lang.rtl ? "right" : "center",
                 };
             });
@@ -676,9 +686,12 @@
             data.text1 = document.getElementById("overrideText1").value;
             data.text2 = document.getElementById("overrideText2").value;
             
-            const scale = parseFloat(document.getElementById("indScaleSlider").value);
-            data.fontScale = scale;
-            document.getElementById("scaleLabel").textContent = scale.toFixed(2) + "x";
+            const scale1 = parseFloat(document.getElementById("indScaleSlider1").value);
+            const scale2 = parseFloat(document.getElementById("indScaleSlider2").value);
+            data.fontScale1 = scale1;
+            data.fontScale2 = scale2;
+            document.getElementById("scaleLabel1").textContent = scale1.toFixed(2) + "x";
+            document.getElementById("scaleLabel2").textContent = scale2.toFixed(2) + "x";
 
             renderIndividualEditorCanvas();
         }
@@ -695,12 +708,16 @@
             data.text2 = (hasBeenTranslated && fallbackTranslations[currentCountryId]) ? fallbackTranslations[currentCountryId].text2 : val2;
             data.text1Pos = { x: 640, y: 220 };
             data.text2Pos = { x: 640, y: 390 };
-            data.fontScale = defaultLangScale;
+            data.fontScale1 = defaultLangScale;
+            data.fontScale2 = defaultLangScale;
 
             document.getElementById("overrideText1").value = data.text1;
             document.getElementById("overrideText2").value = data.text2;
-            document.getElementById("indScaleSlider").value = defaultLangScale;
-            document.getElementById("scaleLabel").textContent = defaultLangScale.toFixed(2) + "x";
+            
+            document.getElementById("indScaleSlider1").value = defaultLangScale;
+            document.getElementById("scaleLabel1").textContent = defaultLangScale.toFixed(2) + "x";
+            document.getElementById("indScaleSlider2").value = defaultLangScale;
+            document.getElementById("scaleLabel2").textContent = defaultLangScale.toFixed(2) + "x";
 
             renderIndividualEditorCanvas();
             showToast("Ajustes individuais restaurados para o padrão.", "info");
@@ -791,8 +808,13 @@
 
             // CALCULATE THE BOUNDING BOXES FOR CLICKS & RENDER AIDS
             const fontSelected = document.getElementById("fontFamilySelect").value;
-            const t1Size = Math.floor(95 * data.fontScale);
-            const t2Size = Math.floor(100 * data.fontScale);
+            
+            // Support independent scaling for Text 1 and Text 2
+            const scale1 = data.fontScale1 !== undefined ? data.fontScale1 : (data.fontScale || langInfo.fontScale);
+            const scale2 = data.fontScale2 !== undefined ? data.fontScale2 : (data.fontScale || langInfo.fontScale);
+            
+            const t1Size = Math.floor(95 * scale1);
+            const t2Size = Math.floor(100 * scale2);
 
             // Fetch boxes (always in 1280x720 base coordinates for consistent state representation)
             boundingBoxes.text1 = getTextBoundingBox(ctx, data.text1, data.text1Pos, t1Size, data.textAlignment, 1.0);
@@ -1041,8 +1063,16 @@
             const data = styleData[countryId];
             document.getElementById("overrideText1").value = data.text1;
             document.getElementById("overrideText2").value = data.text2;
-            document.getElementById("indScaleSlider").value = data.fontScale;
-            document.getElementById("scaleLabel").textContent = data.fontScale.toFixed(2) + "x";
+            
+            // Set values on individual line sliders
+            const scale1 = data.fontScale1 !== undefined ? data.fontScale1 : (data.fontScale || lang.fontScale);
+            const scale2 = data.fontScale2 !== undefined ? data.fontScale2 : (data.fontScale || lang.fontScale);
+
+            document.getElementById("indScaleSlider1").value = scale1;
+            document.getElementById("scaleLabel1").textContent = scale1.toFixed(2) + "x";
+            
+            document.getElementById("indScaleSlider2").value = scale2;
+            document.getElementById("scaleLabel2").textContent = scale2.toFixed(2) + "x";
 
             // Reset drag and hover selections when changing country
             dragTarget = null;
@@ -1363,7 +1393,7 @@ US, ES, FR, ID, AR, HI, RU, DE, JA, IT, KO, TH, VN, TR, PL, TW.`;
             link.click();
         }
 
-        // Downloader pipeline utilizando JSZip para empacotar todas as 16 imagens de forma plana
+        // Downloader pipeline utilizando JSZip para empacotar as imagens em lote em um único arquivo ZIP
         async function downloadAllThumbnails() {
             const btn = document.querySelector("button[onclick='downloadAllThumbnails()']");
             const originalHtml = btn.innerHTML;
@@ -1486,7 +1516,8 @@ US, ES, FR, ID, AR, HI, RU, DE, JA, IT, KO, TH, VN, TR, PL, TW.`;
                     styleData[lang.id].text1Pos = { ...sourceData.text1Pos };
                     styleData[lang.id].text2Pos = { ...sourceData.text2Pos };
                     styleData[lang.id].textAlignment = sourceData.textAlignment;
-                    styleData[lang.id].fontScale = sourceData.fontScale;
+                    styleData[lang.id].fontScale1 = sourceData.fontScale1 !== undefined ? sourceData.fontScale1 : sourceData.fontScale;
+                    styleData[lang.id].fontScale2 = sourceData.fontScale2 !== undefined ? sourceData.fontScale2 : sourceData.fontScale;
                 }
             });
 
