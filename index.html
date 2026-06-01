@@ -47,7 +47,7 @@
             </div>
             <div>
                 <h1 class="font-black text-lg tracking-wider bg-gradient-to-r from-white via-slate-100 to-slate-400 bg-clip-text text-transparent">THUMBGRID ViralFX</h1>
-                <p class="text-xs text-indigo-400 font-medium">Localizador Avançado de Thumbnails para 16 Países</p>
+                <p class="text-xs text-indigo-400 font-medium">Localizador Avançado de Thumbnails</p>
             </div>
         </div>
         
@@ -1327,12 +1327,14 @@ US, ES, FR, ID, AR, HI, RU, DE, JA, IT, KO, TH, VN, TR, PL, TW.`;
             
             const link = document.createElement("a");
             const lang = LANGUAGES.find(l => l.id === countryId);
-            link.download = `thumb_${lang.code}_${lang.name.replace(/\s+/g, '_')}.png`;
+            // Higieniza barras e caracteres inválidos do nome do país para evitar criar pastas locais indesejadas
+            const cleanName = lang.name.replace(/[\s\/\\|:?*<>]+/g, '_');
+            link.download = `thumb_${lang.code}_${cleanName}.png`;
             link.href = tempCanvas.toDataURL("image/png");
             link.click();
         }
 
-        // Downloader pipeline utilizando JSZip para empacotar todas as 16 imagens
+        // Downloader pipeline utilizando JSZip para empacotar todas as 16 imagens de forma plana
         async function downloadAllThumbnails() {
             const btn = document.querySelector("button[onclick='downloadAllThumbnails()']");
             const originalHtml = btn.innerHTML;
@@ -1353,9 +1355,13 @@ US, ES, FR, ID, AR, HI, RU, DE, JA, IT, KO, TH, VN, TR, PL, TW.`;
                     
                     // Converte o canvas para Blob assincronamente
                     const blob = await new Promise(resolve => tempCanvas.toBlob(resolve, "image/png"));
-                    const filename = `thumb_${lang.code}_${lang.name.replace(/\s+/g, '_')}.png`;
                     
-                    // Adiciona o arquivo correspondente ao ZIP
+                    // Higieniza o nome do país de forma robusta substituindo barras por sublinhados
+                    // Isso evita que o JSZip crie pastas separadas para "Spain / LatAm" e "Egypt / Gulf"
+                    const cleanName = lang.name.replace(/[\s\/\\|:?*<>]+/g, '_');
+                    const filename = `thumb_${lang.code}_${cleanName}.png`;
+                    
+                    // Adiciona o arquivo correspondente ao ZIP na raiz
                     zip.file(filename, blob);
                 }
 
