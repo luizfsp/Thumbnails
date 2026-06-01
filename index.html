@@ -1035,6 +1035,14 @@
             loadCountryToEditor(countryId);
         }
 
+        function requestRenderAll() {
+            if (activeTab === "grid") {
+                renderGrid();
+            } else {
+                renderIndividualEditorCanvas();
+            }
+        }
+
         // FLAWLESS BOUNDING-BOX DRAG AND DROP MECHANISM
         function setupInteractiveCanvasEvents() {
             const canvas = document.getElementById("interactiveCanvas");
