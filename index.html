@@ -1,0 +1,1265 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Global Thumbnail Studio | Localizador de Criativos</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts (Suporte global para múltiplos scripts: Latim, Cirílico, Árabe, Devanagari, Asiáticos) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;600;800;900&family=Noto+Sans+JP:wght@700;900&family=Noto+Sans+KR:wght@700;900&family=Noto+Sans+SC:wght@700;900&family=Noto+Sans+TC:wght@700;900&family=Noto+Sans:wght@700;900&family=Rubik+Mono+One&family=Teko:wght@700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0b0f19;
+        }
+
+        /* Custom scrollbar para parecer uma ferramenta premium */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #475569;
+        }
+    </style>
+</head>
+
+<body class="text-slate-100 min-h-screen flex flex-col overflow-x-hidden">
+
+    <!-- HEADER -->
+    <header
+        class="border-b border-slate-800 bg-slate-900/80 backdrop-blur-md px-6 py-4 sticky top-0 z-50 flex flex-wrap justify-between items-center gap-4">
+        <div class="flex items-center gap-3">
+            <div
+                class="bg-gradient-to-tr from-indigo-500 to-violet-600 p-2.5 rounded-xl shadow-lg shadow-indigo-500/20">
+                <i class="fa-solid fa-earth-americas text-xl text-white"></i>
+            </div>
+            <div>
+                <h1
+                    class="font-black text-lg tracking-wider bg-gradient-to-r from-white via-slate-100 to-slate-400 bg-clip-text text-transparent">
+                    THUMBGRID GLOBAL</h1>
+                <p class="text-xs text-indigo-400 font-medium">Localizador Avançado de Thumbnails para 16 Países</p>
+            </div>
+        </div>
+
+        <!-- API Setup & Global Stats -->
+        <div class="flex items-center gap-3 flex-wrap sm:flex-nowrap">
+            <div class="relative">
+                <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-500">
+                    <i class="fa-solid fa-key text-xs"></i>
+                </span>
+                <input type="password" id="apiKeyInput" placeholder="Chave de API Gemini (Opcional)"
+                    class="bg-slate-950/80 text-xs border border-slate-800 rounded-lg pl-8 pr-3 py-2 w-52 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-slate-300 placeholder:text-slate-600 transition-all">
+            </div>
+            <button onclick="toggleApiHelp()"
+                class="p-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg transition"
+                title="Ajuda com a API">
+                <i class="fa-solid fa-circle-question"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- MAIN WORKSPACE -->
+    <main class="flex-1 flex flex-col lg:flex-row min-h-0">
+
+        <!-- LEFT PANEL: CONTROL CENTER -->
+        <aside
+            class="w-full lg:w-[420px] bg-slate-900 border-r border-slate-800 flex flex-col shrink-0 overflow-y-auto">
+
+            <!-- ACCORDION CONTROLS -->
+            <div class="p-5 space-y-6">
+
+                <!-- STEP 1: Original Content & AI Settings -->
+                <div class="bg-slate-950/50 p-4 rounded-xl border border-slate-800/80">
+                    <div class="flex justify-between items-center mb-3">
+                        <h3 class="font-bold text-sm text-indigo-400 uppercase tracking-wider flex items-center gap-2">
+                            <span class="bg-indigo-500/10 text-indigo-400 text-[10px] py-0.5 px-2 rounded-full">1</span>
+                            Conteúdo Original (PT)
+                        </h3>
+                    </div>
+
+                    <div class="space-y-3">
+                        <div>
+                            <label class="block text-xs text-slate-400 font-semibold mb-1">Linha de Texto Principal
+                                (Destaque)</label>
+                            <input type="text" id="ptText1" value="COMO FICAR RICO" oninput="updateMasterText()"
+                                class="w-full bg-slate-900 border border-slate-800 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-indigo-500 text-white font-bold">
+                        </div>
+                        <div>
+                            <label class="block text-xs text-slate-400 font-semibold mb-1">Linha de Texto
+                                Secundária</label>
+                            <input type="text" id="ptText2" value="EM 2026 COM IA" oninput="updateMasterText()"
+                                class="w-full bg-slate-900 border border-slate-800 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-indigo-500 text-white font-bold">
+                        </div>
+
+                        <div class="pt-2">
+                            <button onclick="translateAllWithAI()" id="btnTranslate"
+                                class="w-full bg-gradient-to-r from-indigo-500 to-violet-600 hover:from-indigo-600 hover:to-violet-700 text-white text-xs font-bold py-2.5 px-4 rounded-lg shadow-lg shadow-indigo-500/20 transition-all flex items-center justify-center gap-2">
+                                <i class="fa-solid fa-wand-magic-sparkles"></i>
+                                Adaptar Visualmente com IA (16 Idiomas)
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STEP 2: Background Image Template Options (Gradients Removed) -->
+                <div class="bg-slate-950/50 p-4 rounded-xl border border-slate-800/80">
+                    <h3 class="font-bold text-sm text-indigo-400 uppercase tracking-wider flex items-center gap-2 mb-3">
+                        <span class="bg-indigo-500/10 text-indigo-400 text-[10px] py-0.5 px-2 rounded-full">2</span>
+                        Imagem de Template (Fundo)
+                    </h3>
+
+                    <div class="space-y-4">
+                        <!-- Custom Background Upload -->
+                        <div>
+                            <label class="block text-xs text-slate-400 font-semibold mb-1">Upload de Fundo (1280x720
+                                ideal)</label>
+                            <div class="flex items-center justify-center w-full">
+                                <label
+                                    class="flex flex-col items-center justify-center w-full h-28 border-2 border-slate-800 border-dashed rounded-lg cursor-pointer bg-slate-900 hover:bg-slate-800/50 hover:border-indigo-500/50 transition">
+                                    <div class="flex flex-col items-center justify-center pt-3 pb-4 px-2 text-center">
+                                        <i class="fa-solid fa-images text-xl text-indigo-400 mb-1.5 animate-pulse"></i>
+                                        <p class="text-[10px] text-slate-300 font-bold">Enviar Imagem de Template</p>
+                                        <p class="text-[9px] text-slate-500 mt-1" id="bgFileName">Template Padrão Ativo
+                                        </p>
+                                    </div>
+                                    <input type="file" id="bgUpload" accept="image/*" class="hidden"
+                                        onchange="handleBgUpload(event)">
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Vignette and Filters -->
+                        <div class="grid grid-cols-2 gap-3 pt-1">
+                            <div>
+                                <label class="block text-xs text-slate-400 font-semibold mb-1">Escurecer Bordas</label>
+                                <input type="range" id="vignetteSlider" min="0" max="100" value="35"
+                                    oninput="requestRenderAll()"
+                                    class="w-full accent-indigo-500 bg-slate-800 h-1 rounded-lg cursor-pointer">
+                            </div>
+                            <div>
+                                <label class="block text-xs text-slate-400 font-semibold mb-1">Brilho do Fundo</label>
+                                <input type="range" id="bgBrightnessSlider" min="10" max="150" value="85"
+                                    oninput="requestRenderAll()"
+                                    class="w-full accent-indigo-500 bg-slate-800 h-1 rounded-lg cursor-pointer">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STEP 3: Typography & Text Effects -->
+                <div class="bg-slate-950/50 p-4 rounded-xl border border-slate-800/80">
+                    <h3 class="font-bold text-sm text-indigo-400 uppercase tracking-wider flex items-center gap-2 mb-3">
+                        <span class="bg-indigo-500/10 text-indigo-400 text-[10px] py-0.5 px-2 rounded-full">3</span>
+                        Tipografia e Efeitos
+                    </h3>
+
+                    <div class="space-y-4">
+                        <!-- Font selection -->
+                        <div>
+                            <label class="block text-xs text-slate-400 font-semibold mb-1">Fonte Principal</label>
+                            <select id="fontFamilySelect" onchange="requestRenderAll()"
+                                class="w-full bg-slate-900 border border-slate-800 rounded-lg px-3 py-2 text-xs focus:outline-none focus:ring-1 focus:ring-indigo-500 text-white font-semibold">
+                                <option value="'Anton', 'Noto Sans', sans-serif">Anton (Impactante / YouTube)</option>
+                                <option value="'Rubik Mono One', sans-serif">Rubik Mono One (Gorda / Moderna)</option>
+                                <option value="'Teko', sans-serif">Teko (Condensada / Gamer)</option>
+                                <option value="'Inter', sans-serif" selected>Inter Black (Limpa / Premium)</option>
+                            </select>
+                        </div>
+
+                        <!-- Text Styling Controls (Layer 1 & 2) -->
+                        <div class="space-y-3 border-t border-slate-800/50 pt-3">
+                            <h4 class="text-[11px] font-black uppercase text-slate-500 tracking-wider">Texto Superior
+                            </h4>
+                            <div class="grid grid-cols-3 gap-2">
+                                <div>
+                                    <label class="block text-[10px] text-slate-500 mb-0.5">Cor Texto</label>
+                                    <input type="color" id="t1Color" value="#ffffff" onchange="requestRenderAll()"
+                                        class="w-full h-7 bg-transparent cursor-pointer border border-slate-800 rounded">
+                                </div>
+                                <div>
+                                    <label class="block text-[10px] text-slate-500 mb-0.5">Cor Borda</label>
+                                    <input type="color" id="t1Stroke" value="#000000" onchange="requestRenderAll()"
+                                        class="w-full h-7 bg-transparent cursor-pointer border border-slate-800 rounded">
+                                </div>
+                                <div>
+                                    <label class="block text-[10px] text-slate-500 mb-0.5">Larg. Borda</label>
+                                    <input type="number" id="t1StrokeWidth" value="8" min="0" max="25"
+                                        oninput="requestRenderAll()"
+                                        class="w-full bg-slate-900 text-xs border border-slate-800 rounded px-2 py-1">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="space-y-3 border-t border-slate-800/50 pt-3">
+                            <h4 class="text-[11px] font-black uppercase text-slate-500 tracking-wider">Texto Inferior
+                            </h4>
+                            <div class="grid grid-cols-3 gap-2">
+                                <div>
+                                    <label class="block text-[10px] text-slate-500 mb-0.5">Cor Texto</label>
+                                    <input type="color" id="t2Color" value="#facc15" onchange="requestRenderAll()"
+                                        class="w-full h-7 bg-transparent cursor-pointer border border-slate-800 rounded">
+                                </div>
+                                <div>
+                                    <label class="block text-[10px] text-slate-500 mb-0.5">Cor Borda</label>
+                                    <input type="color" id="t2Stroke" value="#000000" onchange="requestRenderAll()"
+                                        class="w-full h-7 bg-transparent cursor-pointer border border-slate-800 rounded">
+                                </div>
+                                <div>
+                                    <label class="block text-[10px] text-slate-500 mb-0.5">Larg. Borda</label>
+                                    <input type="number" id="t2StrokeWidth" value="8" min="0" max="25"
+                                        oninput="requestRenderAll()"
+                                        class="w-full bg-slate-900 text-xs border border-slate-800 rounded px-2 py-1">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Graphic Badges -->
+                        <div class="border-t border-slate-800/50 pt-3">
+                            <label class="block text-xs text-slate-400 font-semibold mb-1.5">Selo/Adesivo de
+                                Destaque</label>
+                            <div class="grid grid-cols-3 gap-2">
+                                <button onclick="selectBadge('none')" id="badge_none"
+                                    class="badge-opt bg-indigo-500/10 border border-indigo-500 text-indigo-400 py-1.5 px-2 rounded-lg text-xs font-bold transition">Nenhum</button>
+                                <button onclick="selectBadge('new')" id="badge_new"
+                                    class="badge-opt bg-slate-950 border border-slate-800 text-slate-400 hover:text-white py-1.5 px-2 rounded-lg text-xs font-bold transition">NEW!</button>
+                                <button onclick="selectBadge('play')" id="badge_play"
+                                    class="badge-opt bg-slate-950 border border-slate-800 text-slate-400 hover:text-white py-1.5 px-2 rounded-lg text-xs font-bold transition"><i
+                                        class="fa-solid fa-play mr-1"></i> PLAY</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- EXPORT ACTION BUTTON -->
+            <div class="p-5 mt-auto bg-slate-950/80 border-t border-slate-800 flex flex-col gap-3 sticky bottom-0">
+                <div class="flex justify-between items-center text-xs">
+                    <span class="text-slate-400">Total Adaptadas:</span>
+                    <span class="font-bold text-indigo-400">16 Países Ativos</span>
+                </div>
+                <button onclick="downloadAllThumbnails()"
+                    class="w-full bg-emerald-500 hover:bg-emerald-600 text-slate-950 text-sm font-black py-3 px-4 rounded-xl transition shadow-lg shadow-emerald-500/10 flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-cloud-arrow-down text-lg"></i>
+                    EXPORTAR 16 THUMBNAILS (PNG)
+                </button>
+            </div>
+        </aside>
+
+        <!-- RIGHT PANEL: PREVIEW & LOCALIZATION GRID -->
+        <section class="flex-1 bg-slate-950 p-6 flex flex-col gap-6 overflow-y-auto">
+
+            <!-- VIEW MODE SELECTOR -->
+            <div
+                class="flex flex-wrap items-center justify-between gap-4 bg-slate-900 p-3 rounded-xl border border-slate-800">
+                <div class="flex items-center gap-2">
+                    <button id="tabGridBtn" onclick="switchTab('grid')"
+                        class="px-4 py-2 rounded-lg text-xs font-black bg-indigo-500 text-white transition flex items-center gap-2">
+                        <i class="fa-solid fa-grip"></i> Grid Global (16 Idiomas)
+                    </button>
+                    <button id="tabEditorBtn" onclick="switchTab('editor')"
+                        class="px-4 py-2 rounded-lg text-xs font-bold text-slate-400 hover:text-white transition flex items-center gap-2">
+                        <i class="fa-solid fa-sliders"></i> Ajuste Fino Individual
+                    </button>
+                </div>
+                <div class="text-xs text-slate-400 flex items-center gap-2">
+                    <span class="inline-block w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                    Gemini Ativo para Otimizações Culturais
+                </div>
+            </div>
+
+            <!-- TAB 1: ALL-LANGUAGES GRID PREVIEW -->
+            <div id="tabGrid" class="space-y-6">
+                <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-6">
+                    <!-- Cards will be injected dynamically -->
+                </div>
+            </div>
+
+            <!-- TAB 2: DETAILED INDIVIDUAL EDITOR WITH IMPROVED DRAG & DROP -->
+            <div id="tabEditor" class="hidden">
+                <div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
+                    <!-- Main High-Res Canvas -->
+                    <div
+                        class="xl:col-span-2 flex flex-col items-center justify-center bg-slate-900 border border-slate-800 rounded-2xl p-6">
+                        <div class="flex justify-between items-center w-full mb-4">
+                            <div class="flex items-center gap-2">
+                                <span id="currentEditingFlag" class="text-2xl">🇺🇸</span>
+                                <div>
+                                    <h4 class="font-black text-sm" id="currentEditingCountryName">United States -
+                                        English</h4>
+                                    <p class="text-[10px] text-slate-400">Passe o mouse sobre os textos e arraste a
+                                        caixa pontilhada azul para ajustar a posição</p>
+                                </div>
+                            </div>
+                            <span class="text-xs font-mono bg-slate-950 px-2 py-1 rounded text-indigo-400"
+                                id="currentEditingCode">US</span>
+                        </div>
+
+                        <!-- Interactive Canvas Container -->
+                        <div class="relative max-w-full aspect-video bg-black rounded-lg overflow-hidden shadow-2xl border border-slate-700/50"
+                            style="width: 640px;">
+                            <canvas id="interactiveCanvas" width="1280" height="720"
+                                class="w-full h-full cursor-default"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Individual Adjustments Controls -->
+                    <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 space-y-6">
+                        <h4
+                            class="font-black text-sm text-slate-200 border-b border-slate-800 pb-3 flex items-center gap-2">
+                            <i class="fa-solid fa-sliders text-indigo-400"></i>
+                            Ajustes Finos (Exclusivos)
+                        </h4>
+
+                        <!-- Selector to change country fast inside individual view -->
+                        <div>
+                            <label class="block text-xs text-slate-400 font-semibold mb-1">Selecionar Outro País</label>
+                            <select id="countryEditorSelect" onchange="loadCountryToEditor(this.value)"
+                                class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs focus:outline-none focus:ring-1 focus:ring-indigo-500 text-white font-semibold font-sans">
+                                <!-- Options populated by JS -->
+                            </select>
+                        </div>
+
+                        <!-- Live Text overrides for current country -->
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-xs text-slate-400 font-semibold mb-1">Texto Superior
+                                    Traduzido</label>
+                                <input type="text" id="overrideText1" oninput="applyOverride()"
+                                    class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-sm text-white font-bold">
+                            </div>
+                            <div>
+                                <label class="block text-xs text-slate-400 font-semibold mb-1">Texto Inferior
+                                    Traduzido</label>
+                                <input type="text" id="overrideText2" oninput="applyOverride()"
+                                    class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-sm text-white font-bold">
+                            </div>
+                        </div>
+
+                        <!-- Specific scale/formatting -->
+                        <div class="space-y-4 pt-4 border-t border-slate-800/80">
+                            <div>
+                                <div class="flex justify-between text-xs mb-1">
+                                    <span class="text-slate-400 font-semibold">Tamanho Fonte Geral</span>
+                                    <span id="scaleLabel" class="text-indigo-400 font-mono">1.0x</span>
+                                </div>
+                                <input type="range" id="indScaleSlider" min="0.4" max="1.8" step="0.05" value="1.0"
+                                    oninput="applyOverride()"
+                                    class="w-full accent-indigo-500 bg-slate-800 h-1 rounded-lg cursor-pointer">
+                            </div>
+
+                            <div class="grid grid-cols-2 gap-3">
+                                <button onclick="resetIndividualAdjustments()"
+                                    class="w-full bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-bold py-2 px-3 rounded-lg transition">
+                                    Resetar Ajustes
+                                </button>
+                                <button onclick="downloadSingleThumbnail()"
+                                    class="w-full bg-indigo-500 hover:bg-indigo-600 text-white text-xs font-bold py-2 px-3 rounded-lg transition flex items-center justify-center gap-1.5">
+                                    <i class="fa-solid fa-download"></i> Baixar Esta
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+    </main>
+
+    <!-- HELPER INFO MODAL (API KEY INFO) -->
+    <div id="apiHelpModal"
+        class="hidden fixed inset-0 z-[100] bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl max-w-md w-full p-6 relative shadow-2xl">
+            <button onclick="toggleApiHelp()" class="absolute top-4 right-4 text-slate-500 hover:text-white transition">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+            <div class="flex items-center gap-3 mb-4">
+                <div class="bg-indigo-500/10 p-2.5 rounded-xl text-indigo-400">
+                    <i class="fa-solid fa-circle-info text-xl"></i>
+                </div>
+                <h3 class="font-bold text-lg text-white">Como Funciona a IA?</h3>
+            </div>
+            <div class="space-y-3 text-slate-300 text-xs leading-relaxed">
+                <p>Nós incluímos uma <strong>tradução de demonstração perfeita de alta qualidade</strong> para o tema
+                    padrão de finanças/futebol/sucesso, para que você possa testar o aplicativo imediatamente.</p>
+                <p>Ao inserir sua <strong>Chave de API do Gemini</strong> no cabeçalho:</p>
+                <ul class="list-disc pl-5 space-y-1.5 text-slate-400">
+                    <li>Você pode digitar qualquer frase em português (ex: <i>"Nova Técnica Revelada - Sem
+                            Programar"</i>).</li>
+                    <li>O modelo <code
+                            class="text-indigo-400 font-mono bg-slate-950 px-1 py-0.5 rounded">gemini-3-flash-preview</code>
+                        traduzirá dinamicamente com <strong>localização cultural e adaptando gírias e tamanho das
+                            palavras</strong> para os 16 países!</li>
+                </ul>
+                <p
+                    class="text-[11px] text-yellow-500 bg-yellow-500/10 p-2.5 rounded border border-yellow-500/20 font-medium">
+                    Sua chave é mantida localmente no seu navegador e enviada diretamente para a API oficial do Google.
+                </p>
+            </div>
+            <button onclick="toggleApiHelp()"
+                class="mt-5 w-full bg-slate-800 hover:bg-slate-700 text-white font-bold py-2 rounded-xl transition text-xs">Entendido</button>
+        </div>
+    </div>
+
+    <!-- MAIN APP SCRIPT -->
+    <script>
+        // Target countries configured per system request
+        const LANGUAGES = [
+            { id: "us", code: "US", name: "United States", lang: "English", flag: "🇺🇸", rtl: false, fontScale: 1.0 },
+            { id: "es", code: "ES", name: "Spain / LatAm", lang: "Spanish", flag: "🇪🇸", rtl: false, fontScale: 1.0 },
+            { id: "fr", code: "FR", name: "France", lang: "French", flag: "🇫🇷", rtl: false, fontScale: 1.0 },
+            { id: "id", code: "ID", name: "Indonesia", lang: "Indonesian", flag: "🇮🇩", rtl: false, fontScale: 1.0 },
+            { id: "ar", code: "AR", name: "Egypt / Gulf", lang: "Arabic", flag: "🇦🇷", rtl: true, fontScale: 1.1 },
+            { id: "hi", code: "HI", name: "India", lang: "Hindi", flag: "🇮🇳", rtl: false, fontScale: 1.05 },
+            { id: "ru", code: "RU", name: "Russia", lang: "Russian", flag: "🇷🇺", rtl: false, fontScale: 0.95 },
+            { id: "de", code: "DE", name: "Germany", lang: "German", flag: "🇩🇪", rtl: false, fontScale: 0.85 },
+            { id: "ja", code: "JA", name: "Japan", lang: "Japanese", flag: "🇯🇵", rtl: false, fontScale: 1.15 },
+            { id: "it", code: "IT", name: "Italy", lang: "Italian", flag: "🇮🇹", rtl: false, fontScale: 1.0 },
+            { id: "ko", code: "KO", name: "South Korea", lang: "Korean", flag: "🇰🇷", rtl: false, fontScale: 1.1 },
+            { id: "th", code: "TH", name: "Thailand", lang: "Thai", flag: "🇹🇭", rtl: false, fontScale: 1.1 },
+            { id: "vn", code: "VN", name: "Vietnam", lang: "Vietnamese", flag: "🇻🇳", rtl: false, fontScale: 1.0 },
+            { id: "tr", code: "TR", name: "Turkey", lang: "Turkish", flag: "🇹🇷", rtl: false, fontScale: 1.0 },
+            { id: "pl", code: "PL", name: "Poland", lang: "Polish", flag: "🇵🇱", rtl: false, fontScale: 0.9 },
+            { id: "tw", code: "TW", name: "Taiwan", lang: "Traditional Chinese", flag: "🇹🇼", rtl: false, fontScale: 1.2 }
+        ];
+
+        // High Quality Pre-baked marketing-focused default translations for instantly working demo
+        const DEFAULT_TRANSLATIONS = {
+            "us": { text1: "HOW TO GET RICH", text2: "IN 2026 WITH AI" },
+            "es": { text1: "CÓMO HACERSE RICO", text2: "EN 2026 CON IA" },
+            "fr": { text1: "COMMENT S'ENRICHIR", text2: "EN 2026 GRÂCE À L'IA" },
+            "id": { text1: "CARA CEPAT KAYA", text2: "DI 2026 DENGAN AI" },
+            "ar": { text1: "كيف تصبح ثرياً", text2: "في ٢٠٢٦ بالذكاء الاصطناعي" },
+            "hi": { text1: "अमीर कैसे बनें", text2: "2026 में AI की मदद से" },
+            "ru": { text1: "КАК СТАТЬ БОГАТЫМ", text2: "В 2026 С ПОМОЩЬЮ ИИ" },
+            "de": { text1: "REICH WERDEN", text2: "IN 2026 MIT KI" },
+            "ja": { text1: "金持ちになる方法", text2: "2026年最新AI活用術" },
+            "it": { text1: "COME DIVENTARE RICCO", text2: "NEL 2026 CON L'IA" },
+            "ko": { text1: "부자 되는 법", text2: "2026년 최신 AI 혁명" },
+            "th": { text1: "วิธีรวยเร็วสุด", text2: "ในปี 2026 ด้วย AI" },
+            "vn": { text1: "CÁCH LÀM GIÀU", text2: "NĂM 2026 VỚI AI" },
+            "tr": { text1: "NASIL ZENGİN OLUNUR", text2: "2026'DA YAPAY ZEKA İLE" },
+            "pl": { text1: "JAK SIĘ WZBOGACIĆ", text2: "W 2026 DZIĘKI AI" },
+            "tw": { text1: "如何快速致富", text2: "2026最新AI密技" }
+        };
+
+        // UI & Render State
+        let activeTab = "grid"; // 'grid' or 'editor'
+        let currentCountryId = "us"; // Currently selected country for fine-tuning
+        let uploadedBgImage = null; // Custom uploaded background element
+
+        // Dragging & Hover mechanics variables on interactive canvas
+        let isDragging = false;
+        let dragTarget = null; // 'text1' or 'text2'
+        let hoveredTarget = null; // 'text1' or 'text2'
+        let dragOffset = { x: 0, y: 0 };
+        let boundingBoxes = { text1: null, text2: null }; // Stores accurate coordinates of text bounding boxes for click checks
+
+        // Specific styling structures that can be adjusted PER country
+        let styleData = {};
+
+        function initApp() {
+            // Populate Style Data for all languages
+            LANGUAGES.forEach(lang => {
+                styleData[lang.id] = {
+                    text1: DEFAULT_TRANSLATIONS[lang.id].text1,
+                    text2: DEFAULT_TRANSLATIONS[lang.id].text2,
+                    text1Pos: { x: 640, y: 220 }, // Base layout coordinates on 1280x720 canvas
+                    text2Pos: { x: 640, y: 390 },
+                    fontScale: lang.fontScale, // individual fine-tuning scale
+                    textAlignment: lang.rtl ? "right" : "center",
+                };
+            });
+
+            // Load default high-quality background template (Unsplash premium gradient mockup image to avoid black screen)
+            const defaultImg = new Image();
+            defaultImg.crossOrigin = "anonymous";
+            defaultImg.onload = function () {
+                uploadedBgImage = defaultImg;
+                requestRenderAll();
+            };
+            defaultImg.src = "https://images.unsplash.com/photo-1618005198143-e5283464305c?auto=format&fit=crop&w=1280&h=720&q=80";
+
+            // Populate selector inside individual view
+            const select = document.getElementById("countryEditorSelect");
+            select.innerHTML = "";
+            LANGUAGES.forEach(lang => {
+                const opt = document.createElement("option");
+                opt.value = lang.id;
+                opt.textContent = `${lang.flag} ${lang.name} - ${lang.lang}`;
+                select.appendChild(opt);
+            });
+
+            // Initialize grid and event bindings
+            renderGrid();
+            loadCountryToEditor("us");
+            setupInteractiveCanvasEvents();
+        }
+
+        function switchTab(tab) {
+            activeTab = tab;
+            const gridBtn = document.getElementById("tabGridBtn");
+            const editorBtn = document.getElementById("tabEditorBtn");
+            const gridTab = document.getElementById("tabGrid");
+            const editorTab = document.getElementById("tabEditor");
+
+            if (tab === "grid") {
+                gridBtn.className = "px-4 py-2 rounded-lg text-xs font-black bg-indigo-500 text-white transition flex items-center gap-2";
+                editorBtn.className = "px-4 py-2 rounded-lg text-xs font-bold text-slate-400 hover:text-white transition flex items-center gap-2";
+                gridTab.classList.remove("hidden");
+                editorTab.classList.add("hidden");
+                renderGrid(); // Redraw grid
+            } else {
+                gridBtn.className = "px-4 py-2 rounded-lg text-xs font-bold text-slate-400 hover:text-white transition flex items-center gap-2";
+                editorBtn.className = "px-4 py-2 rounded-lg text-xs font-black bg-indigo-500 text-white transition flex items-center gap-2";
+                gridTab.classList.add("hidden");
+                editorTab.classList.remove("hidden");
+                renderIndividualEditorCanvas();
+            }
+        }
+
+        // Handle uploaded image background template
+        function handleBgUpload(event) {
+            const file = event.target.files[0];
+            if (file) {
+                document.getElementById("bgFileName").textContent = file.name;
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const img = new Image();
+                    img.onload = function () {
+                        uploadedBgImage = img;
+                        requestRenderAll();
+                    };
+                    img.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        let selectedBadgeType = 'none'; // none, new, play
+        function selectBadge(type) {
+            selectedBadgeType = type;
+            document.querySelectorAll(".badge-opt").forEach(btn => {
+                btn.className = "badge-opt bg-slate-950 border border-slate-800 text-slate-400 hover:text-white py-1.5 px-2 rounded-lg text-xs font-bold transition";
+            });
+            document.getElementById(`badge_${type}`).className = "badge-opt bg-indigo-500/10 border border-indigo-500 text-indigo-400 py-1.5 px-2 rounded-lg text-xs font-bold transition";
+            requestRenderAll();
+        }
+
+        // Real-time synchronization of original texts input to default languages
+        function updateMasterText() {
+            const val1 = document.getElementById("ptText1").value.toUpperCase();
+            const val2 = document.getElementById("ptText2").value.toUpperCase();
+
+            // If the user hasn't translated via AI yet, we mirror input for English (US) to make live testing fluid
+            if (styleData["us"].text1 === DEFAULT_TRANSLATIONS["us"].text1) {
+                styleData["us"].text1 = val1 || "TEXTO 1";
+            }
+            if (styleData["us"].text2 === DEFAULT_TRANSLATIONS["us"].text2) {
+                styleData["us"].text2 = val2 || "TEXTO 2";
+            }
+
+            // Also reload current text values to active view
+            const activeData = styleData[currentCountryId];
+            if (currentCountryId === "us") {
+                document.getElementById("overrideText1").value = activeData.text1;
+                document.getElementById("overrideText2").value = activeData.text2;
+            }
+
+            requestRenderAll();
+        }
+
+        function applyOverride() {
+            const data = styleData[currentCountryId];
+            data.text1 = document.getElementById("overrideText1").value;
+            data.text2 = document.getElementById("overrideText2").value;
+
+            const scale = parseFloat(document.getElementById("indScaleSlider").value);
+            data.fontScale = scale;
+            document.getElementById("scaleLabel").textContent = scale.toFixed(2) + "x";
+
+            renderIndividualEditorCanvas();
+        }
+
+        function resetIndividualAdjustments() {
+            const defaultLangScale = LANGUAGES.find(l => l.id === currentCountryId).fontScale;
+            const data = styleData[currentCountryId];
+            data.text1 = DEFAULT_TRANSLATIONS[currentCountryId].text1;
+            data.text2 = DEFAULT_TRANSLATIONS[currentCountryId].text2;
+            data.text1Pos = { x: 640, y: 220 };
+            data.text2Pos = { x: 640, y: 390 };
+            data.fontScale = defaultLangScale;
+
+            document.getElementById("overrideText1").value = data.text1;
+            document.getElementById("overrideText2").value = data.text2;
+            document.getElementById("indScaleSlider").value = defaultLangScale;
+            document.getElementById("scaleLabel").textContent = defaultLangScale.toFixed(2) + "x";
+
+            renderIndividualEditorCanvas();
+        }
+
+        // Helper to calculate exact geometric boundaries of text to perform flawless hit tests
+        function getTextBoundingBox(ctx, text, pos, fontSize, alignment, scaleFactor = 1.0) {
+            ctx.save();
+            const fontSelected = document.getElementById("fontFamilySelect").value;
+            ctx.font = `900 ${fontSize}px ${fontSelected}`;
+            ctx.textAlign = alignment;
+            ctx.textBaseline = "middle";
+
+            const metrics = ctx.measureText(text);
+            const textWidth = metrics.width;
+
+            // Approximate height using font size metric
+            const textHeight = fontSize * 1.1;
+
+            let xStart = pos.x;
+            if (alignment === "center") {
+                xStart = pos.x - textWidth / 2;
+            } else if (alignment === "right") {
+                xStart = pos.x - textWidth;
+            }
+
+            const yStart = pos.y - textHeight / 2;
+
+            ctx.restore();
+
+            return {
+                x: xStart * scaleFactor,
+                y: yStart * scaleFactor,
+                width: textWidth * scaleFactor,
+                height: textHeight * scaleFactor
+            };
+        }
+
+        // Drawing rendering logic of thumbnails
+        function drawThumbnailOnCanvas(canvas, countryId, width = 1280, height = 720, isInteractive = false) {
+            const ctx = canvas.getContext("2d");
+            const data = styleData[countryId];
+            const langInfo = LANGUAGES.find(l => l.id === countryId);
+
+            ctx.clearRect(0, 0, width, height);
+            const scaleFactor = width / 1280;
+
+            // BACKGROUND LAYER
+            ctx.save();
+            if (uploadedBgImage) {
+                // Cover image logic maintaining ratio
+                const hRatio = width / uploadedBgImage.width;
+                const vRatio = height / uploadedBgImage.height;
+                const ratio = Math.max(hRatio, vRatio);
+                const shiftX = (width - uploadedBgImage.width * ratio) / 2;
+                const shiftY = (height - uploadedBgImage.height * ratio) / 2;
+                ctx.drawImage(uploadedBgImage, 0, 0, uploadedBgImage.width, uploadedBgImage.height,
+                    shiftX, shiftY, uploadedBgImage.width * ratio, uploadedBgImage.height * ratio);
+            } else {
+                // If template background failed or not yet set, display clean dark checkered studio mockup grid
+                ctx.fillStyle = "#1e293b";
+                ctx.fillRect(0, 0, width, height);
+                ctx.strokeStyle = "#334155";
+                ctx.lineWidth = 1;
+                for (let i = 0; i < width; i += 40 * scaleFactor) {
+                    ctx.beginPath(); ctx.moveTo(i, 0); ctx.lineTo(i, height); ctx.stroke();
+                }
+                for (let j = 0; j < height; j += 40 * scaleFactor) {
+                    ctx.beginPath(); ctx.moveTo(0, j); ctx.lineTo(width, j); ctx.stroke();
+                }
+            }
+            ctx.restore();
+
+            // RENDER BG BRIGHTNESS FILTER
+            ctx.save();
+            const bgBrightness = document.getElementById("bgBrightnessSlider").value / 100;
+            ctx.fillStyle = "black";
+            ctx.globalAlpha = Math.max(0, 1 - bgBrightness);
+            ctx.fillRect(0, 0, width, height);
+            ctx.restore();
+
+            // VIGNETTE EFFECT (For visual contrast)
+            const vignetteIntensity = document.getElementById("vignetteSlider").value / 100;
+            if (vignetteIntensity > 0) {
+                ctx.save();
+                const rOuter = Math.sqrt(Math.pow(width / 2, 2) + Math.pow(height / 2, 2));
+                const radialGrad = ctx.createRadialGradient(width / 2, height / 2, width / 4 * scaleFactor, width / 2, height / 2, rOuter);
+                radialGrad.addColorStop(0, 'rgba(0,0,0,0)');
+                radialGrad.addColorStop(1, `rgba(0,0,0,${vignetteIntensity * 0.95})`);
+                ctx.fillStyle = radialGrad;
+                ctx.fillRect(0, 0, width, height);
+                ctx.restore();
+            }
+
+            // CALCULATE THE BOUNDING BOXES FOR CLICKS & RENDER AIDS
+            const fontSelected = document.getElementById("fontFamilySelect").value;
+            const t1Size = Math.floor(95 * data.fontScale);
+            const t2Size = Math.floor(100 * data.fontScale);
+
+            // Fetch boxes (always in 1280x720 base coordinates for consistent state representation)
+            boundingBoxes.text1 = getTextBoundingBox(ctx, data.text1, data.text1Pos, t1Size, data.textAlignment, 1.0);
+            boundingBoxes.text2 = getTextBoundingBox(ctx, data.text2, data.text2Pos, t2Size, data.textAlignment, 1.0);
+
+            // TEXT LAYER 1
+            if (data.text1) {
+                ctx.save();
+                ctx.textBaseline = "middle";
+                ctx.lineJoin = "round";
+                ctx.lineCap = "round";
+                ctx.font = `900 ${t1Size * scaleFactor}px ${fontSelected}`;
+                ctx.textAlign = data.textAlignment;
+
+                ctx.fillStyle = document.getElementById("t1Color").value;
+                ctx.strokeStyle = document.getElementById("t1Stroke").value;
+                ctx.lineWidth = parseInt(document.getElementById("t1StrokeWidth").value) * scaleFactor;
+
+                // Realistic YT visual drop shadow
+                ctx.shadowColor = 'rgba(0, 0, 0, 0.85)';
+                ctx.shadowBlur = 15 * scaleFactor;
+                ctx.shadowOffsetX = 8 * scaleFactor;
+                ctx.shadowOffsetY = 8 * scaleFactor;
+
+                const posX = data.text1Pos.x * scaleFactor;
+                const posY = data.text1Pos.y * scaleFactor;
+
+                if (ctx.lineWidth > 0) {
+                    ctx.strokeText(data.text1, posX, posY);
+                }
+                ctx.fillText(data.text1, posX, posY);
+                ctx.restore();
+            }
+
+            // TEXT LAYER 2
+            if (data.text2) {
+                ctx.save();
+                ctx.textBaseline = "middle";
+                ctx.lineJoin = "round";
+                ctx.lineCap = "round";
+                ctx.font = `900 ${t2Size * scaleFactor}px ${fontSelected}`;
+                ctx.textAlign = data.textAlignment;
+
+                ctx.fillStyle = document.getElementById("t2Color").value;
+                ctx.strokeStyle = document.getElementById("t2Stroke").value;
+                ctx.lineWidth = parseInt(document.getElementById("t2StrokeWidth").value) * scaleFactor;
+
+                // Shadow
+                ctx.shadowColor = 'rgba(0, 0, 0, 0.85)';
+                ctx.shadowBlur = 15 * scaleFactor;
+                ctx.shadowOffsetX = 10 * scaleFactor;
+                ctx.shadowOffsetY = 10 * scaleFactor;
+
+                const posX = data.text2Pos.x * scaleFactor;
+                const posY = data.text2Pos.y * scaleFactor;
+
+                if (ctx.lineWidth > 0) {
+                    ctx.strokeText(data.text2, posX, posY);
+                }
+                ctx.fillText(data.text2, posX, posY);
+                ctx.restore();
+            }
+
+            // DRAW INTERACTIVE GUIDELINES ON INDIVIDUAL VIEW
+            if (isInteractive) {
+                // If we are hovering or dragging a target, render high contrast dashed handles
+                ['text1', 'text2'].forEach(target => {
+                    const box = target === 'text1' ? boundingBoxes.text1 : boundingBoxes.text2;
+                    const textVal = target === 'text1' ? data.text1 : data.text2;
+
+                    if (!box || !textVal) return;
+
+                    const isTargetHovered = hoveredTarget === target;
+                    const isTargetDragged = dragTarget === target;
+
+                    if (isTargetHovered || isTargetDragged) {
+                        ctx.save();
+                        ctx.strokeStyle = isTargetDragged ? "#6366f1" : "#38bdf8";
+                        ctx.lineWidth = isTargetDragged ? 3 * scaleFactor : 2 * scaleFactor;
+                        ctx.setLineDash([8 * scaleFactor, 4 * scaleFactor]);
+
+                        // Draw bounding box
+                        ctx.strokeRect(
+                            box.x * scaleFactor,
+                            box.y * scaleFactor,
+                            box.width * scaleFactor,
+                            box.height * scaleFactor
+                        );
+
+                        // Highlight background highlight glow
+                        ctx.fillStyle = isTargetDragged ? "rgba(99, 102, 241, 0.08)" : "rgba(56, 189, 248, 0.04)";
+                        ctx.fillRect(
+                            box.x * scaleFactor,
+                            box.y * scaleFactor,
+                            box.width * scaleFactor,
+                            box.height * scaleFactor
+                        );
+
+                        // Small tag in corner indicating drag handle is active
+                        ctx.fillStyle = isTargetDragged ? "#6366f1" : "#38bdf8";
+                        ctx.font = `bold ${11 * scaleFactor}px sans-serif`;
+                        ctx.textBaseline = "top";
+                        ctx.textAlign = "left";
+                        const labelText = isTargetDragged ? "ARRASTANDO" : "CLIQUE PARA MOVER";
+                        ctx.fillText(labelText, box.x * scaleFactor, (box.y - 18) * scaleFactor);
+                        ctx.restore();
+                    }
+                });
+            }
+
+            // DRAW BADGE
+            if (selectedBadgeType !== 'none') {
+                ctx.save();
+                ctx.shadowColor = 'rgba(0, 0, 0, 0.5)';
+                ctx.shadowBlur = 10 * scaleFactor;
+                ctx.shadowOffsetX = 5 * scaleFactor;
+                ctx.shadowOffsetY = 5 * scaleFactor;
+
+                const badgeX = 120 * scaleFactor;
+                const badgeY = 100 * scaleFactor;
+
+                if (selectedBadgeType === 'new') {
+                    ctx.translate(badgeX, badgeY);
+                    ctx.rotate(-15 * Math.PI / 180);
+
+                    ctx.fillStyle = "#facc15";
+                    ctx.beginPath();
+                    ctx.roundRect(-70 * scaleFactor, -30 * scaleFactor, 140 * scaleFactor, 60 * scaleFactor, 12 * scaleFactor);
+                    ctx.fill();
+
+                    ctx.strokeStyle = "#ffffff";
+                    ctx.lineWidth = 4 * scaleFactor;
+                    ctx.stroke();
+
+                    ctx.fillStyle = "#000000";
+                    ctx.font = `900 ${28 * scaleFactor}px 'Inter', sans-serif`;
+                    ctx.textAlign = "center";
+                    ctx.textBaseline = "middle";
+                    ctx.fillText("NEW!", 0, 0);
+
+                } else if (selectedBadgeType === 'play') {
+                    ctx.translate(badgeX, badgeY);
+
+                    ctx.fillStyle = "#ef4444";
+                    ctx.beginPath();
+                    ctx.arc(0, 0, 45 * scaleFactor, 0, 2 * Math.PI);
+                    ctx.fill();
+                    ctx.strokeStyle = "#ffffff";
+                    ctx.lineWidth = 5 * scaleFactor;
+                    ctx.stroke();
+
+                    ctx.fillStyle = "#ffffff";
+                    ctx.beginPath();
+                    const size = 18 * scaleFactor;
+                    ctx.moveTo(-size / 2, -size);
+                    ctx.lineTo(size * 1.2 - size / 2, 0);
+                    ctx.lineTo(-size / 2, size);
+                    ctx.closePath();
+                    ctx.fill();
+                }
+                ctx.restore();
+            }
+
+            // WATERMARK IN GRID MODE CARDS (only on small cards)
+            if (width < 1000) {
+                ctx.save();
+                ctx.fillStyle = "rgba(15, 23, 42, 0.85)";
+                ctx.beginPath();
+                ctx.roundRect(15, 15, 150 * scaleFactor, 55 * scaleFactor, 8);
+                ctx.fill();
+
+                ctx.fillStyle = "#ffffff";
+                ctx.font = `bold ${16}px 'Inter', sans-serif`;
+                ctx.fillText(`${langInfo.flag} ${langInfo.code}`, 30, 15 + (27 * scaleFactor));
+                ctx.restore();
+            }
+        }
+
+        function renderGrid() {
+            if (activeTab !== "grid") return;
+
+            const gridContainer = document.querySelector("#tabGrid > div");
+            gridContainer.innerHTML = "";
+
+            LANGUAGES.forEach(lang => {
+                const card = document.createElement("div");
+                card.className = "bg-slate-900 border border-slate-800/80 rounded-2xl p-4 flex flex-col gap-3 group hover:border-indigo-500/30 hover:shadow-xl hover:shadow-indigo-500/5 transition duration-300";
+
+                const header = document.createElement("div");
+                header.className = "flex justify-between items-center";
+                header.innerHTML = `
+                    <div class="flex items-center gap-2">
+                        <span class="text-xl">${lang.flag}</span>
+                        <div>
+                            <h4 class="font-bold text-xs text-slate-200">${lang.name}</h4>
+                            <p class="text-[9px] text-slate-500">${lang.lang}</p>
+                        </div>
+                    </div>
+                    <button onclick="goToCountryDetail('${lang.id}')" class="text-slate-400 hover:text-indigo-400 p-1.5 hover:bg-slate-800 rounded-lg transition text-xs flex items-center gap-1">
+                        <i class="fa-solid fa-pen-to-square"></i> Ajustar
+                    </button>
+                `;
+                card.appendChild(header);
+
+                const canvasContainer = document.createElement("div");
+                canvasContainer.className = "w-full aspect-video rounded-lg overflow-hidden bg-slate-950 relative border border-slate-800";
+
+                const canvas = document.createElement("canvas");
+                canvas.width = 640;
+                canvas.height = 360;
+                canvas.className = "w-full h-full";
+                canvasContainer.appendChild(canvas);
+                card.appendChild(canvasContainer);
+
+                const footer = document.createElement("div");
+                footer.className = "flex justify-between items-center text-[10px] text-slate-500 pt-1 border-t border-slate-800/60";
+                footer.innerHTML = `
+                    <span class="truncate pr-4">${styleData[lang.id].text1} ${styleData[lang.id].text2}</span>
+                    <button onclick="downloadCountryPNG('${lang.id}')" class="text-emerald-400 hover:text-emerald-300 font-bold flex items-center gap-1 shrink-0">
+                        <i class="fa-solid fa-arrow-down-to-bracket"></i> PNG
+                    </button>
+                `;
+                card.appendChild(footer);
+
+                gridContainer.appendChild(card);
+                drawThumbnailOnCanvas(canvas, lang.id, 640, 360);
+            });
+        }
+
+        function renderIndividualEditorCanvas() {
+            if (activeTab !== "editor") return;
+            const canvas = document.getElementById("interactiveCanvas");
+            // Set 3rd parameter (isInteractive) to true to show dashed borders/drag helpers!
+            drawThumbnailOnCanvas(canvas, currentCountryId, 1280, 720, true);
+        }
+
+        function loadCountryToEditor(countryId) {
+            currentCountryId = countryId;
+            const lang = LANGUAGES.find(l => l.id === countryId);
+
+            document.getElementById("currentEditingFlag").textContent = lang.flag;
+            document.getElementById("currentEditingCountryName").textContent = `${lang.name} - ${lang.lang}`;
+            document.getElementById("currentEditingCode").textContent = lang.code;
+            document.getElementById("countryEditorSelect").value = countryId;
+
+            const data = styleData[countryId];
+            document.getElementById("overrideText1").value = data.text1;
+            document.getElementById("overrideText2").value = data.text2;
+            document.getElementById("indScaleSlider").value = data.fontScale;
+            document.getElementById("scaleLabel").textContent = data.fontScale.toFixed(2) + "x";
+
+            // Reset drag and hover selections when changing country
+            dragTarget = null;
+            hoveredTarget = null;
+            isDragging = false;
+
+            renderIndividualEditorCanvas();
+        }
+
+        function goToCountryDetail(countryId) {
+            switchTab("editor");
+            loadCountryToEditor(countryId);
+        }
+
+        function requestRenderAll() {
+            if (activeTab === "grid") {
+                renderGrid();
+            } else {
+                renderIndividualEditorCanvas();
+            }
+        }
+
+        // FLAWLESS BOUNDING-BOX DRAG AND DROP MECHANISM
+        function setupInteractiveCanvasEvents() {
+            const canvas = document.getElementById("interactiveCanvas");
+
+            // Helper to fetch normalized base 1280x720 mouse coordinates from responsive client dimensions
+            function getMousePos(evt) {
+                const rect = canvas.getBoundingClientRect();
+                return {
+                    x: (evt.clientX - rect.left) / rect.width * 1280,
+                    y: (evt.clientY - rect.top) / rect.height * 720
+                };
+            }
+
+            // Checks whether mouse coordinate is geometrically inside a text bounding box
+            function isInsideBox(pos, box) {
+                if (!box) return false;
+                return (pos.x >= box.x && pos.x <= box.x + box.width &&
+                    pos.y >= box.y && pos.y <= box.y + box.height);
+            }
+
+            // Handle hover and mouse click checks
+            function handleMouseMove(clientX, clientY) {
+                const mousePos = getMousePos({ clientX, clientY });
+                const prevHovered = hoveredTarget;
+
+                if (!isDragging) {
+                    // Geometric hit testing instead of basic radial distance
+                    const overT1 = isInsideBox(mousePos, boundingBoxes.text1);
+                    const overT2 = isInsideBox(mousePos, boundingBoxes.text2);
+
+                    if (overT1) {
+                        hoveredTarget = "text1";
+                        canvas.style.cursor = "grab";
+                    } else if (overT2) {
+                        hoveredTarget = "text2";
+                        canvas.style.cursor = "grab";
+                    } else {
+                        hoveredTarget = null;
+                        canvas.style.cursor = "default";
+                    }
+
+                    // Only redraw if hover state changed to conserve compute
+                    if (prevHovered !== hoveredTarget) {
+                        renderIndividualEditorCanvas();
+                    }
+                } else {
+                    // Update drag coordinates in real-time
+                    const data = styleData[currentCountryId];
+                    canvas.style.cursor = "grabbing";
+
+                    if (dragTarget === "text1") {
+                        data.text1Pos.x = Math.round(mousePos.x - dragOffset.x);
+                        data.text1Pos.y = Math.round(mousePos.y - dragOffset.y);
+                    } else if (dragTarget === "text2") {
+                        data.text2Pos.x = Math.round(mousePos.x - dragOffset.x);
+                        data.text2Pos.y = Math.round(mousePos.y - dragOffset.y);
+                    }
+
+                    renderIndividualEditorCanvas();
+                }
+            }
+
+            function handleMouseDown(clientX, clientY) {
+                const mousePos = getMousePos({ clientX, clientY });
+
+                const overT1 = isInsideBox(mousePos, boundingBoxes.text1);
+                const overT2 = isInsideBox(mousePos, boundingBoxes.text2);
+                const data = styleData[currentCountryId];
+
+                if (overT1) {
+                    isDragging = true;
+                    dragTarget = "text1";
+                    // Calculate precise offset so text doesn't snap abruptly to center of mouse on click
+                    dragOffset.x = mousePos.x - data.text1Pos.x;
+                    dragOffset.y = mousePos.y - data.text1Pos.y;
+                    canvas.style.cursor = "grabbing";
+                } else if (overT2) {
+                    isDragging = true;
+                    dragTarget = "text2";
+                    dragOffset.x = mousePos.x - data.text2Pos.x;
+                    dragOffset.y = mousePos.y - data.text2Pos.y;
+                    canvas.style.cursor = "grabbing";
+                }
+
+                renderIndividualEditorCanvas();
+            }
+
+            function handleMouseUp() {
+                if (isDragging) {
+                    isDragging = false;
+                    dragTarget = null;
+                    canvas.style.cursor = hoveredTarget ? "grab" : "default";
+                    renderIndividualEditorCanvas();
+                }
+            }
+
+            // Mouse Bindings
+            canvas.addEventListener("mousedown", (e) => handleMouseDown(e.clientX, e.clientY));
+            window.addEventListener("mousemove", (e) => handleMouseMove(e.clientX, e.clientY));
+            window.addEventListener("mouseup", handleMouseUp);
+
+            // Responsive Mobile/Tablet touch gesture simulation 
+            canvas.addEventListener("touchstart", (e) => {
+                if (e.touches.length > 0) {
+                    handleMouseDown(e.touches[0].clientX, e.touches[0].clientY);
+                }
+                e.preventDefault();
+            });
+            window.addEventListener("touchmove", (e) => {
+                if (e.touches.length > 0) {
+                    handleMouseMove(e.touches[0].clientX, e.touches[0].clientY);
+                }
+            });
+            window.addEventListener("touchend", handleMouseUp);
+        }
+
+        // AI Integration to perform cultural translation and copy localization
+        async function translateAllWithAI() {
+            const apiKey = document.getElementById("apiKeyInput").value.trim();
+            const ptText1 = document.getElementById("ptText1").value.trim();
+            const ptText2 = document.getElementById("ptText2").value.trim();
+
+            if (!ptText1 && !ptText2) {
+                alert("Por favor, preencha pelo menos uma linha de texto em português.");
+                return;
+            }
+
+            const btn = document.getElementById("btnTranslate");
+            const originalHtml = btn.innerHTML;
+            btn.disabled = true;
+            btn.innerHTML = `<i class="fa-solid fa-spinner animate-spin mr-2"></i> Localizando com IA...`;
+
+            if (!apiKey) {
+                // Mock delay simulation
+                setTimeout(() => {
+                    LANGUAGES.forEach(lang => {
+                        styleData[lang.id].text1 = DEFAULT_TRANSLATIONS[lang.id].text1;
+                        styleData[lang.id].text2 = DEFAULT_TRANSLATIONS[lang.id].text2;
+                    });
+
+                    btn.disabled = false;
+                    btn.innerHTML = originalHtml;
+                    requestRenderAll();
+
+                    const toast = document.createElement("div");
+                    toast.className = "fixed bottom-5 right-5 bg-indigo-600 text-white font-semibold text-xs px-5 py-3 rounded-xl shadow-2xl z-[200] border border-indigo-400/20 transition duration-500 animate-bounce";
+                    toast.innerHTML = `<i class="fa-solid fa-wand-magic-sparkles mr-2"></i> Traduzido! Adicione uma chave Gemini para criar novas frases.`;
+                    document.body.appendChild(toast);
+                    setTimeout(() => toast.remove(), 4000);
+                }, 1500);
+                return;
+            }
+
+            try {
+                const systemPrompt = `You are a world-class global marketing and YouTube optimization copywriter. 
+Your task is to take a YouTube Thumbnail text originally in Portuguese, and adapt it into 16 specified target languages.
+CRITICAL MANDATE:
+1. Do NOT translate literally. Translate the HOOK, the CATCHY impact, matching internet culture slang of that specific target country.
+2. Keep it short. YouTube thumbnails have limited space. Avoid long phrases.
+3. Keep the capitalization bold and explosive.
+4. Output strict JSON with schema matching exactly the specified structure below. No explanation, markdown ticks, or other text outside the JSON.`;
+
+                const userQuery = `Original Portuguese texts:
+Line 1: "${ptText1}"
+Line 2: "${ptText2}"
+
+Generate localized translations for these exact language codes:
+US, ES, FR, ID, AR, HI, RU, DE, JA, IT, KO, TH, VN, TR, PL, TW.`;
+
+                // Exponential backoff runner
+                const makeApiCall = async (retryCount = 0) => {
+                    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            contents: [{ parts: [{ text: userQuery }] }],
+                            systemInstruction: { parts: [{ text: systemPrompt }] },
+                            generationConfig: {
+                                responseMimeType: "application/json",
+                                responseSchema: {
+                                    type: "OBJECT",
+                                    properties: {
+                                        translations: {
+                                            type: "ARRAY",
+                                            items: {
+                                                type: "OBJECT",
+                                                properties: {
+                                                    code: { type: "STRING", description: "Language code (US, ES, etc)" },
+                                                    text1: { type: "STRING", description: "Localized version for line 1 text" },
+                                                    text2: { type: "STRING", description: "Localized version for line 2 text" }
+                                                },
+                                                required: ["code", "text1", "text2"]
+                                            }
+                                        }
+                                    },
+                                    required: ["translations"]
+                                }
+                            }
+                        })
+                    });
+
+                    if (response.status === 429 && retryCount < 3) {
+                        const delay = Math.pow(2, retryCount) * 1000;
+                        await new Promise(resolve => setTimeout(resolve, delay));
+                        return makeApiCall(retryCount + 1);
+                    }
+                    return response;
+                };
+
+                const res = await makeApiCall();
+                const result = await res.json();
+
+                const candidate = result.candidates?.[0];
+                if (candidate && candidate.content?.parts?.[0]?.text) {
+                    const parsedJson = JSON.parse(candidate.content.parts[0].text);
+                    if (parsedJson.translations) {
+                        parsedJson.translations.forEach(t => {
+                            const langId = t.code.toLowerCase();
+                            if (styleData[langId]) {
+                                styleData[langId].text1 = t.text1;
+                                styleData[langId].text2 = t.text2;
+                            }
+                        });
+
+                        loadCountryToEditor(currentCountryId);
+                        requestRenderAll();
+                    }
+                }
+            } catch (err) {
+                console.error("AI Generation Error", err);
+                alert("Houve um problema de conexão com a API do Gemini. Verifique sua chave ou tente novamente.");
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = originalHtml;
+            }
+        }
+
+        function downloadSingleThumbnail() {
+            downloadCountryPNG(currentCountryId);
+        }
+
+        function downloadCountryPNG(countryId) {
+            const tempCanvas = document.createElement("canvas");
+            tempCanvas.width = 1280;
+            tempCanvas.height = 720;
+
+            // Render at full scale (1280x720) for production quality output
+            drawThumbnailOnCanvas(tempCanvas, countryId, 1280, 720, false);
+
+            const link = document.createElement("a");
+            const lang = LANGUAGES.find(l => l.id === countryId);
+            link.download = `thumb_${lang.code}_${lang.name.replace(/\s+/g, '_')}.png`;
+            link.href = tempCanvas.toDataURL("image/png");
+            link.click();
+        }
+
+        // Downloader pipeline
+        function downloadAllThumbnails() {
+            let delay = 0;
+            LANGUAGES.forEach((lang, index) => {
+                setTimeout(() => {
+                    downloadCountryPNG(lang.id);
+                }, delay);
+                delay += 300; // anti-clogging gap
+            });
+        }
+
+        function toggleApiHelp() {
+            const modal = document.getElementById("apiHelpModal");
+            modal.classList.toggle("hidden");
+        }
+
+        window.onload = function () {
+            initApp();
+        };
+    </script>
+</body>
+
+</html>
