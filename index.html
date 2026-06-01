@@ -46,8 +46,8 @@
                 <i class="fa-solid fa-earth-americas text-xl text-white"></i>
             </div>
             <div>
-                <h1 class="font-black text-lg tracking-wider bg-gradient-to-r from-white via-slate-100 to-slate-400 bg-clip-text text-transparent">THUMBGRID ViralFX</h1>
-                <p class="text-xs text-indigo-400 font-medium">Localizador Avançado de Thumbnails</p>
+                <h1 class="font-black text-lg tracking-wider bg-gradient-to-r from-white via-slate-100 to-slate-400 bg-clip-text text-transparent">THUMBGRID GLOBAL</h1>
+                <p class="text-xs text-indigo-400 font-medium">Localizador Avançado de Thumbnails para 16 Países</p>
             </div>
         </div>
         
@@ -97,12 +97,12 @@
                     <div class="space-y-3">
                         <div>
                             <label class="block text-xs text-slate-400 font-semibold mb-1">Linha de Texto Principal (Destaque)</label>
-                            <input type="text" id="ptText1" value="ESTRATÉGIA SECRETA" oninput="handleManualTextInput()" 
+                            <input type="text" id="ptText1" value="O NOVO TIMESKIP" oninput="handleManualTextInput()" 
                                 class="w-full bg-slate-900 border border-slate-800 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-indigo-500 text-white font-bold">
                         </div>
                         <div>
                             <label class="block text-xs text-slate-400 font-semibold mb-1">Linha de Texto Secundária</label>
-                            <input type="text" id="ptText2" value="REVELADA HOJE" oninput="handleManualTextInput()" 
+                            <input type="text" id="ptText2" value="DOS CHAPÉUS DE PALHA" oninput="handleManualTextInput()" 
                                 class="w-full bg-slate-900 border border-slate-800 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-indigo-500 text-white font-bold">
                         </div>
                         
@@ -155,7 +155,7 @@
                     </div>
                 </div>
 
-                <!-- STEP 3: Typography & Text Effects -->
+                <!-- STEP 3: Typography & Text Effects with Double Border Support -->
                 <div class="bg-slate-950/50 p-4 rounded-xl border border-slate-800/80">
                     <h3 class="font-bold text-sm text-indigo-400 uppercase tracking-wider flex items-center gap-2 mb-3">
                         <span class="bg-indigo-500/10 text-indigo-400 text-[10px] py-0.5 px-2 rounded-full">3</span>
@@ -163,7 +163,7 @@
                     </h3>
                     
                     <div class="space-y-4">
-                        <!-- Font selection -->
+                        <!-- Font selection (Barlow Black set as default) -->
                         <div>
                             <label class="block text-xs text-slate-400 font-semibold mb-1">Fonte Principal</label>
                             <select id="fontFamilySelect" onchange="requestRenderAll()" 
@@ -176,24 +176,36 @@
                             </select>
                         </div>
 
-                        <!-- Text Styling Controls (Layer 1 & 2) -->
+                        <!-- Text Styling Controls (Layer 1 - Superior) -->
                         <div class="space-y-3 border-t border-slate-800/50 pt-3">
-                            <h4 class="text-[11px] font-black uppercase text-slate-500 tracking-wider">Texto Superior</h4>
+                            <h4 class="text-[11px] font-black uppercase text-indigo-400 tracking-wider">Texto Superior</h4>
+                            <!-- Primary Fill & Inner Border Row -->
                             <div class="grid grid-cols-3 gap-2">
                                 <div>
-                                    <label class="block text-[10px] text-slate-500 mb-0.5">Cor Texto</label>
-                                    <input type="color" id="t1Color" value="#ffffff" onchange="requestRenderAll()" class="w-full h-7 bg-transparent cursor-pointer border border-slate-800 rounded">
+                                    <label class="block text-[10px] text-slate-500 mb-0.5">Cor Preench.</label>
+                                    <input type="color" id="t1Color" value="#facc15" onchange="requestRenderAll()" class="w-full h-7 bg-transparent cursor-pointer border border-slate-800 rounded">
                                 </div>
                                 <div>
-                                    <label class="block text-[10px] text-slate-500 mb-0.5">Cor Borda</label>
+                                    <label class="block text-[10px] text-slate-500 mb-0.5">Borda Interna</label>
                                     <input type="color" id="t1Stroke" value="#000000" onchange="requestRenderAll()" class="w-full h-7 bg-transparent cursor-pointer border border-slate-800 rounded">
                                 </div>
                                 <div>
-                                    <label class="block text-[10px] text-slate-500 mb-0.5">Larg. Borda</label>
-                                    <input type="number" id="t1StrokeWidth" value="8" min="0" max="25" oninput="requestRenderAll()" class="w-full bg-slate-900 text-xs border border-slate-800 rounded px-2 py-1">
+                                    <label class="block text-[10px] text-slate-500 mb-0.5">Larg. Interna</label>
+                                    <input type="number" id="t1StrokeWidth" value="10" min="0" max="25" oninput="requestRenderAll()" class="w-full bg-slate-900 text-xs border border-slate-800 rounded px-2 py-1">
                                 </div>
                             </div>
-                            <!-- Global Toggles Line 1 -->
+                            <!-- Secondary Outer Border Row -->
+                            <div class="grid grid-cols-2 gap-2 bg-slate-950/40 p-2 rounded-lg border border-slate-800/50">
+                                <div>
+                                    <label class="block text-[10px] text-slate-500 mb-0.5">Borda Externa</label>
+                                    <input type="color" id="t1StrokeOuter" value="#ffffff" onchange="requestRenderAll()" class="w-full h-7 bg-transparent cursor-pointer border border-slate-800 rounded">
+                                </div>
+                                <div>
+                                    <label class="block text-[10px] text-slate-500 mb-0.5">Larg. Externa</label>
+                                    <input type="number" id="t1StrokeOuterWidth" value="8" min="0" max="25" oninput="requestRenderAll()" class="w-full bg-slate-900 text-xs border border-slate-800 rounded px-2 py-1">
+                                </div>
+                            </div>
+                            <!-- Style Toggle Row -->
                             <div class="flex gap-2">
                                 <button id="globalBold1Btn" onclick="toggleGlobalStyle('bold1')" class="flex-1 bg-slate-900 border border-slate-800 text-slate-400 py-1.5 px-2 rounded-lg text-xs font-bold transition flex items-center justify-center gap-1.5">
                                     <i class="fa-solid fa-bold text-[10px]"></i> Negrito
@@ -204,23 +216,36 @@
                             </div>
                         </div>
 
+                        <!-- Text Styling Controls (Layer 2 - Inferior) -->
                         <div class="space-y-3 border-t border-slate-800/50 pt-3">
-                            <h4 class="text-[11px] font-black uppercase text-slate-500 tracking-wider">Texto Inferior</h4>
+                            <h4 class="text-[11px] font-black uppercase text-indigo-400 tracking-wider">Texto Inferior</h4>
+                            <!-- Primary Fill & Inner Border Row -->
                             <div class="grid grid-cols-3 gap-2">
                                 <div>
-                                    <label class="block text-[10px] text-slate-500 mb-0.5">Cor Texto</label>
+                                    <label class="block text-[10px] text-slate-500 mb-0.5">Cor Preench.</label>
                                     <input type="color" id="t2Color" value="#facc15" onchange="requestRenderAll()" class="w-full h-7 bg-transparent cursor-pointer border border-slate-800 rounded">
                                 </div>
                                 <div>
-                                    <label class="block text-[10px] text-slate-500 mb-0.5">Cor Borda</label>
+                                    <label class="block text-[10px] text-slate-500 mb-0.5">Borda Interna</label>
                                     <input type="color" id="t2Stroke" value="#000000" onchange="requestRenderAll()" class="w-full h-7 bg-transparent cursor-pointer border border-slate-800 rounded">
                                 </div>
                                 <div>
-                                    <label class="block text-[10px] text-slate-500 mb-0.5">Larg. Borda</label>
-                                    <input type="number" id="t2StrokeWidth" value="8" min="0" max="25" oninput="requestRenderAll()" class="w-full bg-slate-900 text-xs border border-slate-800 rounded px-2 py-1">
+                                    <label class="block text-[10px] text-slate-500 mb-0.5">Larg. Interna</label>
+                                    <input type="number" id="t2StrokeWidth" value="10" min="0" max="25" oninput="requestRenderAll()" class="w-full bg-slate-900 text-xs border border-slate-800 rounded px-2 py-1">
                                 </div>
                             </div>
-                            <!-- Global Toggles Line 2 -->
+                            <!-- Secondary Outer Border Row -->
+                            <div class="grid grid-cols-2 gap-2 bg-slate-950/40 p-2 rounded-lg border border-slate-800/50">
+                                <div>
+                                    <label class="block text-[10px] text-slate-500 mb-0.5">Borda Externa</label>
+                                    <input type="color" id="t2StrokeOuter" value="#ffffff" onchange="requestRenderAll()" class="w-full h-7 bg-transparent cursor-pointer border border-slate-800 rounded">
+                                </div>
+                                <div>
+                                    <label class="block text-[10px] text-slate-500 mb-0.5">Larg. Externa</label>
+                                    <input type="number" id="t2StrokeOuterWidth" value="8" min="0" max="25" oninput="requestRenderAll()" class="w-full bg-slate-900 text-xs border border-slate-800 rounded px-2 py-1">
+                                </div>
+                            </div>
+                            <!-- Style Toggle Row -->
                             <div class="flex gap-2">
                                 <button id="globalBold2Btn" onclick="toggleGlobalStyle('bold2')" class="flex-1 bg-slate-900 border border-slate-800 text-slate-400 py-1.5 px-2 rounded-lg text-xs font-bold transition flex items-center justify-center gap-1.5">
                                     <i class="fa-solid fa-bold text-[10px]"></i> Negrito
@@ -553,7 +578,7 @@
             "ru": { text1: "НОВЫЙ ТАЙМСКИП", text2: "СОЛОМЕННЫХ ШЛЯП" },
             "de": { text1: "DER NEUE TIMESKIP", text2: "DER STROHHÜTE" },
             "ja": { text1: "麦わらの一味の", text2: "新タイムスキップ" },
-            "it": { text1: "IL NUOVO TIMESKIP", text2: "DEI CAPPELLI DI PAGLIA" },
+            "it": { text1: "IL NOVA TIMESKIP", text2: "DEI CAPPELLI DI PAGLIA" },
             "ko": { text1: "밀짚모자 일당의", text2: "새로운 타임스킵" },
             "th": { text1: "ไทม์สคิปใหม่", text2: "ของกลุ่มหมวกฟาง" },
             "vn": { text1: "TIMESKIP MỚI", text2: "CỦA BĂNG MŨ RƠM" },
@@ -601,8 +626,8 @@
 
         // Initialize state with individual line scales and active bold status
         function initDefaultLayout() {
-            const val1 = "ESTRATÉGIA SECRETA";
-            const val2 = "REVELADA HOJE";
+            const val1 = "O NOVO TIMESKIP";
+            const val2 = "DOS CHAPÉUS DE PALHA";
 
             document.getElementById("ptText1").value = val1;
             document.getElementById("ptText2").value = val2;
@@ -612,9 +637,11 @@
             hasBeenTranslated = false;
 
             LANGUAGES.forEach(lang => {
+                // Initialize using our fallbackTimeskipTranslations if present
+                const textPair = fallbackTimeskipTranslations[lang.id] || { text1: val1, text2: val2 };
                 styleData[lang.id] = {
-                    text1: val1,
-                    text2: val2,
+                    text1: textPair.text1,
+                    text2: textPair.text2,
                     text1Pos: { x: 640, y: 220 }, // Base layout coordinates on 1280x720 canvas
                     text2Pos: { x: 640, y: 390 },
                     fontScale1: lang.fontScale, // individual fine-tuning scale for line 1
@@ -882,7 +909,7 @@
             boundingBoxes.text1 = getTextBoundingBox(ctx, data.text1, data.text1Pos, t1Size, data.textAlignment, 1.0, true, countryId);
             boundingBoxes.text2 = getTextBoundingBox(ctx, data.text2, data.text2Pos, t2Size, data.textAlignment, 1.0, false, countryId);
 
-            // TEXT LAYER 1
+            // TEXT LAYER 1 (Superior) - Double stroke drawing logic
             if (data.text1) {
                 ctx.save();
                 ctx.textBaseline = "middle";
@@ -895,11 +922,13 @@
                 ctx.font = `${style1} ${weight1} ${t1Size * scaleFactor}px ${fontSelected}`;
                 ctx.textAlign = data.textAlignment;
                 
-                ctx.fillStyle = document.getElementById("t1Color").value;
-                ctx.strokeStyle = document.getElementById("t1Stroke").value;
-                ctx.lineWidth = parseInt(document.getElementById("t1StrokeWidth").value) * scaleFactor;
-                
-                // Realistic YT visual drop shadow
+                const fillCol = document.getElementById("t1Color").value;
+                const innerCol = document.getElementById("t1Stroke").value;
+                const innerW = parseInt(document.getElementById("t1StrokeWidth").value) * scaleFactor;
+                const outerCol = document.getElementById("t1StrokeOuter").value;
+                const outerW = parseInt(document.getElementById("t1StrokeOuterWidth").value) * scaleFactor;
+
+                // Shadow configuration
                 ctx.shadowColor = 'rgba(0, 0, 0, 0.85)';
                 ctx.shadowBlur = 15 * scaleFactor;
                 ctx.shadowOffsetX = 8 * scaleFactor;
@@ -908,14 +937,27 @@
                 const posX = data.text1Pos.x * scaleFactor;
                 const posY = data.text1Pos.y * scaleFactor;
 
-                if (ctx.lineWidth > 0) {
+                // 1. Draw Outer Border
+                if (outerW > 0) {
+                    ctx.strokeStyle = outerCol;
+                    ctx.lineWidth = innerW + (outerW * 2);
                     ctx.strokeText(data.text1, posX, posY);
                 }
+
+                // 2. Draw Inner Border
+                if (innerW > 0) {
+                    ctx.strokeStyle = innerCol;
+                    ctx.lineWidth = innerW;
+                    ctx.strokeText(data.text1, posX, posY);
+                }
+
+                // 3. Draw Interior Fill
+                ctx.fillStyle = fillCol;
                 ctx.fillText(data.text1, posX, posY);
                 ctx.restore();
             }
 
-            // TEXT LAYER 2
+            // TEXT LAYER 2 (Inferior) - Double stroke drawing logic
             if (data.text2) {
                 ctx.save();
                 ctx.textBaseline = "middle";
@@ -928,11 +970,13 @@
                 ctx.font = `${style2} ${weight2} ${t2Size * scaleFactor}px ${fontSelected}`;
                 ctx.textAlign = data.textAlignment;
                 
-                ctx.fillStyle = document.getElementById("t2Color").value;
-                ctx.strokeStyle = document.getElementById("t2Stroke").value;
-                ctx.lineWidth = parseInt(document.getElementById("t2StrokeWidth").value) * scaleFactor;
-                
-                // Shadow
+                const fillCol = document.getElementById("t2Color").value;
+                const innerCol = document.getElementById("t2Stroke").value;
+                const innerW = parseInt(document.getElementById("t2StrokeWidth").value) * scaleFactor;
+                const outerCol = document.getElementById("t2StrokeOuter").value;
+                const outerW = parseInt(document.getElementById("t2StrokeOuterWidth").value) * scaleFactor;
+
+                // Shadow configuration
                 ctx.shadowColor = 'rgba(0, 0, 0, 0.85)';
                 ctx.shadowBlur = 15 * scaleFactor;
                 ctx.shadowOffsetX = 10 * scaleFactor;
@@ -941,9 +985,22 @@
                 const posX = data.text2Pos.x * scaleFactor;
                 const posY = data.text2Pos.y * scaleFactor;
 
-                if (ctx.lineWidth > 0) {
+                // 1. Draw Outer Border
+                if (outerW > 0) {
+                    ctx.strokeStyle = outerCol;
+                    ctx.lineWidth = innerW + (outerW * 2);
                     ctx.strokeText(data.text2, posX, posY);
                 }
+
+                // 2. Draw Inner Border
+                if (innerW > 0) {
+                    ctx.strokeStyle = innerCol;
+                    ctx.lineWidth = innerW;
+                    ctx.strokeText(data.text2, posX, posY);
+                }
+
+                // 3. Draw Interior Fill
+                ctx.fillStyle = fillCol;
                 ctx.fillText(data.text2, posX, posY);
                 ctx.restore();
             }
@@ -1307,13 +1364,13 @@
                     const clean2 = ptText2.toUpperCase().trim();
 
                     LANGUAGES.forEach(lang => {
-                        // If they are translating the default "ESTRATÉGIA SECRETA" / "REVELADA HOJE" texts
-                        if (clean1 === "ESTRATÉGIA SECRETA" && clean2 === "REVELADA HOJE" && fallbackTranslations[lang.id]) {
-                            styleData[lang.id].text1 = fallbackTranslations[lang.id].text1;
-                            styleData[lang.id].text2 = fallbackTranslations[lang.id].text2;
-                        } else if ((clean1 === "O NOVO TIMESKIP" || clean1.includes("TIMESKIP")) && (clean2 === "DOS CHAPÉUS DE PALHA" || clean2.includes("CHAPÉUS")) && fallbackTimeskipTranslations[lang.id]) {
+                        // If they are translating our standard dummy continuous sentence
+                        if ((clean1 === "O NOVO TIMESKIP" || clean1.includes("TIMESKIP")) && (clean2 === "DOS CHAPÉUS DE PALHA" || clean2.includes("CHAPÉUS")) && fallbackTimeskipTranslations[lang.id]) {
                             styleData[lang.id].text1 = fallbackTimeskipTranslations[lang.id].text1;
                             styleData[lang.id].text2 = fallbackTimeskipTranslations[lang.id].text2;
+                        } else if (clean1 === "ESTRATÉGIA SECRETA" && clean2 === "REVELADA HOJE" && fallbackTranslations[lang.id]) {
+                            styleData[lang.id].text1 = fallbackTranslations[lang.id].text1;
+                            styleData[lang.id].text2 = fallbackTranslations[lang.id].text2;
                         } else {
                             // Suffix mockup so custom user text renders immediately
                             styleData[lang.id].text1 = `${ptText1} (${lang.code})`;
@@ -1341,7 +1398,7 @@ CRITICAL CONTEXT RULES:
 2. You MUST translate them together as a unified semantic block to preserve proper grammatical flow, gender agreements, number agreements, prepositions (like 'of the', 'de los', 'de l\'', 'des'), and localized case declensions.
 3. Once translated cohesively, split the resulting translation logically back into two lines (text1 and text2). Ensure that reading Line 1 then Line 2 feels like a single, seamless, natural sentence in the target language. Do not isolate them into disconnected hooks unless the input itself represents two unrelated hooks.
 4. Capitalization must remain bold, impactful, and expressive.
-5. Translate the HOOK, the CATCHY impact, matching the local internet culture slang of that specific target country.
+5. Translate the HOOK, the CATCHY impact, matching the local internet culture slang of that specific target country, if applicable.
 6. Output strict JSON with schema matching exactly the specified structure below. No explanation, markdown ticks, or other text outside the JSON.`;
 
                 const userQuery = `Original Portuguese texts:
