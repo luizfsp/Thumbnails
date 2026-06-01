@@ -205,6 +205,15 @@
                                     <input type="number" id="t1StrokeOuterWidth" value="0" min="0" max="25" oninput="updateGlobalStyle('t1StrokeOuterWidth', parseInt(this.value) || 0)" class="w-full bg-slate-900 text-xs border border-slate-800 rounded px-2 py-1">
                                 </div>
                             </div>
+                            <!-- Global Font Size Line 1 -->
+                            <div class="space-y-1 bg-slate-950/40 p-2 rounded-lg border border-slate-800/50">
+                                <div class="flex justify-between text-[10px] text-slate-500 font-bold">
+                                    <span>Tamanho da Fonte Global</span>
+                                    <span id="globalScale1Label" class="text-indigo-400 font-mono">1.00x</span>
+                                </div>
+                                <input type="range" id="globalScale1" min="0.4" max="1.8" step="0.05" value="1.0" oninput="updateGlobalScale(1, this.value)"
+                                    class="w-full accent-indigo-500 bg-slate-800 h-1 rounded-lg cursor-pointer">
+                            </div>
                             <!-- Style Toggle Row -->
                             <div class="flex gap-2">
                                 <button id="globalBold1Btn" onclick="toggleGlobalStyle('bold1')" class="flex-1 bg-slate-900 border border-slate-800 text-slate-400 py-1.5 px-2 rounded-lg text-xs font-bold transition flex items-center justify-center gap-1.5">
@@ -244,6 +253,15 @@
                                     <label class="block text-[10px] text-slate-500 mb-0.5">Larg. Externa</label>
                                     <input type="number" id="t2StrokeOuterWidth" value="0" min="0" max="25" oninput="updateGlobalStyle('t2StrokeOuterWidth', parseInt(this.value) || 0)" class="w-full bg-slate-900 text-xs border border-slate-800 rounded px-2 py-1">
                                 </div>
+                            </div>
+                            <!-- Global Font Size Line 2 -->
+                            <div class="space-y-1 bg-slate-950/40 p-2 rounded-lg border border-slate-800/50">
+                                <div class="flex justify-between text-[10px] text-slate-500 font-bold">
+                                    <span>Tamanho da Fonte Global</span>
+                                    <span id="globalScale2Label" class="text-indigo-400 font-mono">1.00x</span>
+                                </div>
+                                <input type="range" id="globalScale2" min="0.4" max="1.8" step="0.05" value="1.0" oninput="updateGlobalScale(2, this.value)"
+                                    class="w-full accent-indigo-500 bg-slate-800 h-1 rounded-lg cursor-pointer">
                             </div>
                             <!-- Style Toggle Row -->
                             <div class="flex gap-2">
@@ -657,6 +675,10 @@
         let globalTextAlignment = "center";
         let hasBeenTranslated = false;
         
+        // Global cumulative multipliers for Step 3 Sliders
+        let globalFontScale1 = 1.0;
+        let globalFontScale2 = 1.0;
+        
         // Dragging & Hover mechanics variables on interactive canvas
         let isDragging = false;
         let dragTarget = null; // 'text1' or 'text2'
@@ -698,6 +720,18 @@
 
             uploadedBgImage = null; // Clean slate
             hasBeenTranslated = false;
+
+            // Reset global multipliers UI and state
+            globalFontScale1 = 1.0;
+            globalFontScale2 = 1.0;
+            if (document.getElementById("globalScale1")) {
+                document.getElementById("globalScale1").value = 1.0;
+                document.getElementById("globalScale1Label").textContent = "1.00x";
+            }
+            if (document.getElementById("globalScale2")) {
+                document.getElementById("globalScale2").value = 1.0;
+                document.getElementById("globalScale2Label").textContent = "1.00x";
+            }
 
             LANGUAGES.forEach(lang => {
                 // Initialize using our fallbackTimeskipTranslations if present
@@ -846,6 +880,19 @@
             renderIndividualEditorCanvas();
         }
 
+        // Global font scaling updates
+        function updateGlobalScale(line, value) {
+            const val = parseFloat(value);
+            if (line === 1) {
+                globalFontScale1 = val;
+                document.getElementById("globalScale1Label").textContent = val.toFixed(2) + "x";
+            } else {
+                globalFontScale2 = val;
+                document.getElementById("globalScale2Label").textContent = val.toFixed(2) + "x";
+            }
+            requestRenderAll();
+        }
+
         function resetIndividualAdjustments() {
             const defaultLangScale = LANGUAGES.find(l => l.id === currentCountryId).fontScale;
             const data = styleData[currentCountryId];
@@ -901,6 +948,7 @@
         }
 
         // Helper to calculate exact geometric boundaries of text to perform flawless hit tests
+        // DYNAMIC AUTO-SHRINK CONSTRAINT: If the text width exceeds 1120px, it dynamically shrinks on the fly!
         function getTextBoundingBox(ctx, text, pos, fontSize, alignment, scaleFactor = 1.0, isText1 = true, countryId = currentCountryId) {
             ctx.save();
             const fontSelected = document.getElementById("fontFamilySelect").value;
@@ -927,11 +975,21 @@
             // Aplica a correção de isolamento bidirecional para manter números LTR intactos
             const processedText = resolveBidi(text, langInfo && langInfo.rtl);
 
-            const metrics = ctx.measureText(processedText);
-            const textWidth = metrics.width;
+            let metrics = ctx.measureText(processedText);
+            let textWidth = metrics.width;
             
-            // Approximate height using font size metric
-            const textHeight = fontSize * 1.1;
+            // Auto-shrink limit: 1120px out of 1280px to protect safe zones
+            const maxAllowedWidth = 1120;
+            let finalFontSize = fontSize;
+            if (textWidth > maxAllowedWidth) {
+                const shrinkRatio = maxAllowedWidth / textWidth;
+                finalFontSize = Math.floor(fontSize * shrinkRatio);
+                ctx.font = `${style} ${weight} ${finalFontSize}px ${fontSelected}`;
+                metrics = ctx.measureText(processedText);
+                textWidth = metrics.width;
+            }
+
+            const textHeight = finalFontSize * 1.1;
 
             let xStart = pos.x;
             if (alignment === "center") {
@@ -948,7 +1006,8 @@
                 x: xStart * scaleFactor,
                 y: yStart * scaleFactor,
                 width: textWidth * scaleFactor,
-                height: textHeight * scaleFactor
+                height: textHeight * scaleFactor,
+                adjustedFontSize: finalFontSize // Return final computed size respecting auto-fit constraint
             };
         }
 
@@ -1005,16 +1064,19 @@
             // CALCULATE THE BOUNDING BOXES FOR CLICKS & RENDER AIDS
             const fontSelected = document.getElementById("fontFamilySelect").value;
             
-            // Support independent scaling for Text 1 and Text 2
+            // Support independent scaling for Text 1 and Text 2 + global text scale multiplier
             const scale1 = data.fontScale1 !== undefined ? data.fontScale1 : (data.fontScale || langInfo.fontScale);
             const scale2 = data.fontScale2 !== undefined ? data.fontScale2 : (data.fontScale || langInfo.fontScale);
             
-            const t1Size = Math.floor(95 * scale1);
-            const t2Size = Math.floor(100 * scale2);
+            const baseT1Size = Math.floor(95 * scale1 * globalFontScale1);
+            const baseT2Size = Math.floor(100 * scale2 * globalFontScale2);
 
-            // Fetch boxes (always in 1280x720 base coordinates for consistent state representation)
-            boundingBoxes.text1 = getTextBoundingBox(ctx, data.text1, data.text1Pos, t1Size, data.textAlignment, 1.0, true, countryId);
-            boundingBoxes.text2 = getTextBoundingBox(ctx, data.text2, data.text2Pos, t2Size, data.textAlignment, 1.0, false, countryId);
+            // Fetch boxes and dynamically compute optimal safe auto-shrunk font size
+            boundingBoxes.text1 = getTextBoundingBox(ctx, data.text1, data.text1Pos, baseT1Size, data.textAlignment, 1.0, true, countryId);
+            boundingBoxes.text2 = getTextBoundingBox(ctx, data.text2, data.text2Pos, baseT2Size, data.textAlignment, 1.0, false, countryId);
+
+            const t1Size = boundingBoxes.text1.adjustedFontSize;
+            const t2Size = boundingBoxes.text2.adjustedFontSize;
 
             // TEXT LAYER 1 (Superior) - Double stroke drawing logic
             if (data.text1) {
