@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,67 +11,54 @@
     <!-- Google Fonts (Suporte global para múltiplos scripts: Latim, Cirílico, Árabe, Devanagari, Asiáticos) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;600;800;900&family=Noto+Sans+JP:wght@700;900&family=Noto+Sans+KR:wght@700;900&family=Noto+Sans+SC:wght@700;900&family=Noto+Sans+TC:wght@700;900&family=Noto+Sans:wght@700;900&family=Rubik+Mono+One&family=Teko:wght@700&display=swap"
-        rel="stylesheet">
-
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;600;800;900&family=Noto+Sans+JP:wght@700;900&family=Noto+Sans+KR:wght@700;900&family=Noto+Sans+SC:wght@700;900&family=Noto+Sans+TC:wght@700;900&family=Noto+Sans:wght@700;900&family=Rubik+Mono+One&family=Teko:wght@700&display=swap" rel="stylesheet">
+    
     <style>
         body {
             font-family: 'Inter', sans-serif;
             background-color: #0b0f19;
         }
-
         /* Custom scrollbar para parecer uma ferramenta premium */
         ::-webkit-scrollbar {
             width: 8px;
             height: 8px;
         }
-
         ::-webkit-scrollbar-track {
             background: #0f172a;
         }
-
         ::-webkit-scrollbar-thumb {
             background: #334155;
             border-radius: 4px;
         }
-
         ::-webkit-scrollbar-thumb:hover {
             background: #475569;
         }
     </style>
 </head>
-
 <body class="text-slate-100 min-h-screen flex flex-col overflow-x-hidden">
 
     <!-- HEADER -->
-    <header
-        class="border-b border-slate-800 bg-slate-900/80 backdrop-blur-md px-6 py-4 sticky top-0 z-50 flex flex-wrap justify-between items-center gap-4">
+    <header class="border-b border-slate-800 bg-slate-900/80 backdrop-blur-md px-6 py-4 sticky top-0 z-50 flex flex-wrap justify-between items-center gap-4">
         <div class="flex items-center gap-3">
-            <div
-                class="bg-gradient-to-tr from-indigo-500 to-violet-600 p-2.5 rounded-xl shadow-lg shadow-indigo-500/20">
+            <div class="bg-gradient-to-tr from-indigo-500 to-violet-600 p-2.5 rounded-xl shadow-lg shadow-indigo-500/20">
                 <i class="fa-solid fa-earth-americas text-xl text-white"></i>
             </div>
             <div>
-                <h1
-                    class="font-black text-lg tracking-wider bg-gradient-to-r from-white via-slate-100 to-slate-400 bg-clip-text text-transparent">
-                    THUMBGRID GLOBAL</h1>
+                <h1 class="font-black text-lg tracking-wider bg-gradient-to-r from-white via-slate-100 to-slate-400 bg-clip-text text-transparent">THUMBGRID GLOBAL</h1>
                 <p class="text-xs text-indigo-400 font-medium">Localizador Avançado de Thumbnails para 16 Países</p>
             </div>
         </div>
-
+        
         <!-- API Setup & Global Stats -->
         <div class="flex items-center gap-3 flex-wrap sm:flex-nowrap">
             <div class="relative">
                 <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-500">
                     <i class="fa-solid fa-key text-xs"></i>
                 </span>
-                <input type="password" id="apiKeyInput" placeholder="Chave de API Gemini (Opcional)"
+                <input type="password" id="apiKeyInput" placeholder="Chave de API Gemini (Opcional)" 
                     class="bg-slate-950/80 text-xs border border-slate-800 rounded-lg pl-8 pr-3 py-2 w-52 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-slate-300 placeholder:text-slate-600 transition-all">
             </div>
-            <button onclick="toggleApiHelp()"
-                class="p-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg transition"
-                title="Ajuda com a API">
+            <button onclick="toggleApiHelp()" class="p-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg transition" title="Ajuda com a API">
                 <i class="fa-solid fa-circle-question"></i>
             </button>
         </div>
@@ -80,14 +66,13 @@
 
     <!-- MAIN WORKSPACE -->
     <main class="flex-1 flex flex-col lg:flex-row min-h-0">
-
+        
         <!-- LEFT PANEL: CONTROL CENTER -->
-        <aside
-            class="w-full lg:w-[420px] bg-slate-900 border-r border-slate-800 flex flex-col shrink-0 overflow-y-auto">
-
+        <aside class="w-full lg:w-[420px] bg-slate-900 border-r border-slate-800 flex flex-col shrink-0 overflow-y-auto">
+            
             <!-- ACCORDION CONTROLS -->
             <div class="p-5 space-y-6">
-
+                
                 <!-- STEP 1: Original Content & AI Settings -->
                 <div class="bg-slate-950/50 p-4 rounded-xl border border-slate-800/80">
                     <div class="flex justify-between items-center mb-3">
@@ -97,25 +82,42 @@
                         </h3>
                     </div>
 
+                    <!-- Presets Selector Buttons -->
+                    <div class="mb-4">
+                        <label class="block text-[10px] text-slate-400 font-bold uppercase tracking-wider mb-2">Temas Rápidos de Demonstração</label>
+                        <div class="grid grid-cols-3 gap-1.5">
+                            <button onclick="selectThemePreset('games')" id="themeBtn_games" class="bg-indigo-600 text-white font-black py-2 px-1 rounded-lg text-[11px] transition flex flex-col items-center justify-center gap-1 border border-indigo-400/20">
+                                <i class="fa-solid fa-gamepad text-sm"></i>
+                                Games
+                            </button>
+                            <button onclick="selectThemePreset('anime')" id="themeBtn_anime" class="bg-slate-900 hover:bg-slate-800 text-slate-400 hover:text-white font-bold py-2 px-1 rounded-lg text-[11px] transition flex flex-col items-center justify-center gap-1 border border-slate-800">
+                                <i class="fa-solid fa-wand-magic-sparkles text-sm"></i>
+                                Anime
+                            </button>
+                            <button onclick="selectThemePreset('filosofia')" id="themeBtn_filosofia" class="bg-slate-900 hover:bg-slate-800 text-slate-400 hover:text-white font-bold py-2 px-1 rounded-lg text-[11px] transition flex flex-col items-center justify-center gap-1 border border-slate-800">
+                                <i class="fa-solid fa-landmark text-sm"></i>
+                                Filosofia
+                            </button>
+                        </div>
+                    </div>
+                    
                     <div class="space-y-3">
                         <div>
-                            <label class="block text-xs text-slate-400 font-semibold mb-1">Linha de Texto Principal
-                                (Destaque)</label>
-                            <input type="text" id="ptText1" value="COMO FICAR RICO" oninput="updateMasterText()"
+                            <label class="block text-xs text-slate-400 font-semibold mb-1">Linha de Texto Principal (Destaque)</label>
+                            <input type="text" id="ptText1" value="NOVO MUNDO SECRETO" oninput="handleManualTextInput()" 
                                 class="w-full bg-slate-900 border border-slate-800 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-indigo-500 text-white font-bold">
                         </div>
                         <div>
-                            <label class="block text-xs text-slate-400 font-semibold mb-1">Linha de Texto
-                                Secundária</label>
-                            <input type="text" id="ptText2" value="EM 2026 COM IA" oninput="updateMasterText()"
+                            <label class="block text-xs text-slate-400 font-semibold mb-1">Linha de Texto Secundária</label>
+                            <input type="text" id="ptText2" value="REVELADO HOJE NO GAME" oninput="handleManualTextInput()" 
                                 class="w-full bg-slate-900 border border-slate-800 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-indigo-500 text-white font-bold">
                         </div>
-
+                        
                         <div class="pt-2">
-                            <button onclick="translateAllWithAI()" id="btnTranslate"
+                            <button onclick="translateAllWithAI()" id="btnTranslate" 
                                 class="w-full bg-gradient-to-r from-indigo-500 to-violet-600 hover:from-indigo-600 hover:to-violet-700 text-white text-xs font-bold py-2.5 px-4 rounded-lg shadow-lg shadow-indigo-500/20 transition-all flex items-center justify-center gap-2">
                                 <i class="fa-solid fa-wand-magic-sparkles"></i>
-                                Adaptar Visualmente com IA (16 Idiomas)
+                                Traduzir e Adaptar com IA (16 Idiomas)
                             </button>
                         </div>
                     </div>
@@ -127,23 +129,19 @@
                         <span class="bg-indigo-500/10 text-indigo-400 text-[10px] py-0.5 px-2 rounded-full">2</span>
                         Imagem de Template (Fundo)
                     </h3>
-
+                    
                     <div class="space-y-4">
                         <!-- Custom Background Upload -->
                         <div>
-                            <label class="block text-xs text-slate-400 font-semibold mb-1">Upload de Fundo (1280x720
-                                ideal)</label>
+                            <label class="block text-xs text-slate-400 font-semibold mb-1">Upload de Fundo Personalizado</label>
                             <div class="flex items-center justify-center w-full">
-                                <label
-                                    class="flex flex-col items-center justify-center w-full h-28 border-2 border-slate-800 border-dashed rounded-lg cursor-pointer bg-slate-900 hover:bg-slate-800/50 hover:border-indigo-500/50 transition">
+                                <label class="flex flex-col items-center justify-center w-full h-28 border-2 border-slate-800 border-dashed rounded-lg cursor-pointer bg-slate-900 hover:bg-slate-800/50 hover:border-indigo-500/50 transition">
                                     <div class="flex flex-col items-center justify-center pt-3 pb-4 px-2 text-center">
                                         <i class="fa-solid fa-images text-xl text-indigo-400 mb-1.5 animate-pulse"></i>
                                         <p class="text-[10px] text-slate-300 font-bold">Enviar Imagem de Template</p>
-                                        <p class="text-[9px] text-slate-500 mt-1" id="bgFileName">Template Padrão Ativo
-                                        </p>
+                                        <p class="text-[9px] text-slate-500 mt-1" id="bgFileName">Fundo do Tema Ativo</p>
                                     </div>
-                                    <input type="file" id="bgUpload" accept="image/*" class="hidden"
-                                        onchange="handleBgUpload(event)">
+                                    <input type="file" id="bgUpload" accept="image/*" class="hidden" onchange="handleBgUpload(event)">
                                 </label>
                             </div>
                         </div>
@@ -152,14 +150,12 @@
                         <div class="grid grid-cols-2 gap-3 pt-1">
                             <div>
                                 <label class="block text-xs text-slate-400 font-semibold mb-1">Escurecer Bordas</label>
-                                <input type="range" id="vignetteSlider" min="0" max="100" value="35"
-                                    oninput="requestRenderAll()"
+                                <input type="range" id="vignetteSlider" min="0" max="100" value="35" oninput="requestRenderAll()"
                                     class="w-full accent-indigo-500 bg-slate-800 h-1 rounded-lg cursor-pointer">
                             </div>
                             <div>
                                 <label class="block text-xs text-slate-400 font-semibold mb-1">Brilho do Fundo</label>
-                                <input type="range" id="bgBrightnessSlider" min="10" max="150" value="85"
-                                    oninput="requestRenderAll()"
+                                <input type="range" id="bgBrightnessSlider" min="10" max="150" value="85" oninput="requestRenderAll()"
                                     class="w-full accent-indigo-500 bg-slate-800 h-1 rounded-lg cursor-pointer">
                             </div>
                         </div>
@@ -172,12 +168,12 @@
                         <span class="bg-indigo-500/10 text-indigo-400 text-[10px] py-0.5 px-2 rounded-full">3</span>
                         Tipografia e Efeitos
                     </h3>
-
+                    
                     <div class="space-y-4">
                         <!-- Font selection -->
                         <div>
                             <label class="block text-xs text-slate-400 font-semibold mb-1">Fonte Principal</label>
-                            <select id="fontFamilySelect" onchange="requestRenderAll()"
+                            <select id="fontFamilySelect" onchange="requestRenderAll()" 
                                 class="w-full bg-slate-900 border border-slate-800 rounded-lg px-3 py-2 text-xs focus:outline-none focus:ring-1 focus:ring-indigo-500 text-white font-semibold">
                                 <option value="'Anton', 'Noto Sans', sans-serif">Anton (Impactante / YouTube)</option>
                                 <option value="'Rubik Mono One', sans-serif">Rubik Mono One (Gorda / Moderna)</option>
@@ -188,77 +184,131 @@
 
                         <!-- Text Styling Controls (Layer 1 & 2) -->
                         <div class="space-y-3 border-t border-slate-800/50 pt-3">
-                            <h4 class="text-[11px] font-black uppercase text-slate-500 tracking-wider">Texto Superior
-                            </h4>
+                            <h4 class="text-[11px] font-black uppercase text-slate-500 tracking-wider">Texto Superior</h4>
                             <div class="grid grid-cols-3 gap-2">
                                 <div>
                                     <label class="block text-[10px] text-slate-500 mb-0.5">Cor Texto</label>
-                                    <input type="color" id="t1Color" value="#ffffff" onchange="requestRenderAll()"
-                                        class="w-full h-7 bg-transparent cursor-pointer border border-slate-800 rounded">
+                                    <input type="color" id="t1Color" value="#ffffff" onchange="requestRenderAll()" class="w-full h-7 bg-transparent cursor-pointer border border-slate-800 rounded">
                                 </div>
                                 <div>
                                     <label class="block text-[10px] text-slate-500 mb-0.5">Cor Borda</label>
-                                    <input type="color" id="t1Stroke" value="#000000" onchange="requestRenderAll()"
-                                        class="w-full h-7 bg-transparent cursor-pointer border border-slate-800 rounded">
+                                    <input type="color" id="t1Stroke" value="#000000" onchange="requestRenderAll()" class="w-full h-7 bg-transparent cursor-pointer border border-slate-800 rounded">
                                 </div>
                                 <div>
                                     <label class="block text-[10px] text-slate-500 mb-0.5">Larg. Borda</label>
-                                    <input type="number" id="t1StrokeWidth" value="8" min="0" max="25"
-                                        oninput="requestRenderAll()"
-                                        class="w-full bg-slate-900 text-xs border border-slate-800 rounded px-2 py-1">
+                                    <input type="number" id="t1StrokeWidth" value="8" min="0" max="25" oninput="requestRenderAll()" class="w-full bg-slate-900 text-xs border border-slate-800 rounded px-2 py-1">
                                 </div>
                             </div>
                         </div>
 
                         <div class="space-y-3 border-t border-slate-800/50 pt-3">
-                            <h4 class="text-[11px] font-black uppercase text-slate-500 tracking-wider">Texto Inferior
-                            </h4>
+                            <h4 class="text-[11px] font-black uppercase text-slate-500 tracking-wider">Texto Inferior</h4>
                             <div class="grid grid-cols-3 gap-2">
                                 <div>
                                     <label class="block text-[10px] text-slate-500 mb-0.5">Cor Texto</label>
-                                    <input type="color" id="t2Color" value="#facc15" onchange="requestRenderAll()"
-                                        class="w-full h-7 bg-transparent cursor-pointer border border-slate-800 rounded">
+                                    <input type="color" id="t2Color" value="#facc15" onchange="requestRenderAll()" class="w-full h-7 bg-transparent cursor-pointer border border-slate-800 rounded">
                                 </div>
                                 <div>
                                     <label class="block text-[10px] text-slate-500 mb-0.5">Cor Borda</label>
-                                    <input type="color" id="t2Stroke" value="#000000" onchange="requestRenderAll()"
-                                        class="w-full h-7 bg-transparent cursor-pointer border border-slate-800 rounded">
+                                    <input type="color" id="t2Stroke" value="#000000" onchange="requestRenderAll()" class="w-full h-7 bg-transparent cursor-pointer border border-slate-800 rounded">
                                 </div>
                                 <div>
                                     <label class="block text-[10px] text-slate-500 mb-0.5">Larg. Borda</label>
-                                    <input type="number" id="t2StrokeWidth" value="8" min="0" max="25"
-                                        oninput="requestRenderAll()"
-                                        class="w-full bg-slate-900 text-xs border border-slate-800 rounded px-2 py-1">
+                                    <input type="number" id="t2StrokeWidth" value="8" min="0" max="25" oninput="requestRenderAll()" class="w-full bg-slate-900 text-xs border border-slate-800 rounded px-2 py-1">
                                 </div>
                             </div>
                         </div>
 
                         <!-- Graphic Badges -->
                         <div class="border-t border-slate-800/50 pt-3">
-                            <label class="block text-xs text-slate-400 font-semibold mb-1.5">Selo/Adesivo de
-                                Destaque</label>
+                            <label class="block text-xs text-slate-400 font-semibold mb-1.5">Selo/Adesivo de Destaque</label>
                             <div class="grid grid-cols-3 gap-2">
-                                <button onclick="selectBadge('none')" id="badge_none"
-                                    class="badge-opt bg-indigo-500/10 border border-indigo-500 text-indigo-400 py-1.5 px-2 rounded-lg text-xs font-bold transition">Nenhum</button>
-                                <button onclick="selectBadge('new')" id="badge_new"
-                                    class="badge-opt bg-slate-950 border border-slate-800 text-slate-400 hover:text-white py-1.5 px-2 rounded-lg text-xs font-bold transition">NEW!</button>
-                                <button onclick="selectBadge('play')" id="badge_play"
-                                    class="badge-opt bg-slate-950 border border-slate-800 text-slate-400 hover:text-white py-1.5 px-2 rounded-lg text-xs font-bold transition"><i
-                                        class="fa-solid fa-play mr-1"></i> PLAY</button>
+                                <button onclick="selectBadge('none')" id="badge_none" class="badge-opt bg-indigo-500/10 border border-indigo-500 text-indigo-400 py-1.5 px-2 rounded-lg text-xs font-bold transition">Nenhum</button>
+                                <button onclick="selectBadge('new')" id="badge_new" class="badge-opt bg-slate-950 border border-slate-800 text-slate-400 hover:text-white py-1.5 px-2 rounded-lg text-xs font-bold transition">NEW!</button>
+                                <button onclick="selectBadge('play')" id="badge_play" class="badge-opt bg-slate-950 border border-slate-800 text-slate-400 hover:text-white py-1.5 px-2 rounded-lg text-xs font-bold transition"><i class="fa-solid fa-play mr-1"></i> PLAY</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STEP 4: Global Positioning Control Center -->
+                <div class="bg-slate-950/50 p-4 rounded-xl border border-slate-800/80">
+                    <h3 class="font-bold text-sm text-indigo-400 uppercase tracking-wider flex items-center gap-2 mb-3">
+                        <span class="bg-indigo-500/10 text-indigo-400 text-[10px] py-0.5 px-2 rounded-full">4</span>
+                        Posicionamento em Massa (Global)
+                    </h3>
+                    <div class="space-y-4">
+                        <div class="bg-indigo-950/20 p-2.5 rounded-lg border border-indigo-500/10 mb-2">
+                            <p class="text-[11px] text-indigo-300 leading-normal">
+                                <i class="fa-solid fa-circle-info mr-1"></i> Ajuste estes controles para mover o texto de <strong>todas as 16 thumbnails</strong> ao mesmo tempo de forma rápida!
+                            </p>
+                        </div>
+                        
+                        <!-- Text 1 Pos -->
+                        <div class="space-y-2">
+                            <div class="flex justify-between text-xs">
+                                <span class="text-slate-400 font-semibold">Texto Superior (Altura Y)</span>
+                                <span id="globalT1YLabel" class="text-indigo-400 font-mono">220px</span>
+                            </div>
+                            <input type="range" id="globalT1Y" min="50" max="670" value="220" oninput="applyGlobalPosition('y1', this.value)"
+                                class="w-full accent-indigo-500 bg-slate-800 h-1 rounded-lg cursor-pointer">
+                        </div>
+
+                        <div class="space-y-2">
+                            <div class="flex justify-between text-xs">
+                                <span class="text-slate-400 font-semibold">Texto Superior (Largura X)</span>
+                                <span id="globalT1XLabel" class="text-indigo-400 font-mono">640px</span>
+                            </div>
+                            <input type="range" id="globalT1X" min="100" max="1180" value="640" oninput="applyGlobalPosition('x1', this.value)"
+                                class="w-full accent-indigo-500 bg-slate-800 h-1 rounded-lg cursor-pointer">
+                        </div>
+
+                        <!-- Text 2 Pos -->
+                        <div class="space-y-2 pt-2 border-t border-slate-800/50">
+                            <div class="flex justify-between text-xs">
+                                <span class="text-slate-400 font-semibold">Texto Inferior (Altura Y)</span>
+                                <span id="globalT2YLabel" class="text-indigo-400 font-mono">390px</span>
+                            </div>
+                            <input type="range" id="globalT2Y" min="50" max="670" value="390" oninput="applyGlobalPosition('y2', this.value)"
+                                class="w-full accent-indigo-500 bg-slate-800 h-1 rounded-lg cursor-pointer">
+                        </div>
+
+                        <div class="space-y-2">
+                            <div class="flex justify-between text-xs">
+                                <span class="text-slate-400 font-semibold">Texto Inferior (Largura X)</span>
+                                <span id="globalT2XLabel" class="text-indigo-400 font-mono">640px</span>
+                            </div>
+                            <input type="range" id="globalT2X" min="100" max="1180" value="640" oninput="applyGlobalPosition('x2', this.value)"
+                                class="w-full accent-indigo-500 bg-slate-800 h-1 rounded-lg cursor-pointer">
+                        </div>
+
+                        <!-- Global Alignment Select -->
+                        <div class="space-y-2 pt-2 border-t border-slate-800/50">
+                            <label class="block text-xs text-slate-400 font-semibold mb-1">Alinhamento do Bloco</label>
+                            <div class="grid grid-cols-3 gap-1.5">
+                                <button onclick="applyGlobalAlignment('left')" id="alignBtn_left" class="bg-slate-900 hover:bg-slate-800 text-slate-400 hover:text-white py-1.5 px-1 rounded-lg text-xs font-bold transition flex items-center justify-center gap-1 border border-slate-800">
+                                    <i class="fa-solid fa-align-left"></i> Esquerda
+                                </button>
+                                <button onclick="applyGlobalAlignment('center')" id="alignBtn_center" class="bg-indigo-600 text-white py-1.5 px-1 rounded-lg text-xs font-bold transition flex items-center justify-center gap-1 border border-indigo-400/20">
+                                    <i class="fa-solid fa-align-center"></i> Centro
+                                </button>
+                                <button onclick="applyGlobalAlignment('right')" id="alignBtn_right" class="bg-slate-900 hover:bg-slate-800 text-slate-400 hover:text-white py-1.5 px-1 rounded-lg text-xs font-bold transition flex items-center justify-center gap-1 border border-slate-800">
+                                    <i class="fa-solid fa-align-right"></i> Direita
+                                </button>
                             </div>
                         </div>
                     </div>
                 </div>
 
             </div>
-
+            
             <!-- EXPORT ACTION BUTTON -->
             <div class="p-5 mt-auto bg-slate-950/80 border-t border-slate-800 flex flex-col gap-3 sticky bottom-0">
                 <div class="flex justify-between items-center text-xs">
                     <span class="text-slate-400">Total Adaptadas:</span>
                     <span class="font-bold text-indigo-400">16 Países Ativos</span>
                 </div>
-                <button onclick="downloadAllThumbnails()"
+                <button onclick="downloadAllThumbnails()" 
                     class="w-full bg-emerald-500 hover:bg-emerald-600 text-slate-950 text-sm font-black py-3 px-4 rounded-xl transition shadow-lg shadow-emerald-500/10 flex items-center justify-center gap-2">
                     <i class="fa-solid fa-cloud-arrow-down text-lg"></i>
                     EXPORTAR 16 THUMBNAILS (PNG)
@@ -268,17 +318,14 @@
 
         <!-- RIGHT PANEL: PREVIEW & LOCALIZATION GRID -->
         <section class="flex-1 bg-slate-950 p-6 flex flex-col gap-6 overflow-y-auto">
-
+            
             <!-- VIEW MODE SELECTOR -->
-            <div
-                class="flex flex-wrap items-center justify-between gap-4 bg-slate-900 p-3 rounded-xl border border-slate-800">
+            <div class="flex flex-wrap items-center justify-between gap-4 bg-slate-900 p-3 rounded-xl border border-slate-800">
                 <div class="flex items-center gap-2">
-                    <button id="tabGridBtn" onclick="switchTab('grid')"
-                        class="px-4 py-2 rounded-lg text-xs font-black bg-indigo-500 text-white transition flex items-center gap-2">
+                    <button id="tabGridBtn" onclick="switchTab('grid')" class="px-4 py-2 rounded-lg text-xs font-black bg-indigo-500 text-white transition flex items-center gap-2">
                         <i class="fa-solid fa-grip"></i> Grid Global (16 Idiomas)
                     </button>
-                    <button id="tabEditorBtn" onclick="switchTab('editor')"
-                        class="px-4 py-2 rounded-lg text-xs font-bold text-slate-400 hover:text-white transition flex items-center gap-2">
+                    <button id="tabEditorBtn" onclick="switchTab('editor')" class="px-4 py-2 rounded-lg text-xs font-bold text-slate-400 hover:text-white transition flex items-center gap-2">
                         <i class="fa-solid fa-sliders"></i> Ajuste Fino Individual
                     </button>
                 </div>
@@ -299,34 +346,27 @@
             <div id="tabEditor" class="hidden">
                 <div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
                     <!-- Main High-Res Canvas -->
-                    <div
-                        class="xl:col-span-2 flex flex-col items-center justify-center bg-slate-900 border border-slate-800 rounded-2xl p-6">
+                    <div class="xl:col-span-2 flex flex-col items-center justify-center bg-slate-900 border border-slate-800 rounded-2xl p-6">
                         <div class="flex justify-between items-center w-full mb-4">
                             <div class="flex items-center gap-2">
                                 <span id="currentEditingFlag" class="text-2xl">🇺🇸</span>
                                 <div>
-                                    <h4 class="font-black text-sm" id="currentEditingCountryName">United States -
-                                        English</h4>
-                                    <p class="text-[10px] text-slate-400">Passe o mouse sobre os textos e arraste a
-                                        caixa pontilhada azul para ajustar a posição</p>
+                                    <h4 class="font-black text-sm" id="currentEditingCountryName">United States - English</h4>
+                                    <p class="text-[10px] text-slate-400">Passe o mouse sobre os textos e arraste a caixa pontilhada azul para ajustar a posição</p>
                                 </div>
                             </div>
-                            <span class="text-xs font-mono bg-slate-950 px-2 py-1 rounded text-indigo-400"
-                                id="currentEditingCode">US</span>
+                            <span class="text-xs font-mono bg-slate-950 px-2 py-1 rounded text-indigo-400" id="currentEditingCode">US</span>
                         </div>
-
+                        
                         <!-- Interactive Canvas Container -->
-                        <div class="relative max-w-full aspect-video bg-black rounded-lg overflow-hidden shadow-2xl border border-slate-700/50"
-                            style="width: 640px;">
-                            <canvas id="interactiveCanvas" width="1280" height="720"
-                                class="w-full h-full cursor-default"></canvas>
+                        <div class="relative max-w-full aspect-video bg-black rounded-lg overflow-hidden shadow-2xl border border-slate-700/50" style="width: 640px;">
+                            <canvas id="interactiveCanvas" width="1280" height="720" class="w-full h-full cursor-default"></canvas>
                         </div>
                     </div>
 
                     <!-- Individual Adjustments Controls -->
                     <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 space-y-6">
-                        <h4
-                            class="font-black text-sm text-slate-200 border-b border-slate-800 pb-3 flex items-center gap-2">
+                        <h4 class="font-black text-sm text-slate-200 border-b border-slate-800 pb-3 flex items-center gap-2">
                             <i class="fa-solid fa-sliders text-indigo-400"></i>
                             Ajustes Finos (Exclusivos)
                         </h4>
@@ -343,15 +383,13 @@
                         <!-- Live Text overrides for current country -->
                         <div class="space-y-4">
                             <div>
-                                <label class="block text-xs text-slate-400 font-semibold mb-1">Texto Superior
-                                    Traduzido</label>
-                                <input type="text" id="overrideText1" oninput="applyOverride()"
+                                <label class="block text-xs text-slate-400 font-semibold mb-1">Texto Superior Traduzido</label>
+                                <input type="text" id="overrideText1" oninput="applyOverride()" 
                                     class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-sm text-white font-bold">
                             </div>
                             <div>
-                                <label class="block text-xs text-slate-400 font-semibold mb-1">Texto Inferior
-                                    Traduzido</label>
-                                <input type="text" id="overrideText2" oninput="applyOverride()"
+                                <label class="block text-xs text-slate-400 font-semibold mb-1">Texto Inferior Traduzido</label>
+                                <input type="text" id="overrideText2" oninput="applyOverride()" 
                                     class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-sm text-white font-bold">
                             </div>
                         </div>
@@ -363,17 +401,22 @@
                                     <span class="text-slate-400 font-semibold">Tamanho Fonte Geral</span>
                                     <span id="scaleLabel" class="text-indigo-400 font-mono">1.0x</span>
                                 </div>
-                                <input type="range" id="indScaleSlider" min="0.4" max="1.8" step="0.05" value="1.0"
-                                    oninput="applyOverride()"
+                                <input type="range" id="indScaleSlider" min="0.4" max="1.8" step="0.05" value="1.0" oninput="applyOverride()"
                                     class="w-full accent-indigo-500 bg-slate-800 h-1 rounded-lg cursor-pointer">
                             </div>
 
-                            <div class="grid grid-cols-2 gap-3">
-                                <button onclick="resetIndividualAdjustments()"
+                            <!-- Sync drag coordinates layout to all 16 other language assets -->
+                            <button onclick="syncCurrentLayoutToAll()" 
+                                class="w-full bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-400 border border-indigo-500/30 text-xs font-bold py-2.5 px-3 rounded-lg transition flex items-center justify-center gap-2">
+                                <i class="fa-solid fa-arrows-spin animate-spin-slow"></i> Aplicar Esta Posição em Todas as Thumbs
+                            </button>
+
+                            <div class="grid grid-cols-2 gap-3 pt-1">
+                                <button onclick="resetIndividualAdjustments()" 
                                     class="w-full bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-bold py-2 px-3 rounded-lg transition">
                                     Resetar Ajustes
                                 </button>
-                                <button onclick="downloadSingleThumbnail()"
+                                <button onclick="downloadSingleThumbnail()" 
                                     class="w-full bg-indigo-500 hover:bg-indigo-600 text-white text-xs font-bold py-2 px-3 rounded-lg transition flex items-center justify-center gap-1.5">
                                     <i class="fa-solid fa-download"></i> Baixar Esta
                                 </button>
@@ -387,9 +430,8 @@
     </main>
 
     <!-- HELPER INFO MODAL (API KEY INFO) -->
-    <div id="apiHelpModal"
-        class="hidden fixed inset-0 z-[100] bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
-        <div class="bg-slate-900 border border-slate-800 rounded-2xl max-w-md w-full p-6 relative shadow-2xl">
+    <div id="apiHelpModal" class="hidden fixed inset-0 z-[100] bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-slate-900 border border-slate-900 rounded-2xl max-w-md w-full p-6 relative shadow-2xl">
             <button onclick="toggleApiHelp()" class="absolute top-4 right-4 text-slate-500 hover:text-white transition">
                 <i class="fa-solid fa-xmark text-lg"></i>
             </button>
@@ -400,24 +442,15 @@
                 <h3 class="font-bold text-lg text-white">Como Funciona a IA?</h3>
             </div>
             <div class="space-y-3 text-slate-300 text-xs leading-relaxed">
-                <p>Nós incluímos uma <strong>tradução de demonstração perfeita de alta qualidade</strong> para o tema
-                    padrão de finanças/futebol/sucesso, para que você possa testar o aplicativo imediatamente.</p>
+                <p>Nós incluímos <strong>traduções de demonstração perfeitas de alta qualidade</strong> para os temas padrão de <strong>Games, Anime e Filosofia</strong>, para que você possa testar o aplicativo imediatamente sem qualquer custo de API.</p>
                 <p>Ao inserir sua <strong>Chave de API do Gemini</strong> no cabeçalho:</p>
                 <ul class="list-disc pl-5 space-y-1.5 text-slate-400">
-                    <li>Você pode digitar qualquer frase em português (ex: <i>"Nova Técnica Revelada - Sem
-                            Programar"</i>).</li>
-                    <li>O modelo <code
-                            class="text-indigo-400 font-mono bg-slate-950 px-1 py-0.5 rounded">gemini-3-flash-preview</code>
-                        traduzirá dinamicamente com <strong>localização cultural e adaptando gírias e tamanho das
-                            palavras</strong> para os 16 países!</li>
+                    <li>Você pode digitar qualquer frase em português (ex: <i>"Nova Técnica Revelada - Sem Programar"</i>).</li>
+                    <li>O modelo <code class="text-indigo-400 font-mono bg-slate-950 px-1 py-0.5 rounded">gemini-3-flash-preview</code> traduzirá dinamicamente com <strong>localização cultural e adaptando gírias e tamanho das palavras</strong> para os 16 países!</li>
                 </ul>
-                <p
-                    class="text-[11px] text-yellow-500 bg-yellow-500/10 p-2.5 rounded border border-yellow-500/20 font-medium">
-                    Sua chave é mantida localmente no seu navegador e enviada diretamente para a API oficial do Google.
-                </p>
+                <p class="text-[11px] text-yellow-500 bg-yellow-500/10 p-2.5 rounded border border-yellow-500/20 font-medium">Sua chave é mantida localmente no seu navegador e enviada diretamente para a API oficial do Google.</p>
             </div>
-            <button onclick="toggleApiHelp()"
-                class="mt-5 w-full bg-slate-800 hover:bg-slate-700 text-white font-bold py-2 rounded-xl transition text-xs">Entendido</button>
+            <button onclick="toggleApiHelp()" class="mt-5 w-full bg-slate-800 hover:bg-slate-700 text-white font-bold py-2 rounded-xl transition text-xs">Entendido</button>
         </div>
     </div>
 
@@ -429,7 +462,7 @@
             { id: "es", code: "ES", name: "Spain / LatAm", lang: "Spanish", flag: "🇪🇸", rtl: false, fontScale: 1.0 },
             { id: "fr", code: "FR", name: "France", lang: "French", flag: "🇫🇷", rtl: false, fontScale: 1.0 },
             { id: "id", code: "ID", name: "Indonesia", lang: "Indonesian", flag: "🇮🇩", rtl: false, fontScale: 1.0 },
-            { id: "ar", code: "AR", name: "Egypt / Gulf", lang: "Arabic", flag: "🇦🇷", rtl: true, fontScale: 1.1 },
+            { id: "ar", code: "ar", name: "Egypt / Gulf", lang: "Arabic", flag: "🇸🇦", rtl: true, fontScale: 1.1 },
             { id: "hi", code: "HI", name: "India", lang: "Hindi", flag: "🇮🇳", rtl: false, fontScale: 1.05 },
             { id: "ru", code: "RU", name: "Russia", lang: "Russian", flag: "🇷🇺", rtl: false, fontScale: 0.95 },
             { id: "de", code: "DE", name: "Germany", lang: "German", flag: "🇩🇪", rtl: false, fontScale: 0.85 },
@@ -443,31 +476,86 @@
             { id: "tw", code: "TW", name: "Taiwan", lang: "Traditional Chinese", flag: "🇹🇼", rtl: false, fontScale: 1.2 }
         ];
 
-        // High Quality Pre-baked marketing-focused default translations for instantly working demo
-        const DEFAULT_TRANSLATIONS = {
-            "us": { text1: "HOW TO GET RICH", text2: "IN 2026 WITH AI" },
-            "es": { text1: "CÓMO HACERSE RICO", text2: "EN 2026 CON IA" },
-            "fr": { text1: "COMMENT S'ENRICHIR", text2: "EN 2026 GRÂCE À L'IA" },
-            "id": { text1: "CARA CEPAT KAYA", text2: "DI 2026 DENGAN AI" },
-            "ar": { text1: "كيف تصبح ثرياً", text2: "في ٢٠٢٦ بالذكاء الاصطناعي" },
-            "hi": { text1: "अमीर कैसे बनें", text2: "2026 में AI की मदद से" },
-            "ru": { text1: "КАК СТАТЬ БОГАТЫМ", text2: "В 2026 С ПОМОЩЬЮ ИИ" },
-            "de": { text1: "REICH WERDEN", text2: "IN 2026 MIT KI" },
-            "ja": { text1: "金持ちになる方法", text2: "2026年最新AI活用術" },
-            "it": { text1: "COME DIVENTARE RICCO", text2: "NEL 2026 CON L'IA" },
-            "ko": { text1: "부자 되는 법", text2: "2026년 최신 AI 혁명" },
-            "th": { text1: "วิธีรวยเร็วสุด", text2: "ในปี 2026 ด้วย AI" },
-            "vn": { text1: "CÁCH LÀM GIÀU", text2: "NĂM 2026 VỚI AI" },
-            "tr": { text1: "NASIL ZENGİN OLUNUR", text2: "2026'DA YAPAY ZEKA İLE" },
-            "pl": { text1: "JAK SIĘ WZBOGACIĆ", text2: "W 2026 DZIĘKI AI" },
-            "tw": { text1: "如何快速致富", text2: "2026最新AI密技" }
+        // Theme presets configuration loaded with premium matching Unsplash backgrounds
+        const THEME_PRESETS = {
+            games: {
+                ptText1: "NOVO MUNDO SECRETO",
+                ptText2: "REVELADO HOJE NO GAME",
+                bg: "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=1280&h=720&q=80",
+                translations: {
+                    "us": { text1: "NEW SECRET WORLD", text2: "REVEALED IN-GAME TODAY" },
+                    "es": { text1: "NUEVO MUNDO SECRETO", text2: "REVELADO HOY EN EL JUEGO" },
+                    "fr": { text1: "NOUVEAU MONDE SECRET", text2: "RÉVÉLÉ DANS LE JEU AUJOURD'HUI" },
+                    "id": { text1: "DUNIA RAHASIA BARU", text2: "TERUNGKAP HARI INI" },
+                    "ar": { text1: "عالم سري جديد", text2: "تم الكشف عنه اليوم في اللعبة" },
+                    "hi": { text1: "नया गुप्त संसार", text2: "आज गेम में खुलासा हुआ" },
+                    "ru": { text1: "НОВЫЙ СЕКРЕТНЫЙ МИР", text2: "РАСКРЫТ В ИГРЕ СЕГОДНЯ" },
+                    "de": { text1: "NEUE GEHEIME WELT", text2: "HEUTE IM SPIEL ENTHÜLLT" },
+                    "ja": { text1: "新しい隠しワールド", text2: "本日ゲーム内で公開！" },
+                    "it": { text1: "NUOVO MONDO SEGRETO", text2: "SVELATO OGGI NEL GIOCO" },
+                    "ko": { text1: "새로운 비밀 세계", text2: "오늘 게임에서 전격 공개!" },
+                    "th": { text1: "โลกเร้นลับแห่งใหม่", text2: "เปิดเผยในเกมวันนี้" },
+                    "vn": { text1: "THẾ GIỚI BÍ MẬT MỚI", text2: "HÉ LỘ TRONG GAME HÔM NAY" },
+                    "tr": { text1: "YENİ GİZLİ DÜNYA", text2: "BUGÜN OYUNDA AÇIKLANDI" },
+                    "pl": { text1: "NOWY TAJNY ŚWIAT", text2: "ODKRYTY DZISIAJ W GRZE" },
+                    "tw": { text1: "全新秘密地圖", text2: "今天遊戲內正式公開" }
+                }
+            },
+            anime: {
+                ptText1: "ESTE PROTAGONISTA",
+                ptText2: "PASSOU DOS LIMITES",
+                bg: "https://images.unsplash.com/photo-1578632767115-351597cf2477?auto=format&fit=crop&w=1280&h=720&q=80",
+                translations: {
+                    "us": { text1: "THIS PROTAGONIST", text2: "WENT TOO FAR" },
+                    "es": { text1: "ESTE PROTAGONISTA", text2: "CRUZÓ TODOS LOS LÍMITES" },
+                    "fr": { text1: "CE PROTAGONISTE", text2: "A DÉPASSÉ LES BORNES" },
+                    "id": { text1: "PROTAGONIS INI", text2: "SUDAH KELAWAT BATAS" },
+                    "ar": { text1: "هذا البطل الرئيسي", text2: "تجاوز كل الحدود" },
+                    "hi": { text1: "इस मुख्य पात्र ने", text2: "सारी हदें पार कर दीं" },
+                    "ru": { text1: "ЭТОТ ПРОТАГОНИСТ", text2: "ПЕРЕШЕЛ ВСЕ ГРАНИЦЫ" },
+                    "de": { text1: "DIESER PROTAGONIST", text2: "GING VIEEEL ZU WEIT" },
+                    "ja": { text1: "この最強主人公", text2: "ついに限界を突破！" },
+                    "it": { text1: "QUESTO PROTAGONISTA", text2: "HA SUPERATO IL LIMITE" },
+                    "ko": { text1: "이 사기캐 주인공", text2: "결국 선을 넘어버렸다!" },
+                    "th": { text1: "พระเอกสุดเทพคนนี้", text2: "ทะลุขีดจำกัดไปแล้ว" },
+                    "vn": { text1: "MAIN BÁ ĐẠO NÀY", text2: "ĐÃ VƯỢT QUÁ GIỚI HẠN" },
+                    "tr": { text1: "BU BAŞKARAKTER", text2: "SINIRLARI TAMAMEN AŞTI" },
+                    "pl": { text1: "TEN PROTAGONISTA", text2: "PRZEKROCZYŁ WSZELKIE GRANICE" },
+                    "tw": { text1: "這個開掛主角", text2: "實力居然超越極限" }
+                }
+            },
+            filosofia: {
+                ptText1: "A ARTE DE CONTROLAR",
+                ptText2: "A SUA PRÓPRIA MENTE",
+                bg: "https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?auto=format&fit=crop&w=1280&h=720&q=80",
+                translations: {
+                    "us": { text1: "THE ART OF CONTROLLING", text2: "YOUR OWN MIND" },
+                    "es": { text1: "EL ARTE DE CONTROLAR", text2: "TU PROPIA MENTE" },
+                    "fr": { text1: "L'ART DE CONTRÔLER", text2: "VOTRE PROPRE ESPRIT" },
+                    "id": { text1: "SENI MENGENDALIKAN", text2: "PIKIRAN ANDA SENDIRI" },
+                    "ar": { text1: "فن السيطرة على", text2: "عقلك وأفكارك" },
+                    "hi": { text1: "अपने दिमाग को काबू", text2: "करने की गुप्त कला" },
+                    "ru": { text1: "ИСКУССТВО КОНТROЛЯ", text2: "СОБСТВЕННОГО РАЗУМА" },
+                    "de": { text1: "DIE KUNST DER KONTROLLE", text2: "ÜBER DEN EIGENEN GEIST" },
+                    "ja": { text1: "自らの心を完全に", text2: "支配する究極のアート" },
+                    "it": { text1: "L'ARTE DI CONTROLLARE", text2: "LA TUA STESSA MENTE" },
+                    "ko": { text1: "내면을 지배하고", text2: "마음을 조절하는 기술" },
+                    "th": { text1: "ศิลปะแห่งการควบคุม", text2: "จิตใจของตัวเอง" },
+                    "vn": { text1: "NGHỆ THUẬT KIỂM SOÁT", text2: "CHÍNH TÂM TRÍ BẠN" },
+                    "tr": { text1: "ZİHNİNİZİ KONTROL", text2: "ETMENİN EŞSİZ SANATI" },
+                    "pl": { text1: "SZTUKA KONTROLOWANIA", text2: "WŁASNEGO UMYSŁU" },
+                    "tw": { text1: "完全掌控自我", text2: "心靈修形態的終極藝術" }
+                }
+            }
         };
 
         // UI & Render State
         let activeTab = "grid"; // 'grid' or 'editor'
         let currentCountryId = "us"; // Currently selected country for fine-tuning
         let uploadedBgImage = null; // Custom uploaded background element
-
+        let activeTheme = "games"; // 'games', 'anime', or 'filosofia'
+        let globalTextAlignment = "center";
+        
         // Dragging & Hover mechanics variables on interactive canvas
         let isDragging = false;
         let dragTarget = null; // 'text1' or 'text2'
@@ -479,26 +567,8 @@
         let styleData = {};
 
         function initApp() {
-            // Populate Style Data for all languages
-            LANGUAGES.forEach(lang => {
-                styleData[lang.id] = {
-                    text1: DEFAULT_TRANSLATIONS[lang.id].text1,
-                    text2: DEFAULT_TRANSLATIONS[lang.id].text2,
-                    text1Pos: { x: 640, y: 220 }, // Base layout coordinates on 1280x720 canvas
-                    text2Pos: { x: 640, y: 390 },
-                    fontScale: lang.fontScale, // individual fine-tuning scale
-                    textAlignment: lang.rtl ? "right" : "center",
-                };
-            });
-
-            // Load default high-quality background template (Unsplash premium gradient mockup image to avoid black screen)
-            const defaultImg = new Image();
-            defaultImg.crossOrigin = "anonymous";
-            defaultImg.onload = function () {
-                uploadedBgImage = defaultImg;
-                requestRenderAll();
-            };
-            defaultImg.src = "https://images.unsplash.com/photo-1618005198143-e5283464305c?auto=format&fit=crop&w=1280&h=720&q=80";
+            // Apply the default 'games' theme configuration
+            loadThemeConfig("games");
 
             // Populate selector inside individual view
             const select = document.getElementById("countryEditorSelect");
@@ -514,6 +584,70 @@
             renderGrid();
             loadCountryToEditor("us");
             setupInteractiveCanvasEvents();
+        }
+
+        // Apply a full preset theme translation and update background
+        function loadThemeConfig(themeKey) {
+            activeTheme = themeKey;
+            const theme = THEME_PRESETS[themeKey];
+
+            // Set Portuguese Inputs
+            document.getElementById("ptText1").value = theme.ptText1;
+            document.getElementById("ptText2").value = theme.ptText2;
+
+            // Load theme background image
+            const defaultImg = new Image();
+            defaultImg.crossOrigin = "anonymous";
+            defaultImg.onload = function() {
+                uploadedBgImage = defaultImg;
+                requestRenderAll();
+            };
+            defaultImg.src = theme.bg;
+
+            // Apply styleData and default translations
+            LANGUAGES.forEach(lang => {
+                styleData[lang.id] = {
+                    text1: theme.translations[lang.id].text1,
+                    text2: theme.translations[lang.id].text2,
+                    text1Pos: { x: 640, y: 220 }, // Base layout coordinates on 1280x720 canvas
+                    text2Pos: { x: 640, y: 390 },
+                    fontScale: lang.fontScale, // individual fine-tuning scale
+                    textAlignment: lang.rtl ? "right" : "center",
+                };
+            });
+
+            if (document.getElementById("globalT1Y")) {
+                document.getElementById("globalT1Y").value = 220;
+                document.getElementById("globalT1YLabel").textContent = "220px";
+                document.getElementById("globalT1X").value = 640;
+                document.getElementById("globalT1XLabel").textContent = "640px";
+                document.getElementById("globalT2Y").value = 390;
+                document.getElementById("globalT2YLabel").textContent = "390px";
+                document.getElementById("globalT2X").value = 640;
+                document.getElementById("globalT2XLabel").textContent = "640px";
+                applyGlobalAlignment('center');
+            }
+        }
+
+        function selectThemePreset(themeKey) {
+            // Update buttons visually
+            const themes = ['games', 'anime', 'filosofia'];
+            themes.forEach(t => {
+                const btn = document.getElementById(`themeBtn_${t}`);
+                if (t === themeKey) {
+                    btn.className = "bg-indigo-600 text-white font-black py-2 px-1 rounded-lg text-[11px] transition flex flex-col items-center justify-center gap-1 border border-indigo-400/20";
+                } else {
+                    btn.className = "bg-slate-900 hover:bg-slate-800 text-slate-400 hover:text-white font-bold py-2 px-1 rounded-lg text-[11px] transition flex flex-col items-center justify-center gap-1 border border-slate-800";
+                }
+            });
+
+            // Load configurations
+            loadThemeConfig(themeKey);
+
+            // If we are currently editing, update the inputs in the active individual view
+            loadCountryToEditor(currentCountryId);
+
+            requestRenderAll();
         }
 
         function switchTab(tab) {
@@ -544,9 +678,9 @@
             if (file) {
                 document.getElementById("bgFileName").textContent = file.name;
                 const reader = new FileReader();
-                reader.onload = function (e) {
+                reader.onload = function(e) {
                     const img = new Image();
-                    img.onload = function () {
+                    img.onload = function() {
                         uploadedBgImage = img;
                         requestRenderAll();
                     };
@@ -567,15 +701,15 @@
         }
 
         // Real-time synchronization of original texts input to default languages
-        function updateMasterText() {
+        function handleManualTextInput() {
             const val1 = document.getElementById("ptText1").value.toUpperCase();
             const val2 = document.getElementById("ptText2").value.toUpperCase();
-
+            
             // If the user hasn't translated via AI yet, we mirror input for English (US) to make live testing fluid
-            if (styleData["us"].text1 === DEFAULT_TRANSLATIONS["us"].text1) {
+            if (styleData["us"].text1 === THEME_PRESETS[activeTheme].translations["us"].text1) {
                 styleData["us"].text1 = val1 || "TEXTO 1";
             }
-            if (styleData["us"].text2 === DEFAULT_TRANSLATIONS["us"].text2) {
+            if (styleData["us"].text2 === THEME_PRESETS[activeTheme].translations["us"].text2) {
                 styleData["us"].text2 = val2 || "TEXTO 2";
             }
 
@@ -593,7 +727,7 @@
             const data = styleData[currentCountryId];
             data.text1 = document.getElementById("overrideText1").value;
             data.text2 = document.getElementById("overrideText2").value;
-
+            
             const scale = parseFloat(document.getElementById("indScaleSlider").value);
             data.fontScale = scale;
             document.getElementById("scaleLabel").textContent = scale.toFixed(2) + "x";
@@ -604,8 +738,10 @@
         function resetIndividualAdjustments() {
             const defaultLangScale = LANGUAGES.find(l => l.id === currentCountryId).fontScale;
             const data = styleData[currentCountryId];
-            data.text1 = DEFAULT_TRANSLATIONS[currentCountryId].text1;
-            data.text2 = DEFAULT_TRANSLATIONS[currentCountryId].text2;
+            
+            // Reset to current theme preset baseline
+            data.text1 = THEME_PRESETS[activeTheme].translations[currentCountryId].text1;
+            data.text2 = THEME_PRESETS[activeTheme].translations[currentCountryId].text2;
             data.text1Pos = { x: 640, y: 220 };
             data.text2Pos = { x: 640, y: 390 };
             data.fontScale = defaultLangScale;
@@ -628,7 +764,7 @@
 
             const metrics = ctx.measureText(text);
             const textWidth = metrics.width;
-
+            
             // Approximate height using font size metric
             const textHeight = fontSize * 1.1;
 
@@ -670,7 +806,7 @@
                 const shiftX = (width - uploadedBgImage.width * ratio) / 2;
                 const shiftY = (height - uploadedBgImage.height * ratio) / 2;
                 ctx.drawImage(uploadedBgImage, 0, 0, uploadedBgImage.width, uploadedBgImage.height,
-                    shiftX, shiftY, uploadedBgImage.width * ratio, uploadedBgImage.height * ratio);
+                                             shiftX, shiftY, uploadedBgImage.width*ratio, uploadedBgImage.height*ratio);
             } else {
                 // If template background failed or not yet set, display clean dark checkered studio mockup grid
                 ctx.fillStyle = "#1e293b";
@@ -698,8 +834,8 @@
             const vignetteIntensity = document.getElementById("vignetteSlider").value / 100;
             if (vignetteIntensity > 0) {
                 ctx.save();
-                const rOuter = Math.sqrt(Math.pow(width / 2, 2) + Math.pow(height / 2, 2));
-                const radialGrad = ctx.createRadialGradient(width / 2, height / 2, width / 4 * scaleFactor, width / 2, height / 2, rOuter);
+                const rOuter = Math.sqrt(Math.pow(width/2, 2) + Math.pow(height/2, 2));
+                const radialGrad = ctx.createRadialGradient(width/2, height/2, width/4 * scaleFactor, width/2, height/2, rOuter);
                 radialGrad.addColorStop(0, 'rgba(0,0,0,0)');
                 radialGrad.addColorStop(1, `rgba(0,0,0,${vignetteIntensity * 0.95})`);
                 ctx.fillStyle = radialGrad;
@@ -724,11 +860,11 @@
                 ctx.lineCap = "round";
                 ctx.font = `900 ${t1Size * scaleFactor}px ${fontSelected}`;
                 ctx.textAlign = data.textAlignment;
-
+                
                 ctx.fillStyle = document.getElementById("t1Color").value;
                 ctx.strokeStyle = document.getElementById("t1Stroke").value;
                 ctx.lineWidth = parseInt(document.getElementById("t1StrokeWidth").value) * scaleFactor;
-
+                
                 // Realistic YT visual drop shadow
                 ctx.shadowColor = 'rgba(0, 0, 0, 0.85)';
                 ctx.shadowBlur = 15 * scaleFactor;
@@ -753,11 +889,11 @@
                 ctx.lineCap = "round";
                 ctx.font = `900 ${t2Size * scaleFactor}px ${fontSelected}`;
                 ctx.textAlign = data.textAlignment;
-
+                
                 ctx.fillStyle = document.getElementById("t2Color").value;
                 ctx.strokeStyle = document.getElementById("t2Stroke").value;
                 ctx.lineWidth = parseInt(document.getElementById("t2StrokeWidth").value) * scaleFactor;
-
+                
                 // Shadow
                 ctx.shadowColor = 'rgba(0, 0, 0, 0.85)';
                 ctx.shadowBlur = 15 * scaleFactor;
@@ -780,7 +916,7 @@
                 ['text1', 'text2'].forEach(target => {
                     const box = target === 'text1' ? boundingBoxes.text1 : boundingBoxes.text2;
                     const textVal = target === 'text1' ? data.text1 : data.text2;
-
+                    
                     if (!box || !textVal) return;
 
                     const isTargetHovered = hoveredTarget === target;
@@ -791,7 +927,7 @@
                         ctx.strokeStyle = isTargetDragged ? "#6366f1" : "#38bdf8";
                         ctx.lineWidth = isTargetDragged ? 3 * scaleFactor : 2 * scaleFactor;
                         ctx.setLineDash([8 * scaleFactor, 4 * scaleFactor]);
-
+                        
                         // Draw bounding box
                         ctx.strokeRect(
                             box.x * scaleFactor,
@@ -835,12 +971,12 @@
                 if (selectedBadgeType === 'new') {
                     ctx.translate(badgeX, badgeY);
                     ctx.rotate(-15 * Math.PI / 180);
-
+                    
                     ctx.fillStyle = "#facc15";
                     ctx.beginPath();
                     ctx.roundRect(-70 * scaleFactor, -30 * scaleFactor, 140 * scaleFactor, 60 * scaleFactor, 12 * scaleFactor);
                     ctx.fill();
-
+                    
                     ctx.strokeStyle = "#ffffff";
                     ctx.lineWidth = 4 * scaleFactor;
                     ctx.stroke();
@@ -853,7 +989,7 @@
 
                 } else if (selectedBadgeType === 'play') {
                     ctx.translate(badgeX, badgeY);
-
+                    
                     ctx.fillStyle = "#ef4444";
                     ctx.beginPath();
                     ctx.arc(0, 0, 45 * scaleFactor, 0, 2 * Math.PI);
@@ -865,9 +1001,9 @@
                     ctx.fillStyle = "#ffffff";
                     ctx.beginPath();
                     const size = 18 * scaleFactor;
-                    ctx.moveTo(-size / 2, -size);
-                    ctx.lineTo(size * 1.2 - size / 2, 0);
-                    ctx.lineTo(-size / 2, size);
+                    ctx.moveTo(-size/2, -size);
+                    ctx.lineTo(size * 1.2 - size/2, 0);
+                    ctx.lineTo(-size/2, size);
                     ctx.closePath();
                     ctx.fill();
                 }
@@ -881,7 +1017,7 @@
                 ctx.beginPath();
                 ctx.roundRect(15, 15, 150 * scaleFactor, 55 * scaleFactor, 8);
                 ctx.fill();
-
+                
                 ctx.fillStyle = "#ffffff";
                 ctx.font = `bold ${16}px 'Inter', sans-serif`;
                 ctx.fillText(`${langInfo.flag} ${langInfo.code}`, 30, 15 + (27 * scaleFactor));
@@ -917,7 +1053,7 @@
 
                 const canvasContainer = document.createElement("div");
                 canvasContainer.className = "w-full aspect-video rounded-lg overflow-hidden bg-slate-950 relative border border-slate-800";
-
+                
                 const canvas = document.createElement("canvas");
                 canvas.width = 640;
                 canvas.height = 360;
@@ -950,7 +1086,7 @@
         function loadCountryToEditor(countryId) {
             currentCountryId = countryId;
             const lang = LANGUAGES.find(l => l.id === countryId);
-
+            
             document.getElementById("currentEditingFlag").textContent = lang.flag;
             document.getElementById("currentEditingCountryName").textContent = `${lang.name} - ${lang.lang}`;
             document.getElementById("currentEditingCode").textContent = lang.code;
@@ -986,7 +1122,7 @@
         // FLAWLESS BOUNDING-BOX DRAG AND DROP MECHANISM
         function setupInteractiveCanvasEvents() {
             const canvas = document.getElementById("interactiveCanvas");
-
+            
             // Helper to fetch normalized base 1280x720 mouse coordinates from responsive client dimensions
             function getMousePos(evt) {
                 const rect = canvas.getBoundingClientRect();
@@ -1000,7 +1136,7 @@
             function isInsideBox(pos, box) {
                 if (!box) return false;
                 return (pos.x >= box.x && pos.x <= box.x + box.width &&
-                    pos.y >= box.y && pos.y <= box.y + box.height);
+                        pos.y >= box.y && pos.y <= box.y + box.height);
             }
 
             // Handle hover and mouse click checks
@@ -1047,7 +1183,7 @@
 
             function handleMouseDown(clientX, clientY) {
                 const mousePos = getMousePos({ clientX, clientY });
-
+                
                 const overT1 = isInsideBox(mousePos, boundingBoxes.text1);
                 const overT2 = isInsideBox(mousePos, boundingBoxes.text2);
                 const data = styleData[currentCountryId];
@@ -1066,7 +1202,7 @@
                     dragOffset.y = mousePos.y - data.text2Pos.y;
                     canvas.style.cursor = "grabbing";
                 }
-
+                
                 renderIndividualEditorCanvas();
             }
 
@@ -1116,20 +1252,21 @@
             btn.innerHTML = `<i class="fa-solid fa-spinner animate-spin mr-2"></i> Localizando com IA...`;
 
             if (!apiKey) {
-                // Mock delay simulation
+                // Mock delay simulation if key is not active
                 setTimeout(() => {
+                    // Update matching activeTheme preset translations fallback
                     LANGUAGES.forEach(lang => {
-                        styleData[lang.id].text1 = DEFAULT_TRANSLATIONS[lang.id].text1;
-                        styleData[lang.id].text2 = DEFAULT_TRANSLATIONS[lang.id].text2;
+                        styleData[lang.id].text1 = THEME_PRESETS[activeTheme].translations[lang.id].text1;
+                        styleData[lang.id].text2 = THEME_PRESETS[activeTheme].translations[lang.id].text2;
                     });
-
+                    
                     btn.disabled = false;
                     btn.innerHTML = originalHtml;
                     requestRenderAll();
-
+                    
                     const toast = document.createElement("div");
                     toast.className = "fixed bottom-5 right-5 bg-indigo-600 text-white font-semibold text-xs px-5 py-3 rounded-xl shadow-2xl z-[200] border border-indigo-400/20 transition duration-500 animate-bounce";
-                    toast.innerHTML = `<i class="fa-solid fa-wand-magic-sparkles mr-2"></i> Traduzido! Adicione uma chave Gemini para criar novas frases.`;
+                    toast.innerHTML = `<i class="fa-solid fa-wand-magic-sparkles mr-2"></i> Traduzido! Adicione uma chave Gemini para criar novas frases fora dos temas.`;
                     document.body.appendChild(toast);
                     setTimeout(() => toast.remove(), 4000);
                 }, 1500);
@@ -1195,7 +1332,7 @@ US, ES, FR, ID, AR, HI, RU, DE, JA, IT, KO, TH, VN, TR, PL, TW.`;
 
                 const res = await makeApiCall();
                 const result = await res.json();
-
+                
                 const candidate = result.candidates?.[0];
                 if (candidate && candidate.content?.parts?.[0]?.text) {
                     const parsedJson = JSON.parse(candidate.content.parts[0].text);
@@ -1207,7 +1344,7 @@ US, ES, FR, ID, AR, HI, RU, DE, JA, IT, KO, TH, VN, TR, PL, TW.`;
                                 styleData[langId].text2 = t.text2;
                             }
                         });
-
+                        
                         loadCountryToEditor(currentCountryId);
                         requestRenderAll();
                     }
@@ -1229,10 +1366,10 @@ US, ES, FR, ID, AR, HI, RU, DE, JA, IT, KO, TH, VN, TR, PL, TW.`;
             const tempCanvas = document.createElement("canvas");
             tempCanvas.width = 1280;
             tempCanvas.height = 720;
-
+            
             // Render at full scale (1280x720) for production quality output
             drawThumbnailOnCanvas(tempCanvas, countryId, 1280, 720, false);
-
+            
             const link = document.createElement("a");
             const lang = LANGUAGES.find(l => l.id === countryId);
             link.download = `thumb_${lang.code}_${lang.name.replace(/\s+/g, '_')}.png`;
@@ -1256,10 +1393,107 @@ US, ES, FR, ID, AR, HI, RU, DE, JA, IT, KO, TH, VN, TR, PL, TW.`;
             modal.classList.toggle("hidden");
         }
 
-        window.onload = function () {
+        function applyGlobalPosition(axis, value) {
+            const intVal = parseInt(value);
+            
+            if (axis === 'y1') {
+                document.getElementById("globalT1YLabel").textContent = intVal + "px";
+                document.getElementById("globalT1Y").value = intVal;
+            } else if (axis === 'x1') {
+                document.getElementById("globalT1XLabel").textContent = intVal + "px";
+                document.getElementById("globalT1X").value = intVal;
+            } else if (axis === 'y2') {
+                document.getElementById("globalT2YLabel").textContent = intVal + "px";
+                document.getElementById("globalT2Y").value = intVal;
+            } else if (axis === 'x2') {
+                document.getElementById("globalT2XLabel").textContent = intVal + "px";
+                document.getElementById("globalT2X").value = intVal;
+            }
+
+            // Move the elements of all languages inside the memory buffer
+            LANGUAGES.forEach(lang => {
+                if (styleData[lang.id]) {
+                    if (axis === 'y1') styleData[lang.id].text1Pos.y = intVal;
+                    if (axis === 'x1') styleData[lang.id].text1Pos.x = intVal;
+                    if (axis === 'y2') styleData[lang.id].text2Pos.y = intVal;
+                    if (axis === 'x2') styleData[lang.id].text2Pos.x = intVal;
+                }
+            });
+
+            // Refresh the screen elements
+            if (activeTab === "editor") {
+                renderIndividualEditorCanvas();
+            } else {
+                renderGrid();
+            }
+        }
+
+        function applyGlobalAlignment(alignment) {
+            globalTextAlignment = alignment;
+            
+            const aligns = ['left', 'center', 'right'];
+            aligns.forEach(a => {
+                const btn = document.getElementById(`alignBtn_${a}`);
+                if (btn) {
+                    if (a === alignment) {
+                        btn.className = "bg-indigo-600 text-white py-1.5 px-1 rounded-lg text-xs font-bold transition flex items-center justify-center gap-1 border border-indigo-400/20";
+                    } else {
+                        btn.className = "bg-slate-900 hover:bg-slate-800 text-slate-400 hover:text-white py-1.5 px-1 rounded-lg text-xs font-bold transition flex items-center justify-center gap-1 border border-slate-800";
+                    }
+                }
+            });
+
+            LANGUAGES.forEach(lang => {
+                if (styleData[lang.id]) {
+                    styleData[lang.id].textAlignment = alignment;
+                }
+            });
+
+            requestRenderAll();
+        }
+
+        function syncCurrentLayoutToAll() {
+            const sourceData = styleData[currentCountryId];
+            
+            // Replicate settings across the whole stack
+            LANGUAGES.forEach(lang => {
+                if (lang.id !== currentCountryId) {
+                    styleData[lang.id].text1Pos = { ...sourceData.text1Pos };
+                    styleData[lang.id].text2Pos = { ...sourceData.text2Pos };
+                    styleData[lang.id].textAlignment = sourceData.textAlignment;
+                    styleData[lang.id].fontScale = sourceData.fontScale;
+                }
+            });
+
+            // Update Left Sidebar sliders configuration values visually to prevent desync
+            document.getElementById("globalT1Y").value = sourceData.text1Pos.y;
+            document.getElementById("globalT1YLabel").textContent = sourceData.text1Pos.y + "px";
+            
+            document.getElementById("globalT1X").value = sourceData.text1Pos.x;
+            document.getElementById("globalT1XLabel").textContent = sourceData.text1Pos.x + "px";
+
+            document.getElementById("globalT2Y").value = sourceData.text2Pos.y;
+            document.getElementById("globalT2YLabel").textContent = sourceData.text2Pos.y + "px";
+
+            document.getElementById("globalT2X").value = sourceData.text2Pos.x;
+            document.getElementById("globalT2XLabel").textContent = sourceData.text2Pos.x + "px";
+
+            applyGlobalAlignment(sourceData.textAlignment);
+
+            // Display floating success confirmation
+            const toast = document.createElement("div");
+            toast.className = "fixed bottom-5 right-5 bg-emerald-600 text-white font-semibold text-xs px-5 py-3 rounded-xl shadow-2xl z-[200] border border-emerald-400/20 transition duration-500 animate-bounce";
+            toast.innerHTML = `<i class="fa-solid fa-circle-check mr-2"></i> Layout e coordenadas aplicados em todas as 16 thumbnails com sucesso!`;
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 4000);
+
+            requestRenderAll();
+        }
+
+        // Window entry point
+        window.onload = function() {
             initApp();
         };
     </script>
 </body>
-
 </html>
