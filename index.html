@@ -97,12 +97,12 @@
                     <div class="space-y-3">
                         <div>
                             <label class="block text-xs text-slate-400 font-semibold mb-1">Linha de Texto Principal (Destaque)</label>
-                            <input type="text" id="ptText1" value="O NOVO TIMESKIP" oninput="handleManualTextInput()" 
+                            <input type="text" id="ptText1" value="100 SEGREDOS" oninput="handleManualTextInput()" 
                                 class="w-full bg-slate-900 border border-slate-800 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-indigo-500 text-white font-bold">
                         </div>
                         <div>
                             <label class="block text-xs text-slate-400 font-semibold mb-1">Linha de Texto Secundária</label>
-                            <input type="text" id="ptText2" value="DOS CHAPÉUS DE PALHA" oninput="handleManualTextInput()" 
+                            <input type="text" id="ptText2" value="QUE VOCÊ NÃO SABIA" oninput="handleManualTextInput()" 
                                 class="w-full bg-slate-900 border border-slate-800 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-indigo-500 text-white font-bold">
                         </div>
                         
@@ -484,7 +484,7 @@
                                     </div>
                                     <div>
                                         <label class="block text-[9px] text-slate-500 mb-0.5">Larg. Ext.</label>
-                                        <input type="number" id="indT1StrokeOuterWidth" oninput="updateIndividualStyle('indT1StrokeOuterWidth', parseInt(this.value) || 0)" class="w-full bg-slate-950 text-[11px] border border-slate-800 rounded px-1.5 py-1 text-white">
+                                        <input type="number" id="indT1StrokeOuterWidth" oninput="updateIndividualStyle('t1StrokeOuterWidth', parseInt(this.value) || 0)" class="w-full bg-slate-950 text-[11px] border border-slate-800 rounded px-1.5 py-1 text-white">
                                     </div>
                                 </div>
                             </div>
@@ -513,7 +513,7 @@
                                     </div>
                                     <div>
                                         <label class="block text-[9px] text-slate-500 mb-0.5">Larg. Ext.</label>
-                                        <input type="number" id="indT2StrokeOuterWidth" oninput="updateIndividualStyle('indT2StrokeOuterWidth', parseInt(this.value) || 0)" class="w-full bg-slate-950 text-[11px] border border-slate-800 rounded px-1.5 py-1 text-white">
+                                        <input type="number" id="indT2StrokeOuterWidth" oninput="updateIndividualStyle('t2StrokeOuterWidth', parseInt(this.value) || 0)" class="w-full bg-slate-950 text-[11px] border border-slate-800 rounded px-1.5 py-1 text-white">
                                     </div>
                                 </div>
                             </div>
@@ -620,7 +620,7 @@
             "hi": { text1: "गुप्त रणनीति", text2: "आज खुलासा हुआ" },
             "ru": { text1: "СЕKРЕТНАЯ СТРАТЕГИЯ", text2: "РАСКРЫTA СЕГОДНЯ" },
             "de": { text1: "GEHEIME STRATEGIE", text2: "HEUTE ENTHÜLLT" },
-            "ja": { text1: "秘密の戦略", text2: "本日ついに公開！" },
+            "ja": { text1: "秘密の戦略", text2: "本日ついに公开！" },
             "it": { text1: "STRATEGIA SEGRETA", text2: "SVELATA OGGI" },
             "ko": { text1: "비밀 전략", text2: "오늘 전격 공개!" },
             "th": { text1: "กลยุทธ์ลับ", text2: "เปิดเผยวันนี้" },
@@ -1667,6 +1667,7 @@ US, ES, FR, ID, AR, HI, RU, DE, JA, IT, KO, TH, VN, TR, PL, TW.`;
             modal.classList.toggle("hidden");
         }
 
+        // Global position mapping
         function applyGlobalPosition(axis, value) {
             const intVal = parseInt(value);
             
