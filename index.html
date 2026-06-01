@@ -81,35 +81,16 @@
                             Conteúdo Original (PT)
                         </h3>
                     </div>
-
-                    <!-- Presets Selector Buttons -->
-                    <div class="mb-4">
-                        <label class="block text-[10px] text-slate-400 font-bold uppercase tracking-wider mb-2">Temas Rápidos de Demonstração</label>
-                        <div class="grid grid-cols-3 gap-1.5">
-                            <button onclick="selectThemePreset('games')" id="themeBtn_games" class="bg-indigo-600 text-white font-black py-2 px-1 rounded-lg text-[11px] transition flex flex-col items-center justify-center gap-1 border border-indigo-400/20">
-                                <i class="fa-solid fa-gamepad text-sm"></i>
-                                Games
-                            </button>
-                            <button onclick="selectThemePreset('anime')" id="themeBtn_anime" class="bg-slate-900 hover:bg-slate-800 text-slate-400 hover:text-white font-bold py-2 px-1 rounded-lg text-[11px] transition flex flex-col items-center justify-center gap-1 border border-slate-800">
-                                <i class="fa-solid fa-wand-magic-sparkles text-sm"></i>
-                                Anime
-                            </button>
-                            <button onclick="selectThemePreset('filosofia')" id="themeBtn_filosofia" class="bg-slate-900 hover:bg-slate-800 text-slate-400 hover:text-white font-bold py-2 px-1 rounded-lg text-[11px] transition flex flex-col items-center justify-center gap-1 border border-slate-800">
-                                <i class="fa-solid fa-landmark text-sm"></i>
-                                Filosofia
-                            </button>
-                        </div>
-                    </div>
                     
                     <div class="space-y-3">
                         <div>
                             <label class="block text-xs text-slate-400 font-semibold mb-1">Linha de Texto Principal (Destaque)</label>
-                            <input type="text" id="ptText1" value="NOVO MUNDO SECRETO" oninput="handleManualTextInput()" 
+                            <input type="text" id="ptText1" value="ESTRATÉGIA SECRETA" oninput="handleManualTextInput()" 
                                 class="w-full bg-slate-900 border border-slate-800 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-indigo-500 text-white font-bold">
                         </div>
                         <div>
                             <label class="block text-xs text-slate-400 font-semibold mb-1">Linha de Texto Secundária</label>
-                            <input type="text" id="ptText2" value="REVELADO HOJE NO GAME" oninput="handleManualTextInput()" 
+                            <input type="text" id="ptText2" value="REVELADA HOJE" oninput="handleManualTextInput()" 
                                 class="w-full bg-slate-900 border border-slate-800 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-indigo-500 text-white font-bold">
                         </div>
                         
@@ -123,7 +104,7 @@
                     </div>
                 </div>
 
-                <!-- STEP 2: Background Image Template Options (Gradients Removed) -->
+                <!-- STEP 2: Background Image Template Options -->
                 <div class="bg-slate-950/50 p-4 rounded-xl border border-slate-800/80">
                     <h3 class="font-bold text-sm text-indigo-400 uppercase tracking-wider flex items-center gap-2 mb-3">
                         <span class="bg-indigo-500/10 text-indigo-400 text-[10px] py-0.5 px-2 rounded-full">2</span>
@@ -139,7 +120,7 @@
                                     <div class="flex flex-col items-center justify-center pt-3 pb-4 px-2 text-center">
                                         <i class="fa-solid fa-images text-xl text-indigo-400 mb-1.5 animate-pulse"></i>
                                         <p class="text-[10px] text-slate-300 font-bold">Enviar Imagem de Template</p>
-                                        <p class="text-[9px] text-slate-500 mt-1" id="bgFileName">Fundo do Tema Ativo</p>
+                                        <p class="text-[9px] text-slate-500 mt-1" id="bgFileName">Nenhum arquivo enviado - Tela preta ativa</p>
                                     </div>
                                     <input type="file" id="bgUpload" accept="image/*" class="hidden" onchange="handleBgUpload(event)">
                                 </label>
@@ -155,7 +136,7 @@
                             </div>
                             <div>
                                 <label class="block text-xs text-slate-400 font-semibold mb-1">Brilho do Fundo</label>
-                                <input type="range" id="bgBrightnessSlider" min="10" max="150" value="85" oninput="requestRenderAll()"
+                                <input type="range" id="bgBrightnessSlider" min="10" max="150" value="100" oninput="requestRenderAll()"
                                     class="w-full accent-indigo-500 bg-slate-800 h-1 rounded-lg cursor-pointer">
                             </div>
                         </div>
@@ -408,7 +389,7 @@
                             <!-- Sync drag coordinates layout to all 16 other language assets -->
                             <button onclick="syncCurrentLayoutToAll()" 
                                 class="w-full bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-400 border border-indigo-500/30 text-xs font-bold py-2.5 px-3 rounded-lg transition flex items-center justify-center gap-2">
-                                <i class="fa-solid fa-arrows-spin animate-spin-slow"></i> Aplicar Esta Posição em Todas as Thumbs
+                                <i class="fa-solid fa-arrows-spin"></i> Aplicar Esta Posição em Todas as Thumbs
                             </button>
 
                             <div class="grid grid-cols-2 gap-3 pt-1">
@@ -431,7 +412,7 @@
 
     <!-- HELPER INFO MODAL (API KEY INFO) -->
     <div id="apiHelpModal" class="hidden fixed inset-0 z-[100] bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
-        <div class="bg-slate-900 border border-slate-900 rounded-2xl max-w-md w-full p-6 relative shadow-2xl">
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl max-w-md w-full p-6 relative shadow-2xl">
             <button onclick="toggleApiHelp()" class="absolute top-4 right-4 text-slate-500 hover:text-white transition">
                 <i class="fa-solid fa-xmark text-lg"></i>
             </button>
@@ -442,13 +423,13 @@
                 <h3 class="font-bold text-lg text-white">Como Funciona a IA?</h3>
             </div>
             <div class="space-y-3 text-slate-300 text-xs leading-relaxed">
-                <p>Nós incluímos <strong>traduções de demonstração perfeitas de alta qualidade</strong> para os temas padrão de <strong>Games, Anime e Filosofia</strong>, para que você possa testar o aplicativo imediatamente sem qualquer custo de API.</p>
+                <p>Nós incluímos um sistema de **Tradução Localizada de Demonstração** para que você possa testar o aplicativo e ver o grid ser traduzido em tempo real para os 16 países imediatamente, mesmo sem uma chave de API.</p>
                 <p>Ao inserir sua <strong>Chave de API do Gemini</strong> no cabeçalho:</p>
                 <ul class="list-disc pl-5 space-y-1.5 text-slate-400">
-                    <li>Você pode digitar qualquer frase em português (ex: <i>"Nova Técnica Revelada - Sem Programar"</i>).</li>
-                    <li>O modelo <code class="text-indigo-400 font-mono bg-slate-950 px-1 py-0.5 rounded">gemini-3-flash-preview</code> traduzirá dinamicamente com <strong>localização cultural e adaptando gírias e tamanho das palavras</strong> para os 16 países!</li>
+                    <li>Você pode digitar qualquer frase personalizada em português (ex: <i>"Estratégia Secreta Nunca Revelada"</i>).</li>
+                    <li>O modelo <code class="text-indigo-400 font-mono bg-slate-950 px-1 py-0.5 rounded">gemini-2.5-flash-preview-09-2025</code> traduzirá dinamicamente com <strong>localização de gírias e tamanho ideal de termos</strong> para os 16 países!</li>
                 </ul>
-                <p class="text-[11px] text-yellow-500 bg-yellow-500/10 p-2.5 rounded border border-yellow-500/20 font-medium">Sua chave é mantida localmente no seu navegador e enviada diretamente para a API oficial do Google.</p>
+                <p class="text-[11px] text-yellow-500 bg-yellow-500/10 p-2.5 rounded border border-yellow-500/20 font-medium">Sua chave é mantida localmente no seu navegador e enviada diretamente para a API oficial do Google de forma segura.</p>
             </div>
             <button onclick="toggleApiHelp()" class="mt-5 w-full bg-slate-800 hover:bg-slate-700 text-white font-bold py-2 rounded-xl transition text-xs">Entendido</button>
         </div>
@@ -476,85 +457,32 @@
             { id: "tw", code: "TW", name: "Taiwan", lang: "Traditional Chinese", flag: "🇹🇼", rtl: false, fontScale: 1.2 }
         ];
 
-        // Theme presets configuration loaded with premium matching Unsplash backgrounds
-        const THEME_PRESETS = {
-            games: {
-                ptText1: "NOVO MUNDO SECRETO",
-                ptText2: "REVELADO HOJE NO GAME",
-                bg: "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=1280&h=720&q=80",
-                translations: {
-                    "us": { text1: "NEW SECRET WORLD", text2: "REVEALED IN-GAME TODAY" },
-                    "es": { text1: "NUEVO MUNDO SECRETO", text2: "REVELADO HOY EN EL JUEGO" },
-                    "fr": { text1: "NOUVEAU MONDE SECRET", text2: "RÉVÉLÉ DANS LE JEU AUJOURD'HUI" },
-                    "id": { text1: "DUNIA RAHASIA BARU", text2: "TERUNGKAP HARI INI" },
-                    "ar": { text1: "عالم سري جديد", text2: "تم الكشف عنه اليوم في اللعبة" },
-                    "hi": { text1: "नया गुप्त संसार", text2: "आज गेम में खुलासा हुआ" },
-                    "ru": { text1: "НОВЫЙ СЕКРЕТНЫЙ МИР", text2: "РАСКРЫТ В ИГРЕ СЕГОДНЯ" },
-                    "de": { text1: "NEUE GEHEIME WELT", text2: "HEUTE IM SPIEL ENTHÜLLT" },
-                    "ja": { text1: "新しい隠しワールド", text2: "本日ゲーム内で公開！" },
-                    "it": { text1: "NUOVO MONDO SEGRETO", text2: "SVELATO OGGI NEL GIOCO" },
-                    "ko": { text1: "새로운 비밀 세계", text2: "오늘 게임에서 전격 공개!" },
-                    "th": { text1: "โลกเร้นลับแห่งใหม่", text2: "เปิดเผยในเกมวันนี้" },
-                    "vn": { text1: "THẾ GIỚI BÍ MẬT MỚI", text2: "HÉ LỘ TRONG GAME HÔM NAY" },
-                    "tr": { text1: "YENİ GİZLİ DÜNYA", text2: "BUGÜN OYUNDA AÇIKLANDI" },
-                    "pl": { text1: "NOWY TAJNY ŚWIAT", text2: "ODKRYTY DZISIAJ W GRZE" },
-                    "tw": { text1: "全新秘密地圖", text2: "今天遊戲內正式公開" }
-                }
-            },
-            anime: {
-                ptText1: "ESTE PROTAGONISTA",
-                ptText2: "PASSOU DOS LIMITES",
-                bg: "https://images.unsplash.com/photo-1578632767115-351597cf2477?auto=format&fit=crop&w=1280&h=720&q=80",
-                translations: {
-                    "us": { text1: "THIS PROTAGONIST", text2: "WENT TOO FAR" },
-                    "es": { text1: "ESTE PROTAGONISTA", text2: "CRUZÓ TODOS LOS LÍMITES" },
-                    "fr": { text1: "CE PROTAGONISTE", text2: "A DÉPASSÉ LES BORNES" },
-                    "id": { text1: "PROTAGONIS INI", text2: "SUDAH KELAWAT BATAS" },
-                    "ar": { text1: "هذا البطل الرئيسي", text2: "تجاوز كل الحدود" },
-                    "hi": { text1: "इस मुख्य पात्र ने", text2: "सारी हदें पार कर दीं" },
-                    "ru": { text1: "ЭТОТ ПРОТАГОНИСТ", text2: "ПЕРЕШЕЛ ВСЕ ГРАНИЦЫ" },
-                    "de": { text1: "DIESER PROTAGONIST", text2: "GING VIEEEL ZU WEIT" },
-                    "ja": { text1: "この最強主人公", text2: "ついに限界を突破！" },
-                    "it": { text1: "QUESTO PROTAGONISTA", text2: "HA SUPERATO IL LIMITE" },
-                    "ko": { text1: "이 사기캐 주인공", text2: "결국 선을 넘어버렸다!" },
-                    "th": { text1: "พระเอกสุดเทพคนนี้", text2: "ทะลุขีดจำกัดไปแล้ว" },
-                    "vn": { text1: "MAIN BÁ ĐẠO NÀY", text2: "ĐÃ VƯỢT QUÁ GIỚI HẠN" },
-                    "tr": { text1: "BU BAŞKARAKTER", text2: "SINIRLARI TAMAMEN AŞTI" },
-                    "pl": { text1: "TEN PROTAGONISTA", text2: "PRZEKROCZYŁ WSZELKIE GRANICE" },
-                    "tw": { text1: "這個開掛主角", text2: "實力居然超越極限" }
-                }
-            },
-            filosofia: {
-                ptText1: "A ARTE DE CONTROLAR",
-                ptText2: "A SUA PRÓPRIA MENTE",
-                bg: "https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?auto=format&fit=crop&w=1280&h=720&q=80",
-                translations: {
-                    "us": { text1: "THE ART OF CONTROLLING", text2: "YOUR OWN MIND" },
-                    "es": { text1: "EL ARTE DE CONTROLAR", text2: "TU PROPIA MENTE" },
-                    "fr": { text1: "L'ART DE CONTRÔLER", text2: "VOTRE PROPRE ESPRIT" },
-                    "id": { text1: "SENI MENGENDALIKAN", text2: "PIKIRAN ANDA SENDIRI" },
-                    "ar": { text1: "فن السيطرة على", text2: "عقلك وأفكارك" },
-                    "hi": { text1: "अपने दिमाग को काबू", text2: "करने की गुप्त कला" },
-                    "ru": { text1: "ИСКУССТВО КОНТROЛЯ", text2: "СОБСТВЕННОГО РАЗУМА" },
-                    "de": { text1: "DIE KUNST DER KONTROLLE", text2: "ÜBER DEN EIGENEN GEIST" },
-                    "ja": { text1: "自らの心を完全に", text2: "支配する究極のアート" },
-                    "it": { text1: "L'ARTE DI CONTROLLARE", text2: "LA TUA STESSA MENTE" },
-                    "ko": { text1: "내면을 지배하고", text2: "마음을 조절하는 기술" },
-                    "th": { text1: "ศิลปะแห่งการควบคุม", text2: "จิตใจของตัวเอง" },
-                    "vn": { text1: "NGHỆ THUẬT KIỂM SOÁT", text2: "CHÍNH TÂM TRÍ BẠN" },
-                    "tr": { text1: "ZİHNİNİZİ KONTROL", text2: "ETMENİN EŞSİZ SANATI" },
-                    "pl": { text1: "SZTUKA KONTROLOWANIA", text2: "WŁASNEGO UMYSŁU" },
-                    "tw": { text1: "完全掌控自我", text2: "心靈修形態的終極藝術" }
-                }
-            }
+        // Fallback local translations for the default starting template text (ESTRATÉGIA SECRETA / REVELADA HOJE)
+        const fallbackTranslations = {
+            "us": { text1: "SECRET STRATEGY", text2: "REVEALED TODAY" },
+            "es": { text1: "ESTRATEGIA SECRETA", text2: "REVELADA HOY" },
+            "fr": { text1: "STRATÉGIE SECRÈTE", text2: "RÉVÉLÉE AUJOURD'HUI" },
+            "id": { text1: "STRATEGI RAHASIA", text2: "TERUNGKAP HARI INI" },
+            "ar": { text1: "استراتيجية سرية", text2: "تم الكشف عنها اليوم" },
+            "hi": { text1: "गुप्त रणनीति", text2: "आज खुलासा हुआ" },
+            "ru": { text1: "СЕКРЕТНАЯ СТРАТЕГИЯ", text2: "РАСКРЫТА СЕГОДНЯ" },
+            "de": { text1: "GEHEIME STRATEGIE", text2: "HEUTE ENTHÜLLT" },
+            "ja": { text1: "秘密の戦略", text2: "本日ついに公開！" },
+            "it": { text1: "STRATEGIA SEGRETA", text2: "SVELATA OGGI" },
+            "ko": { text1: "비밀 전략", text2: "오늘 전격 공개!" },
+            "th": { text1: "กลยุทธ์ลับ", text2: "เปิดเผยวันนี้" },
+            "vn": { text1: "CHIẾN THUẬT BÍ MẬT", text2: "HÉ LỘ HÔM NAY" },
+            "tr": { text1: "GİZLİ STRATEJİ", text2: "BUGÜN AÇIKLANDI" },
+            "pl": { text1: "TAJNA STRATEGIA", text2: "ODKRYTA DZISIAJ" },
+            "tw": { text1: "全新秘密策略", text2: "今天正式公開" }
         };
 
         // UI & Render State
         let activeTab = "grid"; // 'grid' or 'editor'
         let currentCountryId = "us"; // Currently selected country for fine-tuning
-        let uploadedBgImage = null; // Custom uploaded background element
-        let activeTheme = "games"; // 'games', 'anime', or 'filosofia'
+        let uploadedBgImage = null; // Custom uploaded background element (Starts NULL / Black)
         let globalTextAlignment = "center";
+        let hasBeenTranslated = false;
         
         // Dragging & Hover mechanics variables on interactive canvas
         let isDragging = false;
@@ -567,8 +495,8 @@
         let styleData = {};
 
         function initApp() {
-            // Apply the default 'games' theme configuration
-            loadThemeConfig("games");
+            // Apply default layout on start (Clean Black screen)
+            initDefaultLayout();
 
             // Populate selector inside individual view
             const select = document.getElementById("countryEditorSelect");
@@ -586,29 +514,22 @@
             setupInteractiveCanvasEvents();
         }
 
-        // Apply a full preset theme translation and update background
-        function loadThemeConfig(themeKey) {
-            activeTheme = themeKey;
-            const theme = THEME_PRESETS[themeKey];
+        // Initialize state without mock themes, completely black background
+        function initDefaultLayout() {
+            const val1 = "ESTRATÉGIA SECRETA";
+            const val2 = "REVELADA HOJE";
 
-            // Set Portuguese Inputs
-            document.getElementById("ptText1").value = theme.ptText1;
-            document.getElementById("ptText2").value = theme.ptText2;
+            document.getElementById("ptText1").value = val1;
+            document.getElementById("ptText2").value = val2;
+            document.getElementById("bgFileName").textContent = "Nenhum arquivo enviado - Tela preta ativa";
 
-            // Load theme background image
-            const defaultImg = new Image();
-            defaultImg.crossOrigin = "anonymous";
-            defaultImg.onload = function() {
-                uploadedBgImage = defaultImg;
-                requestRenderAll();
-            };
-            defaultImg.src = theme.bg;
+            uploadedBgImage = null; // Clean slate
+            hasBeenTranslated = false;
 
-            // Apply styleData and default translations
             LANGUAGES.forEach(lang => {
                 styleData[lang.id] = {
-                    text1: theme.translations[lang.id].text1,
-                    text2: theme.translations[lang.id].text2,
+                    text1: val1,
+                    text2: val2,
                     text1Pos: { x: 640, y: 220 }, // Base layout coordinates on 1280x720 canvas
                     text2Pos: { x: 640, y: 390 },
                     fontScale: lang.fontScale, // individual fine-tuning scale
@@ -616,6 +537,7 @@
                 };
             });
 
+            // Sync global sliders UI to match initial state
             if (document.getElementById("globalT1Y")) {
                 document.getElementById("globalT1Y").value = 220;
                 document.getElementById("globalT1YLabel").textContent = "220px";
@@ -629,25 +551,20 @@
             }
         }
 
-        function selectThemePreset(themeKey) {
-            // Update buttons visually
-            const themes = ['games', 'anime', 'filosofia'];
-            themes.forEach(t => {
-                const btn = document.getElementById(`themeBtn_${t}`);
-                if (t === themeKey) {
-                    btn.className = "bg-indigo-600 text-white font-black py-2 px-1 rounded-lg text-[11px] transition flex flex-col items-center justify-center gap-1 border border-indigo-400/20";
-                } else {
-                    btn.className = "bg-slate-900 hover:bg-slate-800 text-slate-400 hover:text-white font-bold py-2 px-1 rounded-lg text-[11px] transition flex flex-col items-center justify-center gap-1 border border-slate-800";
-                }
-            });
-
-            // Load configurations
-            loadThemeConfig(themeKey);
-
-            // If we are currently editing, update the inputs in the active individual view
-            loadCountryToEditor(currentCountryId);
-
-            requestRenderAll();
+        // Custom notification system instead of alert()
+        function showToast(message, type = 'info') {
+            const toast = document.createElement("div");
+            const bgColor = type === 'error' ? 'bg-rose-600' : type === 'success' ? 'bg-emerald-600' : 'bg-indigo-600';
+            const icon = type === 'error' ? 'fa-triangle-exclamation' : type === 'success' ? 'fa-circle-check' : 'fa-info-circle';
+            
+            toast.className = `fixed bottom-5 right-5 ${bgColor} text-white font-semibold text-xs px-5 py-3 rounded-xl shadow-2xl z-[200] border border-white/10 transition duration-500 animate-bounce flex items-center gap-2`;
+            toast.innerHTML = `<i class="fa-solid ${icon}"></i> ${message}`;
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.classList.add("opacity-0", "translate-y-2");
+                setTimeout(() => toast.remove(), 500);
+            }, 4000);
         }
 
         function switchTab(tab) {
@@ -683,6 +600,7 @@
                     img.onload = function() {
                         uploadedBgImage = img;
                         requestRenderAll();
+                        showToast("Template de imagem carregado com sucesso!", "success");
                     };
                     img.src = e.target.result;
                 };
@@ -705,20 +623,18 @@
             const val1 = document.getElementById("ptText1").value.toUpperCase();
             const val2 = document.getElementById("ptText2").value.toUpperCase();
             
-            // If the user hasn't translated via AI yet, we mirror input for English (US) to make live testing fluid
-            if (styleData["us"].text1 === THEME_PRESETS[activeTheme].translations["us"].text1) {
-                styleData["us"].text1 = val1 || "TEXTO 1";
-            }
-            if (styleData["us"].text2 === THEME_PRESETS[activeTheme].translations["us"].text2) {
-                styleData["us"].text2 = val2 || "TEXTO 2";
-            }
+            // Mirror to all languages if they haven't run the AI translation yet
+            LANGUAGES.forEach(lang => {
+                if (!hasBeenTranslated) {
+                    styleData[lang.id].text1 = val1;
+                    styleData[lang.id].text2 = val2;
+                }
+            });
 
             // Also reload current text values to active view
             const activeData = styleData[currentCountryId];
-            if (currentCountryId === "us") {
-                document.getElementById("overrideText1").value = activeData.text1;
-                document.getElementById("overrideText2").value = activeData.text2;
-            }
+            document.getElementById("overrideText1").value = activeData.text1;
+            document.getElementById("overrideText2").value = activeData.text2;
 
             requestRenderAll();
         }
@@ -739,9 +655,12 @@
             const defaultLangScale = LANGUAGES.find(l => l.id === currentCountryId).fontScale;
             const data = styleData[currentCountryId];
             
-            // Reset to current theme preset baseline
-            data.text1 = THEME_PRESETS[activeTheme].translations[currentCountryId].text1;
-            data.text2 = THEME_PRESETS[activeTheme].translations[currentCountryId].text2;
+            // Reset to default mirrored PT inputs or fallback translation
+            const val1 = document.getElementById("ptText1").value.toUpperCase();
+            const val2 = document.getElementById("ptText2").value.toUpperCase();
+
+            data.text1 = (hasBeenTranslated && fallbackTranslations[currentCountryId]) ? fallbackTranslations[currentCountryId].text1 : val1;
+            data.text2 = (hasBeenTranslated && fallbackTranslations[currentCountryId]) ? fallbackTranslations[currentCountryId].text2 : val2;
             data.text1Pos = { x: 640, y: 220 };
             data.text2Pos = { x: 640, y: 390 };
             data.fontScale = defaultLangScale;
@@ -752,6 +671,7 @@
             document.getElementById("scaleLabel").textContent = defaultLangScale.toFixed(2) + "x";
 
             renderIndividualEditorCanvas();
+            showToast("Ajustes individuais restaurados para o padrão.", "info");
         }
 
         // Helper to calculate exact geometric boundaries of text to perform flawless hit tests
@@ -787,7 +707,7 @@
             };
         }
 
-        // Drawing rendering logic of thumbnails
+        // Drawing rendering logic of thumbnails (Optimized with solid black background fallback)
         function drawThumbnailOnCanvas(canvas, countryId, width = 1280, height = 720, isInteractive = false) {
             const ctx = canvas.getContext("2d");
             const data = styleData[countryId];
@@ -808,27 +728,21 @@
                 ctx.drawImage(uploadedBgImage, 0, 0, uploadedBgImage.width, uploadedBgImage.height,
                                              shiftX, shiftY, uploadedBgImage.width*ratio, uploadedBgImage.height*ratio);
             } else {
-                // If template background failed or not yet set, display clean dark checkered studio mockup grid
-                ctx.fillStyle = "#1e293b";
+                // Completely black background requested by the user for custom templates
+                ctx.fillStyle = "#000000";
                 ctx.fillRect(0, 0, width, height);
-                ctx.strokeStyle = "#334155";
-                ctx.lineWidth = 1;
-                for (let i = 0; i < width; i += 40 * scaleFactor) {
-                    ctx.beginPath(); ctx.moveTo(i, 0); ctx.lineTo(i, height); ctx.stroke();
-                }
-                for (let j = 0; j < height; j += 40 * scaleFactor) {
-                    ctx.beginPath(); ctx.moveTo(0, j); ctx.lineTo(width, j); ctx.stroke();
-                }
             }
             ctx.restore();
 
-            // RENDER BG BRIGHTNESS FILTER
-            ctx.save();
-            const bgBrightness = document.getElementById("bgBrightnessSlider").value / 100;
-            ctx.fillStyle = "black";
-            ctx.globalAlpha = Math.max(0, 1 - bgBrightness);
-            ctx.fillRect(0, 0, width, height);
-            ctx.restore();
+            // RENDER BG BRIGHTNESS FILTER (Only useful when background image is uploaded)
+            if (uploadedBgImage) {
+                ctx.save();
+                const bgBrightness = document.getElementById("bgBrightnessSlider").value / 100;
+                ctx.fillStyle = "black";
+                ctx.globalAlpha = Math.max(0, 1 - bgBrightness);
+                ctx.fillRect(0, 0, width, height);
+                ctx.restore();
+            }
 
             // VIGNETTE EFFECT (For visual contrast)
             const vignetteIntensity = document.getElementById("vignetteSlider").value / 100;
@@ -1242,7 +1156,7 @@
             const ptText2 = document.getElementById("ptText2").value.trim();
 
             if (!ptText1 && !ptText2) {
-                alert("Por favor, preencha pelo menos uma linha de texto em português.");
+                showToast("Por favor, preencha pelo menos uma linha de texto em português.", "error");
                 return;
             }
 
@@ -1252,24 +1166,28 @@
             btn.innerHTML = `<i class="fa-solid fa-spinner animate-spin mr-2"></i> Localizando com IA...`;
 
             if (!apiKey) {
-                // Mock delay simulation if key is not active
+                // High fidelity mock delay simulation if key is not active
                 setTimeout(() => {
-                    // Update matching activeTheme preset translations fallback
                     LANGUAGES.forEach(lang => {
-                        styleData[lang.id].text1 = THEME_PRESETS[activeTheme].translations[lang.id].text1;
-                        styleData[lang.id].text2 = THEME_PRESETS[activeTheme].translations[lang.id].text2;
+                        // If they are translating the default "ESTRATÉGIA SECRETA" / "REVELADA HOJE" texts
+                        if (ptText1 === "ESTRATÉGIA SECRETA" && ptText2 === "REVELADA HOJE" && fallbackTranslations[lang.id]) {
+                            styleData[lang.id].text1 = fallbackTranslations[lang.id].text1;
+                            styleData[lang.id].text2 = fallbackTranslations[lang.id].text2;
+                        } else {
+                            // Suffix mockup so custom user text renders immediately
+                            styleData[lang.id].text1 = `${ptText1} (${lang.code})`;
+                            styleData[lang.id].text2 = `${ptText2} (${lang.lang})`;
+                        }
                     });
                     
+                    hasBeenTranslated = true;
                     btn.disabled = false;
                     btn.innerHTML = originalHtml;
+                    loadCountryToEditor(currentCountryId);
                     requestRenderAll();
                     
-                    const toast = document.createElement("div");
-                    toast.className = "fixed bottom-5 right-5 bg-indigo-600 text-white font-semibold text-xs px-5 py-3 rounded-xl shadow-2xl z-[200] border border-indigo-400/20 transition duration-500 animate-bounce";
-                    toast.innerHTML = `<i class="fa-solid fa-wand-magic-sparkles mr-2"></i> Traduzido! Adicione uma chave Gemini para criar novas frases fora dos temas.`;
-                    document.body.appendChild(toast);
-                    setTimeout(() => toast.remove(), 4000);
-                }, 1500);
+                    showToast("Simulação de localização concluída! Adicione uma chave Gemini no cabeçalho para obter traduções autênticas.", "info");
+                }, 1200);
                 return;
             }
 
@@ -1289,9 +1207,9 @@ Line 2: "${ptText2}"
 Generate localized translations for these exact language codes:
 US, ES, FR, ID, AR, HI, RU, DE, JA, IT, KO, TH, VN, TR, PL, TW.`;
 
-                // Exponential backoff runner
+                // Exponential backoff runner using the correct gemini-2.5-flash-preview-09-2025 model endpoint
                 const makeApiCall = async (retryCount = 0) => {
-                    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
+                    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
                     const response = await fetch(apiUrl, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
@@ -1345,13 +1263,15 @@ US, ES, FR, ID, AR, HI, RU, DE, JA, IT, KO, TH, VN, TR, PL, TW.`;
                             }
                         });
                         
+                        hasBeenTranslated = true;
                         loadCountryToEditor(currentCountryId);
                         requestRenderAll();
+                        showToast("Localização com Inteligência Artificial concluída!", "success");
                     }
                 }
             } catch (err) {
                 console.error("AI Generation Error", err);
-                alert("Houve um problema de conexão com a API do Gemini. Verifique sua chave ou tente novamente.");
+                showToast("Erro na conexão com a API do Gemini. Verifique sua chave ou tente novamente.", "error");
             } finally {
                 btn.disabled = false;
                 btn.innerHTML = originalHtml;
@@ -1386,6 +1306,7 @@ US, ES, FR, ID, AR, HI, RU, DE, JA, IT, KO, TH, VN, TR, PL, TW.`;
                 }, delay);
                 delay += 300; // anti-clogging gap
             });
+            showToast("Iniciando exportação em lote de todas as 16 thumbnails...", "success");
         }
 
         function toggleApiHelp() {
@@ -1480,13 +1401,7 @@ US, ES, FR, ID, AR, HI, RU, DE, JA, IT, KO, TH, VN, TR, PL, TW.`;
 
             applyGlobalAlignment(sourceData.textAlignment);
 
-            // Display floating success confirmation
-            const toast = document.createElement("div");
-            toast.className = "fixed bottom-5 right-5 bg-emerald-600 text-white font-semibold text-xs px-5 py-3 rounded-xl shadow-2xl z-[200] border border-emerald-400/20 transition duration-500 animate-bounce";
-            toast.innerHTML = `<i class="fa-solid fa-circle-check mr-2"></i> Layout e coordenadas aplicados em todas as 16 thumbnails com sucesso!`;
-            document.body.appendChild(toast);
-            setTimeout(() => toast.remove(), 4000);
-
+            showToast("Layout e coordenadas aplicados em todas as 16 thumbnails com sucesso!", "success");
             requestRenderAll();
         }
 
