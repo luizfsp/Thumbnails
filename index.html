@@ -897,6 +897,7 @@
             ctx.save();
             const fontSelected = document.getElementById("fontFamilySelect").value;
             const data = styleData[countryId];
+            const langInfo = LANGUAGES.find(l => l.id === countryId);
             
             // Extract styles correctly based on line check
             const isItalic = isText1 ? data.italic1 : data.italic2;
@@ -907,6 +908,13 @@
             ctx.font = `${style} ${weight} ${fontSize}px ${fontSelected}`;
             ctx.textAlign = alignment;
             ctx.textBaseline = "middle";
+            
+            // Correção BiDi: Define a direção do contexto de renderização para medição precisa de textos mistos
+            if (langInfo && langInfo.rtl) {
+                ctx.direction = 'rtl';
+            } else {
+                ctx.direction = 'ltr';
+            }
 
             const metrics = ctx.measureText(text);
             const textWidth = metrics.width;
@@ -1004,6 +1012,9 @@
                 ctx.lineJoin = "round";
                 ctx.lineCap = "round";
                 
+                // Correção BiDi: Define a direção para renderizar números LTR e termos RTL de forma correta
+                ctx.direction = langInfo.rtl ? 'rtl' : 'ltr';
+                
                 // Assemble styles correctly
                 const style1 = data.italic1 ? "italic" : "normal";
                 const weight1 = data.bold1 ? "900" : "400";
@@ -1052,6 +1063,9 @@
                 ctx.textBaseline = "middle";
                 ctx.lineJoin = "round";
                 ctx.lineCap = "round";
+                
+                // Correção BiDi: Define a direção para renderizar números LTR e termos RTL de forma correta
+                ctx.direction = langInfo.rtl ? 'rtl' : 'ltr';
                 
                 // Assemble styles correctly
                 const style2 = data.italic2 ? "italic" : "normal";
