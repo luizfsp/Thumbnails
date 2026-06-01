@@ -183,26 +183,26 @@
                             <div class="grid grid-cols-3 gap-2">
                                 <div>
                                     <label class="block text-[10px] text-slate-500 mb-0.5">Cor Preench.</label>
-                                    <input type="color" id="t1Color" value="#facc15" onchange="requestRenderAll()" class="w-full h-7 bg-transparent cursor-pointer border border-slate-800 rounded">
+                                    <input type="color" id="t1Color" value="#ffffff" onchange="updateGlobalStyle('t1Color', this.value)" class="w-full h-7 bg-transparent cursor-pointer border border-slate-800 rounded">
                                 </div>
                                 <div>
                                     <label class="block text-[10px] text-slate-500 mb-0.5">Borda Interna</label>
-                                    <input type="color" id="t1Stroke" value="#000000" onchange="requestRenderAll()" class="w-full h-7 bg-transparent cursor-pointer border border-slate-800 rounded">
+                                    <input type="color" id="t1Stroke" value="#000000" onchange="updateGlobalStyle('t1Stroke', this.value)" class="w-full h-7 bg-transparent cursor-pointer border border-slate-800 rounded">
                                 </div>
                                 <div>
                                     <label class="block text-[10px] text-slate-500 mb-0.5">Larg. Interna</label>
-                                    <input type="number" id="t1StrokeWidth" value="10" min="0" max="25" oninput="requestRenderAll()" class="w-full bg-slate-900 text-xs border border-slate-800 rounded px-2 py-1">
+                                    <input type="number" id="t1StrokeWidth" value="10" min="0" max="25" oninput="updateGlobalStyle('t1StrokeWidth', parseInt(this.value) || 0)" class="w-full bg-slate-900 text-xs border border-slate-800 rounded px-2 py-1">
                                 </div>
                             </div>
                             <!-- Secondary Outer Border Row -->
                             <div class="grid grid-cols-2 gap-2 bg-slate-950/40 p-2 rounded-lg border border-slate-800/50">
                                 <div>
                                     <label class="block text-[10px] text-slate-500 mb-0.5">Borda Externa</label>
-                                    <input type="color" id="t1StrokeOuter" value="#ffffff" onchange="requestRenderAll()" class="w-full h-7 bg-transparent cursor-pointer border border-slate-800 rounded">
+                                    <input type="color" id="t1StrokeOuter" value="#ffffff" onchange="updateGlobalStyle('t1StrokeOuter', this.value)" class="w-full h-7 bg-transparent cursor-pointer border border-slate-800 rounded">
                                 </div>
                                 <div>
                                     <label class="block text-[10px] text-slate-500 mb-0.5">Larg. Externa</label>
-                                    <input type="number" id="t1StrokeOuterWidth" value="8" min="0" max="25" oninput="requestRenderAll()" class="w-full bg-slate-900 text-xs border border-slate-800 rounded px-2 py-1">
+                                    <input type="number" id="t1StrokeOuterWidth" value="0" min="0" max="25" oninput="updateGlobalStyle('t1StrokeOuterWidth', parseInt(this.value) || 0)" class="w-full bg-slate-900 text-xs border border-slate-800 rounded px-2 py-1">
                                 </div>
                             </div>
                             <!-- Style Toggle Row -->
@@ -223,26 +223,26 @@
                             <div class="grid grid-cols-3 gap-2">
                                 <div>
                                     <label class="block text-[10px] text-slate-500 mb-0.5">Cor Preench.</label>
-                                    <input type="color" id="t2Color" value="#facc15" onchange="requestRenderAll()" class="w-full h-7 bg-transparent cursor-pointer border border-slate-800 rounded">
+                                    <input type="color" id="t2Color" value="#facc15" onchange="updateGlobalStyle('t2Color', this.value)" class="w-full h-7 bg-transparent cursor-pointer border border-slate-800 rounded">
                                 </div>
                                 <div>
                                     <label class="block text-[10px] text-slate-500 mb-0.5">Borda Interna</label>
-                                    <input type="color" id="t2Stroke" value="#000000" onchange="requestRenderAll()" class="w-full h-7 bg-transparent cursor-pointer border border-slate-800 rounded">
+                                    <input type="color" id="t2Stroke" value="#000000" onchange="updateGlobalStyle('t2Stroke', this.value)" class="w-full h-7 bg-transparent cursor-pointer border border-slate-800 rounded">
                                 </div>
                                 <div>
                                     <label class="block text-[10px] text-slate-500 mb-0.5">Larg. Interna</label>
-                                    <input type="number" id="t2StrokeWidth" value="10" min="0" max="25" oninput="requestRenderAll()" class="w-full bg-slate-900 text-xs border border-slate-800 rounded px-2 py-1">
+                                    <input type="number" id="t2StrokeWidth" value="10" min="0" max="25" oninput="updateGlobalStyle('t2StrokeWidth', parseInt(this.value) || 0)" class="w-full bg-slate-900 text-xs border border-slate-800 rounded px-2 py-1">
                                 </div>
                             </div>
                             <!-- Secondary Outer Border Row -->
                             <div class="grid grid-cols-2 gap-2 bg-slate-950/40 p-2 rounded-lg border border-slate-800/50">
                                 <div>
                                     <label class="block text-[10px] text-slate-500 mb-0.5">Borda Externa</label>
-                                    <input type="color" id="t2StrokeOuter" value="#ffffff" onchange="requestRenderAll()" class="w-full h-7 bg-transparent cursor-pointer border border-slate-800 rounded">
+                                    <input type="color" id="t2StrokeOuter" value="#ffffff" onchange="updateGlobalStyle('t2StrokeOuter', this.value)" class="w-full h-7 bg-transparent cursor-pointer border border-slate-800 rounded">
                                 </div>
                                 <div>
                                     <label class="block text-[10px] text-slate-500 mb-0.5">Larg. Externa</label>
-                                    <input type="number" id="t2StrokeOuterWidth" value="8" min="0" max="25" oninput="requestRenderAll()" class="w-full bg-slate-900 text-xs border border-slate-800 rounded px-2 py-1">
+                                    <input type="number" id="t2StrokeOuterWidth" value="0" min="0" max="25" oninput="updateGlobalStyle('t2StrokeOuterWidth', parseInt(this.value) || 0)" class="w-full bg-slate-900 text-xs border border-slate-800 rounded px-2 py-1">
                                 </div>
                             </div>
                             <!-- Style Toggle Row -->
@@ -456,6 +456,69 @@
                             </div>
                         </div>
 
+                        <!-- Individual Colors & Borders Section (Overrides standard properties) -->
+                        <div class="space-y-4 pt-4 border-t border-slate-800/60">
+                            <span class="text-[11px] font-black uppercase text-slate-500 tracking-wider block">Cores e Bordas Individuais</span>
+                            
+                            <!-- Superior line individual styling box -->
+                            <div class="space-y-3 bg-slate-950/40 p-3 rounded-xl border border-slate-800/50">
+                                <span class="text-[10px] font-bold text-indigo-400 block uppercase">Texto Superior</span>
+                                <div class="grid grid-cols-3 gap-2">
+                                    <div>
+                                        <label class="block text-[9px] text-slate-500 mb-0.5">Texto</label>
+                                        <input type="color" id="indT1Color" onchange="updateIndividualStyle('t1Color', this.value)" class="w-full h-7 bg-transparent cursor-pointer border border-slate-800 rounded">
+                                    </div>
+                                    <div>
+                                        <label class="block text-[9px] text-slate-500 mb-0.5">Borda Int.</label>
+                                        <input type="color" id="indT1Stroke" onchange="updateIndividualStyle('t1Stroke', this.value)" class="w-full h-7 bg-transparent cursor-pointer border border-slate-800 rounded">
+                                    </div>
+                                    <div>
+                                        <label class="block text-[9px] text-slate-500 mb-0.5">Larg. Int.</label>
+                                        <input type="number" id="indT1StrokeWidth" oninput="updateIndividualStyle('t1StrokeWidth', parseInt(this.value) || 0)" class="w-full bg-slate-950 text-[11px] border border-slate-800 rounded px-1.5 py-1 text-white">
+                                    </div>
+                                </div>
+                                <div class="grid grid-cols-2 gap-2">
+                                    <div>
+                                        <label class="block text-[9px] text-slate-500 mb-0.5">Borda Ext.</label>
+                                        <input type="color" id="indT1StrokeOuter" onchange="updateIndividualStyle('t1StrokeOuter', this.value)" class="w-full h-7 bg-transparent cursor-pointer border border-slate-800 rounded">
+                                    </div>
+                                    <div>
+                                        <label class="block text-[9px] text-slate-500 mb-0.5">Larg. Ext.</label>
+                                        <input type="number" id="indT1StrokeOuterWidth" oninput="updateIndividualStyle('indT1StrokeOuterWidth', parseInt(this.value) || 0)" class="w-full bg-slate-950 text-[11px] border border-slate-800 rounded px-1.5 py-1 text-white">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Inferior line individual styling box -->
+                            <div class="space-y-3 bg-slate-950/40 p-3 rounded-xl border border-slate-800/50">
+                                <span class="text-[10px] font-bold text-indigo-400 block uppercase">Texto Inferior</span>
+                                <div class="grid grid-cols-3 gap-2">
+                                    <div>
+                                        <label class="block text-[9px] text-slate-500 mb-0.5">Texto</label>
+                                        <input type="color" id="indT2Color" onchange="updateIndividualStyle('t2Color', this.value)" class="w-full h-7 bg-transparent cursor-pointer border border-slate-800 rounded">
+                                    </div>
+                                    <div>
+                                        <label class="block text-[9px] text-slate-500 mb-0.5">Borda Int.</label>
+                                        <input type="color" id="indT2Stroke" onchange="updateIndividualStyle('t2Stroke', this.value)" class="w-full h-7 bg-transparent cursor-pointer border border-slate-800 rounded">
+                                    </div>
+                                    <div>
+                                        <label class="block text-[9px] text-slate-500 mb-0.5">Larg. Int.</label>
+                                        <input type="number" id="indT2StrokeWidth" oninput="updateIndividualStyle('t2StrokeWidth', parseInt(this.value) || 0)" class="w-full bg-slate-950 text-[11px] border border-slate-800 rounded px-1.5 py-1 text-white">
+                                    </div>
+                                </div>
+                                <div class="grid grid-cols-2 gap-2">
+                                    <div>
+                                        <label class="block text-[9px] text-slate-500 mb-0.5">Borda Ext.</label>
+                                        <input type="color" id="indT2StrokeOuter" onchange="updateIndividualStyle('t2StrokeOuter', this.value)" class="w-full h-7 bg-transparent cursor-pointer border border-slate-800 rounded">
+                                    </div>
+                                    <div>
+                                        <label class="block text-[9px] text-slate-500 mb-0.5">Larg. Ext.</label>
+                                        <input type="number" id="indT2StrokeOuterWidth" oninput="updateIndividualStyle('indT2StrokeOuterWidth', parseInt(this.value) || 0)" class="w-full bg-slate-950 text-[11px] border border-slate-800 rounded px-1.5 py-1 text-white">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         <!-- Specific scale/formatting with separate sliders for superior and inferior lines -->
                         <div class="space-y-4 pt-4 border-t border-slate-800/80">
                             <div>
@@ -605,7 +668,7 @@
         let styleData = {};
 
         function initApp() {
-            // Apply default layout on start (Clean Black screen)
+            // Apply default layout on start (Clean Black screen with custom text styles)
             initDefaultLayout();
 
             // Populate selector inside individual view
@@ -624,7 +687,7 @@
             setupInteractiveCanvasEvents();
         }
 
-        // Initialize state with individual line scales and active bold status
+        // Initialize state with individual line scales, active bold status, and colors/borders mapping
         function initDefaultLayout() {
             const val1 = "O NOVO TIMESKIP";
             const val2 = "DOS CHAPÉUS DE PALHA";
@@ -651,6 +714,17 @@
                     italic1: false,
                     bold2: true,
                     italic2: false,
+                    // Default border colors mapped directly in state memory buffer
+                    t1Color: "#ffffff",
+                    t1Stroke: "#000000",
+                    t1StrokeWidth: 10,
+                    t1StrokeOuter: "#ffffff",
+                    t1StrokeOuterWidth: 0, // Outer Stroke starts at 0 (zerado)
+                    t2Color: "#facc15",
+                    t2Stroke: "#000000",
+                    t2StrokeWidth: 10,
+                    t2StrokeOuter: "#ffffff",
+                    t2StrokeOuterWidth: 0 // Outer Stroke starts at 0 (zerado)
                 };
             });
 
@@ -791,6 +865,19 @@
             data.bold2 = true;
             data.italic2 = false;
 
+            // Reset individual colors
+            data.t1Color = "#ffffff";
+            data.t1Stroke = "#000000";
+            data.t1StrokeWidth = 10;
+            data.t1StrokeOuter = "#ffffff";
+            data.t1StrokeOuterWidth = 0;
+            
+            data.t2Color = "#facc15";
+            data.t2Stroke = "#000000";
+            data.t2StrokeWidth = 10;
+            data.t2StrokeOuter = "#ffffff";
+            data.t2StrokeOuterWidth = 0;
+
             document.getElementById("overrideText1").value = data.text1;
             document.getElementById("overrideText2").value = data.text2;
             
@@ -799,6 +886,7 @@
             document.getElementById("indScaleSlider2").value = defaultLangScale;
             document.getElementById("scaleLabel2").textContent = defaultLangScale.toFixed(2) + "x";
 
+            syncIndividualUIInputs();
             updateStyleTogglesUI();
             renderIndividualEditorCanvas();
             showToast("Ajustes individuais restaurados para o padrão.", "info");
@@ -922,11 +1010,12 @@
                 ctx.font = `${style1} ${weight1} ${t1Size * scaleFactor}px ${fontSelected}`;
                 ctx.textAlign = data.textAlignment;
                 
-                const fillCol = document.getElementById("t1Color").value;
-                const innerCol = document.getElementById("t1Stroke").value;
-                const innerW = parseInt(document.getElementById("t1StrokeWidth").value) * scaleFactor;
-                const outerCol = document.getElementById("t1StrokeOuter").value;
-                const outerW = parseInt(document.getElementById("t1StrokeOuterWidth").value) * scaleFactor;
+                // Read exact properties of Text 1 from data buffer
+                const fillCol = data.t1Color;
+                const innerCol = data.t1Stroke;
+                const innerW = data.t1StrokeWidth * scaleFactor;
+                const outerCol = data.t1StrokeOuter;
+                const outerW = data.t1StrokeOuterWidth * scaleFactor;
 
                 // Shadow configuration
                 ctx.shadowColor = 'rgba(0, 0, 0, 0.85)';
@@ -970,11 +1059,12 @@
                 ctx.font = `${style2} ${weight2} ${t2Size * scaleFactor}px ${fontSelected}`;
                 ctx.textAlign = data.textAlignment;
                 
-                const fillCol = document.getElementById("t2Color").value;
-                const innerCol = document.getElementById("t2Stroke").value;
-                const innerW = parseInt(document.getElementById("t2StrokeWidth").value) * scaleFactor;
-                const outerCol = document.getElementById("t2StrokeOuter").value;
-                const outerW = parseInt(document.getElementById("t2StrokeOuterWidth").value) * scaleFactor;
+                // Read exact properties of Text 2 from data buffer
+                const fillCol = data.t2Color;
+                const innerCol = data.t2Stroke;
+                const innerW = data.t2StrokeWidth * scaleFactor;
+                const outerCol = data.t2StrokeOuter;
+                const outerW = data.t2StrokeOuterWidth * scaleFactor;
 
                 // Shadow configuration
                 ctx.shadowColor = 'rgba(0, 0, 0, 0.85)';
@@ -1206,6 +1296,7 @@
             hoveredTarget = null;
             isDragging = false;
 
+            syncIndividualUIInputs();
             updateStyleTogglesUI();
             renderIndividualEditorCanvas();
         }
@@ -1398,7 +1489,7 @@ CRITICAL CONTEXT RULES:
 2. You MUST translate them together as a unified semantic block to preserve proper grammatical flow, gender agreements, number agreements, prepositions (like 'of the', 'de los', 'de l\'', 'des'), and localized case declensions.
 3. Once translated cohesively, split the resulting translation logically back into two lines (text1 and text2). Ensure that reading Line 1 then Line 2 feels like a single, seamless, natural sentence in the target language. Do not isolate them into disconnected hooks unless the input itself represents two unrelated hooks.
 4. Capitalization must remain bold, impactful, and expressive.
-5. Translate the HOOK, the CATCHY impact, matching the local internet culture slang of that specific target country, if applicable.
+5. Translate the HOOK, the CATCHY impact, matching the local internet culture slang of that specific target country.
 6. Output strict JSON with schema matching exactly the specified structure below. No explanation, markdown ticks, or other text outside the JSON.`;
 
                 const userQuery = `Original Portuguese texts:
@@ -1635,6 +1726,28 @@ US, ES, FR, ID, AR, HI, RU, DE, JA, IT, KO, TH, VN, TR, PL, TW.`;
             requestRenderAll();
         }
 
+        function updateGlobalStyle(property, value) {
+            // Update the value in all languages
+            LANGUAGES.forEach(lang => {
+                if (styleData[lang.id]) {
+                    styleData[lang.id][property] = value;
+                }
+            });
+            
+            // If the current country is being edited, sync the individual UI inputs
+            if (activeTab === "editor") {
+                syncIndividualUIInputs();
+            }
+            
+            requestRenderAll();
+        }
+
+        function updateIndividualStyle(property, value) {
+            if (!styleData[currentCountryId]) return;
+            styleData[currentCountryId][property] = value;
+            renderIndividualEditorCanvas();
+        }
+
         function toggleGlobalStyle(property) {
             if (!styleData[currentCountryId]) return;
             const currentVal = !styleData[currentCountryId][property];
@@ -1698,6 +1811,25 @@ US, ES, FR, ID, AR, HI, RU, DE, JA, IT, KO, TH, VN, TR, PL, TW.`;
             }
         }
 
+        function syncIndividualUIInputs() {
+            const data = styleData[currentCountryId];
+            if (!data) return;
+
+            // Sync Text 1
+            document.getElementById("indT1Color").value = data.t1Color;
+            document.getElementById("indT1Stroke").value = data.t1Stroke;
+            document.getElementById("indT1StrokeWidth").value = data.t1StrokeWidth;
+            document.getElementById("indT1StrokeOuter").value = data.t1StrokeOuter;
+            document.getElementById("indT1StrokeOuterWidth").value = data.t1StrokeOuterWidth;
+
+            // Sync Text 2
+            document.getElementById("indT2Color").value = data.t2Color;
+            document.getElementById("indT2Stroke").value = data.t2Stroke;
+            document.getElementById("indT2StrokeWidth").value = data.t2StrokeWidth;
+            document.getElementById("indT2StrokeOuter").value = data.t2StrokeOuter;
+            document.getElementById("indT2StrokeOuterWidth").value = data.t2StrokeOuterWidth;
+        }
+
         function syncCurrentLayoutToAll() {
             const sourceData = styleData[currentCountryId];
             
@@ -1713,6 +1845,17 @@ US, ES, FR, ID, AR, HI, RU, DE, JA, IT, KO, TH, VN, TR, PL, TW.`;
                     styleData[lang.id].italic1 = sourceData.italic1;
                     styleData[lang.id].bold2 = sourceData.bold2;
                     styleData[lang.id].italic2 = sourceData.italic2;
+                    // Colors & Borders replicas
+                    styleData[lang.id].t1Color = sourceData.t1Color;
+                    styleData[lang.id].t1Stroke = sourceData.t1Stroke;
+                    styleData[lang.id].t1StrokeWidth = sourceData.t1StrokeWidth;
+                    styleData[lang.id].t1StrokeOuter = sourceData.t1StrokeOuter;
+                    styleData[lang.id].t1StrokeOuterWidth = sourceData.t1StrokeOuterWidth;
+                    styleData[lang.id].t2Color = sourceData.t2Color;
+                    styleData[lang.id].t2Stroke = sourceData.t2Stroke;
+                    styleData[lang.id].t2StrokeWidth = sourceData.t2StrokeWidth;
+                    styleData[lang.id].t2StrokeOuter = sourceData.t2StrokeOuter;
+                    styleData[lang.id].t2StrokeOuterWidth = sourceData.t2StrokeOuterWidth;
                 }
             });
 
@@ -1728,6 +1871,19 @@ US, ES, FR, ID, AR, HI, RU, DE, JA, IT, KO, TH, VN, TR, PL, TW.`;
 
             document.getElementById("globalT2X").value = sourceData.text2Pos.x;
             document.getElementById("globalT2XLabel").textContent = sourceData.text2Pos.x + "px";
+
+            // Sync global pickers
+            document.getElementById("t1Color").value = sourceData.t1Color;
+            document.getElementById("t1Stroke").value = sourceData.t1Stroke;
+            document.getElementById("t1StrokeWidth").value = sourceData.t1StrokeWidth;
+            document.getElementById("t1StrokeOuter").value = sourceData.t1StrokeOuter;
+            document.getElementById("t1StrokeOuterWidth").value = sourceData.t1StrokeOuterWidth;
+
+            document.getElementById("t2Color").value = sourceData.t2Color;
+            document.getElementById("t2Stroke").value = sourceData.t2Stroke;
+            document.getElementById("t2StrokeWidth").value = sourceData.t2StrokeWidth;
+            document.getElementById("t2StrokeOuter").value = sourceData.t2StrokeOuter;
+            document.getElementById("t2StrokeOuterWidth").value = sourceData.t2StrokeOuterWidth;
 
             applyGlobalAlignment(sourceData.textAlignment);
             updateStyleTogglesUI();
