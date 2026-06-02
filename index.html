@@ -298,16 +298,6 @@
                                 </button>
                             </div>
                         </div>
-
-                        <!-- Graphic Badges -->
-                        <div class="border-t border-slate-800/50 pt-3">
-                            <label class="block text-xs text-slate-400 font-semibold mb-1.5">Selo/Adesivo de Destaque</label>
-                            <div class="grid grid-cols-3 gap-2">
-                                <button onclick="selectBadge('none')" id="badge_none" class="badge-opt bg-indigo-500/10 border border-indigo-500 text-indigo-400 py-1.5 px-2 rounded-lg text-xs font-bold transition">Nenhum</button>
-                                <button onclick="selectBadge('new')" id="badge_new" class="badge-opt bg-slate-950 border border-slate-800 text-slate-400 hover:text-white py-1.5 px-2 rounded-lg text-xs font-bold transition">NEW!</button>
-                                <button onclick="selectBadge('play')" id="badge_play" class="badge-opt bg-slate-950 border border-slate-800 text-slate-400 hover:text-white py-1.5 px-2 rounded-lg text-xs font-bold transition"><i class="fa-solid fa-play mr-1"></i> PLAY</button>
-                            </div>
-                        </div>
                     </div>
                 </div>
 
@@ -320,7 +310,7 @@
                     <div class="space-y-4">
                         <div class="bg-indigo-950/20 p-2.5 rounded-lg border border-indigo-500/10 mb-2">
                             <p class="text-[11px] text-indigo-300 leading-normal">
-                                <i class="fa-solid fa-circle-info mr-1"></i> Ajuste estes controles para mover o texto de <strong>todas as 16 thumbnails</strong> ao mesmo tempo de forma rápida!
+                                <i class="fa-solid fa-circle-info mr-1"></i> Ajuste estes controles para mover o texto de <strong>todas as thumbnails</strong> ao mesmo tempo de forma rápida!
                             </p>
                         </div>
                         
@@ -583,7 +573,7 @@
                                     class="w-full accent-indigo-500 bg-slate-800 h-1 rounded-lg cursor-pointer">
                             </div>
 
-                            <!-- Sync drag coordinates layout to all 16 other language assets -->
+                            <!-- Sync drag coordinates layout to all other language assets -->
                             <button onclick="syncCurrentLayoutToAll()" 
                                 class="w-full bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-400 border border-indigo-500/30 text-xs font-bold py-2.5 px-3 rounded-lg transition flex items-center justify-center gap-2">
                                 <i class="fa-solid fa-arrows-spin"></i> Aplicar Esta Posição em Todas as Thumbs
@@ -685,7 +675,7 @@
             "fr": { text1: "100 SECRETS", text2: "QUE VOUS NE SAVIEZ PAS" },
             "id": { text1: "100 RAHASIA", text2: "YANG TIDAK KAMU KETAHUI" },
             "ar": { text1: "100 سر", text2: "لم تكن تعرفها" },
-            "hi": { text1: "100 रहस्य", text2: "जो आप não جانتے थे" },
+            "hi": { text1: "100 रहस्य", text2: "جو aap não جانتے تھے" },
             "ru": { text1: "100 СЕКРЕТОВ", text2: "О КОТОРЫХ ВЫ НЕ ZНАЛИ" },
             "de": { text1: "100 GEHEIMNISSE", text2: "DIE DU NICHT WUSSTEST" },
             "ja": { text1: "あなたが知らない", text2: "100ของความลับ" },
@@ -721,22 +711,6 @@
 
         // Specific styling structures that can be adjusted PER country
         let styleData = {};
-
-        // Custom toast notification system
-        function showToast(message, type = 'info') {
-            const toast = document.createElement("div");
-            const bgColor = type === 'error' ? 'bg-rose-600' : type === 'success' ? 'bg-emerald-600' : 'bg-indigo-600';
-            const icon = type === 'error' ? 'fa-triangle-exclamation' : type === 'success' ? 'fa-circle-check' : 'fa-info-circle';
-            
-            toast.className = `fixed bottom-5 right-5 ${bgColor} text-white font-semibold text-xs px-5 py-3 rounded-xl shadow-2xl z-[200] border border-white/10 transition duration-500 animate-bounce flex items-center gap-2`;
-            toast.innerHTML = `<i class="fa-solid ${icon}"></i> ${message}`;
-            document.body.appendChild(toast);
-            
-            setTimeout(() => {
-                toast.classList.add("opacity-0", "translate-y-2");
-                setTimeout(() => toast.remove(), 500);
-            }, 4000);
-        }
 
         // Cross-platform Flag Preloading pipeline (CORS supported)
         const flagImages = {};
@@ -1235,6 +1209,59 @@
                         ctx.restore();
                     }
                 });
+            }
+
+            // DRAW BADGE
+            if (selectedBadgeType !== 'none') {
+                ctx.save();
+                ctx.shadowColor = 'rgba(0, 0, 0, 0.5)';
+                ctx.shadowBlur = 10 * scaleFactor;
+                ctx.shadowOffsetX = 5 * scaleFactor;
+                ctx.shadowOffsetY = 5 * scaleFactor;
+
+                const badgeX = 120 * scaleFactor;
+                const badgeY = 100 * scaleFactor;
+
+                if (selectedBadgeType === 'new') {
+                    ctx.translate(badgeX, badgeY);
+                    ctx.rotate(-15 * Math.PI / 180);
+                    
+                    ctx.fillStyle = "#facc15";
+                    ctx.beginPath();
+                    ctx.roundRect(-70 * scaleFactor, -30 * scaleFactor, 140 * scaleFactor, 60 * scaleFactor, 12 * scaleFactor);
+                    ctx.fill();
+                    
+                    ctx.strokeStyle = "#ffffff";
+                    ctx.lineWidth = 4 * scaleFactor;
+                    ctx.stroke();
+
+                    ctx.fillStyle = "#000000";
+                    ctx.font = `900 ${28 * scaleFactor}px 'Inter', sans-serif`;
+                    ctx.textAlign = "center";
+                    ctx.textBaseline = "middle";
+                    ctx.fillText("NEW!", 0, 0);
+
+                } else if (selectedBadgeType === 'play') {
+                    ctx.translate(badgeX, badgeY);
+                    
+                    ctx.fillStyle = "#ef4444";
+                    ctx.beginPath();
+                    ctx.arc(0, 0, 45 * scaleFactor, 0, 2 * Math.PI);
+                    ctx.fill();
+                    ctx.strokeStyle = "#ffffff";
+                    ctx.lineWidth = 5 * scaleFactor;
+                    ctx.stroke();
+
+                    ctx.fillStyle = "#ffffff";
+                    ctx.beginPath();
+                    const size = 18 * scaleFactor;
+                    ctx.moveTo(-size/2, -size);
+                    ctx.lineTo(size * 1.2 - size/2, 0);
+                    ctx.lineTo(-size/2, size);
+                    ctx.closePath();
+                    ctx.fill();
+                }
+                ctx.restore();
             }
 
             // REMOVED internal Canvas watermark inside this block to prevent overlaps and redundancy
@@ -1972,137 +1999,7 @@ ${langCodes}.`;
             applyGlobalAlignment(sourceData.textAlignment);
             updateStyleTogglesUI();
 
-            showToast("Layout e estilos aplicados em todas as 16 thumbnails com sucesso!", "success");
-            requestRenderAll();
-        }
-
-        // Global font scaling updates
-        function updateGlobalScale(line, value) {
-            const val = parseFloat(value);
-            if (line === 1) {
-                globalFontScale1 = val;
-                document.getElementById("globalScale1Label").textContent = val.toFixed(2) + "x";
-            } else {
-                globalFontScale2 = val;
-                document.getElementById("globalScale2Label").textContent = val.toFixed(2) + "x";
-            }
-            requestRenderAll();
-        }
-
-        // Handle uploaded image background template
-        function handleBgUpload(event) {
-            const file = event.target.files[0];
-            if (file) {
-                document.getElementById("bgFileName").textContent = file.name;
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const img = new Image();
-                    img.onload = function() {
-                        uploadedBgImage = img;
-                        requestRenderAll();
-                        showToast("Template de imagem carregado com sucesso!", "success");
-                    };
-                    img.src = e.target.result;
-                };
-                reader.readAsDataURL(file);
-            }
-        }
-
-        // Real-time synchronization of original texts input to default languages
-        function handleManualTextInput() {
-            const val1 = document.getElementById("ptText1").value.toUpperCase();
-            const val2 = document.getElementById("ptText2").value.toUpperCase();
-            
-            // Mirror to all languages if they haven't run the AI translation yet
-            LANGUAGES.forEach(lang => {
-                if (!hasBeenTranslated) {
-                    styleData[lang.id].text1 = val1;
-                    styleData[lang.id].text2 = val2;
-                }
-            });
-
-            // Also reload current text values to active view
-            const activeData = styleData[currentCountryId];
-            if (activeData) {
-                document.getElementById("overrideText1").value = activeData.text1;
-                document.getElementById("overrideText2").value = activeData.text2;
-            }
-
-            requestRenderAll();
-        }
-
-        function applyOverride() {
-            const data = styleData[currentCountryId];
-            if (!data) return;
-            data.text1 = document.getElementById("overrideText1").value;
-            data.text2 = document.getElementById("overrideText2").value;
-            
-            const scale1 = parseFloat(document.getElementById("indScaleSlider1").value);
-            const scale2 = parseFloat(document.getElementById("indScaleSlider2").value);
-            data.fontScale1 = scale1;
-            data.fontScale2 = scale2;
-            document.getElementById("scaleLabel1").textContent = scale1.toFixed(2) + "x";
-            document.getElementById("scaleLabel2").textContent = scale2.toFixed(2) + "x";
-
-            renderIndividualEditorCanvas();
-        }
-
-        function resetIndividualAdjustments() {
-            const defaultLangScale = LANGUAGES.find(l => l.id === currentCountryId)?.fontScale || 1.0;
-            const data = styleData[currentCountryId];
-            if (!data) return;
-            
-            // Reset to default mirrored PT inputs or fallback translation
-            const val1 = document.getElementById("ptText1").value.toUpperCase();
-            const val2 = document.getElementById("ptText2").value.toUpperCase();
-
-            data.text1 = (hasBeenTranslated && fallbackTimeskipTranslations[currentCountryId]) ? fallbackTimeskipTranslations[currentCountryId].text1 : val1;
-            data.text2 = (hasBeenTranslated && fallbackTimeskipTranslations[currentCountryId]) ? fallbackTimeskipTranslations[currentCountryId].text2 : val2;
-            data.text1Pos = { x: 640, y: 220 };
-            data.text2Pos = { x: 640, y: 390 };
-            data.fontScale1 = defaultLangScale;
-            data.fontScale2 = defaultLangScale;
-            data.bold1 = true;
-            data.italic1 = false;
-            data.bold2 = true;
-            data.italic2 = false;
-
-            // Reset individual colors
-            data.t1Color = "#ffffff";
-            data.t1Stroke = "#000000";
-            data.t1StrokeWidth = 10;
-            data.t1StrokeOuter = "#ffffff";
-            data.t1StrokeOuterWidth = 0;
-            
-            data.t2Color = "#facc15";
-            data.t2Stroke = "#000000";
-            data.t2StrokeWidth = 10;
-            data.t2StrokeOuter = "#ffffff";
-            data.t2StrokeOuterWidth = 0;
-
-            document.getElementById("overrideText1").value = data.text1;
-            document.getElementById("overrideText2").value = data.text2;
-            
-            document.getElementById("indScaleSlider1").value = defaultLangScale;
-            document.getElementById("scaleLabel1").textContent = defaultLangScale.toFixed(2) + "x";
-            document.getElementById("indScaleSlider2").value = defaultLangScale;
-            document.getElementById("scaleLabel2").textContent = defaultLangScale.toFixed(2) + "x";
-
-            syncIndividualUIInputs();
-            updateStyleTogglesUI();
-            renderIndividualEditorCanvas();
-            showToast("Ajustes individuais restaurados para o padrão.", "info");
-        }
-
-        function selectBadge(type) {
-            selectedBadgeType = type;
-            document.querySelectorAll(".badge-opt").forEach(btn => {
-                btn.className = "badge-opt bg-slate-950 border border-slate-800 text-slate-400 hover:text-white py-1.5 px-2 rounded-lg text-xs font-bold transition";
-            });
-            const badgeBtn = document.getElementById(`badge_${type}`);
-            if (badgeBtn) {
-                badgeBtn.className = "badge-opt bg-indigo-500/10 border border-indigo-500 text-indigo-400 py-1.5 px-2 rounded-lg text-xs font-bold transition";
-            }
+            showToast("Layout e estilos aplicados em todas as thumbnails com sucesso!", "success");
             requestRenderAll();
         }
 
