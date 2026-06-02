@@ -110,9 +110,34 @@
                             <button onclick="translateAllWithAI()" id="btnTranslate" 
                                 class="w-full bg-gradient-to-r from-indigo-500 to-violet-600 hover:from-indigo-600 hover:to-violet-700 text-white text-xs font-bold py-2.5 px-4 rounded-lg shadow-lg shadow-indigo-500/20 transition-all flex items-center justify-center gap-2">
                                 <i class="fa-solid fa-wand-magic-sparkles"></i>
-                                Traduzir e Adaptar com IA (16 Idiomas)
+                                Traduzir e Adaptar com IA (18 Idiomas)
                             </button>
                         </div>
+                    </div>
+                </div>
+
+                <!-- STEP 1.5: Active Languages Configurator -->
+                <div class="bg-slate-950/50 p-4 rounded-xl border border-slate-800/80">
+                    <div class="flex justify-between items-center mb-3">
+                        <h3 class="font-bold text-xs text-indigo-400 uppercase tracking-wider flex items-center gap-2">
+                            <span class="bg-indigo-500/10 text-indigo-400 text-[10px] py-0.5 px-2 rounded-full">1.5</span>
+                            Idiomas Ativos (<span id="activeCount" class="font-mono text-white">18</span>/18)
+                        </h3>
+                    </div>
+                    
+                    <!-- Selection actions -->
+                    <div class="flex gap-2 mb-3">
+                        <button onclick="toggleAllLanguages(true)" class="flex-1 bg-slate-900 hover:bg-slate-850 border border-slate-800 hover:border-slate-700 text-[10px] font-black py-2 px-2 rounded transition flex items-center justify-center gap-1.5 text-slate-300 uppercase tracking-wider">
+                            <i class="fa-solid fa-square-check text-emerald-400 text-xs"></i> Todos
+                        </button>
+                        <button onclick="toggleAllLanguages(false)" class="flex-1 bg-slate-900 hover:bg-slate-850 border border-slate-800 hover:border-slate-700 text-[10px] font-black py-2 px-2 rounded transition flex items-center justify-center gap-1.5 text-slate-300 uppercase tracking-wider">
+                            <i class="fa-solid fa-square-minus text-rose-400 text-xs"></i> Nenhum
+                        </button>
+                    </div>
+
+                    <!-- Beautiful interactive checklist grid of languages -->
+                    <div class="grid grid-cols-3 gap-1.5 max-h-48 overflow-y-auto pr-1" id="languagesSelectorGrid">
+                        <!-- Populated dynamically by script -->
                     </div>
                 </div>
 
@@ -361,12 +386,12 @@
             <div class="p-5 mt-auto bg-slate-950/80 border-t border-slate-800 flex flex-col gap-3 sticky bottom-0">
                 <div class="flex justify-between items-center text-xs">
                     <span class="text-slate-400">Total Adaptadas:</span>
-                    <span class="font-bold text-indigo-400">16 Países Ativos</span>
+                    <span class="font-bold text-indigo-400">18 Países Ativos</span>
                 </div>
                 <button onclick="downloadAllThumbnails()" 
                     class="w-full bg-emerald-500 hover:bg-emerald-600 text-slate-950 text-sm font-black py-3 px-4 rounded-xl transition shadow-lg shadow-emerald-500/10 flex items-center justify-center gap-2">
                     <i class="fa-solid fa-file-zipper text-lg"></i>
-                    EXPORTAR ZIP (16 IMAGENS)
+                    EXPORTAR ZIP (18 IMAGENS)
                 </button>
             </div>
         </aside>
@@ -378,7 +403,7 @@
             <div class="flex flex-wrap items-center justify-between gap-4 bg-slate-900 p-3 rounded-xl border border-slate-800">
                 <div class="flex items-center gap-2">
                     <button id="tabGridBtn" onclick="switchTab('grid')" class="px-4 py-2 rounded-lg text-xs font-black bg-indigo-500 text-white transition flex items-center gap-2">
-                        <i class="fa-solid fa-grip"></i> Grid Global (16 Idiomas)
+                        <i class="fa-solid fa-grip"></i> Grid Global (18 Idiomas)
                     </button>
                     <button id="tabEditorBtn" onclick="switchTab('editor')" class="px-4 py-2 rounded-lg text-xs font-bold text-slate-400 hover:text-white transition flex items-center gap-2">
                         <i class="fa-solid fa-sliders"></i> Ajuste Fino Individual
@@ -594,7 +619,7 @@
                 <h3 class="font-bold text-lg text-white">Como Funciona a IA?</h3>
             </div>
             <div class="space-y-3 text-slate-300 text-xs leading-relaxed">
-                <p>Nós incluímos um sistema de **Tradução Localizada de Demonstração** para que você possa testar o aplicativo e ver o grid ser traduzido em tempo real para os 16 países imediatamente, mesmo sem uma chave de API.</p>
+                <p>Nós incluímos um sistema de **Tradução Localizada de Demonstração** para que você possa testar o aplicativo e ver o grid ser traduzido em tempo real para os 18 países imediatamente, mesmo sem uma chave de API.</p>
                 <p>Ao inserir sua <strong>Chave de API do Gemini</strong> no cabeçalho:</p>
                 <ul class="list-disc pl-5 space-y-1.5 text-slate-400">
                     <li>Você pode digitar qualquer frase personalizada em português (ex: <i>"Estratégia Secreta Nunca Revelada"</i>).</li>
@@ -610,22 +635,24 @@
     <script>
         // Target countries configured per system request
         const LANGUAGES = [
-            { id: "us", code: "US", flagCode: "us", name: "United States", lang: "English", rtl: false, fontScale: 0.85 },
-            { id: "es", code: "ES", flagCode: "es", name: "Spain / LatAm", lang: "Spanish", rtl: false, fontScale: 0.9 },
-            { id: "fr", code: "FR", flagCode: "fr", name: "France", lang: "French", rtl: false, fontScale: 0.75 },
-            { id: "id", code: "ID", flagCode: "id", name: "Indonesia", lang: "Indonesian", fontScale: 0.75 },
-            { id: "ar", code: "ar", flagCode: "sa", name: "Egypt / Gulf", lang: "Arabic", rtl: true, fontScale: 0.95 },
-            { id: "hi", code: "HI", flagCode: "in", name: "India", lang: "Hindi", rtl: false, fontScale: 0.95 },
-            { id: "ru", code: "RU", flagCode: "ru", name: "Russia", lang: "Russian", rtl: false, fontScale: 0.8 },
-            { id: "de", code: "DE", flagCode: "de", name: "Germany", lang: "German", rtl: false, fontScale: 0.75 },
-            { id: "ja", code: "JA", flagCode: "jp", name: "Japan", lang: "Japanese", rtl: false, fontScale: 1.05 },
-            { id: "it", code: "IT", flagCode: "it", name: "Italy", lang: "Italian", rtl: false, fontScale: 0.9 },
-            { id: "ko", code: "KO", flagCode: "kr", name: "South Korea", lang: "Korean", rtl: false, fontScale: 1.05 },
-            { id: "th", code: "TH", flagCode: "th", name: "Thailand", lang: "Thai", rtl: false, fontScale: 0.95 },
-            { id: "vn", code: "VN", flagCode: "vn", name: "Vietnam", lang: "Vietnamese", rtl: false, fontScale: 0.9 },
-            { id: "tr", code: "TR", flagCode: "tr", name: "Turkey", lang: "Turkish", rtl: false, fontScale: 0.9 },
-            { id: "pl", code: "PL", flagCode: "pl", name: "Poland", lang: "Polish", rtl: false, fontScale: 0.75 },
-            { id: "tw", code: "TW", flagCode: "tw", name: "Taiwan", lang: "Traditional Chinese", rtl: false, fontScale: 1.05 }
+            { id: "us", code: "US", flagCode: "us", name: "United States", lang: "English", rtl: false, fontScale: 0.85, active: true },
+            { id: "es", code: "ES", flagCode: "es", name: "Spain / LatAm", lang: "Spanish", rtl: false, fontScale: 0.9, active: true },
+            { id: "fr", code: "FR", flagCode: "fr", name: "France", lang: "French", rtl: false, fontScale: 0.75, active: true },
+            { id: "id", code: "ID", flagCode: "id", name: "Indonesia", lang: "Indonesian", fontScale: 0.75, active: true },
+            { id: "ar", code: "ar", flagCode: "sa", name: "Egypt / Gulf", lang: "Arabic", rtl: true, fontScale: 0.95, active: true },
+            { id: "hi", code: "HI", flagCode: "in", name: "India", lang: "Hindi", rtl: false, fontScale: 0.95, active: true },
+            { id: "ru", code: "RU", flagCode: "ru", name: "Russia", lang: "Russian", rtl: false, fontScale: 0.8, active: true },
+            { id: "de", code: "DE", flagCode: "de", name: "Germany", lang: "German", rtl: false, fontScale: 0.75, active: true },
+            { id: "ja", code: "JA", flagCode: "jp", name: "Japan", lang: "Japanese", rtl: false, fontScale: 1.05, active: true },
+            { id: "it", code: "IT", flagCode: "it", name: "Italy", lang: "Italian", rtl: false, fontScale: 0.9, active: true },
+            { id: "ko", code: "KO", flagCode: "kr", name: "South Korea", lang: "Korean", rtl: false, fontScale: 1.05, active: true },
+            { id: "th", code: "TH", flagCode: "th", name: "Thailand", lang: "Thai", rtl: false, fontScale: 0.95, active: true },
+            { id: "vn", code: "VN", flagCode: "vn", name: "Vietnam", lang: "Vietnamese", rtl: false, fontScale: 0.9, active: true },
+            { id: "tr", code: "TR", flagCode: "tr", name: "Turkey", lang: "Turkish", rtl: false, fontScale: 0.9, active: true },
+            { id: "pl", code: "PL", flagCode: "pl", name: "Poland", lang: "Polish", rtl: false, fontScale: 0.75, active: true },
+            { id: "tw", code: "TW", flagCode: "tw", name: "Taiwan", lang: "Traditional Chinese", rtl: false, fontScale: 1.05, active: true },
+            { id: "se", code: "SE", flagCode: "se", name: "Sweden", lang: "Swedish", rtl: false, fontScale: 0.85, active: true },
+            { id: "nl", code: "NL", flagCode: "nl", name: "Netherlands", lang: "Dutch", rtl: false, fontScale: 0.85, active: true }
         ];
 
         // Fallback local translations for the default starting template text (ESTRATÉGIA SECRETA / REVELADA HOJE)
@@ -645,7 +672,9 @@
             "vn": { text1: "CHIẾN THUẬT BÍ MẬT", text2: "HÉ LỘ HÔM NAY" },
             "tr": { text1: "GİZLİ STRATEJİ", text2: "BUGÜN AÇIKLANDI" },
             "pl": { text1: "TAJNA STRATEGIA", text2: "ODKRYTA DZISIAJ" },
-            "tw": { text1: "全新秘密策略", text2: "今天正式公開" }
+            "tw": { text1: "全新秘密策略", text2: "今天正式公開" },
+            "se": { text1: "HEMLIG STRATEGI", text2: "AVSLÖJAD IDAG" },
+            "nl": { text1: "GEHEIME STRATEGIE", text2: "VANDAAG ONTHULD" }
         };
 
         // Fallback localized translations for continuous sentence "100 SEGREDOS" / "QUE VOCÊ NÃO SABIA"
@@ -665,7 +694,9 @@
             "vn": { text1: "100 BÍ MẬT", text2: "MÀ BẠN KHÔNG BIẾT" },
             "tr": { text1: "BİLMEDİĞİNİZ", text2: "100 SIR" },
             "pl": { text1: "100 SEKRETÓW", text2: "O KTÓRYCH NIE WIEDZIAŁEŚ" },
-            "tw": { text1: "你不知道的", text2: "100個秘密" }
+            "tw": { text1: "你不知道的", text2: "100個秘密" },
+            "se": { text1: "100 HEMLIGHETER", text2: "SOM DU INTE VISSTE" },
+            "nl": { text1: "100 GEHEIMEN", text2: "DIE JE NIET WUSST" }
         };
 
         // UI & Render State
@@ -710,15 +741,11 @@
             // Apply default layout on start (Clean Black screen with custom text styles)
             initDefaultLayout();
 
+            // Render active language selector chips
+            renderLanguagesSelectorGrid();
+
             // Populate selector inside individual view
-            const select = document.getElementById("countryEditorSelect");
-            select.innerHTML = "";
-            LANGUAGES.forEach(lang => {
-                const opt = document.createElement("option");
-                opt.value = lang.id;
-                opt.textContent = `${lang.code} - ${lang.name} (${lang.lang})`;
-                select.appendChild(opt);
-            });
+            updateCountryEditorSelect();
 
             // Initialize grid and event bindings
             renderGrid();
@@ -794,166 +821,84 @@
             updateStyleTogglesUI();
         }
 
-        // Custom notification system instead of alert()
-        function showToast(message, type = 'info') {
-            const toast = document.createElement("div");
-            const bgColor = type === 'error' ? 'bg-rose-600' : type === 'success' ? 'bg-emerald-600' : 'bg-indigo-600';
-            const icon = type === 'error' ? 'fa-triangle-exclamation' : type === 'success' ? 'fa-circle-check' : 'fa-info-circle';
-            
-            toast.className = `fixed bottom-5 right-5 ${bgColor} text-white font-semibold text-xs px-5 py-3 rounded-xl shadow-2xl z-[200] border border-white/10 transition duration-500 animate-bounce flex items-center gap-2`;
-            toast.innerHTML = `<i class="fa-solid ${icon}"></i> ${message}`;
-            document.body.appendChild(toast);
-            
-            setTimeout(() => {
-                toast.classList.add("opacity-0", "translate-y-2");
-                setTimeout(() => toast.remove(), 500);
-            }, 4000);
-        }
-
-        function switchTab(tab) {
-            activeTab = tab;
-            const gridBtn = document.getElementById("tabGridBtn");
-            const editorBtn = document.getElementById("tabEditorBtn");
-            const gridTab = document.getElementById("tabGrid");
-            const editorTab = document.getElementById("tabEditor");
-
-            if (tab === "grid") {
-                gridBtn.className = "px-4 py-2 rounded-lg text-xs font-black bg-indigo-500 text-white transition flex items-center gap-2";
-                editorBtn.className = "px-4 py-2 rounded-lg text-xs font-bold text-slate-400 hover:text-white transition flex items-center gap-2";
-                gridTab.classList.remove("hidden");
-                editorTab.classList.add("hidden");
-                renderGrid(); // Redraw grid
-            } else {
-                gridBtn.className = "px-4 py-2 rounded-lg text-xs font-bold text-slate-400 hover:text-white transition flex items-center gap-2";
-                editorBtn.className = "px-4 py-2 rounded-lg text-xs font-black bg-indigo-500 text-white transition flex items-center gap-2";
-                gridTab.classList.add("hidden");
-                editorTab.classList.remove("hidden");
-                renderIndividualEditorCanvas();
-            }
-        }
-
-        // Handle uploaded image background template
-        function handleBgUpload(event) {
-            const file = event.target.files[0];
-            if (file) {
-                document.getElementById("bgFileName").textContent = file.name;
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const img = new Image();
-                    img.onload = function() {
-                        uploadedBgImage = img;
-                        requestRenderAll();
-                        showToast("Template de imagem carregado com sucesso!", "success");
-                    };
-                    img.src = e.target.result;
-                };
-                reader.readAsDataURL(file);
-            }
-        }
-
-        let selectedBadgeType = 'none'; // none, new, play
-        function selectBadge(type) {
-            selectedBadgeType = type;
-            document.querySelectorAll(".badge-opt").forEach(btn => {
-                btn.className = "badge-opt bg-slate-950 border border-slate-800 text-slate-400 hover:text-white py-1.5 px-2 rounded-lg text-xs font-bold transition";
+        // Render cross-platform flag selector grid beautifully
+        function renderLanguagesSelectorGrid() {
+            const grid = document.getElementById("languagesSelectorGrid");
+            grid.innerHTML = "";
+            LANGUAGES.forEach(lang => {
+                const btn = document.createElement("button");
+                btn.onclick = () => toggleLanguage(lang.id);
+                
+                // Premium active/inactive conditional styling
+                if (lang.active) {
+                    btn.className = "flex items-center gap-1.5 p-1.5 bg-indigo-600/10 border border-indigo-500/40 hover:border-indigo-400 text-slate-100 rounded text-[10px] font-bold truncate text-left justify-start transition duration-150 shadow-sm shadow-indigo-500/5";
+                } else {
+                    btn.className = "flex items-center gap-1.5 p-1.5 bg-slate-950/80 border border-slate-900 hover:border-slate-800 text-slate-500 rounded text-[10px] font-bold truncate text-left justify-start transition duration-150 opacity-60";
+                }
+                
+                btn.innerHTML = `
+                    <img src="https://flagcdn.com/w40/${lang.flagCode}.png" class="w-4 h-3 object-cover rounded shadow-sm shrink-0 border border-white/5" alt="">
+                    <span class="truncate">${lang.code}</span>
+                `;
+                grid.appendChild(btn);
             });
-            document.getElementById(`badge_${type}`).className = "badge-opt bg-indigo-500/10 border border-indigo-500 text-indigo-400 py-1.5 px-2 rounded-lg text-xs font-bold transition";
+            
+            // Update active count visualizer
+            const activeCount = LANGUAGES.filter(l => l.active).length;
+            document.getElementById("activeCount").textContent = activeCount;
+            document.querySelector("span[class*='text-indigo-400 font-bold']").textContent = `${activeCount} Países Ativos`;
+            document.querySelector("button[onclick='downloadAllThumbnails()']").textContent = `EXPORTAR ZIP (${activeCount} IMAGENS)`;
+        }
+
+        // Toggle single language selection active state
+        function toggleLanguage(id) {
+            const lang = LANGUAGES.find(l => l.id === id);
+            if (lang) {
+                lang.active = !lang.active;
+                renderLanguagesSelectorGrid();
+                updateCountryEditorSelect();
+                
+                // Fallback check to avoid focusing on inactive current editor country
+                if (currentCountryId === id && !lang.active) {
+                    const firstActive = LANGUAGES.find(l => l.active);
+                    if (firstActive) {
+                        loadCountryToEditor(firstActive.id);
+                    }
+                }
+                
+                requestRenderAll();
+            }
+        }
+
+        // Select all or deselect all languages in bulk
+        function toggleAllLanguages(activeState) {
+            LANGUAGES.forEach(l => l.active = activeState);
+            renderLanguagesSelectorGrid();
+            updateCountryEditorSelect();
+            
+            if (!activeState) {
+                showToast("Por favor, ative pelo menos um idioma para visualizar ou exportar.", "info");
+            } else {
+                loadCountryToEditor("us");
+            }
             requestRenderAll();
         }
 
-        // Real-time synchronization of original texts input to default languages
-        function handleManualTextInput() {
-            const val1 = document.getElementById("ptText1").value.toUpperCase();
-            const val2 = document.getElementById("ptText2").value.toUpperCase();
-            
-            // Mirror to all languages if they haven't run the AI translation yet
+        // Update dropdown list for fine-tune editor containing only active languages
+        function updateCountryEditorSelect() {
+            const select = document.getElementById("countryEditorSelect");
+            select.innerHTML = "";
             LANGUAGES.forEach(lang => {
-                if (!hasBeenTranslated) {
-                    styleData[lang.id].text1 = val1;
-                    styleData[lang.id].text2 = val2;
+                if (lang.active) {
+                    const opt = document.createElement("option");
+                    opt.value = lang.id;
+                    opt.textContent = `${lang.code} - ${lang.name} (${lang.lang})`;
+                    select.appendChild(opt);
                 }
             });
-
-            // Also reload current text values to active view
-            const activeData = styleData[currentCountryId];
-            document.getElementById("overrideText1").value = activeData.text1;
-            document.getElementById("overrideText2").value = activeData.text2;
-
-            requestRenderAll();
-        }
-
-        function applyOverride() {
-            const data = styleData[currentCountryId];
-            data.text1 = document.getElementById("overrideText1").value;
-            data.text2 = document.getElementById("overrideText2").value;
-            
-            const scale1 = parseFloat(document.getElementById("indScaleSlider1").value);
-            const scale2 = parseFloat(document.getElementById("indScaleSlider2").value);
-            data.fontScale1 = scale1;
-            data.fontScale2 = scale2;
-            document.getElementById("scaleLabel1").textContent = scale1.toFixed(2) + "x";
-            document.getElementById("scaleLabel2").textContent = scale2.toFixed(2) + "x";
-
-            renderIndividualEditorCanvas();
-        }
-
-        // Global font scaling updates
-        function updateGlobalScale(line, value) {
-            const val = parseFloat(value);
-            if (line === 1) {
-                globalFontScale1 = val;
-                document.getElementById("globalScale1Label").textContent = val.toFixed(2) + "x";
-            } else {
-                globalFontScale2 = val;
-                document.getElementById("globalScale2Label").textContent = val.toFixed(2) + "x";
+            if (LANGUAGES.find(l => l.id === currentCountryId)?.active) {
+                select.value = currentCountryId;
             }
-            requestRenderAll();
-        }
-
-        function resetIndividualAdjustments() {
-            const defaultLangScale = LANGUAGES.find(l => l.id === currentCountryId).fontScale;
-            const data = styleData[currentCountryId];
-            
-            // Reset to default mirrored PT inputs or fallback translation
-            const val1 = document.getElementById("ptText1").value.toUpperCase();
-            const val2 = document.getElementById("ptText2").value.toUpperCase();
-
-            data.text1 = (hasBeenTranslated && fallbackTranslations[currentCountryId]) ? fallbackTranslations[currentCountryId].text1 : val1;
-            data.text2 = (hasBeenTranslated && fallbackTranslations[currentCountryId]) ? fallbackTranslations[currentCountryId].text2 : val2;
-            data.text1Pos = { x: 640, y: 220 };
-            data.text2Pos = { x: 640, y: 390 };
-            data.fontScale1 = defaultLangScale;
-            data.fontScale2 = defaultLangScale;
-            data.bold1 = true;
-            data.italic1 = false;
-            data.bold2 = true;
-            data.italic2 = false;
-
-            // Reset individual colors
-            data.t1Color = "#ffffff";
-            data.t1Stroke = "#000000";
-            data.t1StrokeWidth = 10;
-            data.t1StrokeOuter = "#ffffff";
-            data.t1StrokeOuterWidth = 0;
-            
-            data.t2Color = "#facc15";
-            data.t2Stroke = "#000000";
-            data.t2StrokeWidth = 10;
-            data.t2StrokeOuter = "#ffffff";
-            data.t2StrokeOuterWidth = 0;
-
-            document.getElementById("overrideText1").value = data.text1;
-            document.getElementById("overrideText2").value = data.text2;
-            
-            document.getElementById("indScaleSlider1").value = defaultLangScale;
-            document.getElementById("scaleLabel1").textContent = defaultLangScale.toFixed(2) + "x";
-            document.getElementById("indScaleSlider2").value = defaultLangScale;
-            document.getElementById("scaleLabel2").textContent = defaultLangScale.toFixed(2) + "x";
-
-            syncIndividualUIInputs();
-            updateStyleTogglesUI();
-            renderIndividualEditorCanvas();
-            showToast("Ajustes individuais restaurados para o padrão.", "info");
         }
 
         // Helper to resolve Canvas mixed LTR/RTL (BiDi) bugs with numbers
@@ -989,7 +934,7 @@
                 ctx.direction = 'ltr';
             }
 
-            // Aplica a correção de isolamento bidirecional para manter números LTR intactos
+            // Aplica a correção de isolamento de direção para manter números intactos no Firefox
             const processedText = resolveBidi(text, langInfo && langInfo.rtl);
 
             let metrics = ctx.measureText(processedText);
@@ -1304,11 +1249,8 @@
                 }
                 ctx.restore();
             }
-
-            // REMOVED internal Canvas watermark inside this block to prevent overlaps and redundancy
         }
 
-        // Funções Globais de Renderização
         function requestRenderAll() {
             if (activeTab === "grid") {
                 renderGrid();
@@ -1323,7 +1265,25 @@
             const gridContainer = document.querySelector("#tabGrid > div");
             gridContainer.innerHTML = "";
 
-            LANGUAGES.forEach(lang => {
+            const activeLanguages = LANGUAGES.filter(l => l.active);
+
+            // In case no language is active, render an elegant empty state
+            if (activeLanguages.length === 0) {
+                gridContainer.innerHTML = `
+                    <div class="col-span-full py-16 text-center bg-slate-900 border border-slate-800/80 rounded-2xl flex flex-col items-center justify-center gap-4">
+                        <div class="bg-indigo-500/10 p-4 rounded-full text-indigo-400">
+                            <i class="fa-solid fa-earth-americas text-4xl animate-spin"></i>
+                        </div>
+                        <div class="space-y-1">
+                            <h4 class="font-bold text-sm text-slate-200">Nenhum Idioma Selecionado</h4>
+                            <p class="text-xs text-slate-500 max-w-sm mx-auto">Ative os países desejados no gerenciador de idiomas (Passo 1.5) para renderizá-los e exportá-los de forma imediata.</p>
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+
+            activeLanguages.forEach(lang => {
                 const card = document.createElement("div");
                 card.className = "bg-slate-900 border border-slate-800/80 rounded-2xl p-4 flex flex-col gap-3 group hover:border-indigo-500/30 hover:shadow-xl hover:shadow-indigo-500/5 transition duration-300";
 
@@ -1539,6 +1499,14 @@
             const ptText2 = document.getElementById("ptText2").value.trim();
             const selectedModel = document.getElementById("apiModelSelect").value;
 
+            // Only fetch currently active checked languages
+            const activeLanguages = LANGUAGES.filter(l => l.active);
+
+            if (activeLanguages.length === 0) {
+                showToast("Por favor, ative pelo menos um idioma no Passo 1.5 para poder traduzir.", "error");
+                return;
+            }
+
             if (!ptText1 && !ptText2) {
                 showToast("Por favor, preencha pelo menos uma linha de texto em português.", "error");
                 return;
@@ -1556,17 +1524,19 @@
                     const clean2 = ptText2.toUpperCase().trim();
 
                     LANGUAGES.forEach(lang => {
-                        // If they are translating our standard dummy continuous sentence
-                        if ((clean1 === "100 SEGREDOS" || clean1.includes("SEGREDOS")) && (clean2 === "QUE VOCÊ NÃO SABIA" || clean2.includes("SABIA")) && fallbackTimeskipTranslations[lang.id]) {
-                            styleData[lang.id].text1 = fallbackTimeskipTranslations[lang.id].text1;
-                            styleData[lang.id].text2 = fallbackTimeskipTranslations[lang.id].text2;
-                        } else if (clean1 === "ESTRATÉGIA SECRETA" && clean2 === "REVELADA HOJE" && fallbackTranslations[lang.id]) {
-                            styleData[lang.id].text1 = fallbackTranslations[lang.id].text1;
-                            styleData[lang.id].text2 = fallbackTranslations[lang.id].text2;
-                        } else {
-                            // Suffix mockup so custom user text renders immediately
-                            styleData[lang.id].text1 = `${ptText1} (${lang.code})`;
-                            styleData[lang.id].text2 = `${ptText2} (${lang.lang})`;
+                        if (lang.active) {
+                            // If they are translating our standard dummy continuous sentence
+                            if ((clean1 === "100 SEGREDOS" || clean1.includes("SEGREDOS")) && (clean2 === "QUE VOCÊ NÃO SABIA" || clean2.includes("SABIA")) && fallbackTimeskipTranslations[lang.id]) {
+                                styleData[lang.id].text1 = fallbackTimeskipTranslations[lang.id].text1;
+                                styleData[lang.id].text2 = fallbackTimeskipTranslations[lang.id].text2;
+                            } else if (clean1 === "ESTRATÉGIA SECRETA" && clean2 === "REVELADA HOJE" && fallbackTranslations[lang.id]) {
+                                styleData[lang.id].text1 = fallbackTranslations[lang.id].text1;
+                                styleData[lang.id].text2 = fallbackTranslations[lang.id].text2;
+                            } else {
+                                // Suffix mockup so custom user text renders immediately
+                                styleData[lang.id].text1 = `${ptText1} (${lang.code})`;
+                                styleData[lang.id].text2 = `${ptText2} (${lang.lang})`;
+                            }
                         }
                     });
                     
@@ -1583,22 +1553,23 @@
 
             try {
                 const systemPrompt = `You are a world-class global marketing and YouTube optimization copywriter. 
-Your task is to take a YouTube Thumbnail text originally in Portuguese, and adapt it into 16 specified target languages.
+Your task is to take a YouTube Thumbnail text originally in Portuguese, and adapt it into specified target languages.
 
 CRITICAL CONTEXT RULES:
-1. SISTER STRINGS CONNECTION: The input consists of two lines: Line 1 (Main Text) and Line 2 (Secondary Text). These two lines are often a SINGLE, CONTINUOUS SENTENCE or cohesive phrase split for layout constraints (e.g., "O NOVO TIMESKIP" + "DOS CHAPÉUS DE PALHA").
-2. You MUST translate them together as a unified semantic block to preserve proper grammatical flow, gender agreements, number agreements, prepositions (like 'of the', 'de los', 'de l\'', 'des'), and localized case declensions.
+1. SISTER STRINGS CONNECTION: The input consists of two lines: Line 1 (Main Text) and Line 2 (Secondary Text). These two lines are often a SINGLE, CONTINUOUS SENTENCE or cohesive phrase split for layout constraints.
+2. You MUST translate them together as a unified semantic block to preserve proper grammatical flow, gender agreements, number agreements, prepositions, and localized case declensions.
 3. Once translated cohesively, split the resulting translation logically back into two lines (text1 and text2). Ensure that reading Line 1 then Line 2 feels like a single, seamless, natural sentence in the target language. Do not isolate them into disconnected hooks unless the input itself represents two unrelated hooks.
 4. Capitalization must remain bold, impactful, and expressive.
-5. Translate the HOOK, the CATCHY impact, matching the local internet culture slang of that specific target country, if applicable.
+5. Translate the HOOK, the CATCHY impact, matching the local internet culture slang of that specific target country.
 6. Output strict JSON with schema matching exactly the specified structure below. No explanation, markdown ticks, or other text outside the JSON.`;
 
+                const langCodes = activeLanguages.map(l => l.code).join(", ");
                 const userQuery = `Original Portuguese texts:
 Line 1: "${ptText1}"
 Line 2: "${ptText2}"
 
 Generate localized translations for these exact language codes:
-US, ES, FR, ID, AR, HI, RU, DE, JA, IT, KO, TH, VN, TR, PL, TW.`;
+${langCodes}.`;
 
                 // Exponential backoff runner using the chosen stable model
                 const makeApiCall = async (retryCount = 0) => {
@@ -1715,16 +1686,22 @@ US, ES, FR, ID, AR, HI, RU, DE, JA, IT, KO, TH, VN, TR, PL, TW.`;
 
         // Downloader pipeline utilizando JSZip para empacotar as imagens em lote em um único arquivo ZIP
         async function downloadAllThumbnails() {
+            const activeLanguages = LANGUAGES.filter(l => l.active);
+            if (activeLanguages.length === 0) {
+                showToast("Por favor, ative pelo menos um idioma no gerenciador para exportar o ZIP.", "error");
+                return;
+            }
+
             const btn = document.querySelector("button[onclick='downloadAllThumbnails()']");
             const originalHtml = btn.innerHTML;
             btn.disabled = true;
             btn.innerHTML = `<i class="fa-solid fa-spinner animate-spin mr-2"></i> Compactando ZIP...`;
-            showToast("Renderizando e empacotando as 16 thumbnails. Aguarde...", "info");
+            showToast(`Renderizando e empacotando as ${activeLanguages.length} thumbnails ativas. Aguarde...`, "info");
 
             try {
                 const zip = new JSZip();
 
-                for (const lang of LANGUAGES) {
+                for (const lang of activeLanguages) {
                     const tempCanvas = document.createElement("canvas");
                     tempCanvas.width = 1280;
                     tempCanvas.height = 720;
@@ -1736,7 +1713,6 @@ US, ES, FR, ID, AR, HI, RU, DE, JA, IT, KO, TH, VN, TR, PL, TW.`;
                     const blob = await new Promise(resolve => tempCanvas.toBlob(resolve, "image/png"));
                     
                     // Higieniza o nome do país de forma robusta substituindo barras por sublinhados
-                    // Isso evita que o JSZip crie pastas separadas para "Spain / LatAm" e "Egypt / Gulf"
                     const cleanName = lang.name.replace(/[\s\/\\|:?*<>]+/g, '_');
                     const filename = `thumb_${lang.code}_${cleanName}.png`;
                     
