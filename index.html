@@ -366,13 +366,13 @@
                         <div class="space-y-2 pt-2 border-t border-slate-800/50">
                             <label class="block text-xs text-slate-400 font-semibold mb-1">Alinhamento do Bloco</label>
                             <div class="grid grid-cols-3 gap-1.5">
-                                <button onclick="applyGlobalAlignment('left')" id="alignBtn_left" class="bg-slate-900 hover:bg-slate-800 text-slate-400 hover:text-white py-1.5 px-1 rounded-lg text-xs font-bold transition flex items-center justify-center gap-1 border border-slate-800">
+                                <button onclick="applyGlobalAlignment('left')" id="alignBtn_left" class="bg-slate-900 hover:bg-slate-850 border border-slate-800 text-slate-400 hover:text-white py-1.5 px-1 rounded-lg text-xs font-bold transition flex items-center justify-center gap-1 border border-slate-800">
                                     <i class="fa-solid fa-align-left"></i> Esquerda
                                 </button>
                                 <button onclick="applyGlobalAlignment('center')" id="alignBtn_center" class="bg-indigo-600 text-white py-1.5 px-1 rounded-lg text-xs font-bold transition flex items-center justify-center gap-1 border border-indigo-400/20">
                                     <i class="fa-solid fa-align-center"></i> Centro
                                 </button>
-                                <button onclick="applyGlobalAlignment('right')" id="alignBtn_right" class="bg-slate-900 hover:bg-slate-800 text-slate-400 hover:text-white py-1.5 px-1 rounded-lg text-xs font-bold transition flex items-center justify-center gap-1 border border-slate-800">
+                                <button onclick="applyGlobalAlignment('right')" id="alignBtn_right" class="bg-slate-900 hover:bg-slate-850 border border-slate-800 text-slate-400 hover:text-white py-1.5 px-1 rounded-lg text-xs font-bold transition flex items-center justify-center gap-1 border border-slate-800">
                                     <i class="fa-solid fa-align-right"></i> Direita
                                 </button>
                             </div>
@@ -388,7 +388,7 @@
                     <span class="text-slate-400">Total Adaptadas:</span>
                     <span id="activeCountriesStatus" class="font-bold text-indigo-400">18 Países Ativos</span>
                 </div>
-                <button onclick="downloadAllThumbnails()" 
+                <button id="zipExportBtn" onclick="downloadAllThumbnails()" 
                     class="w-full bg-emerald-500 hover:bg-emerald-600 text-slate-950 text-sm font-black py-3 px-4 rounded-xl transition shadow-lg shadow-emerald-500/10 flex items-center justify-center gap-2">
                     <i class="fa-solid fa-file-zipper text-lg"></i>
                     EXPORTAR ZIP (18 IMAGENS)
@@ -417,7 +417,8 @@
 
             <!-- TAB 1: ALL-LANGUAGES GRID PREVIEW -->
             <div id="tabGrid" class="space-y-6">
-                <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-6">
+                <!-- ID explicitamente inserido para evitar falhas de escopo dinâmico no navegador Brave -->
+                <div id="gridContainer" class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-6">
                     <!-- Cards will be injected dynamically -->
                 </div>
             </div>
@@ -455,7 +456,7 @@
                         <div>
                             <label class="block text-xs text-slate-400 font-semibold mb-1">Selecionar Outro País</label>
                             <select id="countryEditorSelect" onchange="loadCountryToEditor(this.value)"
-                                class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs focus:outline-none focus:ring-1 focus:ring-indigo-500 text-white font-semibold font-sans font-sans">
+                                class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs focus:outline-none focus:ring-1 focus:ring-indigo-500 text-white font-semibold font-sans">
                                 <!-- Options populated by JS -->
                             </select>
                         </div>
@@ -684,7 +685,7 @@
             "fr": { text1: "100 SECRETS", text2: "QUE VOUS NE SAVIEZ PAS" },
             "id": { text1: "100 RAHASIA", text2: "YANG TIDAK KAMU KETAHUI" },
             "ar": { text1: "100 سر", text2: "لم تكن تعرفها" },
-            "hi": { text1: "100 रहस्य", text2: "जो आप não جانتے थे" },
+            "hi": { text1: "100 रहस्य", text2: "जो आप não جانتے تھے" },
             "ru": { text1: "100 СЕКРЕТОВ", text2: "О КОТОРЫХ ВЫ НЕ ZНАЛИ" },
             "de": { text1: "100 GEHEIMNISSE", text2: "DIE DU NICHT WUSSTEST" },
             "ja": { text1: "あなたが知らない", text2: "100ของความลับ" },
@@ -853,7 +854,7 @@
                 statusEl.textContent = `${activeCount} Países Ativos`;
             }
             
-            const zipBtn = document.querySelector("button[onclick='downloadAllThumbnails()']");
+            const zipBtn = document.getElementById("zipExportBtn");
             if (zipBtn) {
                 zipBtn.textContent = `EXPORTAR ZIP (${activeCount} IMAGENS)`;
             }
@@ -1206,62 +1207,10 @@
                 });
             }
 
-            // DRAW BADGE
-            if (selectedBadgeType !== 'none') {
-                ctx.save();
-                ctx.shadowColor = 'rgba(0, 0, 0, 0.5)';
-                ctx.shadowBlur = 10 * scaleFactor;
-                ctx.shadowOffsetX = 5 * scaleFactor;
-                ctx.shadowOffsetY = 5 * scaleFactor;
-
-                const badgeX = 120 * scaleFactor;
-                const badgeY = 100 * scaleFactor;
-
-                if (selectedBadgeType === 'new') {
-                    ctx.translate(badgeX, badgeY);
-                    ctx.rotate(-15 * Math.PI / 180);
-                    
-                    ctx.fillStyle = "#facc15";
-                    ctx.beginPath();
-                    ctx.roundRect(-70 * scaleFactor, -30 * scaleFactor, 140 * scaleFactor, 60 * scaleFactor, 12 * scaleFactor);
-                    ctx.fill();
-                    
-                    ctx.strokeStyle = "#ffffff";
-                    ctx.lineWidth = 4 * scaleFactor;
-                    ctx.stroke();
-
-                    ctx.fillStyle = "#000000";
-                    ctx.font = `900 ${28 * scaleFactor}px 'Inter', sans-serif`;
-                    ctx.textAlign = "center";
-                    ctx.textBaseline = "middle";
-                    ctx.fillText("NEW!", 0, 0);
-
-                } else if (selectedBadgeType === 'play') {
-                    ctx.translate(badgeX, badgeY);
-                    
-                    ctx.fillStyle = "#ef4444";
-                    ctx.beginPath();
-                    ctx.arc(0, 0, 45 * scaleFactor, 0, 2 * Math.PI);
-                    ctx.fill();
-                    ctx.strokeStyle = "#ffffff";
-                    ctx.lineWidth = 5 * scaleFactor;
-                    ctx.stroke();
-
-                    ctx.fillStyle = "#ffffff";
-                    ctx.beginPath();
-                    const size = 18 * scaleFactor;
-                    ctx.moveTo(-size/2, -size);
-                    ctx.lineTo(size * 1.2 - size/2, 0);
-                    ctx.lineTo(-size/2, size);
-                    ctx.closePath();
-                    ctx.fill();
-                }
-                ctx.restore();
-            }
-
             // REMOVED internal Canvas watermark inside this block to prevent overlaps and redundancy
         }
 
+        // Funções Globais de Renderização
         function requestRenderAll() {
             if (activeTab === "grid") {
                 renderGrid();
@@ -1273,7 +1222,9 @@
         function renderGrid() {
             if (activeTab !== "grid") return;
 
-            const gridContainer = document.querySelector("#tabGrid > div");
+            // Seletor ID substituindo query generica para garantir compatibilidade estrutural no Brave
+            const gridContainer = document.getElementById("gridContainer");
+            if (!gridContainer) return;
             gridContainer.innerHTML = "";
 
             const activeLanguages = LANGUAGES.filter(l => l.active);
@@ -1703,7 +1654,7 @@ ${langCodes}.`;
                 return;
             }
 
-            const btn = document.querySelector("button[onclick='downloadAllThumbnails()']");
+            const btn = document.getElementById("zipExportBtn");
             const originalHtml = btn.innerHTML;
             btn.disabled = true;
             btn.innerHTML = `<i class="fa-solid fa-spinner animate-spin mr-2"></i> Compactando ZIP...`;
@@ -1801,7 +1752,7 @@ ${langCodes}.`;
                     if (a === alignment) {
                         btn.className = "bg-indigo-600 text-white py-1.5 px-1 rounded-lg text-xs font-bold transition flex items-center justify-center gap-1 border border-indigo-400/20";
                     } else {
-                        btn.className = "bg-slate-900 hover:bg-slate-800 text-slate-400 hover:text-white py-1.5 px-1 rounded-lg text-xs font-bold transition flex items-center justify-center gap-1 border border-slate-800";
+                        btn.className = "bg-slate-900 hover:bg-slate-850 border border-slate-800 text-slate-400 hover:text-white py-1.5 px-1 rounded-lg text-xs font-bold transition flex items-center justify-center gap-1 border border-slate-800";
                     }
                 }
             });
