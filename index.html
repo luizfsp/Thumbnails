@@ -320,7 +320,7 @@
                     <div class="space-y-4">
                         <div class="bg-indigo-950/20 p-2.5 rounded-lg border border-indigo-500/10 mb-2">
                             <p class="text-[11px] text-indigo-300 leading-normal">
-                                <i class="fa-solid fa-circle-info mr-1"></i> Ajuste estes controles para mover o texto de <strong>todas as thumbnails</strong> ao mesmo tempo de forma rápida!
+                                <i class="fa-solid fa-circle-info mr-1"></i> Ajuste estes controles para mover o texto de <strong>todas as 16 thumbnails</strong> ao mesmo tempo de forma rápida!
                             </p>
                         </div>
                         
@@ -1972,7 +1972,7 @@ ${langCodes}.`;
             applyGlobalAlignment(sourceData.textAlignment);
             updateStyleTogglesUI();
 
-            showToast("Layout e estilos aplicados em todas as thumbnails com sucesso!", "success");
+            showToast("Layout e estilos aplicados em todas as 16 thumbnails com sucesso!", "success");
             requestRenderAll();
         }
 
@@ -1985,6 +1985,123 @@ ${langCodes}.`;
             } else {
                 globalFontScale2 = val;
                 document.getElementById("globalScale2Label").textContent = val.toFixed(2) + "x";
+            }
+            requestRenderAll();
+        }
+
+        // Handle uploaded image background template
+        function handleBgUpload(event) {
+            const file = event.target.files[0];
+            if (file) {
+                document.getElementById("bgFileName").textContent = file.name;
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = new Image();
+                    img.onload = function() {
+                        uploadedBgImage = img;
+                        requestRenderAll();
+                        showToast("Template de imagem carregado com sucesso!", "success");
+                    };
+                    img.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        // Real-time synchronization of original texts input to default languages
+        function handleManualTextInput() {
+            const val1 = document.getElementById("ptText1").value.toUpperCase();
+            const val2 = document.getElementById("ptText2").value.toUpperCase();
+            
+            // Mirror to all languages if they haven't run the AI translation yet
+            LANGUAGES.forEach(lang => {
+                if (!hasBeenTranslated) {
+                    styleData[lang.id].text1 = val1;
+                    styleData[lang.id].text2 = val2;
+                }
+            });
+
+            // Also reload current text values to active view
+            const activeData = styleData[currentCountryId];
+            if (activeData) {
+                document.getElementById("overrideText1").value = activeData.text1;
+                document.getElementById("overrideText2").value = activeData.text2;
+            }
+
+            requestRenderAll();
+        }
+
+        function applyOverride() {
+            const data = styleData[currentCountryId];
+            if (!data) return;
+            data.text1 = document.getElementById("overrideText1").value;
+            data.text2 = document.getElementById("overrideText2").value;
+            
+            const scale1 = parseFloat(document.getElementById("indScaleSlider1").value);
+            const scale2 = parseFloat(document.getElementById("indScaleSlider2").value);
+            data.fontScale1 = scale1;
+            data.fontScale2 = scale2;
+            document.getElementById("scaleLabel1").textContent = scale1.toFixed(2) + "x";
+            document.getElementById("scaleLabel2").textContent = scale2.toFixed(2) + "x";
+
+            renderIndividualEditorCanvas();
+        }
+
+        function resetIndividualAdjustments() {
+            const defaultLangScale = LANGUAGES.find(l => l.id === currentCountryId)?.fontScale || 1.0;
+            const data = styleData[currentCountryId];
+            if (!data) return;
+            
+            // Reset to default mirrored PT inputs or fallback translation
+            const val1 = document.getElementById("ptText1").value.toUpperCase();
+            const val2 = document.getElementById("ptText2").value.toUpperCase();
+
+            data.text1 = (hasBeenTranslated && fallbackTimeskipTranslations[currentCountryId]) ? fallbackTimeskipTranslations[currentCountryId].text1 : val1;
+            data.text2 = (hasBeenTranslated && fallbackTimeskipTranslations[currentCountryId]) ? fallbackTimeskipTranslations[currentCountryId].text2 : val2;
+            data.text1Pos = { x: 640, y: 220 };
+            data.text2Pos = { x: 640, y: 390 };
+            data.fontScale1 = defaultLangScale;
+            data.fontScale2 = defaultLangScale;
+            data.bold1 = true;
+            data.italic1 = false;
+            data.bold2 = true;
+            data.italic2 = false;
+
+            // Reset individual colors
+            data.t1Color = "#ffffff";
+            data.t1Stroke = "#000000";
+            data.t1StrokeWidth = 10;
+            data.t1StrokeOuter = "#ffffff";
+            data.t1StrokeOuterWidth = 0;
+            
+            data.t2Color = "#facc15";
+            data.t2Stroke = "#000000";
+            data.t2StrokeWidth = 10;
+            data.t2StrokeOuter = "#ffffff";
+            data.t2StrokeOuterWidth = 0;
+
+            document.getElementById("overrideText1").value = data.text1;
+            document.getElementById("overrideText2").value = data.text2;
+            
+            document.getElementById("indScaleSlider1").value = defaultLangScale;
+            document.getElementById("scaleLabel1").textContent = defaultLangScale.toFixed(2) + "x";
+            document.getElementById("indScaleSlider2").value = defaultLangScale;
+            document.getElementById("scaleLabel2").textContent = defaultLangScale.toFixed(2) + "x";
+
+            syncIndividualUIInputs();
+            updateStyleTogglesUI();
+            renderIndividualEditorCanvas();
+            showToast("Ajustes individuais restaurados para o padrão.", "info");
+        }
+
+        function selectBadge(type) {
+            selectedBadgeType = type;
+            document.querySelectorAll(".badge-opt").forEach(btn => {
+                btn.className = "badge-opt bg-slate-950 border border-slate-800 text-slate-400 hover:text-white py-1.5 px-2 rounded-lg text-xs font-bold transition";
+            });
+            const badgeBtn = document.getElementById(`badge_${type}`);
+            if (badgeBtn) {
+                badgeBtn.className = "badge-opt bg-indigo-500/10 border border-indigo-500 text-indigo-400 py-1.5 px-2 rounded-lg text-xs font-bold transition";
             }
             requestRenderAll();
         }
