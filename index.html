@@ -320,7 +320,7 @@
                     <div class="space-y-4">
                         <div class="bg-indigo-950/20 p-2.5 rounded-lg border border-indigo-500/10 mb-2">
                             <p class="text-[11px] text-indigo-300 leading-normal">
-                                <i class="fa-solid fa-circle-info mr-1"></i> Ajuste estes controles para mover o texto de <strong>todas as 16 thumbnails</strong> ao mesmo tempo de forma rápida!
+                                <i class="fa-solid fa-circle-info mr-1"></i> Ajuste estes controles para mover o texto de <strong>todas as thumbnails</strong> ao mesmo tempo de forma rápida!
                             </p>
                         </div>
                         
@@ -685,7 +685,7 @@
             "fr": { text1: "100 SECRETS", text2: "QUE VOUS NE SAVIEZ PAS" },
             "id": { text1: "100 RAHASIA", text2: "YANG TIDAK KAMU KETAHUI" },
             "ar": { text1: "100 سر", text2: "لم تكن تعرفها" },
-            "hi": { text1: "100 रहस्य", text2: "جو आप não جانتے تھے" },
+            "hi": { text1: "100 रहस्य", text2: "जो आप não جانتے थे" },
             "ru": { text1: "100 СЕКРЕТОВ", text2: "О КОТОРЫХ ВЫ НЕ ZНАЛИ" },
             "de": { text1: "100 GEHEIMNISSE", text2: "DIE DU NICHT WUSSTEST" },
             "ja": { text1: "あなたが知らない", text2: "100ของความลับ" },
@@ -695,7 +695,7 @@
             "vn": { text1: "100 BÍ MẬT", text2: "MÀ BẠN KHÔNG BIẾT" },
             "tr": { text1: "BİLMEDİĞİNİZ", text2: "100 SIR" },
             "pl": { text1: "100 SEKRETÓW", text2: "O KTÓRYCH NIE WIEDZIAŁEŚ" },
-            "tw": { text1: "你不知道的", text2: "100個秘密" },
+            "tw": { text1: "你不知道 of", text2: "100個秘密" },
             "se": { text1: "100 HEMLIGHETER", text2: "SOM DU INTE VISSTE" },
             "nl": { text1: "100 GEHEIMEN", text2: "DIE JE NIET WUSST" }
         };
@@ -753,19 +753,19 @@
         }
 
         function initApp() {
-            // Preload cross-platform flag assets
-            preloadFlags();
-
-            // Apply default layout on start (Clean Black screen with custom text styles)
+            // 1. Apply default layout on start (Populates state memory buffer first)
             initDefaultLayout();
 
-            // Render active language selector chips
+            // 2. Preload cross-platform flag assets (avoids race condition)
+            preloadFlags();
+
+            // 3. Render active language selector chips
             renderLanguagesSelectorGrid();
 
-            // Populate selector inside individual view
+            // 4. Populate selector inside individual view
             updateCountryEditorSelect();
 
-            // Initialize grid and event bindings
+            // 5. Initialize grid and event bindings
             renderGrid();
             loadCountryToEditor("us");
             setupInteractiveCanvasEvents();
@@ -948,6 +948,12 @@
             const data = styleData[countryId];
             const langInfo = LANGUAGES.find(l => l.id === countryId);
             
+            // Safe fallback if data isn't loaded yet
+            if (!data) {
+                ctx.restore();
+                return { x: 0, y: 0, width: 0, height: 0, adjustedFontSize: fontSize };
+            }
+
             // Extract styles correctly based on line check
             const isItalic = isText1 ? data.italic1 : data.italic2;
             const isBold = isText1 ? data.bold1 : data.bold2;
@@ -965,7 +971,7 @@
                 ctx.direction = 'ltr';
             }
 
-            // Aplica a correção de isolamento de direção para manter números intactos no Firefox
+            // Aplica a correção de isolamento de direção para manter números LTR intactos no Firefox
             const processedText = resolveBidi(text, langInfo && langInfo.rtl);
 
             let metrics = ctx.measureText(processedText);
@@ -1009,6 +1015,9 @@
             const ctx = canvas.getContext("2d");
             const data = styleData[countryId];
             const langInfo = LANGUAGES.find(l => l.id === countryId);
+
+            // Safe guard if state memory for country is not defined yet
+            if (!data) return;
 
             ctx.clearRect(0, 0, width, height);
             const scaleFactor = width / 1280;
@@ -1330,6 +1339,8 @@
             document.getElementById("countryEditorSelect").value = countryId;
 
             const data = styleData[countryId];
+            if (!data) return;
+
             document.getElementById("overrideText1").value = data.text1;
             document.getElementById("overrideText2").value = data.text2;
             
@@ -1354,6 +1365,13 @@
         }
 
         function goToCountryDetail(countryId) {
+            // Force activate the country if it was inactive before switching
+            const lang = LANGUAGES.find(l => l.id === countryId);
+            if (lang && !lang.active) {
+                lang.active = true;
+                renderLanguagesSelectorGrid();
+                updateCountryEditorSelect();
+            }
             switchTab("editor");
             loadCountryToEditor(countryId);
         }
@@ -1361,6 +1379,7 @@
         // FLAWLESS BOUNDING-BOX DRAG AND DROP MECHANISM
         function setupInteractiveCanvasEvents() {
             const canvas = document.getElementById("interactiveCanvas");
+            if (!canvas) return;
             
             // Helper to fetch normalized base 1280x720 mouse coordinates from responsive client dimensions
             function getMousePos(evt) {
@@ -1406,6 +1425,7 @@
                 } else {
                     // Update drag coordinates in real-time
                     const data = styleData[currentCountryId];
+                    if (!data) return;
                     canvas.style.cursor = "grabbing";
 
                     if (dragTarget === "text1") {
@@ -1427,6 +1447,7 @@
                 const overT1 = isInsideBox(mousePos, boundingBoxes.text1);
                 const overT2 = isInsideBox(mousePos, boundingBoxes.text2);
                 const data = styleData[currentCountryId];
+                if (!data) return;
 
                 if (overT1) {
                     isDragging = true;
@@ -1857,7 +1878,7 @@ ${langCodes}.`;
             if (isActive) {
                 // Indigo/Active style
                 btn.className = btn.className
-                    .replace(/bg-slate-900|bg-slate-950/g, 'bg-indigo-600')
+                    .replace(/bg-slate-900|bg-slate-850|bg-slate-950/g, 'bg-indigo-600')
                     .replace(/text-slate-400/g, 'text-white')
                     .replace(/border-slate-800/g, 'border-indigo-400/20');
                 if (!btn.className.includes('bg-indigo-600')) {
@@ -1894,6 +1915,7 @@ ${langCodes}.`;
 
         function syncCurrentLayoutToAll() {
             const sourceData = styleData[currentCountryId];
+            if (!sourceData) return;
             
             // Replicate settings across the whole stack
             LANGUAGES.forEach(lang => {
@@ -1950,7 +1972,7 @@ ${langCodes}.`;
             applyGlobalAlignment(sourceData.textAlignment);
             updateStyleTogglesUI();
 
-            showToast("Layout e estilos aplicados em todas as 16 thumbnails com sucesso!", "success");
+            showToast("Layout e estilos aplicados em todas as thumbnails com sucesso!", "success");
             requestRenderAll();
         }
 
@@ -1965,6 +1987,47 @@ ${langCodes}.`;
                 document.getElementById("globalScale2Label").textContent = val.toFixed(2) + "x";
             }
             requestRenderAll();
+        }
+
+        // Tab Switching Engine with security active-language checkpoints
+        function switchTab(tab) {
+            // Guard: If trying to access fine-tuning but no languages are active, block action
+            if (tab === "editor") {
+                const activeCount = LANGUAGES.filter(l => l.active).length;
+                if (activeCount === 0) {
+                    showToast("Ative pelo menos um país no Passo 1.5 para acessar o Ajuste Fino.", "error");
+                    return;
+                }
+            }
+
+            activeTab = tab;
+            const gridBtn = document.getElementById("tabGridBtn");
+            const editorBtn = document.getElementById("tabEditorBtn");
+            const gridTab = document.getElementById("tabGrid");
+            const editorTab = document.getElementById("tabEditor");
+
+            if (tab === "grid") {
+                gridBtn.className = "px-4 py-2 rounded-lg text-xs font-black bg-indigo-500 text-white transition flex items-center gap-2";
+                editorBtn.className = "px-4 py-2 rounded-lg text-xs font-bold text-slate-400 hover:text-white transition flex items-center gap-2";
+                gridTab.classList.remove("hidden");
+                editorTab.classList.add("hidden");
+                renderGrid(); // Redraw grid
+            } else {
+                gridBtn.className = "px-4 py-2 rounded-lg text-xs font-bold text-slate-400 hover:text-white transition flex items-center gap-2";
+                editorBtn.className = "px-4 py-2 rounded-lg text-xs font-black bg-indigo-500 text-white transition flex items-center gap-2";
+                gridTab.classList.add("hidden");
+                editorTab.classList.remove("hidden");
+                
+                // If currentCountry is inactive, switch currentCountry to the first active country
+                if (!LANGUAGES.find(l => l.id === currentCountryId)?.active) {
+                    const firstActive = LANGUAGES.find(l => l.active);
+                    if (firstActive) {
+                        currentCountryId = firstActive.id;
+                    }
+                }
+                
+                loadCountryToEditor(currentCountryId);
+            }
         }
 
         // Window entry point
