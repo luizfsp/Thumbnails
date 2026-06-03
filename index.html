@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-PT">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,12 +8,15 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- JSZip Library para empacotar as imagens em lote em um único arquivo ZIP -->
+    <!-- JSZip Library para empacotar as imagens em lote num único ficheiro ZIP -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
     <!-- Google Fonts (Suporte global para múltiplos scripts incluindo Barlow Black) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=Barlow:ital,wght@0,400;0,900;1,400;1,900&family=Inter:wght@400;600;800;900&family=Noto+Sans+JP:wght@700;900&family=Noto+Sans+KR:wght@700;900&family=Noto+Sans+SC:wght@700;900&family=Noto+Sans+TC:wght@700;900&family=Noto+Sans:wght@700;900&family=Rubik+Mono+One&family=Teko:wght@700&display=swap" rel="stylesheet">
+    
+    <!-- Fonte Premium Komika Axis (Excelente para Gaming e canais estilo MrBeast/Virais) -->
+    <link href="https://fonts.cdnfonts.com/css/komika-axis" rel="stylesheet">
     
     <style>
         body {
@@ -47,13 +50,12 @@
             </div>
             <div>
                 <h1 class="font-black text-lg tracking-wider bg-gradient-to-r from-white via-slate-100 to-slate-400 bg-clip-text text-transparent">THUMBGRID ViralFX</h1>
-                <p class="text-xs text-indigo-400 font-medium">Editor Avançado de Thumbnails globais</p>
+                <p class="text-xs text-indigo-400 font-medium">Editor Avançado de Thumbnails Globais</p>
             </div>
         </div>
         
-        <!-- API Setup & Model Selector -->
+        <!-- Configuração de API e Seletor de Modelo -->
         <div class="flex items-center gap-3 flex-wrap sm:flex-nowrap">
-            <!-- Selector for active AI model to prevent Google AI Studio errors -->
             <div class="flex items-center gap-1.5">
                 <span class="text-[10px] uppercase font-bold text-slate-500">Modelo:</span>
                 <select id="apiModelSelect" class="bg-slate-950/80 text-xs border border-slate-800 rounded-lg px-2 py-2 text-indigo-300 font-semibold focus:outline-none focus:ring-2 focus:ring-indigo-500">
@@ -76,16 +78,16 @@
         </div>
     </header>
 
-    <!-- MAIN WORKSPACE -->
+    <!-- WORKSPACE PRINCIPAL -->
     <main class="flex-1 flex flex-col lg:flex-row min-h-0">
         
-        <!-- LEFT PANEL: CONTROL CENTER -->
+        <!-- PAINEL ESQUERDO: CENTRO DE CONTROLO -->
         <aside class="w-full lg:w-[420px] bg-slate-900 border-r border-slate-800 flex flex-col shrink-0 overflow-y-auto">
             
-            <!-- ACCORDION CONTROLS -->
+            <!-- ACORDEÃO DE CONTROLOS -->
             <div class="p-5 space-y-6">
                 
-                <!-- STEP 1: Original Content & AI Settings -->
+                <!-- PASSO 1: Conteúdo Original & Definições de IA -->
                 <div class="bg-slate-950/50 p-4 rounded-xl border border-slate-800/80">
                     <div class="flex justify-between items-center mb-3">
                         <h3 class="font-bold text-sm text-indigo-400 uppercase tracking-wider flex items-center gap-2">
@@ -116,7 +118,7 @@
                     </div>
                 </div>
 
-                <!-- STEP 1.5: Active Languages Configurator -->
+                <!-- PASSO 1.5: Configurador de Idiomas Ativos -->
                 <div class="bg-slate-950/50 p-4 rounded-xl border border-slate-800/80">
                     <div class="flex justify-between items-center mb-3">
                         <h3 class="font-bold text-xs text-indigo-400 uppercase tracking-wider flex items-center gap-2">
@@ -125,7 +127,6 @@
                         </h3>
                     </div>
                     
-                    <!-- Selection actions -->
                     <div class="flex gap-2 mb-3">
                         <button onclick="toggleAllLanguages(true)" class="flex-1 bg-slate-900 hover:bg-slate-850 border border-slate-800 hover:border-slate-700 text-[10px] font-black py-2 px-2 rounded transition flex items-center justify-center gap-1.5 text-slate-300 uppercase tracking-wider">
                             <i class="fa-solid fa-square-check text-emerald-400 text-xs"></i> Todos
@@ -135,39 +136,36 @@
                         </button>
                     </div>
 
-                    <!-- Beautiful interactive checklist grid of languages -->
                     <div class="grid grid-cols-3 gap-1.5 max-h-48 overflow-y-auto pr-1" id="languagesSelectorGrid">
-                        <!-- Populated dynamically by script -->
+                        <!-- Gerado dinamicamente -->
                     </div>
                 </div>
 
-                <!-- STEP 2: Background Image Template Options -->
+                <!-- PASSO 2: Opções de Imagem de Template (Fundo) -->
                 <div class="bg-slate-950/50 p-4 rounded-xl border border-slate-800/80">
                     <h3 class="font-bold text-sm text-indigo-400 uppercase tracking-wider flex items-center gap-2 mb-3">
                         <span class="bg-indigo-500/10 text-indigo-400 text-[10px] py-0.5 px-2 rounded-full">2</span>
-                        Imagem de Template (Fundo)
+                        Ficheiro de Template (Fundo)
                     </h3>
                     
                     <div class="space-y-4">
-                        <!-- Custom Background Upload -->
                         <div>
-                            <label class="block text-xs text-slate-400 font-semibold mb-1">Upload de Fundo Personalizado</label>
+                            <label class="block text-xs text-slate-400 font-semibold mb-1">Carregar Fundo Personalizado</label>
                             <div class="flex items-center justify-center w-full">
                                 <label class="flex flex-col items-center justify-center w-full h-28 border-2 border-slate-800 border-dashed rounded-lg cursor-pointer bg-slate-900 hover:bg-slate-800/50 hover:border-indigo-500/50 transition">
                                     <div class="flex flex-col items-center justify-center pt-3 pb-4 px-2 text-center">
                                         <i class="fa-solid fa-images text-xl text-indigo-400 mb-1.5 animate-pulse"></i>
                                         <p class="text-[10px] text-slate-300 font-bold">Enviar Imagem de Template</p>
-                                        <p class="text-[9px] text-slate-500 mt-1" id="bgFileName">Nenhum arquivo enviado - Tela preta ativa</p>
+                                        <p class="text-[9px] text-slate-500 mt-1" id="bgFileName">Nenhuma imagem carregada - Tela preto ativo</p>
                                     </div>
                                     <input type="file" id="bgUpload" accept="image/*" class="hidden" onchange="handleBgUpload(event)">
                                 </label>
                             </div>
                         </div>
 
-                        <!-- Vignette and Filters -->
                         <div class="grid grid-cols-2 gap-3 pt-1">
                             <div>
-                                <label class="block text-xs text-slate-400 font-semibold mb-1">Escurecer Bordas</label>
+                                <label class="block text-xs text-slate-400 font-semibold mb-1">Escurecer Margens</label>
                                 <input type="range" id="vignetteSlider" min="0" max="100" value="35" oninput="requestRenderAll()"
                                     class="w-full accent-indigo-500 bg-slate-800 h-1 rounded-lg cursor-pointer">
                             </div>
@@ -180,7 +178,7 @@
                     </div>
                 </div>
 
-                <!-- STEP 3: Typography & Text Effects with Double Border Support -->
+                <!-- PASSO 3: Tipografia & Efeitos de Texto -->
                 <div class="bg-slate-950/50 p-4 rounded-xl border border-slate-800/80">
                     <h3 class="font-bold text-sm text-indigo-400 uppercase tracking-wider flex items-center gap-2 mb-3">
                         <span class="bg-indigo-500/10 text-indigo-400 text-[10px] py-0.5 px-2 rounded-full">3</span>
@@ -188,58 +186,89 @@
                     </h3>
                     
                     <div class="space-y-4">
-                        <!-- Font selection (Barlow Black set as default) -->
                         <div>
                             <label class="block text-xs text-slate-400 font-semibold mb-1">Fonte Principal</label>
                             <select id="fontFamilySelect" onchange="requestRenderAll()" 
                                 class="w-full bg-slate-900 border border-slate-800 rounded-lg px-3 py-2 text-xs focus:outline-none focus:ring-1 focus:ring-indigo-500 text-white font-semibold">
-                                <option value="'Barlow', sans-serif" selected>Barlow Black (Premium / Arredondada)</option>
-                                <option value="'Anton', 'Noto Sans', sans-serif">Anton (Impactante / YouTube)</option>
-                                <option value="'Rubik Mono One', sans-serif">Rubik Mono One (Gorda / Moderna)</option>
-                                <option value="'Teko', sans-serif">Teko (Condensada / Gamer)</option>
-                                <option value="'Inter', sans-serif">Inter Black (Limpa / Premium)</option>
+                                <option value="'Komika Axis', sans-serif" selected>Komika Axis</option>
+                                <option value="'Barlow', sans-serif">Barlow Black</option>
+                                <option value="'Anton', 'Noto Sans', sans-serif">Anton</option>
+                                <option value="'Rubik Mono One', sans-serif">Rubik Mono One</option>
+                                <option value="'Teko', sans-serif">Teko</option>
+                                <option value="'Inter', sans-serif">Inter Black</option>
                             </select>
                         </div>
 
-                        <!-- Text Styling Controls (Layer 1 - Superior) -->
+                        <!-- Estilos do Texto Superior -->
                         <div class="space-y-3 border-t border-slate-800/50 pt-3">
                             <h4 class="text-[11px] font-black uppercase text-indigo-400 tracking-wider">Texto Superior</h4>
-                            <!-- Primary Fill & Inner Border Row -->
+                            
+                            <!-- Preenchimento Primário & Degradê Inteligente -->
                             <div class="grid grid-cols-3 gap-2">
                                 <div>
-                                    <label class="block text-[10px] text-slate-500 mb-0.5">Cor Preench.</label>
+                                    <label class="block text-[10px] text-slate-500 mb-0.5">Cor 1 (Topo)</label>
                                     <input type="color" id="t1Color" value="#ffffff" onchange="updateGlobalStyle('t1Color', this.value)" class="w-full h-7 bg-transparent cursor-pointer border border-slate-800 rounded">
                                 </div>
                                 <div>
-                                    <label class="block text-[10px] text-slate-500 mb-0.5">Borda Interna</label>
+                                    <label class="block text-[10px] text-slate-500 mb-0.5 flex items-center gap-1">
+                                        <input type="checkbox" id="t1GradientToggle" onchange="updateGlobalStyle('t1Gradient', this.checked)" class="accent-indigo-500 rounded">
+                                        <span>Gradiente</span>
+                                    </label>
+                                    <input type="color" id="t1Color2" value="#94a3b8" onchange="updateGlobalStyle('t1Color2', this.value)" class="w-full h-7 bg-transparent cursor-pointer border border-slate-800 rounded opacity-50" disabled>
+                                </div>
+                                <div>
+                                    <label class="block text-[10px] text-slate-500 mb-0.5">Borda Int.</label>
                                     <input type="color" id="t1Stroke" value="#000000" onchange="updateGlobalStyle('t1Stroke', this.value)" class="w-full h-7 bg-transparent cursor-pointer border border-slate-800 rounded">
                                 </div>
-                                <div>
-                                    <label class="block text-[10px] text-slate-500 mb-0.5">Larg. Interna</label>
-                                    <input type="number" id="t1StrokeWidth" value="10" min="0" max="25" oninput="updateGlobalStyle('t1StrokeWidth', parseInt(this.value) || 0)" class="w-full bg-slate-900 text-xs border border-slate-800 rounded px-2 py-1">
-                                </div>
                             </div>
-                            <!-- Secondary Outer Border Row -->
-                            <div class="grid grid-cols-2 gap-2 bg-slate-950/40 p-2 rounded-lg border border-slate-800/50">
-                                <div>
+
+                            <!-- Borda Externa Adicional -->
+                            <div class="grid grid-cols-3 gap-2">
+                                <div class="col-span-2">
                                     <label class="block text-[10px] text-slate-500 mb-0.5">Borda Externa</label>
                                     <input type="color" id="t1StrokeOuter" value="#ffffff" onchange="updateGlobalStyle('t1StrokeOuter', this.value)" class="w-full h-7 bg-transparent cursor-pointer border border-slate-800 rounded">
                                 </div>
                                 <div>
-                                    <label class="block text-[10px] text-slate-500 mb-0.5">Larg. Externa</label>
+                                    <label class="block text-[10px] text-slate-500 mb-0.5">Espessura</label>
                                     <input type="number" id="t1StrokeOuterWidth" value="0" min="0" max="25" oninput="updateGlobalStyle('t1StrokeOuterWidth', parseInt(this.value) || 0)" class="w-full bg-slate-900 text-xs border border-slate-800 rounded px-2 py-1">
                                 </div>
                             </div>
-                            <!-- Global Font Size Line 1 -->
+
+                            <!-- Definições de Sombra Inteligente Collapsible -->
+                            <details class="bg-slate-950/40 p-2.5 rounded-lg border border-slate-800/60">
+                                <summary class="text-[10px] text-indigo-400 font-bold cursor-pointer select-none flex justify-between items-center">
+                                    <span>Efeitos de Sombra de Alto Impacto</span>
+                                    <i class="fa-solid fa-chevron-down text-[8px]"></i>
+                                </summary>
+                                <div class="grid grid-cols-2 gap-2 mt-2 pt-2 border-t border-slate-800/30">
+                                    <div>
+                                        <label class="block text-[9px] text-slate-500 mb-0.5">Cor Sombra</label>
+                                        <input type="color" id="t1ShadowColor" value="#000000" onchange="updateGlobalStyle('t1ShadowColor', this.value)" class="w-full h-6 bg-transparent cursor-pointer border border-slate-800 rounded">
+                                    </div>
+                                    <div>
+                                        <label class="block text-[9px] text-slate-500 mb-0.5">Desfoque (Blur)</label>
+                                        <input type="range" id="t1ShadowBlur" min="0" max="30" value="15" oninput="updateGlobalStyle('t1ShadowBlur', parseInt(this.value))" class="w-full accent-indigo-500 bg-slate-800 h-1 rounded cursor-pointer">
+                                    </div>
+                                    <div>
+                                        <label class="block text-[9px] text-slate-500 mb-0.5">Desvio X (3D)</label>
+                                        <input type="range" id="t1ShadowX" min="-25" max="25" value="8" oninput="updateGlobalStyle('t1ShadowX', parseInt(this.value))" class="w-full accent-indigo-500 bg-slate-800 h-1 rounded cursor-pointer">
+                                    </div>
+                                    <div>
+                                        <label class="block text-[9px] text-slate-500 mb-0.5">Desvio Y (3D)</label>
+                                        <input type="range" id="t1ShadowY" min="-25" max="25" value="8" oninput="updateGlobalStyle('t1ShadowY', parseInt(this.value))" class="w-full accent-indigo-500 bg-slate-800 h-1 rounded cursor-pointer">
+                                    </div>
+                                </div>
+                            </details>
+
+                            <!-- Tamanho da Fonte Global -->
                             <div class="space-y-1 bg-slate-950/40 p-2 rounded-lg border border-slate-800/50">
                                 <div class="flex justify-between text-[10px] text-slate-500 font-bold">
-                                    <span>Tamanho da Fonte Global</span>
+                                    <span>Tamanho de Letra Global</span>
                                     <span id="globalScale1Label" class="text-indigo-400 font-mono">1.00x</span>
                                 </div>
                                 <input type="range" id="globalScale1" min="0.4" max="1.8" step="0.05" value="1.0" oninput="updateGlobalScale(1, this.value)"
                                     class="w-full accent-indigo-500 bg-slate-800 h-1 rounded-lg cursor-pointer">
                             </div>
-                            <!-- Style Toggle Row -->
                             <div class="flex gap-2">
                                 <button id="globalBold1Btn" onclick="toggleGlobalStyle('bold1')" class="flex-1 bg-slate-900 border border-slate-800 text-slate-400 py-1.5 px-2 rounded-lg text-xs font-bold transition flex items-center justify-center gap-1.5">
                                     <i class="fa-solid fa-bold text-[10px]"></i> Negrito
@@ -250,45 +279,76 @@
                             </div>
                         </div>
 
-                        <!-- Text Styling Controls (Layer 2 - Inferior) -->
+                        <!-- Estilos do Texto Inferior -->
                         <div class="space-y-3 border-t border-slate-800/50 pt-3">
                             <h4 class="text-[11px] font-black uppercase text-indigo-400 tracking-wider">Texto Inferior</h4>
-                            <!-- Primary Fill & Inner Border Row -->
+                            
+                            <!-- Preenchimento Primário & Degradê Inteligente -->
                             <div class="grid grid-cols-3 gap-2">
                                 <div>
-                                    <label class="block text-[10px] text-slate-500 mb-0.5">Cor Preench.</label>
+                                    <label class="block text-[10px] text-slate-500 mb-0.5">Cor 1 (Topo)</label>
                                     <input type="color" id="t2Color" value="#facc15" onchange="updateGlobalStyle('t2Color', this.value)" class="w-full h-7 bg-transparent cursor-pointer border border-slate-800 rounded">
                                 </div>
                                 <div>
-                                    <label class="block text-[10px] text-slate-500 mb-0.5">Borda Interna</label>
+                                    <label class="block text-[10px] text-slate-500 mb-0.5 flex items-center gap-1">
+                                        <input type="checkbox" id="t2GradientToggle" onchange="updateGlobalStyle('t2Gradient', this.checked)" class="accent-indigo-500 rounded">
+                                        <span>Gradiente</span>
+                                    </label>
+                                    <input type="color" id="t2Color2" value="#ea580c" onchange="updateGlobalStyle('t2Color2', this.value)" class="w-full h-7 bg-transparent cursor-pointer border border-slate-800 rounded opacity-50" disabled>
+                                </div>
+                                <div>
+                                    <label class="block text-[10px] text-slate-500 mb-0.5">Borda Int.</label>
                                     <input type="color" id="t2Stroke" value="#000000" onchange="updateGlobalStyle('t2Stroke', this.value)" class="w-full h-7 bg-transparent cursor-pointer border border-slate-800 rounded">
                                 </div>
-                                <div>
-                                    <label class="block text-[10px] text-slate-500 mb-0.5">Larg. Interna</label>
-                                    <input type="number" id="t2StrokeWidth" value="10" min="0" max="25" oninput="updateGlobalStyle('t2StrokeWidth', parseInt(this.value) || 0)" class="w-full bg-slate-900 text-xs border border-slate-800 rounded px-2 py-1">
-                                </div>
                             </div>
-                            <!-- Secondary Outer Border Row -->
-                            <div class="grid grid-cols-2 gap-2 bg-slate-950/40 p-2 rounded-lg border border-slate-800/50">
-                                <div>
+
+                            <!-- Borda Externa Adicional -->
+                            <div class="grid grid-cols-3 gap-2">
+                                <div class="col-span-2">
                                     <label class="block text-[10px] text-slate-500 mb-0.5">Borda Externa</label>
                                     <input type="color" id="t2StrokeOuter" value="#ffffff" onchange="updateGlobalStyle('t2StrokeOuter', this.value)" class="w-full h-7 bg-transparent cursor-pointer border border-slate-800 rounded">
                                 </div>
                                 <div>
-                                    <label class="block text-[10px] text-slate-500 mb-0.5">Larg. Externa</label>
+                                    <label class="block text-[10px] text-slate-500 mb-0.5">Espessura</label>
                                     <input type="number" id="t2StrokeOuterWidth" value="0" min="0" max="25" oninput="updateGlobalStyle('t2StrokeOuterWidth', parseInt(this.value) || 0)" class="w-full bg-slate-900 text-xs border border-slate-800 rounded px-2 py-1">
                                 </div>
                             </div>
-                            <!-- Global Font Size Line 2 -->
+
+                            <!-- Definições de Sombra Inteligente Collapsible -->
+                            <details class="bg-slate-950/40 p-2.5 rounded-lg border border-slate-800/60">
+                                <summary class="text-[10px] text-indigo-400 font-bold cursor-pointer select-none flex justify-between items-center">
+                                    <span>Efeitos de Sombra de Alto Impacto</span>
+                                    <i class="fa-solid fa-chevron-down text-[8px]"></i>
+                                </summary>
+                                <div class="grid grid-cols-2 gap-2 mt-2 pt-2 border-t border-slate-800/30">
+                                    <div>
+                                        <label class="block text-[9px] text-slate-500 mb-0.5">Cor Sombra</label>
+                                        <input type="color" id="t2ShadowColor" value="#000000" onchange="updateGlobalStyle('t2ShadowColor', this.value)" class="w-full h-6 bg-transparent cursor-pointer border border-slate-800 rounded">
+                                    </div>
+                                    <div>
+                                        <label class="block text-[9px] text-slate-500 mb-0.5">Desfoque (Blur)</label>
+                                        <input type="range" id="t2ShadowBlur" min="0" max="30" value="15" oninput="updateGlobalStyle('t2ShadowBlur', parseInt(this.value))" class="w-full accent-indigo-500 bg-slate-800 h-1 rounded cursor-pointer">
+                                    </div>
+                                    <div>
+                                        <label class="block text-[9px] text-slate-500 mb-0.5">Desvio X (3D)</label>
+                                        <input type="range" id="t2ShadowX" min="-25" max="25" value="10" oninput="updateGlobalStyle('t2ShadowX', parseInt(this.value))" class="w-full accent-indigo-500 bg-slate-800 h-1 rounded cursor-pointer">
+                                    </div>
+                                    <div>
+                                        <label class="block text-[9px] text-slate-500 mb-0.5">Desvio Y (3D)</label>
+                                        <input type="range" id="t2ShadowY" min="-25" max="25" value="10" oninput="updateGlobalStyle('t2ShadowY', parseInt(this.value))" class="w-full accent-indigo-500 bg-slate-800 h-1 rounded cursor-pointer">
+                                    </div>
+                                </div>
+                            </details>
+
+                            <!-- Tamanho da Letra Global -->
                             <div class="space-y-1 bg-slate-950/40 p-2 rounded-lg border border-slate-800/50">
                                 <div class="flex justify-between text-[10px] text-slate-500 font-bold">
-                                    <span>Tamanho da Fonte Global</span>
+                                    <span>Tamanho da Letra Global</span>
                                     <span id="globalScale2Label" class="text-indigo-400 font-mono">1.00x</span>
                                 </div>
                                 <input type="range" id="globalScale2" min="0.4" max="1.8" step="0.05" value="1.0" oninput="updateGlobalScale(2, this.value)"
                                     class="w-full accent-indigo-500 bg-slate-800 h-1 rounded-lg cursor-pointer">
                             </div>
-                            <!-- Style Toggle Row -->
                             <div class="flex gap-2">
                                 <button id="globalBold2Btn" onclick="toggleGlobalStyle('bold2')" class="flex-1 bg-slate-900 border border-slate-800 text-slate-400 py-1.5 px-2 rounded-lg text-xs font-bold transition flex items-center justify-center gap-1.5">
                                     <i class="fa-solid fa-bold text-[10px]"></i> Negrito
@@ -299,7 +359,7 @@
                             </div>
                         </div>
 
-                        <!-- Graphic Badges -->
+                        <!-- Selos e Adesivos -->
                         <div class="border-t border-slate-800/50 pt-3">
                             <label class="block text-xs text-slate-400 font-semibold mb-1.5">Selo/Adesivo de Destaque</label>
                             <div class="grid grid-cols-3 gap-2">
@@ -311,7 +371,7 @@
                     </div>
                 </div>
 
-                <!-- STEP 4: Global Positioning Control Center -->
+                <!-- PASSO 4: Centro de Posicionamento Global -->
                 <div class="bg-slate-950/50 p-4 rounded-xl border border-slate-800/80">
                     <h3 class="font-bold text-sm text-indigo-400 uppercase tracking-wider flex items-center gap-2 mb-3">
                         <span class="bg-indigo-500/10 text-indigo-400 text-[10px] py-0.5 px-2 rounded-full">4</span>
@@ -320,11 +380,11 @@
                     <div class="space-y-4">
                         <div class="bg-indigo-950/20 p-2.5 rounded-lg border border-indigo-500/10 mb-2">
                             <p class="text-[11px] text-indigo-300 leading-normal">
-                                <i class="fa-solid fa-circle-info mr-1"></i> Ajuste estes controles para mover o texto de <strong>todas as thumbnails</strong> ao mesmo tempo de forma rápida!
+                                <i class="fa-solid fa-circle-info mr-1"></i> Ajuste estes controlos para mover o texto de <strong>todas as thumbnails</strong> em simultâneo!
                             </p>
                         </div>
                         
-                        <!-- Text 1 Pos -->
+                        <!-- Posição do Texto 1 -->
                         <div class="space-y-2">
                             <div class="flex justify-between text-xs">
                                 <span class="text-slate-400 font-semibold">Texto Superior (Altura Y)</span>
@@ -343,7 +403,7 @@
                                 class="w-full accent-indigo-500 bg-slate-800 h-1 rounded-lg cursor-pointer">
                         </div>
 
-                        <!-- Text 2 Pos -->
+                        <!-- Posição do Texto 2 -->
                         <div class="space-y-2 pt-2 border-t border-slate-800/50">
                             <div class="flex justify-between text-xs">
                                 <span class="text-slate-400 font-semibold">Texto Inferior (Altura Y)</span>
@@ -362,7 +422,7 @@
                                 class="w-full accent-indigo-500 bg-slate-800 h-1 rounded-lg cursor-pointer">
                         </div>
 
-                        <!-- Global Alignment Select -->
+                        <!-- Seletor de Alinhamento -->
                         <div class="space-y-2 pt-2 border-t border-slate-800/50">
                             <label class="block text-xs text-slate-400 font-semibold mb-1">Alinhamento do Bloco</label>
                             <div class="grid grid-cols-3 gap-1.5">
@@ -382,7 +442,7 @@
 
             </div>
             
-            <!-- EXPORT ACTION BUTTON -->
+            <!-- BOTÃO DE EXPORTAÇÃO -->
             <div class="p-5 mt-auto bg-slate-950/80 border-t border-slate-800 flex flex-col gap-3 sticky bottom-0">
                 <div class="flex justify-between items-center text-xs">
                     <span class="text-slate-400">Total Adaptadas:</span>
@@ -396,10 +456,10 @@
             </div>
         </aside>
 
-        <!-- RIGHT PANEL: PREVIEW & LOCALIZATION GRID -->
+        <!-- PAINEL DIREITO: PREVIEW & LOCALIZATION GRID -->
         <section class="flex-1 bg-slate-950 p-6 flex flex-col gap-6 overflow-y-auto">
             
-            <!-- VIEW MODE SELECTOR -->
+            <!-- SELETOR DE MODO DE VISUALIZAÇÃO -->
             <div class="flex flex-wrap items-center justify-between gap-4 bg-slate-900 p-3 rounded-xl border border-slate-800">
                 <div class="flex items-center gap-2">
                     <button id="tabGridBtn" onclick="switchTab('grid')" class="px-4 py-2 rounded-lg text-xs font-black bg-indigo-500 text-white transition flex items-center gap-2">
@@ -415,53 +475,49 @@
                 </div>
             </div>
 
-            <!-- TAB 1: ALL-LANGUAGES GRID PREVIEW -->
+            <!-- TABELA 1: PREVIEW DE TODOS OS IDIOMAS -->
             <div id="tabGrid" class="space-y-6">
-                <!-- ID explicitamente inserido para evitar falhas de escopo dinâmico no navegador Brave -->
                 <div id="gridContainer" class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-6">
-                    <!-- Cards will be injected dynamically -->
+                    <!-- Inserido dinamicamente -->
                 </div>
             </div>
 
-            <!-- TAB 2: DETAILED INDIVIDUAL EDITOR WITH IMPROVED DRAG & DROP -->
+            <!-- TABELA 2: EDITOR DETALHADO INDIVIDUAL -->
             <div id="tabEditor" class="hidden">
                 <div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
-                    <!-- Main High-Res Canvas -->
+                    <!-- Canvas de Alta Resolução -->
                     <div class="xl:col-span-2 flex flex-col items-center justify-center bg-slate-900 border border-slate-800 rounded-2xl p-6">
                         <div class="flex justify-between items-center w-full mb-4">
                             <div class="flex items-center gap-2">
                                 <span id="currentEditingFlag" class="inline-flex items-center"></span>
                                 <div>
                                     <h4 class="font-black text-sm" id="currentEditingCountryName">United States - English</h4>
-                                    <p class="text-[10px] text-slate-400">Passe o mouse sobre os textos e arraste a caixa pontilhada azul para ajustar a posição</p>
+                                    <p class="text-[10px] text-slate-400">Passe o mouse sobre os textos e arraste a caixa azul para ajustar a posição</p>
                                 </div>
                             </div>
                             <span class="text-xs font-mono bg-slate-950 px-2 py-1 rounded text-indigo-400" id="currentEditingCode">US</span>
                         </div>
                         
-                        <!-- Interactive Canvas Container -->
                         <div class="relative max-w-full aspect-video bg-black rounded-lg overflow-hidden shadow-2xl border border-slate-700/50" style="width: 640px;">
                             <canvas id="interactiveCanvas" width="1280" height="720" class="w-full h-full cursor-default"></canvas>
                         </div>
                     </div>
 
-                    <!-- Individual Adjustments Controls -->
+                    <!-- Ajustes Finos Individuais -->
                     <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 space-y-6">
                         <h4 class="font-black text-sm text-slate-200 border-b border-slate-800 pb-3 flex items-center gap-2">
                             <i class="fa-solid fa-sliders text-indigo-400"></i>
                             Ajustes Finos (Exclusivos)
                         </h4>
 
-                        <!-- Selector to change country fast inside individual view -->
                         <div>
                             <label class="block text-xs text-slate-400 font-semibold mb-1">Selecionar Outro País</label>
                             <select id="countryEditorSelect" onchange="loadCountryToEditor(this.value)"
                                 class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs focus:outline-none focus:ring-1 focus:ring-indigo-500 text-white font-semibold font-sans">
-                                <!-- Options populated by JS -->
                             </select>
                         </div>
 
-                        <!-- Live Text overrides for current country -->
+                        <!-- Sobrescrever Texto Traduzido -->
                         <div class="space-y-4">
                             <div>
                                 <label class="block text-xs text-slate-400 font-semibold mb-1">Texto Superior Traduzido</label>
@@ -475,7 +531,7 @@
                             </div>
                         </div>
 
-                        <!-- Style controls for fine-tuning -->
+                        <!-- Estilos Individuais Superior -->
                         <div class="space-y-3 pt-3 border-t border-slate-800/60">
                             <span class="text-[11px] font-black uppercase text-slate-500 tracking-wider block">Estilos do Texto Superior</span>
                             <div class="flex gap-2">
@@ -488,6 +544,7 @@
                             </div>
                         </div>
 
+                        <!-- Estilos Individuais Inferior -->
                         <div class="space-y-3 pt-2">
                             <span class="text-[11px] font-black uppercase text-slate-500 tracking-wider block">Estilos do Texto Inferior</span>
                             <div class="flex gap-2">
@@ -500,74 +557,126 @@
                             </div>
                         </div>
 
-                        <!-- Individual Colors & Borders Section (Overrides standard properties) -->
+                        <!-- Cores, Gradientes e Bordas Individuais por País -->
                         <div class="space-y-4 pt-4 border-t border-slate-800/60">
                             <span class="text-[11px] font-black uppercase text-slate-500 tracking-wider block">Cores e Bordas Individuais</span>
                             
-                            <!-- Superior line individual styling box -->
+                            <!-- Caixa de Estilo do Texto Superior -->
                             <div class="space-y-3 bg-slate-950/40 p-3 rounded-xl border border-slate-800/50">
                                 <span class="text-[10px] font-bold text-indigo-400 block uppercase">Texto Superior</span>
                                 <div class="grid grid-cols-3 gap-2">
                                     <div>
-                                        <label class="block text-[9px] text-slate-500 mb-0.5">Texto</label>
+                                        <label class="block text-[9px] text-slate-500 mb-0.5">Cor 1 (Topo)</label>
                                         <input type="color" id="indT1Color" onchange="updateIndividualStyle('t1Color', this.value)" class="w-full h-7 bg-transparent cursor-pointer border border-slate-800 rounded">
+                                    </div>
+                                    <div>
+                                        <label class="block text-[9px] text-slate-500 mb-0.5 flex items-center gap-1">
+                                            <input type="checkbox" id="indT1GradientToggle" onchange="updateIndividualStyle('t1Gradient', this.checked); syncIndividualUIInputs()" class="accent-indigo-500 rounded scale-90">
+                                            <span>Grad.</span>
+                                        </label>
+                                        <input type="color" id="indT1Color2" onchange="updateIndividualStyle('t1Color2', this.value)" class="w-full h-7 bg-transparent cursor-pointer border border-slate-800 rounded">
                                     </div>
                                     <div>
                                         <label class="block text-[9px] text-slate-500 mb-0.5">Borda Int.</label>
                                         <input type="color" id="indT1Stroke" onchange="updateIndividualStyle('t1Stroke', this.value)" class="w-full h-7 bg-transparent cursor-pointer border border-slate-800 rounded">
                                     </div>
+                                </div>
+                                <div class="grid grid-cols-3 gap-2">
+                                    <div class="col-span-2">
+                                        <label class="block text-[9px] text-slate-500 mb-0.5">Borda Ext.</label>
+                                        <input type="color" id="indT1StrokeOuter" onchange="updateIndividualStyle('t1StrokeOuter', this.value)" class="w-full h-7 bg-transparent cursor-pointer border border-slate-800 rounded">
+                                    </div>
                                     <div>
-                                        <label class="block text-[9px] text-slate-500 mb-0.5">Larg. Int.</label>
+                                        <label class="block text-[9px] text-slate-500 mb-0.5">Borda Int. (px)</label>
                                         <input type="number" id="indT1StrokeWidth" oninput="updateIndividualStyle('t1StrokeWidth', parseInt(this.value) || 0)" class="w-full bg-slate-950 text-[11px] border border-slate-800 rounded px-1.5 py-1 text-white">
                                     </div>
                                 </div>
                                 <div class="grid grid-cols-2 gap-2">
                                     <div>
-                                        <label class="block text-[9px] text-slate-500 mb-0.5">Borda Ext.</label>
-                                        <input type="color" id="indT1StrokeOuter" onchange="updateIndividualStyle('t1StrokeOuter', this.value)" class="w-full h-7 bg-transparent cursor-pointer border border-slate-800 rounded">
+                                        <label class="block text-[9px] text-slate-500 mb-0.5">Borda Ext. (px)</label>
+                                        <input type="number" id="indT1StrokeOuterWidth" oninput="updateIndividualStyle('t1StrokeOuterWidth', parseInt(this.value) || 0)" class="w-full bg-slate-950 text-[11px] border border-slate-800 rounded px-1.5 py-1 text-white">
                                     </div>
                                     <div>
-                                        <label class="block text-[9px] text-slate-500 mb-0.5">Larg. Ext.</label>
-                                        <input type="number" id="indT1StrokeOuterWidth" oninput="updateIndividualStyle('t1StrokeOuterWidth', parseInt(this.value) || 0)" class="w-full bg-slate-950 text-[11px] border border-slate-800 rounded px-1.5 py-1 text-white">
+                                        <label class="block text-[9px] text-slate-500 mb-0.5">Sombra Blur</label>
+                                        <input type="number" id="indT1ShadowBlur" oninput="updateIndividualStyle('t1ShadowBlur', parseInt(this.value) || 0)" class="w-full bg-slate-950 text-[11px] border border-slate-800 rounded px-1.5 py-1 text-white">
+                                    </div>
+                                </div>
+                                <div class="grid grid-cols-3 gap-1">
+                                    <div class="col-span-2">
+                                        <label class="block text-[9px] text-slate-500 mb-0.5">Cor da Sombra</label>
+                                        <input type="color" id="indT1ShadowColor" onchange="updateIndividualStyle('t1ShadowColor', this.value)" class="w-full h-6 bg-transparent cursor-pointer border border-slate-800 rounded">
+                                    </div>
+                                    <div>
+                                        <label class="block text-[9px] text-slate-500 mb-0.5">X / Y Desvio</label>
+                                        <div class="flex gap-1">
+                                            <input type="number" id="indT1ShadowX" oninput="updateIndividualStyle('t1ShadowX', parseInt(this.value) || 0)" class="w-1/2 bg-slate-950 text-[10px] border border-slate-800 rounded p-1 text-center text-white">
+                                            <input type="number" id="indT1ShadowY" oninput="updateIndividualStyle('t1ShadowY', parseInt(this.value) || 0)" class="w-1/2 bg-slate-950 text-[10px] border border-slate-800 rounded p-1 text-center text-white">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
 
-                            <!-- Inferior line individual styling box -->
+                            <!-- Caixa de Estilo do Texto Inferior -->
                             <div class="space-y-3 bg-slate-950/40 p-3 rounded-xl border border-slate-800/50">
                                 <span class="text-[10px] font-bold text-indigo-400 block uppercase">Texto Inferior</span>
                                 <div class="grid grid-cols-3 gap-2">
                                     <div>
-                                        <label class="block text-[9px] text-slate-500 mb-0.5">Texto</label>
+                                        <label class="block text-[9px] text-slate-500 mb-0.5">Cor 1 (Topo)</label>
                                         <input type="color" id="indT2Color" onchange="updateIndividualStyle('t2Color', this.value)" class="w-full h-7 bg-transparent cursor-pointer border border-slate-800 rounded">
+                                    </div>
+                                    <div>
+                                        <label class="block text-[9px] text-slate-500 mb-0.5 flex items-center gap-1">
+                                            <input type="checkbox" id="indT2GradientToggle" onchange="updateIndividualStyle('t2Gradient', this.checked); syncIndividualUIInputs()" class="accent-indigo-500 rounded scale-90">
+                                            <span>Grad.</span>
+                                        </label>
+                                        <input type="color" id="indT2Color2" onchange="updateIndividualStyle('t2Color2', this.value)" class="w-full h-7 bg-transparent cursor-pointer border border-slate-800 rounded">
                                     </div>
                                     <div>
                                         <label class="block text-[9px] text-slate-500 mb-0.5">Borda Int.</label>
                                         <input type="color" id="indT2Stroke" onchange="updateIndividualStyle('t2Stroke', this.value)" class="w-full h-7 bg-transparent cursor-pointer border border-slate-800 rounded">
                                     </div>
+                                </div>
+                                <div class="grid grid-cols-3 gap-2">
+                                    <div class="col-span-2">
+                                        <label class="block text-[9px] text-slate-500 mb-0.5">Borda Ext.</label>
+                                        <input type="color" id="indT2StrokeOuter" onchange="updateIndividualStyle('t2StrokeOuter', this.value)" class="w-full h-7 bg-transparent cursor-pointer border border-slate-800 rounded">
+                                    </div>
                                     <div>
-                                        <label class="block text-[9px] text-slate-500 mb-0.5">Larg. Int.</label>
+                                        <label class="block text-[9px] text-slate-500 mb-0.5">Borda Int. (px)</label>
                                         <input type="number" id="indT2StrokeWidth" oninput="updateIndividualStyle('t2StrokeWidth', parseInt(this.value) || 0)" class="w-full bg-slate-950 text-[11px] border border-slate-800 rounded px-1.5 py-1 text-white">
                                     </div>
                                 </div>
                                 <div class="grid grid-cols-2 gap-2">
                                     <div>
-                                        <label class="block text-[9px] text-slate-500 mb-0.5">Borda Ext.</label>
-                                        <input type="color" id="indT2StrokeOuter" onchange="updateIndividualStyle('t2StrokeOuter', this.value)" class="w-full h-7 bg-transparent cursor-pointer border border-slate-800 rounded">
+                                        <label class="block text-[9px] text-slate-500 mb-0.5">Borda Ext. (px)</label>
+                                        <input type="number" id="indT2StrokeOuterWidth" oninput="updateIndividualStyle('t2StrokeOuterWidth', parseInt(this.value) || 0)" class="w-full bg-slate-950 text-[11px] border border-slate-800 rounded px-1.5 py-1 text-white">
                                     </div>
                                     <div>
-                                        <label class="block text-[9px] text-slate-500 mb-0.5">Larg. Ext.</label>
-                                        <input type="number" id="indT2StrokeOuterWidth" oninput="updateIndividualStyle('t2StrokeOuterWidth', parseInt(this.value) || 0)" class="w-full bg-slate-950 text-[11px] border border-slate-800 rounded px-1.5 py-1 text-white">
+                                        <label class="block text-[9px] text-slate-500 mb-0.5">Sombra Blur</label>
+                                        <input type="number" id="indT2ShadowBlur" oninput="updateIndividualStyle('t2ShadowBlur', parseInt(this.value) || 0)" class="w-full bg-slate-950 text-[11px] border border-slate-800 rounded px-1.5 py-1 text-white">
+                                    </div>
+                                </div>
+                                <div class="grid grid-cols-3 gap-1">
+                                    <div class="col-span-2">
+                                        <label class="block text-[9px] text-slate-500 mb-0.5">Cor da Sombra</label>
+                                        <input type="color" id="indT2ShadowColor" onchange="updateIndividualStyle('t2ShadowColor', this.value)" class="w-full h-6 bg-transparent cursor-pointer border border-slate-800 rounded">
+                                    </div>
+                                    <div>
+                                        <label class="block text-[9px] text-slate-500 mb-0.5">X / Y Desvio</label>
+                                        <div class="flex gap-1">
+                                            <input type="number" id="indT2ShadowX" oninput="updateIndividualStyle('t2ShadowX', parseInt(this.value) || 0)" class="w-1/2 bg-slate-950 text-[10px] border border-slate-800 rounded p-1 text-center text-white">
+                                            <input type="number" id="indT2ShadowY" oninput="updateIndividualStyle('t2ShadowY', parseInt(this.value) || 0)" class="w-1/2 bg-slate-950 text-[10px] border border-slate-800 rounded p-1 text-center text-white">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Specific scale/formatting with separate sliders for superior and inferior lines -->
+                        <!-- Definições Adicionais e botões de Exportação -->
                         <div class="space-y-4 pt-4 border-t border-slate-800/80">
                             <div>
                                 <div class="flex justify-between text-xs mb-1">
-                                    <span class="text-slate-400 font-semibold text-xs text-slate-300">Tam. Fonte Texto Superior</span>
+                                    <span class="text-slate-300 font-semibold text-xs">Tam. Fonte Texto Superior</span>
                                     <span id="scaleLabel1" class="text-indigo-400 font-mono">1.00x</span>
                                 </div>
                                 <input type="range" id="indScaleSlider1" min="0.4" max="1.8" step="0.05" value="1.0" oninput="applyOverride()"
@@ -576,17 +685,17 @@
 
                             <div>
                                 <div class="flex justify-between text-xs mb-1">
-                                    <span class="text-slate-400 font-semibold text-xs text-slate-300">Tam. Fonte Texto Inferior</span>
+                                    <span class="text-slate-300 font-semibold text-xs">Tam. Fonte Texto Inferior</span>
                                     <span id="scaleLabel2" class="text-indigo-400 font-mono">1.00x</span>
                                 </div>
                                 <input type="range" id="indScaleSlider2" min="0.4" max="1.8" step="0.05" value="1.0" oninput="applyOverride()"
                                     class="w-full accent-indigo-500 bg-slate-800 h-1 rounded-lg cursor-pointer">
                             </div>
 
-                            <!-- Sync drag coordinates layout to all 16 other language assets -->
+                            <!-- Botões utilitários -->
                             <button onclick="syncCurrentLayoutToAll()" 
                                 class="w-full bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-400 border border-indigo-500/30 text-xs font-bold py-2.5 px-3 rounded-lg transition flex items-center justify-center gap-2">
-                                <i class="fa-solid fa-arrows-spin"></i> Aplicar Esta Posição em Todas as Thumbs
+                                <i class="fa-solid fa-arrows-spin"></i> Aplicar Este Estilo em Todas as Thumbs
                             </button>
 
                             <div class="grid grid-cols-2 gap-3 pt-1">
@@ -620,13 +729,13 @@
                 <h3 class="font-bold text-lg text-white">Como Funciona a IA?</h3>
             </div>
             <div class="space-y-3 text-slate-300 text-xs leading-relaxed">
-                <p>Nós incluímos um sistema de **Tradução Localizada de Demonstração** para que você possa testar o aplicativo e ver o grid ser traduzido em tempo real para os 18 países imediatamente, mesmo sem uma chave de API.</p>
-                <p>Ao inserir sua <strong>Chave de API do Gemini</strong> no cabeçalho:</p>
+                <p>Nós incluímos um sistema de **Tradução Localizada de Demonstração** para que possa testar a aplicação e ver o grid ser traduzido em tempo real para os 18 países imediatamente, mesmo sem uma chave de API.</p>
+                <p>Ao inserir a sua <strong>Chave de API do Gemini</strong> no cabeçalho:</p>
                 <ul class="list-disc pl-5 space-y-1.5 text-slate-400">
-                    <li>Você pode digitar qualquer frase personalizada em português (ex: <i>"Estratégia Secreta Nunca Revelada"</i>).</li>
+                    <li>Pode digitar qualquer frase personalizada em português (ex: <i>"Estratégia Secreta Nunca Revelada"</i>).</li>
                     <li>Utilize os modelos estáveis oficiais como o <code class="text-indigo-400 font-mono bg-slate-950 px-1 py-0.5 rounded">gemini-1.5-flash</code> para garantir velocidade total e gratuidade de cota no Google AI Studio.</li>
                 </ul>
-                <p class="text-[11px] text-yellow-500 bg-yellow-500/10 p-2.5 rounded border border-yellow-500/20 font-medium">Sua chave é mantida localmente no seu navegador e enviada diretamente para a API oficial do Google de forma segura.</p>
+                <p class="text-[11px] text-yellow-500 bg-yellow-500/10 p-2.5 rounded border border-yellow-500/20 font-medium">A sua chave é guardada localmente no seu navegador e enviada diretamente para a API oficial do Google de forma totalmente segura.</p>
             </div>
             <button onclick="toggleApiHelp()" class="mt-5 w-full bg-slate-800 hover:bg-slate-700 text-white font-bold py-2 rounded-xl transition text-xs">Entendido</button>
         </div>
@@ -634,7 +743,7 @@
 
     <!-- MAIN APP SCRIPT -->
     <script>
-        // Target countries configured per system request
+        // Configuração dos Países Alvo
         const LANGUAGES = [
             { id: "us", code: "US", flagCode: "us", name: "United States", lang: "English", rtl: false, fontScale: 0.85, active: true },
             { id: "es", code: "ES", flagCode: "es", name: "Spain / LatAm", lang: "Spanish", rtl: false, fontScale: 0.9, active: true },
@@ -656,7 +765,7 @@
             { id: "nl", code: "NL", flagCode: "nl", name: "Netherlands", lang: "Dutch", rtl: false, fontScale: 0.85, active: true }
         ];
 
-        // Fallback local translations for the default starting template text (ESTRATÉGIA SECRETA / REVELADA HOJE)
+        // Traduções de contingência (Fallback)
         const fallbackTranslations = {
             "us": { text1: "SECRET STRATEGY", text2: "REVEALED TODAY" },
             "es": { text1: "ESTRATEGIA SECRETA", text2: "REVELADA HOY" },
@@ -678,7 +787,6 @@
             "nl": { text1: "GEHEIME STRATEGIE", text2: "VANDAAG ONTHULD" }
         };
 
-        // Fallback localized translations for continuous sentence "100 SEGREDOS" / "QUE VOCÊ NÃO SABIA"
         const fallbackTimeskipTranslations = {
             "us": { text1: "100 SECRETS", text2: "THAT YOU DIDN'T KNOW" },
             "es": { text1: "100 SECRETOS", text2: "QUE NO SABÍAS" },
@@ -700,29 +808,26 @@
             "nl": { text1: "100 GEHEIMEN", text2: "DIE JE NIET WUSST" }
         };
 
-        // UI & Render State
-        let activeTab = "grid"; // 'grid' or 'editor'
-        let currentCountryId = "us"; // Currently selected country for fine-tuning
-        let uploadedBgImage = null; // Custom uploaded background element (Starts NULL / Black)
+        // Estado do Editor
+        let activeTab = "grid"; 
+        let currentCountryId = "us"; 
+        let uploadedBgImage = null; 
         let globalTextAlignment = "center";
         let hasBeenTranslated = false;
         let selectedBadgeType = "none";
         
-        // Global cumulative multipliers for Step 3 Sliders
         let globalFontScale1 = 1.0;
         let globalFontScale2 = 1.0;
         
-        // Dragging & Hover mechanics variables on interactive canvas
         let isDragging = false;
-        let dragTarget = null; // 'text1' or 'text2'
-        let hoveredTarget = null; // 'text1' or 'text2'
+        let dragTarget = null; 
+        let hoveredTarget = null; 
         let dragOffset = { x: 0, y: 0 };
-        let boundingBoxes = { text1: null, text2: null }; // Stores accurate coordinates of text bounding boxes for click checks
+        let boundingBoxes = { text1: null, text2: null }; 
 
-        // Specific styling structures that can be adjusted PER country
+        // Estrutura dinâmica de estilos e efeitos
         let styleData = {};
 
-        // Custom toast notification system
         function showToast(message, type = 'info') {
             const toast = document.createElement("div");
             const bgColor = type === 'error' ? 'bg-rose-600' : type === 'success' ? 'bg-emerald-600' : 'bg-indigo-600';
@@ -738,12 +843,11 @@
             }, 4000);
         }
 
-        // Cross-platform Flag Preloading pipeline (CORS supported)
         const flagImages = {};
         function preloadFlags() {
             LANGUAGES.forEach(lang => {
                 const img = new Image();
-                img.crossOrigin = "anonymous"; // Prevents canvas staining when downloading ZIP
+                img.crossOrigin = "anonymous"; 
                 img.src = `https://flagcdn.com/w40/${lang.flagCode}.png`;
                 img.onload = () => {
                     requestRenderAll();
@@ -753,37 +857,26 @@
         }
 
         function initApp() {
-            // 1. Apply default layout on start (Populates state memory buffer first)
             initDefaultLayout();
-
-            // 2. Preload cross-platform flag assets (avoids race condition)
             preloadFlags();
-
-            // 3. Render active language selector chips
             renderLanguagesSelectorGrid();
-
-            // 4. Populate selector inside individual view
             updateCountryEditorSelect();
-
-            // 5. Initialize grid and event bindings
             renderGrid();
             loadCountryToEditor("us");
             setupInteractiveCanvasEvents();
         }
 
-        // Initialize state with individual line scales, active bold status, and colors/borders mapping
         function initDefaultLayout() {
             const val1 = "100 SEGREDOS";
             const val2 = "QUE VOCÊ NÃO SABIA";
 
             document.getElementById("ptText1").value = val1;
             document.getElementById("ptText2").value = val2;
-            document.getElementById("bgFileName").textContent = "Nenhum arquivo enviado - Tela preta ativa";
+            document.getElementById("bgFileName").textContent = "Nenhum ficheiro carregado - Ecrã preto ativo";
 
-            uploadedBgImage = null; // Clean slate
+            uploadedBgImage = null; 
             hasBeenTranslated = false;
 
-            // Reset global multipliers UI and state
             globalFontScale1 = 1.0;
             globalFontScale2 = 1.0;
             if (document.getElementById("globalScale1")) {
@@ -796,35 +889,52 @@
             }
 
             LANGUAGES.forEach(lang => {
-                // Initialize using our fallbackTimeskipTranslations if present
                 const textPair = fallbackTimeskipTranslations[lang.id] || { text1: val1, text2: val2 };
                 styleData[lang.id] = {
                     text1: textPair.text1,
                     text2: textPair.text2,
-                    text1Pos: { x: 640, y: 220 }, // Base layout coordinates on 1280x720 canvas
+                    text1Pos: { x: 640, y: 220 }, 
                     text2Pos: { x: 640, y: 390 },
-                    fontScale1: lang.fontScale, // individual fine-tuning scale for line 1
-                    fontScale2: lang.fontScale, // individual fine-tuning scale for line 2
+                    fontScale1: lang.fontScale, 
+                    fontScale2: lang.fontScale, 
                     textAlignment: lang.rtl ? "right" : "center",
                     bold1: true,
                     italic1: false,
                     bold2: true,
                     italic2: false,
-                    // Default border colors mapped directly in state memory buffer
+                    
+                    // Cores, Gradientes e Contornos Base
                     t1Color: "#ffffff",
+                    t1Gradient: false,
+                    t1Color2: "#94a3b8", // Prateado/Metálico por defeito para gradiente elegante
                     t1Stroke: "#000000",
                     t1StrokeWidth: 10,
                     t1StrokeOuter: "#ffffff",
-                    t1StrokeOuterWidth: 0, // Outer Stroke starts at 0 (zerado)
+                    t1StrokeOuterWidth: 0,
+                    
+                    // Sombras Superior
+                    t1ShadowColor: "#000000",
+                    t1ShadowBlur: 15,
+                    t1ShadowX: 8,
+                    t1ShadowY: 8,
+
+                    // Texto Inferior (Ativo Gradiente Amarelo -> Laranja por padrão comercial YouTube)
                     t2Color: "#facc15",
+                    t2Gradient: true,
+                    t2Color2: "#ea580c",
                     t2Stroke: "#000000",
                     t2StrokeWidth: 10,
                     t2StrokeOuter: "#ffffff",
-                    t2StrokeOuterWidth: 0 // Outer Stroke starts at 0 (zerado)
+                    t2StrokeOuterWidth: 0,
+                    
+                    // Sombras Inferior
+                    t2ShadowColor: "#000000",
+                    t2ShadowBlur: 15,
+                    t2ShadowX: 10,
+                    t2ShadowY: 10
                 };
             });
 
-            // Sync global sliders UI to match initial state
             if (document.getElementById("globalT1Y")) {
                 document.getElementById("globalT1Y").value = 220;
                 document.getElementById("globalT1YLabel").textContent = "220px";
@@ -837,9 +947,9 @@
                 applyGlobalAlignment('center');
             }
             updateStyleTogglesUI();
+            syncUIStates();
         }
 
-        // Render cross-platform flag selector grid beautifully
         function renderLanguagesSelectorGrid() {
             const grid = document.getElementById("languagesSelectorGrid");
             if (!grid) return;
@@ -848,7 +958,6 @@
                 const btn = document.createElement("button");
                 btn.onclick = () => toggleLanguage(lang.id);
                 
-                // Premium active/inactive conditional styling
                 if (lang.active) {
                     btn.className = "flex items-center gap-1.5 p-1.5 bg-indigo-600/10 border border-indigo-500/40 hover:border-indigo-400 text-slate-100 rounded text-[10px] font-bold truncate text-left justify-start transition duration-150 shadow-sm shadow-indigo-500/5";
                 } else {
@@ -862,7 +971,6 @@
                 grid.appendChild(btn);
             });
             
-            // Update active count visualizer safely using reliable ID hooks
             const activeCount = LANGUAGES.filter(l => l.active).length;
             document.getElementById("activeCount").textContent = activeCount;
             
@@ -873,11 +981,10 @@
             
             const zipBtn = document.getElementById("zipExportBtn");
             if (zipBtn) {
-                zipBtn.textContent = `EXPORTAR ZIP (${activeCount} IMAGENS)`;
+                zipBtn.textContent = `EXPORTAR ZIP (${activeCount} IDIOMAS)`;
             }
         }
 
-        // Toggle single language selection active state
         function toggleLanguage(id) {
             const lang = LANGUAGES.find(l => l.id === id);
             if (lang) {
@@ -885,19 +992,16 @@
                 renderLanguagesSelectorGrid();
                 updateCountryEditorSelect();
                 
-                // Fallback check to avoid focusing on inactive current editor country
                 if (currentCountryId === id && !lang.active) {
                     const firstActive = LANGUAGES.find(l => l.active);
                     if (firstActive) {
                         loadCountryToEditor(firstActive.id);
                     }
                 }
-                
                 requestRenderAll();
             }
         }
 
-        // Select all or deselect all languages in bulk
         function toggleAllLanguages(activeState) {
             LANGUAGES.forEach(l => l.active = activeState);
             renderLanguagesSelectorGrid();
@@ -914,7 +1018,6 @@
             requestRenderAll();
         }
 
-        // Update dropdown list for fine-tune editor containing only active languages
         function updateCountryEditorSelect() {
             const select = document.getElementById("countryEditorSelect");
             if (!select) return;
@@ -932,29 +1035,22 @@
             }
         }
 
-        // Helper to resolve Canvas mixed LTR/RTL (BiDi) bugs with numbers
-        // SUBSTITUÍDO: Utiliza os caracteres clássicos e infalíveis de Override de Direção LTR: LRO (\u202D) e PDF (\u202C).
-        // Isso impede que o motor do Firefox fatiasse os dígitos do número ao redor de caracteres árabes.
         function resolveBidi(text, isRtl) {
             if (!isRtl || !text) return text;
             return text.replace(/([0-9]+)/g, '\u202D$1\u202C');
         }
 
-        // Helper to calculate exact geometric boundaries of text to perform flawless hit tests
-        // DYNAMIC AUTO-SHRINK CONSTRAINT: If the text width exceeds 1120px, it dynamically shrinks on the fly!
         function getTextBoundingBox(ctx, text, pos, fontSize, alignment, scaleFactor = 1.0, isText1 = true, countryId = currentCountryId) {
             ctx.save();
             const fontSelected = document.getElementById("fontFamilySelect").value;
             const data = styleData[countryId];
             const langInfo = LANGUAGES.find(l => l.id === countryId);
             
-            // Safe fallback if data isn't loaded yet
             if (!data) {
                 ctx.restore();
                 return { x: 0, y: 0, width: 0, height: 0, adjustedFontSize: fontSize };
             }
 
-            // Extract styles correctly based on line check
             const isItalic = isText1 ? data.italic1 : data.italic2;
             const isBold = isText1 ? data.bold1 : data.bold2;
             const style = isItalic ? "italic" : "normal";
@@ -964,20 +1060,16 @@
             ctx.textAlign = alignment;
             ctx.textBaseline = "middle";
             
-            // Correção BiDi: Define a direção do contexto de renderização para medição precisa de textos mistos
             if (langInfo && langInfo.rtl) {
                 ctx.direction = 'rtl';
             } else {
                 ctx.direction = 'ltr';
             }
 
-            // Aplica a correção de isolamento de direção para manter números LTR intactos no Firefox
             const processedText = resolveBidi(text, langInfo && langInfo.rtl);
-
             let metrics = ctx.measureText(processedText);
             let textWidth = metrics.width;
             
-            // Auto-shrink limit: 1120px out of 1280px to protect safe zones
             const maxAllowedWidth = 1120;
             let finalFontSize = fontSize;
             if (textWidth > maxAllowedWidth) {
@@ -989,7 +1081,6 @@
             }
 
             const textHeight = finalFontSize * 1.1;
-
             let xStart = pos.x;
             if (alignment === "center") {
                 xStart = pos.x - textWidth / 2;
@@ -998,7 +1089,6 @@
             }
 
             const yStart = pos.y - textHeight / 2;
-
             ctx.restore();
 
             return {
@@ -1006,26 +1096,24 @@
                 y: yStart * scaleFactor,
                 width: textWidth * scaleFactor,
                 height: textHeight * scaleFactor,
-                adjustedFontSize: finalFontSize // Return final computed size respecting auto-fit constraint
+                adjustedFontSize: finalFontSize 
             };
         }
 
-        // Drawing rendering logic of thumbnails (Optimized with solid black background fallback)
+        // Algoritmo de desenho otimizado com suporte para degradês e sombras dinâmicas
         function drawThumbnailOnCanvas(canvas, countryId, width = 1280, height = 720, isInteractive = false) {
             const ctx = canvas.getContext("2d");
             const data = styleData[countryId];
             const langInfo = LANGUAGES.find(l => l.id === countryId);
 
-            // Safe guard if state memory for country is not defined yet
             if (!data) return;
 
             ctx.clearRect(0, 0, width, height);
             const scaleFactor = width / 1280;
 
-            // BACKGROUND LAYER
+            // CAMADA DE FUNDO
             ctx.save();
             if (uploadedBgImage) {
-                // Cover image logic maintaining ratio
                 const hRatio = width / uploadedBgImage.width;
                 const vRatio = height / uploadedBgImage.height;
                 const ratio = Math.max(hRatio, vRatio);
@@ -1034,13 +1122,11 @@
                 ctx.drawImage(uploadedBgImage, 0, 0, uploadedBgImage.width, uploadedBgImage.height,
                                              shiftX, shiftY, uploadedBgImage.width*ratio, uploadedBgImage.height*ratio);
             } else {
-                // Completely black background requested by the user for custom templates
                 ctx.fillStyle = "#000000";
                 ctx.fillRect(0, 0, width, height);
             }
             ctx.restore();
 
-            // RENDER BG BRIGHTNESS FILTER (Only useful when background image is uploaded)
             if (uploadedBgImage) {
                 ctx.save();
                 const bgBrightness = document.getElementById("bgBrightnessSlider").value / 100;
@@ -1050,7 +1136,6 @@
                 ctx.restore();
             }
 
-            // VIGNETTE EFFECT (For visual contrast)
             const vignetteIntensity = document.getElementById("vignetteSlider").value / 100;
             if (vignetteIntensity > 0) {
                 ctx.save();
@@ -1063,56 +1148,49 @@
                 ctx.restore();
             }
 
-            // CALCULATE THE BOUNDING BOXES FOR CLICKS & RENDER AIDS
             const fontSelected = document.getElementById("fontFamilySelect").value;
             
-            // Support independent scaling for Text 1 and Text 2 + global text scale multiplier
             const scale1 = data.fontScale1 !== undefined ? data.fontScale1 : (data.fontScale || langInfo.fontScale);
             const scale2 = data.fontScale2 !== undefined ? data.fontScale2 : (data.fontScale || langInfo.fontScale);
             
             const baseT1Size = Math.floor(95 * scale1 * globalFontScale1);
             const baseT2Size = Math.floor(100 * scale2 * globalFontScale2);
 
-            // Fetch boxes and dynamically compute optimal safe auto-shrunk font size
             boundingBoxes.text1 = getTextBoundingBox(ctx, data.text1, data.text1Pos, baseT1Size, data.textAlignment, 1.0, true, countryId);
             boundingBoxes.text2 = getTextBoundingBox(ctx, data.text2, data.text2Pos, baseT2Size, data.textAlignment, 1.0, false, countryId);
 
             const t1Size = boundingBoxes.text1.adjustedFontSize;
             const t2Size = boundingBoxes.text2.adjustedFontSize;
 
-            // TEXT LAYER 1 (Superior) - Double stroke drawing logic
+            // TEXT LAYER 1 (Superior)
             if (data.text1) {
                 ctx.save();
                 ctx.textBaseline = "middle";
                 ctx.lineJoin = "round";
                 ctx.lineCap = "round";
-                
-                // Correção BiDi: Define a direção para renderizar números LTR e termos RTL de forma correta
                 ctx.direction = langInfo.rtl ? 'rtl' : 'ltr';
                 
-                // Assemble styles correctly
                 const style1 = data.italic1 ? "italic" : "normal";
                 const weight1 = data.bold1 ? "900" : "400";
                 ctx.font = `${style1} ${weight1} ${t1Size * scaleFactor}px ${fontSelected}`;
                 ctx.textAlign = data.textAlignment;
                 
-                // Read exact properties of Text 1 from data buffer
-                const fillCol = data.t1Color;
+                const fillCol1 = data.t1Color;
+                const fillCol2 = data.t1Color2;
                 const innerCol = data.t1Stroke;
                 const innerW = data.t1StrokeWidth * scaleFactor;
                 const outerCol = data.t1StrokeOuter;
                 const outerW = data.t1StrokeOuterWidth * scaleFactor;
 
-                // Shadow configuration
-                ctx.shadowColor = 'rgba(0, 0, 0, 0.85)';
-                ctx.shadowBlur = 15 * scaleFactor;
-                ctx.shadowOffsetX = 8 * scaleFactor;
-                ctx.shadowOffsetY = 8 * scaleFactor;
+                // Sombras Inteligentes Personalizáveis
+                ctx.shadowColor = data.t1ShadowColor || "#000000";
+                ctx.shadowBlur = (data.t1ShadowBlur !== undefined ? data.t1ShadowBlur : 15) * scaleFactor;
+                ctx.shadowOffsetX = (data.t1ShadowX !== undefined ? data.t1ShadowX : 8) * scaleFactor;
+                ctx.shadowOffsetY = (data.t1ShadowY !== undefined ? data.t1ShadowY : 8) * scaleFactor;
 
                 const posX = data.text1Pos.x * scaleFactor;
                 const posY = data.text1Pos.y * scaleFactor;
 
-                // Aplica a resolução BiDi para corrigir bugs de números com texto RTL no Canvas
                 const processedText = resolveBidi(data.text1, langInfo.rtl);
 
                 // 1. Draw Outer Border
@@ -1129,45 +1207,51 @@
                     ctx.strokeText(processedText, posX, posY);
                 }
 
-                // 3. Draw Interior Fill
-                ctx.fillStyle = fillCol;
+                // 3. Draw Interior Fill (Suporte de Degradê Inteligente)
+                if (data.t1Gradient && fillCol2) {
+                    const topY = posY - (t1Size * scaleFactor) / 2;
+                    const bottomY = posY + (t1Size * scaleFactor) / 2;
+                    const grad = ctx.createLinearGradient(0, topY, 0, bottomY);
+                    grad.addColorStop(0, fillCol1);
+                    grad.addColorStop(1, fillCol2);
+                    ctx.fillStyle = grad;
+                } else {
+                    ctx.fillStyle = fillCol1;
+                }
+
                 ctx.fillText(processedText, posX, posY);
                 ctx.restore();
             }
 
-            // TEXT LAYER 2 (Inferior) - Double stroke drawing logic
+            // TEXT LAYER 2 (Inferior)
             if (data.text2) {
                 ctx.save();
                 ctx.textBaseline = "middle";
                 ctx.lineJoin = "round";
                 ctx.lineCap = "round";
-                
-                // Correção BiDi: Define a direção para renderizar números LTR e termos RTL de forma correta
                 ctx.direction = langInfo.rtl ? 'rtl' : 'ltr';
                 
-                // Assemble styles correctly
                 const style2 = data.italic2 ? "italic" : "normal";
                 const weight2 = data.bold2 ? "900" : "400";
                 ctx.font = `${style2} ${weight2} ${t2Size * scaleFactor}px ${fontSelected}`;
                 ctx.textAlign = data.textAlignment;
                 
-                // Read exact properties of Text 2 from data buffer
-                const fillCol = data.t2Color;
+                const fillCol1 = data.t2Color;
+                const fillCol2 = data.t2Color2;
                 const innerCol = data.t2Stroke;
                 const innerW = data.t2StrokeWidth * scaleFactor;
                 const outerCol = data.t2StrokeOuter;
                 const outerW = data.t2StrokeOuterWidth * scaleFactor;
 
-                // Shadow configuration
-                ctx.shadowColor = 'rgba(0, 0, 0, 0.85)';
-                ctx.shadowBlur = 15 * scaleFactor;
-                ctx.shadowOffsetX = 10 * scaleFactor;
-                ctx.shadowOffsetY = 10 * scaleFactor;
+                // Sombras Inteligentes Personalizáveis
+                ctx.shadowColor = data.t2ShadowColor || "#000000";
+                ctx.shadowBlur = (data.t2ShadowBlur !== undefined ? data.t2ShadowBlur : 15) * scaleFactor;
+                ctx.shadowOffsetX = (data.t2ShadowX !== undefined ? data.t2ShadowX : 10) * scaleFactor;
+                ctx.shadowOffsetY = (data.t2ShadowY !== undefined ? data.t2ShadowY : 10) * scaleFactor;
 
                 const posX = data.text2Pos.x * scaleFactor;
                 const posY = data.text2Pos.y * scaleFactor;
 
-                // Aplica a resolução BiDi para corrigir bugs de números com texto RTL no Canvas
                 const processedText = resolveBidi(data.text2, langInfo.rtl);
 
                 // 1. Draw Outer Border
@@ -1184,15 +1268,24 @@
                     ctx.strokeText(processedText, posX, posY);
                 }
 
-                // 3. Draw Interior Fill
-                ctx.fillStyle = fillCol;
+                // 3. Draw Interior Fill (Amarelo Degradê por defeito)
+                if (data.t2Gradient && fillCol2) {
+                    const topY = posY - (t2Size * scaleFactor) / 2;
+                    const bottomY = posY + (t2Size * scaleFactor) / 2;
+                    const grad = ctx.createLinearGradient(0, topY, 0, bottomY);
+                    grad.addColorStop(0, fillCol1);
+                    grad.addColorStop(1, fillCol2);
+                    ctx.fillStyle = grad;
+                } else {
+                    ctx.fillStyle = fillCol1;
+                }
+
                 ctx.fillText(processedText, posX, posY);
                 ctx.restore();
             }
 
-            // DRAW INTERACTIVE GUIDELINES ON INDIVIDUAL VIEW
+            // GRELHA DE INTERAÇÃO NO MODO EDICÃO INDIVIDUAL
             if (isInteractive) {
-                // If we are hovering or dragging a target, render high contrast dashed handles
                 ['text1', 'text2'].forEach(target => {
                     const box = target === 'text1' ? boundingBoxes.text1 : boundingBoxes.text2;
                     const textVal = target === 'text1' ? data.text1 : data.text2;
@@ -1208,7 +1301,6 @@
                         ctx.lineWidth = isTargetDragged ? 3 * scaleFactor : 2 * scaleFactor;
                         ctx.setLineDash([8 * scaleFactor, 4 * scaleFactor]);
                         
-                        // Draw bounding box
                         ctx.strokeRect(
                             box.x * scaleFactor,
                             box.y * scaleFactor,
@@ -1216,7 +1308,6 @@
                             box.height * scaleFactor
                         );
 
-                        // Highlight background highlight glow
                         ctx.fillStyle = isTargetDragged ? "rgba(99, 102, 241, 0.08)" : "rgba(56, 189, 248, 0.04)";
                         ctx.fillRect(
                             box.x * scaleFactor,
@@ -1225,22 +1316,19 @@
                             box.height * scaleFactor
                         );
 
-                        // Small tag in corner indicating drag handle is active
                         ctx.fillStyle = isTargetDragged ? "#6366f1" : "#38bdf8";
                         ctx.font = `bold ${11 * scaleFactor}px sans-serif`;
                         ctx.textBaseline = "top";
                         ctx.textAlign = "left";
-                        const labelText = isTargetDragged ? "ARRASTANDO" : "CLIQUE PARA MOVER";
+                        const labelText = isTargetDragged ? "A ARRASTAR" : "CLIQUE PARA MOVER";
                         ctx.fillText(labelText, box.x * scaleFactor, (box.y - 18) * scaleFactor);
                         ctx.restore();
                     }
                 });
             }
-
-            // REMOVED internal Canvas watermark inside this block to prevent overlaps and redundancy
         }
 
-        // Funções Globais de Renderização
+        // Funções de Sincronização e Renderização
         function requestRenderAll() {
             if (activeTab === "grid") {
                 renderGrid();
@@ -1252,14 +1340,12 @@
         function renderGrid() {
             if (activeTab !== "grid") return;
 
-            // Seletor ID substituindo query generica para garantir compatibilidade estrutural no Brave
             const gridContainer = document.getElementById("gridContainer");
             if (!gridContainer) return;
             gridContainer.innerHTML = "";
 
             const activeLanguages = LANGUAGES.filter(l => l.active);
 
-            // In case no language is active, render an elegant empty state
             if (activeLanguages.length === 0) {
                 gridContainer.innerHTML = `
                     <div class="col-span-full py-16 text-center bg-slate-900 border border-slate-800/80 rounded-2xl flex flex-col items-center justify-center gap-4">
@@ -1268,7 +1354,7 @@
                         </div>
                         <div class="space-y-1">
                             <h4 class="font-bold text-sm text-slate-200">Nenhum Idioma Selecionado</h4>
-                            <p class="text-xs text-slate-500 max-w-sm mx-auto">Ative os países desejados no gerenciador de idiomas (Passo 1.5) para renderizá-los e exportá-los de forma imediata.</p>
+                            <p class="text-xs text-slate-500 max-w-sm mx-auto">Ative os países desejados no Passo 1.5 para poder renderizar as thumbnails.</p>
                         </div>
                     </div>
                 `;
@@ -1323,7 +1409,6 @@
         function renderIndividualEditorCanvas() {
             if (activeTab !== "editor") return;
             const canvas = document.getElementById("interactiveCanvas");
-            // Set 3rd parameter (isInteractive) to true to show dashed borders/drag helpers!
             drawThumbnailOnCanvas(canvas, currentCountryId, 1280, 720, true);
         }
 
@@ -1332,7 +1417,6 @@
             const lang = LANGUAGES.find(l => l.id === countryId);
             if (!lang) return;
             
-            // Set editing indicator header using FlagCDN
             document.getElementById("currentEditingFlag").innerHTML = `<img src="https://flagcdn.com/w40/${lang.flagCode}.png" class="w-8 h-5 object-cover rounded shadow-sm border border-slate-700/50 inline-block mr-2" alt="">`;
             document.getElementById("currentEditingCountryName").textContent = `${lang.name} - ${lang.lang}`;
             document.getElementById("currentEditingCode").textContent = lang.code;
@@ -1344,7 +1428,6 @@
             document.getElementById("overrideText1").value = data.text1;
             document.getElementById("overrideText2").value = data.text2;
             
-            // Set values on individual line sliders
             const scale1 = data.fontScale1 !== undefined ? data.fontScale1 : (data.fontScale || lang.fontScale);
             const scale2 = data.fontScale2 !== undefined ? data.fontScale2 : (data.fontScale || lang.fontScale);
 
@@ -1354,18 +1437,16 @@
             document.getElementById("indScaleSlider2").value = scale2;
             document.getElementById("scaleLabel2").textContent = scale2.toFixed(2) + "x";
 
-            // Reset drag and hover selections when changing country
             dragTarget = null;
             hoveredTarget = null;
             isDragging = false;
 
-            syncIndividualUIInputs();
+            syncUIStates();
             updateStyleTogglesUI();
             renderIndividualEditorCanvas();
         }
 
         function goToCountryDetail(countryId) {
-            // Force activate the country if it was inactive before switching
             const lang = LANGUAGES.find(l => l.id === countryId);
             if (lang && !lang.active) {
                 lang.active = true;
@@ -1376,12 +1457,10 @@
             loadCountryToEditor(countryId);
         }
 
-        // FLAWLESS BOUNDING-BOX DRAG AND DROP MECHANISM
         function setupInteractiveCanvasEvents() {
             const canvas = document.getElementById("interactiveCanvas");
             if (!canvas) return;
             
-            // Helper to fetch normalized base 1280x720 mouse coordinates from responsive client dimensions
             function getMousePos(evt) {
                 const rect = canvas.getBoundingClientRect();
                 return {
@@ -1390,20 +1469,17 @@
                 };
             }
 
-            // Checks whether mouse coordinate is geometrically inside a text bounding box
             function isInsideBox(pos, box) {
                 if (!box) return false;
                 return (pos.x >= box.x && pos.x <= box.x + box.width &&
                         pos.y >= box.y && pos.y <= box.y + box.height);
             }
 
-            // Handle hover and mouse click checks
             function handleMouseMove(clientX, clientY) {
                 const mousePos = getMousePos({ clientX, clientY });
                 const prevHovered = hoveredTarget;
 
                 if (!isDragging) {
-                    // Geometric hit testing instead of basic radial distance
                     const overT1 = isInsideBox(mousePos, boundingBoxes.text1);
                     const overT2 = isInsideBox(mousePos, boundingBoxes.text2);
 
@@ -1418,12 +1494,10 @@
                         canvas.style.cursor = "default";
                     }
 
-                    // Only redraw if hover state changed to conserve compute
                     if (prevHovered !== hoveredTarget) {
                         renderIndividualEditorCanvas();
                     }
                 } else {
-                    // Update drag coordinates in real-time
                     const data = styleData[currentCountryId];
                     if (!data) return;
                     canvas.style.cursor = "grabbing";
@@ -1440,7 +1514,6 @@
                 }
             }
 
-            // Mouse down handler
             function handleMouseDown(clientX, clientY) {
                 const mousePos = getMousePos({ clientX, clientY });
                 
@@ -1452,7 +1525,6 @@
                 if (overT1) {
                     isDragging = true;
                     dragTarget = "text1";
-                    // Calculate precise offset so text doesn't snap abruptly to center of mouse on click
                     dragOffset.x = mousePos.x - data.text1Pos.x;
                     dragOffset.y = mousePos.y - data.text1Pos.y;
                     canvas.style.cursor = "grabbing";
@@ -1476,12 +1548,10 @@
                 }
             }
 
-            // Mouse Bindings
             canvas.addEventListener("mousedown", (e) => handleMouseDown(e.clientX, e.clientY));
             window.addEventListener("mousemove", (e) => handleMouseMove(e.clientX, e.clientY));
             window.addEventListener("mouseup", handleMouseUp);
 
-            // Responsive Mobile/Tablet touch gesture simulation 
             canvas.addEventListener("touchstart", (e) => {
                 if (e.touches.length > 0) {
                     handleMouseDown(e.touches[0].clientX, e.touches[0].clientY);
@@ -1496,41 +1566,36 @@
             window.addEventListener("touchend", handleMouseUp);
         }
 
-        // AI Integration to perform cultural translation and copy localization
         async function translateAllWithAI() {
-            const envApiKey = ""; // Mandated by Gemini API guidelines
+            const envApiKey = ""; 
             let apiKey = document.getElementById("apiKeyInput").value.trim() || envApiKey;
             const ptText1 = document.getElementById("ptText1").value.trim();
             const ptText2 = document.getElementById("ptText2").value.trim();
             const selectedModel = document.getElementById("apiModelSelect").value;
-
-            // Only fetch currently active checked languages
             const activeLanguages = LANGUAGES.filter(l => l.active);
 
             if (activeLanguages.length === 0) {
-                showToast("Por favor, ative pelo menos um idioma no Passo 1.5 para poder traduzir.", "error");
+                showToast("Por favor, ative pelo menos um idioma no Passo 1.5.", "error");
                 return;
             }
 
             if (!ptText1 && !ptText2) {
-                showToast("Por favor, preencha pelo menos uma linha de texto em português.", "error");
+                showToast("Por favor, preencha pelo menos uma linha de texto.", "error");
                 return;
             }
 
             const btn = document.getElementById("btnTranslate");
             const originalHtml = btn.innerHTML;
             btn.disabled = true;
-            btn.innerHTML = `<i class="fa-solid fa-spinner animate-spin mr-2"></i> Localizando com IA...`;
+            btn.innerHTML = `<i class="fa-solid fa-spinner animate-spin mr-2"></i> Traduzindo...`;
 
             if (!apiKey) {
-                // High fidelity mock delay simulation if key is not active
                 setTimeout(() => {
                     const clean1 = ptText1.toUpperCase().trim();
                     const clean2 = ptText2.toUpperCase().trim();
 
                     LANGUAGES.forEach(lang => {
                         if (lang.active) {
-                            // If they are translating our standard dummy continuous sentence
                             if ((clean1 === "100 SEGREDOS" || clean1.includes("SEGREDOS")) && (clean2 === "QUE VOCÊ NÃO SABIA" || clean2.includes("SABIA")) && fallbackTimeskipTranslations[lang.id]) {
                                 styleData[lang.id].text1 = fallbackTimeskipTranslations[lang.id].text1;
                                 styleData[lang.id].text2 = fallbackTimeskipTranslations[lang.id].text2;
@@ -1538,7 +1603,6 @@
                                 styleData[lang.id].text1 = fallbackTranslations[lang.id].text1;
                                 styleData[lang.id].text2 = fallbackTranslations[lang.id].text2;
                             } else {
-                                // Suffix mockup so custom user text renders immediately
                                 styleData[lang.id].text1 = `${ptText1} (${lang.code})`;
                                 styleData[lang.id].text2 = `${ptText2} (${lang.lang})`;
                             }
@@ -1550,8 +1614,7 @@
                     btn.innerHTML = originalHtml;
                     loadCountryToEditor(currentCountryId);
                     requestRenderAll();
-                    
-                    showToast("Simulação de localização concluída! Adicione uma chave Gemini no cabeçalho para obter traduções autênticas.", "info");
+                    showToast("Simulação de tradução concluída! Adicione a chave Gemini para autenticidade total.", "info");
                 }, 1200);
                 return;
             }
@@ -1576,7 +1639,6 @@ Line 2: "${ptText2}"
 Generate localized translations for these exact language codes:
 ${langCodes}.`;
 
-                // Exponential backoff runner using the chosen stable model
                 const makeApiCall = async (retryCount = 0) => {
                     const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${selectedModel}:generateContent?key=${apiKey}`;
                     const response = await fetch(apiUrl, {
@@ -1609,7 +1671,6 @@ ${langCodes}.`;
                         })
                     });
 
-                    // Retries up to 5 times with delay of 1s, 2s, 4s, 8s, 16s.
                     if (response.status === 429 && retryCount < 5) {
                         const delay = Math.pow(2, retryCount) * 1000;
                         await new Promise(resolve => setTimeout(resolve, delay));
@@ -1620,7 +1681,6 @@ ${langCodes}.`;
 
                 const res = await makeApiCall();
                 
-                // Assert API status is healthy, otherwise fetch error payload to show exactly what broke
                 if (!res.ok) {
                     const errData = await res.json().catch(() => ({}));
                     const errMsg = errData.error?.message || `Erro HTTP ${res.status}`;
@@ -1628,10 +1688,8 @@ ${langCodes}.`;
                 }
 
                 const result = await res.json();
-                
                 const candidate = result.candidates?.[0];
                 if (candidate && candidate.content?.parts?.[0]?.text) {
-                    // Sanitize potential backticks wrap (```json) returned by API
                     let rawText = candidate.content.parts[0].text.trim();
                     if (rawText.startsWith("```json")) {
                         rawText = rawText.replace(/^```json/, "").replace(/```$/, "").trim();
@@ -1652,12 +1710,12 @@ ${langCodes}.`;
                         hasBeenTranslated = true;
                         loadCountryToEditor(currentCountryId);
                         requestRenderAll();
-                        showToast("Localização com Inteligência Artificial concluída!", "success");
+                        showToast("Tradução IA concluída com sucesso!", "success");
                     } else {
-                        throw new Error("Formato de resposta inválido retornado pela IA.");
+                        throw new Error("Formato de resposta inválido.");
                     }
                 } else {
-                    throw new Error("Resposta da IA está vazia ou não pôde ser gerada.");
+                    throw new Error("A resposta da IA veio vazia.");
                 }
             } catch (err) {
                 console.error("AI Generation Error", err);
@@ -1677,31 +1735,28 @@ ${langCodes}.`;
             tempCanvas.width = 1280;
             tempCanvas.height = 720;
             
-            // Render at full scale (1280x720) for production quality output
             drawThumbnailOnCanvas(tempCanvas, countryId, 1280, 720, false);
             
             const link = document.createElement("a");
             const lang = LANGUAGES.find(l => l.id === countryId);
-            // Higieniza barras e caracteres inválidos do nome do país para evitar criar pastas locais indesejadas
             const cleanName = lang.name.replace(/[\s\/\\|:?*<>]+/g, '_');
             link.download = `thumb_${lang.code}_${cleanName}.png`;
             link.href = tempCanvas.toDataURL("image/png");
             link.click();
         }
 
-        // Downloader pipeline utilizando JSZip para empacotar as imagens em lote em um único arquivo ZIP
         async function downloadAllThumbnails() {
             const activeLanguages = LANGUAGES.filter(l => l.active);
             if (activeLanguages.length === 0) {
-                showToast("Por favor, ative pelo menos um idioma no gerenciador para exportar o ZIP.", "error");
+                showToast("Ative pelo menos um idioma para exportar.", "error");
                 return;
             }
 
             const btn = document.getElementById("zipExportBtn");
             const originalHtml = btn.innerHTML;
             btn.disabled = true;
-            btn.innerHTML = `<i class="fa-solid fa-spinner animate-spin mr-2"></i> Compactando ZIP...`;
-            showToast(`Renderizando e empacotando as ${activeLanguages.length} thumbnails ativas. Aguarde...`, "info");
+            btn.innerHTML = `<i class="fa-solid fa-spinner animate-spin mr-2"></i> A gerar ZIP...`;
+            showToast(`A renderizar ${activeLanguages.length} thumbnails. Por favor, aguarde...`, "info");
 
             try {
                 const zip = new JSZip();
@@ -1711,33 +1766,26 @@ ${langCodes}.`;
                     tempCanvas.width = 1280;
                     tempCanvas.height = 720;
                     
-                    // Renderiza em alta resolução de produção
                     drawThumbnailOnCanvas(tempCanvas, lang.id, 1280, 720, false);
-                    
-                    // Converte o canvas para Blob assincronamente
                     const blob = await new Promise(resolve => tempCanvas.toBlob(resolve, "image/png"));
                     
-                    // Higieniza o nome do país de forma robusta substituindo barras por sublinhados
                     const cleanName = lang.name.replace(/[\s\/\\|:?*<>]+/g, '_');
                     const filename = `thumb_${lang.code}_${cleanName}.png`;
                     
-                    // Adiciona o arquivo correspondente ao ZIP na raiz
                     zip.file(filename, blob);
                 }
 
-                // Gera o arquivo ZIP binário assincronamente
                 const content = await zip.generateAsync({ type: "blob" });
                 
-                // Dispara o download nativo do arquivo compactado único
                 const link = document.createElement("a");
                 link.download = "thumbnails_globais.zip";
                 link.href = URL.createObjectURL(content);
                 link.click();
                 
-                showToast("Download do arquivo ZIP iniciado com sucesso!", "success");
+                showToast("Download ZIP iniciado com sucesso!", "success");
             } catch (err) {
-                console.error("Erro ao tentar empacotar o ZIP:", err);
-                showToast("Erro inesperado ao gerar o pacote compactado.", "error");
+                console.error("Erro no ZIP:", err);
+                showToast("Erro inesperado ao gerar o compactado.", "error");
             } finally {
                 btn.disabled = false;
                 btn.innerHTML = originalHtml;
@@ -1749,7 +1797,6 @@ ${langCodes}.`;
             modal.classList.toggle("hidden");
         }
 
-        // Global position mapping
         function applyGlobalPosition(axis, value) {
             const intVal = parseInt(value);
             
@@ -1767,7 +1814,6 @@ ${langCodes}.`;
                 document.getElementById("globalT2X").value = intVal;
             }
 
-            // Move the elements of all languages inside the memory buffer
             LANGUAGES.forEach(lang => {
                 if (styleData[lang.id]) {
                     if (axis === 'y1') styleData[lang.id].text1Pos.y = intVal;
@@ -1777,7 +1823,6 @@ ${langCodes}.`;
                 }
             });
 
-            // Refresh the screen elements
             if (activeTab === "editor") {
                 renderIndividualEditorCanvas();
             } else {
@@ -1810,18 +1855,13 @@ ${langCodes}.`;
         }
 
         function updateGlobalStyle(property, value) {
-            // Update the value in all languages
             LANGUAGES.forEach(lang => {
                 if (styleData[lang.id]) {
                     styleData[lang.id][property] = value;
                 }
             });
             
-            // If the current country is being edited, sync the individual UI inputs
-            if (activeTab === "editor") {
-                syncIndividualUIInputs();
-            }
-            
+            syncUIStates();
             requestRenderAll();
         }
 
@@ -1858,13 +1898,11 @@ ${langCodes}.`;
             const currentData = styleData[currentCountryId];
             if (!currentData) return;
 
-            // Global buttons state
             updateButtonState("globalBold1Btn", currentData.bold1);
             updateButtonState("globalItalic1Btn", currentData.italic1);
             updateButtonState("globalBold2Btn", currentData.bold2);
             updateButtonState("globalItalic2Btn", currentData.italic2);
 
-            // Individual buttons state
             updateButtonState("indBold1Btn", currentData.bold1);
             updateButtonState("indItalic1Btn", currentData.italic1);
             updateButtonState("indBold2Btn", currentData.bold2);
@@ -1876,7 +1914,6 @@ ${langCodes}.`;
             if (!btn) return;
             
             if (isActive) {
-                // Indigo/Active style
                 btn.className = btn.className
                     .replace(/bg-slate-900|bg-slate-850|bg-slate-950/g, 'bg-indigo-600')
                     .replace(/text-slate-400/g, 'text-white')
@@ -1885,7 +1922,6 @@ ${langCodes}.`;
                     btn.classList.add('bg-indigo-600', 'text-white');
                 }
             } else {
-                // Slate/Default style
                 const defaultBg = btnId.startsWith('global') ? 'bg-slate-900' : 'bg-slate-950';
                 btn.className = btn.className
                     .replace(/bg-indigo-600/g, defaultBg)
@@ -1894,30 +1930,126 @@ ${langCodes}.`;
             }
         }
 
+        // Sincronizador de Inputs de Interface do Utilizador (UIs)
+        function syncUIStates() {
+            const data = styleData[currentCountryId];
+            if (!data) return;
+
+            // Sincronizar controlos globais
+            const t1G = document.getElementById("t1GradientToggle");
+            const t1C2 = document.getElementById("t1Color2");
+            if (t1G && t1C2) {
+                t1G.checked = data.t1Gradient;
+                t1C2.value = data.t1Color2;
+                if (data.t1Gradient) {
+                    t1C2.classList.remove("opacity-50");
+                    t1C2.removeAttribute("disabled");
+                } else {
+                    t1C2.classList.add("opacity-50");
+                    t1C2.setAttribute("disabled", "true");
+                }
+            }
+            
+            const t1Props = ['t1ShadowColor', 't1ShadowBlur', 't1ShadowX', 't1ShadowY', 't1Color', 't1Stroke', 't1StrokeWidth', 't1StrokeOuter', 't1StrokeOuterWidth'];
+            t1Props.forEach(prop => {
+                const el = document.getElementById(prop);
+                if (el) el.value = data[prop];
+            });
+
+            const t2G = document.getElementById("t2GradientToggle");
+            const t2C2 = document.getElementById("t2Color2");
+            if (t2G && t2C2) {
+                t2G.checked = data.t2Gradient;
+                t2C2.value = data.t2Color2;
+                if (data.t2Gradient) {
+                    t2C2.classList.remove("opacity-50");
+                    t2C2.removeAttribute("disabled");
+                } else {
+                    t2C2.classList.add("opacity-50");
+                    t2C2.setAttribute("disabled", "true");
+                }
+            }
+
+            const t2Props = ['t2ShadowColor', 't2ShadowBlur', 't2ShadowX', 't2ShadowY', 't2Color', 't2Stroke', 't2StrokeWidth', 't2StrokeOuter', 't2StrokeOuterWidth'];
+            t2Props.forEach(prop => {
+                const el = document.getElementById(prop);
+                if (el) el.value = data[prop];
+            });
+
+            if (activeTab === "editor") {
+                syncIndividualUIInputs();
+            }
+        }
+
         function syncIndividualUIInputs() {
             const data = styleData[currentCountryId];
             if (!data) return;
 
-            // Sync Text 1
+            // Sincronizar Texto 1 Individual
             document.getElementById("indT1Color").value = data.t1Color;
             document.getElementById("indT1Stroke").value = data.t1Stroke;
             document.getElementById("indT1StrokeWidth").value = data.t1StrokeWidth;
             document.getElementById("indT1StrokeOuter").value = data.t1StrokeOuter;
             document.getElementById("indT1StrokeOuterWidth").value = data.t1StrokeOuterWidth;
 
-            // Sync Text 2
+            const indT1G = document.getElementById("indT1GradientToggle");
+            const indT1C2 = document.getElementById("indT1Color2");
+            if (indT1G && indT1C2) {
+                indT1G.checked = data.t1Gradient;
+                indT1C2.value = data.t1Color2;
+                if (data.t1Gradient) {
+                    indT1C2.classList.remove("opacity-50");
+                    indT1C2.removeAttribute("disabled");
+                } else {
+                    indT1C2.classList.add("opacity-50");
+                    indT1C2.setAttribute("disabled", "true");
+                }
+            }
+
+            ['indT1ShadowColor', 'indT1ShadowBlur', 'indT1ShadowX', 'indT1ShadowY'].forEach(prop => {
+                const el = document.getElementById(prop);
+                if (el) {
+                    const baseProp = prop.replace('ind', '');
+                    const propName = baseProp.charAt(0).toLowerCase() + baseProp.slice(1);
+                    el.value = data[propName];
+                }
+            });
+
+            // Sincronizar Texto 2 Individual
             document.getElementById("indT2Color").value = data.t2Color;
             document.getElementById("indT2Stroke").value = data.t2Stroke;
             document.getElementById("indT2StrokeWidth").value = data.t2StrokeWidth;
             document.getElementById("indT2StrokeOuter").value = data.t2StrokeOuter;
             document.getElementById("indT2StrokeOuterWidth").value = data.t2StrokeOuterWidth;
+
+            const indT2G = document.getElementById("indT2GradientToggle");
+            const indT2C2 = document.getElementById("indT2Color2");
+            if (indT2G && indT2C2) {
+                indT2G.checked = data.t2Gradient;
+                indT2C2.value = data.t2Color2;
+                if (data.t2Gradient) {
+                    indT2C2.classList.remove("opacity-50");
+                    indT2C2.removeAttribute("disabled");
+                } else {
+                    indT2C2.classList.add("opacity-50");
+                    indT2C2.setAttribute("disabled", "true");
+                }
+            }
+
+            ['indT2ShadowColor', 'indT2ShadowBlur', 'indT2ShadowX', 'indT2ShadowY'].forEach(prop => {
+                const el = document.getElementById(prop);
+                if (el) {
+                    const baseProp = prop.replace('ind', '');
+                    const propName = baseProp.charAt(0).toLowerCase() + baseProp.slice(1);
+                    el.value = data[propName];
+                }
+            });
         }
 
         function syncCurrentLayoutToAll() {
             const sourceData = styleData[currentCountryId];
             if (!sourceData) return;
             
-            // Replicate settings across the whole stack
             LANGUAGES.forEach(lang => {
                 if (lang.id !== currentCountryId) {
                     styleData[lang.id].text1Pos = { ...sourceData.text1Pos };
@@ -1929,54 +2061,51 @@ ${langCodes}.`;
                     styleData[lang.id].italic1 = sourceData.italic1;
                     styleData[lang.id].bold2 = sourceData.bold2;
                     styleData[lang.id].italic2 = sourceData.italic2;
-                    // Colors & Borders replicas
+                    
+                    // Sincronização avançada de cores, gradientes e sombras
                     styleData[lang.id].t1Color = sourceData.t1Color;
+                    styleData[lang.id].t1Gradient = sourceData.t1Gradient;
+                    styleData[lang.id].t1Color2 = sourceData.t1Color2;
                     styleData[lang.id].t1Stroke = sourceData.t1Stroke;
                     styleData[lang.id].t1StrokeWidth = sourceData.t1StrokeWidth;
                     styleData[lang.id].t1StrokeOuter = sourceData.t1StrokeOuter;
                     styleData[lang.id].t1StrokeOuterWidth = sourceData.t1StrokeOuterWidth;
+                    styleData[lang.id].t1ShadowColor = sourceData.t1ShadowColor;
+                    styleData[lang.id].t1ShadowBlur = sourceData.t1ShadowBlur;
+                    styleData[lang.id].t1ShadowX = sourceData.t1ShadowX;
+                    styleData[lang.id].t1ShadowY = sourceData.t1ShadowY;
+
                     styleData[lang.id].t2Color = sourceData.t2Color;
+                    styleData[lang.id].t2Gradient = sourceData.t2Gradient;
+                    styleData[lang.id].t2Color2 = sourceData.t2Color2;
                     styleData[lang.id].t2Stroke = sourceData.t2Stroke;
                     styleData[lang.id].t2StrokeWidth = sourceData.t2StrokeWidth;
                     styleData[lang.id].t2StrokeOuter = sourceData.t2StrokeOuter;
                     styleData[lang.id].t2StrokeOuterWidth = sourceData.t2StrokeOuterWidth;
+                    styleData[lang.id].t2ShadowColor = sourceData.t2ShadowColor;
+                    styleData[lang.id].t2ShadowBlur = sourceData.t2ShadowBlur;
+                    styleData[lang.id].t2ShadowX = sourceData.t2ShadowX;
+                    styleData[lang.id].t2ShadowY = sourceData.t2ShadowY;
                 }
             });
 
-            // Update Left Sidebar sliders configuration values visually to prevent desync
             document.getElementById("globalT1Y").value = sourceData.text1Pos.y;
             document.getElementById("globalT1YLabel").textContent = sourceData.text1Pos.y + "px";
-            
             document.getElementById("globalT1X").value = sourceData.text1Pos.x;
             document.getElementById("globalT1XLabel").textContent = sourceData.text1Pos.x + "px";
-
             document.getElementById("globalT2Y").value = sourceData.text2Pos.y;
             document.getElementById("globalT2YLabel").textContent = sourceData.text2Pos.y + "px";
-
             document.getElementById("globalT2X").value = sourceData.text2Pos.x;
             document.getElementById("globalT2XLabel").textContent = sourceData.text2Pos.x + "px";
 
-            // Sync global pickers
-            document.getElementById("t1Color").value = sourceData.t1Color;
-            document.getElementById("t1Stroke").value = sourceData.t1Stroke;
-            document.getElementById("t1StrokeWidth").value = sourceData.t1StrokeWidth;
-            document.getElementById("t1StrokeOuter").value = sourceData.t1StrokeOuter;
-            document.getElementById("t1StrokeOuterWidth").value = sourceData.t1StrokeOuterWidth;
-
-            document.getElementById("t2Color").value = sourceData.t2Color;
-            document.getElementById("t2Stroke").value = sourceData.t2Stroke;
-            document.getElementById("t2StrokeWidth").value = sourceData.t2StrokeWidth;
-            document.getElementById("t2StrokeOuter").value = sourceData.t2StrokeOuter;
-            document.getElementById("t2StrokeOuterWidth").value = sourceData.t2StrokeOuterWidth;
-
             applyGlobalAlignment(sourceData.textAlignment);
             updateStyleTogglesUI();
+            syncUIStates();
 
-            showToast("Layout e estilos aplicados em todas as thumbnails com sucesso!", "success");
+            showToast("Design e efeitos aplicados em todas as thumbnails com sucesso!", "success");
             requestRenderAll();
         }
 
-        // Global font scaling updates
         function updateGlobalScale(line, value) {
             const val = parseFloat(value);
             if (line === 1) {
@@ -1989,7 +2118,6 @@ ${langCodes}.`;
             requestRenderAll();
         }
 
-        // Handle uploaded image background template
         function handleBgUpload(event) {
             const file = event.target.files[0];
             if (file) {
@@ -2000,7 +2128,7 @@ ${langCodes}.`;
                     img.onload = function() {
                         uploadedBgImage = img;
                         requestRenderAll();
-                        showToast("Template de imagem carregado com sucesso!", "success");
+                        showToast("Fundo importado com sucesso!", "success");
                     };
                     img.src = e.target.result;
                 };
@@ -2008,12 +2136,10 @@ ${langCodes}.`;
             }
         }
 
-        // Real-time synchronization of original texts input to default languages
         function handleManualTextInput() {
             const val1 = document.getElementById("ptText1").value.toUpperCase();
             const val2 = document.getElementById("ptText2").value.toUpperCase();
             
-            // Mirror to all languages if they haven't run the AI translation yet
             LANGUAGES.forEach(lang => {
                 if (!hasBeenTranslated) {
                     styleData[lang.id].text1 = val1;
@@ -2021,7 +2147,6 @@ ${langCodes}.`;
                 }
             });
 
-            // Also reload current text values to active view
             const activeData = styleData[currentCountryId];
             if (activeData) {
                 document.getElementById("overrideText1").value = activeData.text1;
@@ -2052,7 +2177,6 @@ ${langCodes}.`;
             const data = styleData[currentCountryId];
             if (!data) return;
             
-            // Reset to default mirrored PT inputs or fallback translation
             const val1 = document.getElementById("ptText1").value.toUpperCase();
             const val2 = document.getElementById("ptText2").value.toUpperCase();
 
@@ -2067,18 +2191,29 @@ ${langCodes}.`;
             data.bold2 = true;
             data.italic2 = false;
 
-            // Reset individual colors
             data.t1Color = "#ffffff";
+            data.t1Gradient = false;
+            data.t1Color2 = "#94a3b8";
             data.t1Stroke = "#000000";
             data.t1StrokeWidth = 10;
             data.t1StrokeOuter = "#ffffff";
             data.t1StrokeOuterWidth = 0;
+            data.t1ShadowColor = "#000000";
+            data.t1ShadowBlur = 15;
+            data.t1ShadowX = 8;
+            data.t1ShadowY = 8;
             
             data.t2Color = "#facc15";
+            data.t2Gradient = true;
+            data.t2Color2 = "#ea580c";
             data.t2Stroke = "#000000";
             data.t2StrokeWidth = 10;
             data.t2StrokeOuter = "#ffffff";
             data.t2StrokeOuterWidth = 0;
+            data.t2ShadowColor = "#000000";
+            data.t2ShadowBlur = 15;
+            data.t2ShadowX = 10;
+            data.t2ShadowY = 10;
 
             document.getElementById("overrideText1").value = data.text1;
             document.getElementById("overrideText2").value = data.text2;
@@ -2088,7 +2223,7 @@ ${langCodes}.`;
             document.getElementById("indScaleSlider2").value = defaultLangScale;
             document.getElementById("scaleLabel2").textContent = defaultLangScale.toFixed(2) + "x";
 
-            syncIndividualUIInputs();
+            syncUIStates();
             updateStyleTogglesUI();
             renderIndividualEditorCanvas();
             showToast("Ajustes individuais restaurados para o padrão.", "info");
@@ -2106,13 +2241,11 @@ ${langCodes}.`;
             requestRenderAll();
         }
 
-        // Tab Switching Engine with security active-language checkpoints
         function switchTab(tab) {
-            // Guard: If trying to access fine-tuning but no languages are active, block action
             if (tab === "editor") {
                 const activeCount = LANGUAGES.filter(l => l.active).length;
                 if (activeCount === 0) {
-                    showToast("Ative pelo menos um país no Passo 1.5 para acessar o Ajuste Fino.", "error");
+                    showToast("Ative pelo menos um país no Passo 1.5 para poder editar.", "error");
                     return;
                 }
             }
@@ -2128,14 +2261,13 @@ ${langCodes}.`;
                 editorBtn.className = "px-4 py-2 rounded-lg text-xs font-bold text-slate-400 hover:text-white transition flex items-center gap-2";
                 gridTab.classList.remove("hidden");
                 editorTab.classList.add("hidden");
-                renderGrid(); // Redraw grid
+                renderGrid(); 
             } else {
                 gridBtn.className = "px-4 py-2 rounded-lg text-xs font-bold text-slate-400 hover:text-white transition flex items-center gap-2";
                 editorBtn.className = "px-4 py-2 rounded-lg text-xs font-black bg-indigo-500 text-white transition flex items-center gap-2";
                 gridTab.classList.add("hidden");
                 editorTab.classList.remove("hidden");
                 
-                // If currentCountry is inactive, switch currentCountry to the first active country
                 if (!LANGUAGES.find(l => l.id === currentCountryId)?.active) {
                     const firstActive = LANGUAGES.find(l => l.active);
                     if (firstActive) {
@@ -2147,7 +2279,6 @@ ${langCodes}.`;
             }
         }
 
-        // Window entry point
         window.onload = function() {
             initApp();
         };
