@@ -1909,7 +1909,6 @@ ${langCodes}.`;
 
         function syncCurrentLayoutToAll() {
             const sourceData = styleData[currentCountryId];
-            if (!sourceData) return;
             
             // Replicate settings across the whole stack
             LANGUAGES.forEach(lang => {
@@ -1967,6 +1966,19 @@ ${langCodes}.`;
             updateStyleTogglesUI();
 
             showToast("Layout e estilos aplicados em todas as 16 thumbnails com sucesso!", "success");
+            requestRenderAll();
+        }
+
+        // Global font scaling updates
+        function updateGlobalScale(line, value) {
+            const val = parseFloat(value);
+            if (line === 1) {
+                globalFontScale1 = val;
+                document.getElementById("globalScale1Label").textContent = val.toFixed(2) + "x";
+            } else {
+                globalFontScale2 = val;
+                document.getElementById("globalScale2Label").textContent = val.toFixed(2) + "x";
+            }
             requestRenderAll();
         }
 
