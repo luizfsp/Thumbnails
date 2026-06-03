@@ -1621,15 +1621,17 @@
 
             try {
                 const systemPrompt = `You are a world-class global marketing and YouTube optimization copywriter. 
-Your task is to take a YouTube Thumbnail text originally in Portuguese, and adapt it into 18 target languages.
+Your task is to take a YouTube Thumbnail text originally in Portuguese, and adapt it into the target languages.
 
 CRITICAL CONTEXT RULES:
 1. SISTER STRINGS CONNECTION: The input consists of two lines: Line 1 (Main Text) and Line 2 (Secondary Text). These two lines are often a SINGLE, CONTINUOUS SENTENCE or cohesive phrase split for layout constraints.
 2. You MUST translate them together as a unified semantic block to preserve proper grammatical flow, gender agreements, number agreements, prepositions, and localized case declensions.
 3. Once translated cohesively, split the resulting translation logically back into two lines (text1 and text2). Ensure that reading Line 1 then Line 2 feels like a single, seamless, natural sentence in the target language. Do not isolate them into disconnected hooks unless the input itself represents two unrelated hooks.
 4. Capitalization must remain bold, impactful, and expressive.
-5. Translate the HOOK, the CATCHY impact, matching the local internet culture slang of that specific target country.
-6. Output strict JSON with schema matching exactly the specified structure below. No explanation, markdown ticks, or other text outside the JSON.`;
+5. Translate the HOOK, the CATCHY impact, matching the local internet culture slang of that specific target country - if applicable.
+6. PUNCTUATION FIDELITY: Never add exclamation marks (!) or question marks (?) if they are not explicitly present in the user's input.
+7. REGIONAL PUNCTUATION RESTRICTIONS: Never use exclamation marks (!) for languages that do not use the roman alphabet under any circumstances.
+8. Output strict JSON with schema matching exactly the specified structure below. No explanation, markdown ticks, or other text outside the JSON.`;
 
                 const langCodes = activeLanguages.map(l => l.code).join(", ");
                 const userQuery = `Original Portuguese texts:
