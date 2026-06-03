@@ -16,16 +16,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=Barlow:ital,wght@0,400;0,900;1,400;1,900&family=Inter:wght@400;600;800;900&family=Noto+Sans+JP:wght@700;900&family=Noto+Sans+KR:wght@700;900&family=Noto+Sans+SC:wght@700;900&family=Noto+Sans+TC:wght@700;900&family=Noto+Sans:wght@700;900&family=Rubik+Mono+One&family=Teko:wght@700&display=swap" rel="stylesheet">
     
     <style>
-        /* Importação Direta da Fonte Komika Axis */
-        @font-face {
-            font-family: 'Komika Axis';
-            src: url('https://db.onlinewebfonts.com/t/52d80d2ef65a65349e5d4872f2e51921.woff2') format('woff2'),
-                 url('https://db.onlinewebfonts.com/t/52d80d2ef65a65349e5d4872f2e51921.woff') format('woff'),
-                 url('https://db.onlinewebfonts.com/t/52d80d2ef65a65349e5d4872f2e51921.ttf') format('truetype');
-            font-weight: normal;
-            font-style: normal;
-        }
-
         body {
             font-family: 'Inter', sans-serif;
             background-color: #0b0f19;
@@ -204,7 +194,6 @@
                             <select id="fontFamilySelect" onchange="requestRenderAll()" 
                                 class="w-full bg-slate-900 border border-slate-800 rounded-lg px-3 py-2 text-xs focus:outline-none focus:ring-1 focus:ring-indigo-500 text-white font-semibold">
                                 <option value="'Barlow', sans-serif" selected>Barlow Black (Premium / Arredondada)</option>
-                                <option value="'Komika Axis', sans-serif">Komika Axis (Estilo Comic / Cartoon)</option>
                                 <option value="'Anton', 'Noto Sans', sans-serif">Anton (Impactante / YouTube)</option>
                                 <option value="'Rubik Mono One', sans-serif">Rubik Mono One (Gorda / Moderna)</option>
                                 <option value="'Teko', sans-serif">Teko (Condensada / Gamer)</option>
@@ -309,6 +298,16 @@
                                 </button>
                             </div>
                         </div>
+
+                        <!-- Graphic Badges -->
+                        <div class="border-t border-slate-800/50 pt-3">
+                            <label class="block text-xs text-slate-400 font-semibold mb-1.5">Selo/Adesivo de Destaque</label>
+                            <div class="grid grid-cols-3 gap-2">
+                                <button onclick="selectBadge('none')" id="badge_none" class="badge-opt bg-indigo-500/10 border border-indigo-500 text-indigo-400 py-1.5 px-2 rounded-lg text-xs font-bold transition">Nenhum</button>
+                                <button onclick="selectBadge('new')" id="badge_new" class="badge-opt bg-slate-950 border border-slate-800 text-slate-400 hover:text-white py-1.5 px-2 rounded-lg text-xs font-bold transition">NEW!</button>
+                                <button onclick="selectBadge('play')" id="badge_play" class="badge-opt bg-slate-950 border border-slate-800 text-slate-400 hover:text-white py-1.5 px-2 rounded-lg text-xs font-bold transition"><i class="fa-solid fa-play mr-1"></i> PLAY</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -321,7 +320,7 @@
                     <div class="space-y-4">
                         <div class="bg-indigo-950/20 p-2.5 rounded-lg border border-indigo-500/10 mb-2">
                             <p class="text-[11px] text-indigo-300 leading-normal">
-                                <i class="fa-solid fa-circle-info mr-1"></i> Ajuste estes controles para mover o texto de <strong>todas as 18 thumbnails</strong> ao mesmo tempo de forma rápida!
+                                <i class="fa-solid fa-circle-info mr-1"></i> Ajuste estes controles para mover o texto de <strong>todas as thumbnails</strong> ao mesmo tempo de forma rápida!
                             </p>
                         </div>
                         
@@ -686,10 +685,10 @@
             "fr": { text1: "100 SECRETS", text2: "QUE VOUS NE SAVIEZ PAS" },
             "id": { text1: "100 RAHASIA", text2: "YANG TIDAK KAMU KETAHUI" },
             "ar": { text1: "100 سر", text2: "لم تكن تعرفها" },
-            "hi": { text1: "100 रहस्य", text2: "जो você não sabia" },
+            "hi": { text1: "100 रहस्य", text2: "जो आप não جانتے थे" },
             "ru": { text1: "100 СЕКРЕТОВ", text2: "О КОТОРЫХ ВЫ НЕ ZНАЛИ" },
             "de": { text1: "100 GEHEIMNISSE", text2: "DIE DU NICHT WUSSTEST" },
-            "ja": { text1: "あなたが知らない", text2: "100の秘密" },
+            "ja": { text1: "あなたが知らない", text2: "100ของความลับ" },
             "it": { text1: "100 SEGRETI", text2: "CHE NON SAPEVI" },
             "ko": { text1: "당신이 몰랐던", text2: "100가지 비밀" },
             "th": { text1: "100 ความลับ", text2: "ที่คุณ không เคยรู้" },
@@ -698,7 +697,7 @@
             "pl": { text1: "100 SEKRETÓW", text2: "O KTÓRYCH NIE WIEDZIAŁEŚ" },
             "tw": { text1: "你不知道 of", text2: "100個秘密" },
             "se": { text1: "100 HEMLIGHETER", text2: "SOM DU INTE VISSTE" },
-            "nl": { text1: "100 GEHEIMEN", text2: "DIE JE NIE WUST" }
+            "nl": { text1: "100 GEHEIMEN", text2: "DIE JE NIET WUSST" }
         };
 
         // UI & Render State
@@ -723,6 +722,22 @@
         // Specific styling structures that can be adjusted PER country
         let styleData = {};
 
+        // Custom toast notification system
+        function showToast(message, type = 'info') {
+            const toast = document.createElement("div");
+            const bgColor = type === 'error' ? 'bg-rose-600' : type === 'success' ? 'bg-emerald-600' : 'bg-indigo-600';
+            const icon = type === 'error' ? 'fa-triangle-exclamation' : type === 'success' ? 'fa-circle-check' : 'fa-info-circle';
+            
+            toast.className = `fixed bottom-5 right-5 ${bgColor} text-white font-semibold text-xs px-5 py-3 rounded-xl shadow-2xl z-[200] border border-white/10 transition duration-500 animate-bounce flex items-center gap-2`;
+            toast.innerHTML = `<i class="fa-solid ${icon}"></i> ${message}`;
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.classList.add("opacity-0", "translate-y-2");
+                setTimeout(() => toast.remove(), 500);
+            }, 4000);
+        }
+
         // Cross-platform Flag Preloading pipeline (CORS supported)
         const flagImages = {};
         function preloadFlags() {
@@ -738,19 +753,19 @@
         }
 
         function initApp() {
-            // Apply default layout on start (Clean Black screen with custom text styles)
+            // 1. Apply default layout on start (Populates state memory buffer first)
             initDefaultLayout();
 
-            // Preload cross-platform flag assets (avoids race condition)
+            // 2. Preload cross-platform flag assets (avoids race condition)
             preloadFlags();
 
-            // Render active language selector chips
+            // 3. Render active language selector chips
             renderLanguagesSelectorGrid();
 
-            // Populate selector inside individual view
+            // 4. Populate selector inside individual view
             updateCountryEditorSelect();
 
-            // Initialize grid and event bindings
+            // 5. Initialize grid and event bindings
             renderGrid();
             loadCountryToEditor("us");
             setupInteractiveCanvasEvents();
@@ -837,7 +852,7 @@
                 if (lang.active) {
                     btn.className = "flex items-center gap-1.5 p-1.5 bg-indigo-600/10 border border-indigo-500/40 hover:border-indigo-400 text-slate-100 rounded text-[10px] font-bold truncate text-left justify-start transition duration-150 shadow-sm shadow-indigo-500/5";
                 } else {
-                    btn.className = "flex items-center gap-1.5 p-1.5 bg-slate-950/80 border border-slate-800 hover:border-slate-800 text-slate-500 rounded text-[10px] font-bold truncate text-left justify-start transition duration-150 opacity-60";
+                    btn.className = "flex items-center gap-1.5 p-1.5 bg-slate-950/80 border border-slate-900 hover:border-slate-800 text-slate-500 rounded text-[10px] font-bold truncate text-left justify-start transition duration-150 opacity-60";
                 }
                 
                 btn.innerHTML = `
@@ -878,12 +893,6 @@
                     }
                 }
                 
-                // Safeguard: If active list becomes empty while in editor view, force grid view tab
-                const activeCount = LANGUAGES.filter(l => l.active).length;
-                if (activeCount === 0 && activeTab === "editor") {
-                    switchTab("grid");
-                }
-                
                 requestRenderAll();
             }
         }
@@ -896,9 +905,6 @@
             
             if (!activeState) {
                 showToast("Por favor, ative pelo menos um idioma para visualizar ou exportar.", "info");
-                if (activeTab === "editor") {
-                    switchTab("grid");
-                }
             } else {
                 const firstActive = LANGUAGES.find(l => l.active);
                 if (firstActive) {
@@ -1909,6 +1915,7 @@ ${langCodes}.`;
 
         function syncCurrentLayoutToAll() {
             const sourceData = styleData[currentCountryId];
+            if (!sourceData) return;
             
             // Replicate settings across the whole stack
             LANGUAGES.forEach(lang => {
@@ -1965,7 +1972,7 @@ ${langCodes}.`;
             applyGlobalAlignment(sourceData.textAlignment);
             updateStyleTogglesUI();
 
-            showToast("Layout e estilos aplicados em todas as 16 thumbnails com sucesso!", "success");
+            showToast("Layout e estilos aplicados em todas as thumbnails com sucesso!", "success");
             requestRenderAll();
         }
 
@@ -1978,6 +1985,123 @@ ${langCodes}.`;
             } else {
                 globalFontScale2 = val;
                 document.getElementById("globalScale2Label").textContent = val.toFixed(2) + "x";
+            }
+            requestRenderAll();
+        }
+
+        // Handle uploaded image background template
+        function handleBgUpload(event) {
+            const file = event.target.files[0];
+            if (file) {
+                document.getElementById("bgFileName").textContent = file.name;
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = new Image();
+                    img.onload = function() {
+                        uploadedBgImage = img;
+                        requestRenderAll();
+                        showToast("Template de imagem carregado com sucesso!", "success");
+                    };
+                    img.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        // Real-time synchronization of original texts input to default languages
+        function handleManualTextInput() {
+            const val1 = document.getElementById("ptText1").value.toUpperCase();
+            const val2 = document.getElementById("ptText2").value.toUpperCase();
+            
+            // Mirror to all languages if they haven't run the AI translation yet
+            LANGUAGES.forEach(lang => {
+                if (!hasBeenTranslated) {
+                    styleData[lang.id].text1 = val1;
+                    styleData[lang.id].text2 = val2;
+                }
+            });
+
+            // Also reload current text values to active view
+            const activeData = styleData[currentCountryId];
+            if (activeData) {
+                document.getElementById("overrideText1").value = activeData.text1;
+                document.getElementById("overrideText2").value = activeData.text2;
+            }
+
+            requestRenderAll();
+        }
+
+        function applyOverride() {
+            const data = styleData[currentCountryId];
+            if (!data) return;
+            data.text1 = document.getElementById("overrideText1").value;
+            data.text2 = document.getElementById("overrideText2").value;
+            
+            const scale1 = parseFloat(document.getElementById("indScaleSlider1").value);
+            const scale2 = parseFloat(document.getElementById("indScaleSlider2").value);
+            data.fontScale1 = scale1;
+            data.fontScale2 = scale2;
+            document.getElementById("scaleLabel1").textContent = scale1.toFixed(2) + "x";
+            document.getElementById("scaleLabel2").textContent = scale2.toFixed(2) + "x";
+
+            renderIndividualEditorCanvas();
+        }
+
+        function resetIndividualAdjustments() {
+            const defaultLangScale = LANGUAGES.find(l => l.id === currentCountryId)?.fontScale || 1.0;
+            const data = styleData[currentCountryId];
+            if (!data) return;
+            
+            // Reset to default mirrored PT inputs or fallback translation
+            const val1 = document.getElementById("ptText1").value.toUpperCase();
+            const val2 = document.getElementById("ptText2").value.toUpperCase();
+
+            data.text1 = (hasBeenTranslated && fallbackTimeskipTranslations[currentCountryId]) ? fallbackTimeskipTranslations[currentCountryId].text1 : val1;
+            data.text2 = (hasBeenTranslated && fallbackTimeskipTranslations[currentCountryId]) ? fallbackTimeskipTranslations[currentCountryId].text2 : val2;
+            data.text1Pos = { x: 640, y: 220 };
+            data.text2Pos = { x: 640, y: 390 };
+            data.fontScale1 = defaultLangScale;
+            data.fontScale2 = defaultLangScale;
+            data.bold1 = true;
+            data.italic1 = false;
+            data.bold2 = true;
+            data.italic2 = false;
+
+            // Reset individual colors
+            data.t1Color = "#ffffff";
+            data.t1Stroke = "#000000";
+            data.t1StrokeWidth = 10;
+            data.t1StrokeOuter = "#ffffff";
+            data.t1StrokeOuterWidth = 0;
+            
+            data.t2Color = "#facc15";
+            data.t2Stroke = "#000000";
+            data.t2StrokeWidth = 10;
+            data.t2StrokeOuter = "#ffffff";
+            data.t2StrokeOuterWidth = 0;
+
+            document.getElementById("overrideText1").value = data.text1;
+            document.getElementById("overrideText2").value = data.text2;
+            
+            document.getElementById("indScaleSlider1").value = defaultLangScale;
+            document.getElementById("scaleLabel1").textContent = defaultLangScale.toFixed(2) + "x";
+            document.getElementById("indScaleSlider2").value = defaultLangScale;
+            document.getElementById("scaleLabel2").textContent = defaultLangScale.toFixed(2) + "x";
+
+            syncIndividualUIInputs();
+            updateStyleTogglesUI();
+            renderIndividualEditorCanvas();
+            showToast("Ajustes individuais restaurados para o padrão.", "info");
+        }
+
+        function selectBadge(type) {
+            selectedBadgeType = type;
+            document.querySelectorAll(".badge-opt").forEach(btn => {
+                btn.className = "badge-opt bg-slate-950 border border-slate-800 text-slate-400 hover:text-white py-1.5 px-2 rounded-lg text-xs font-bold transition";
+            });
+            const badgeBtn = document.getElementById(`badge_${type}`);
+            if (badgeBtn) {
+                badgeBtn.className = "badge-opt bg-indigo-500/10 border border-indigo-500 text-indigo-400 py-1.5 px-2 rounded-lg text-xs font-bold transition";
             }
             requestRenderAll();
         }
