@@ -59,8 +59,7 @@
             <div class="flex items-center gap-1.5">
                 <span class="text-[10px] uppercase font-bold text-slate-500">Modelo:</span>
                 <select id="apiModelSelect" class="bg-slate-950/80 text-xs border border-slate-800 rounded-lg px-2 py-2 text-indigo-300 font-semibold focus:outline-none focus:ring-2 focus:ring-indigo-500">
-                    <option value="gemini-1.5-flash" selected>Gemini 1.5 Flash (Recomendado)</option>
-                    <option value="gemini-2.5-flash">Gemini 2.5 Flash</option>
+                    <option value="gemini-2.5-flash" selected>Gemini 2.5 Flash</option>
                     <option value="gemini-1.5-pro">Gemini 1.5 Pro</option>
                 </select>
             </div>
@@ -158,7 +157,7 @@
                         <div>
                             <label class="block text-xs text-slate-400 font-semibold mb-1">Carregar Fundo Personalizado</label>
                             <div class="flex items-center justify-center w-full">
-                                <label class="flex flex-col items-center justify-center w-full h-28 border-2 border-slate-800 border-dashed rounded-lg cursor-pointer bg-slate-900 hover:bg-slate-800/50 hover:border-indigo-500/50 transition">
+                                <label class="flex flex-col items-center justify-center w-full h-28 border-2 border-slate-800 border-dashed rounded-lg cursor-pointer bg-slate-900 hover:bg-slate-850 hover:border-indigo-500/50 transition">
                                     <div class="flex flex-col items-center justify-center pt-3 pb-4 px-2 text-center">
                                         <i class="fa-solid fa-images text-xl text-indigo-400 mb-1.5 animate-pulse"></i>
                                         <p class="text-[10px] text-slate-300 font-bold">Enviar Imagem de Template</p>
@@ -1313,19 +1312,19 @@
                 if (data.t1GradientType === '3colors' && fillCol2 && fillCol3) {
                     const topY = posY - (t1Size * scaleFactor) / 2;
                     const bottomY = posY + (t1Size * scaleFactor) / 2;
-                    const grad = ctx.createLinearGradient(0, topY, 0, bottomY);
+                    const MathGrad = ctx.createLinearGradient(0, topY, 0, bottomY);
                     const midStopOffset = (data.t1MidStop !== undefined ? data.t1MidStop : 80) / 100;
-                    grad.addColorStop(0, fillCol1);
-                    grad.addColorStop(midStopOffset, fillCol2);
-                    grad.addColorStop(1, fillCol3);
-                    ctx.fillStyle = grad;
+                    MathGrad.addColorStop(0, fillCol1);
+                    MathGrad.addColorStop(midStopOffset, fillCol2);
+                    MathGrad.addColorStop(1, fillCol3);
+                    ctx.fillStyle = MathGrad;
                 } else if (data.t1GradientType === '2colors' && fillCol2) {
                     const topY = posY - (t1Size * scaleFactor) / 2;
                     const bottomY = posY + (t1Size * scaleFactor) / 2;
-                    const grad = ctx.createLinearGradient(0, topY, 0, bottomY);
-                    grad.addColorStop(0, fillCol1);
-                    grad.addColorStop(1, fillCol2);
-                    ctx.fillStyle = grad;
+                    const MathGrad = ctx.createLinearGradient(0, topY, 0, bottomY);
+                    MathGrad.addColorStop(0, fillCol1);
+                    MathGrad.addColorStop(1, fillCol2);
+                    ctx.fillStyle = MathGrad;
                 } else {
                     ctx.fillStyle = fillCol1;
                 }
@@ -1383,19 +1382,19 @@
                 if (data.t2GradientType === '3colors' && fillCol2 && fillCol3) {
                     const topY = posY - (t2Size * scaleFactor) / 2;
                     const bottomY = posY + (t2Size * scaleFactor) / 2;
-                    const grad = ctx.createLinearGradient(0, topY, 0, bottomY);
+                    const MathGrad = ctx.createLinearGradient(0, topY, 0, bottomY);
                     const midStopOffset = (data.t2MidStop !== undefined ? data.t2MidStop : 80) / 100;
-                    grad.addColorStop(0, fillCol1);
-                    grad.addColorStop(midStopOffset, fillCol2);
-                    grad.addColorStop(1, fillCol3);
-                    ctx.fillStyle = grad;
+                    MathGrad.addColorStop(0, fillCol1);
+                    MathGrad.addColorStop(midStopOffset, fillCol2);
+                    MathGrad.addColorStop(1, fillCol3);
+                    ctx.fillStyle = MathGrad;
                 } else if (data.t2GradientType === '2colors' && fillCol2) {
                     const topY = posY - (t2Size * scaleFactor) / 2;
                     const bottomY = posY + (t2Size * scaleFactor) / 2;
-                    const grad = ctx.createLinearGradient(0, topY, 0, bottomY);
-                    grad.addColorStop(0, fillCol1);
-                    grad.addColorStop(1, fillCol2);
-                    ctx.fillStyle = grad;
+                    const MathGrad = ctx.createLinearGradient(0, topY, 0, bottomY);
+                    MathGrad.addColorStop(0, fillCol1);
+                    MathGrad.addColorStop(1, fillCol2);
+                    ctx.fillStyle = MathGrad;
                 } else {
                     ctx.fillStyle = fillCol1;
                 }
@@ -1464,21 +1463,21 @@
             const gridContainer = document.getElementById("gridContainer");
             if (!gridContainer) return;
             gridContainer.innerHTML = "";
-        // AI Integration to perform cultural translation and copy localization
-        async function translateAllWithAI() {
-            const envApiKey = ""; // Mandated by Gemini API guidelines
-            let apiKey = document.getElementById("apiKeyInput").value.trim() || envApiKey;
-            const ptText1 = document.getElementById("ptText1").value.trim();
-            const ptText2 = document.getElementById("ptText2").value.trim();
-            const selectedModel = document.getElementById("apiModelSelect").value;
-            
-            const aiInstructions = document.getElementById("aiInstructions") ? document.getElementById("aiInstructions").value.trim() : "";
 
-            // Only fetch currently active checked languages
             const activeLanguages = LANGUAGES.filter(l => l.active);
 
             if (activeLanguages.length === 0) {
-                showToast("Por favor, ative pelo menos um idioma no Passo 1.5 para poder traduzir.", "error");
+                gridContainer.innerHTML = `
+                    <div class="col-span-full py-16 text-center bg-slate-900 border border-slate-800/80 rounded-2xl flex flex-col items-center justify-center gap-4">
+                        <div class="bg-indigo-500/10 p-4 rounded-full text-indigo-400">
+                            <i class="fa-solid fa-earth-americas text-4xl animate-spin"></i>
+                        </div>
+                        <div class="space-y-1">
+                            <h4 class="font-bold text-sm text-slate-200">Nenhum Idioma Selecionado</h4>
+                            <p class="text-xs text-slate-500 max-w-sm mx-auto">Ative os países desejados no Passo 1.5 para poder renderizar as thumbnails.</p>
+                        </div>
+                    </div>
+                `;
                 return;
             }
 
@@ -1590,6 +1589,7 @@
                 };
             }
 
+            // Checks whether mouse coordinate is geometrically inside a text bounding box
             function isInsideBox(pos, box) {
                 if (!box) return false;
                 return (pos.x >= box.x && pos.x <= box.x + box.width &&
@@ -1694,16 +1694,21 @@
             window.addEventListener("touchend", handleMouseUp);
         }
 
+        // AI Integration to perform cultural translation and copy localization
         async function translateAllWithAI() {
-            const envApiKey = ""; 
+            const envApiKey = ""; // Mandated by Gemini API guidelines
             let apiKey = document.getElementById("apiKeyInput").value.trim() || envApiKey;
             const ptText1 = document.getElementById("ptText1").value.trim();
             const ptText2 = document.getElementById("ptText2").value.trim();
             const selectedModel = document.getElementById("apiModelSelect").value;
+            
+            const aiInstructions = document.getElementById("aiInstructions") ? document.getElementById("aiInstructions").value.trim() : "";
+
+            // Only fetch currently active checked languages
             const activeLanguages = LANGUAGES.filter(l => l.active);
 
             if (activeLanguages.length === 0) {
-                showToast("Por favor, ative pelo menos um idioma no Passo 1.5.", "error");
+                showToast("Por favor, ative pelo menos um idioma no Passo 1.5 para poder traduzir.", "error");
                 return;
             }
 
@@ -1773,7 +1778,6 @@ ${langCodes}.`;
                     userQuery += `\n\nCRITICAL CONTEXT / TERMINOLOGY INSTRUCTIONS PROVIDED BY USER:\n"${aiInstructions}"\n\nPlease strictly respect and follow these instructions when translating and splitting!`;
                 }
 
-                // Exponential backoff runner using the chosen stable model
                 const makeApiCall = async (retryCount = 0) => {
                     const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${selectedModel}:generateContent?key=${apiKey}`;
                     const response = await fetch(apiUrl, {
@@ -2280,6 +2284,133 @@ ${langCodes}.`;
             } else {
                 globalFontScale2 = val;
                 document.getElementById("globalScale2Label").textContent = val.toFixed(2) + "x";
+            }
+            requestRenderAll();
+        }
+
+        function handleBgUpload(event) {
+            const file = event.target.files[0];
+            if (file) {
+                document.getElementById("bgFileName").textContent = file.name;
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = new Image();
+                    img.onload = function() {
+                        uploadedBgImage = img;
+                        requestRenderAll();
+                        showToast("Fundo importado com sucesso!", "success");
+                    };
+                    img.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function handleManualTextInput() {
+            const val1 = document.getElementById("ptText1").value.toUpperCase();
+            const val2 = document.getElementById("ptText2").value.toUpperCase();
+            
+            LANGUAGES.forEach(lang => {
+                if (!hasBeenTranslated) {
+                    styleData[lang.id].text1 = val1;
+                    styleData[lang.id].text2 = val2;
+                }
+            });
+
+            const activeData = styleData[currentCountryId];
+            if (activeData) {
+                document.getElementById("overrideText1").value = activeData.text1;
+                document.getElementById("overrideText2").value = activeData.text2;
+            }
+
+            requestRenderAll();
+        }
+
+        function applyOverride() {
+            const data = styleData[currentCountryId];
+            if (!data) return;
+            data.text1 = document.getElementById("overrideText1").value;
+            data.text2 = document.getElementById("overrideText2").value;
+            
+            const scale1 = parseFloat(document.getElementById("indScaleSlider1").value);
+            const scale2 = parseFloat(document.getElementById("indScaleSlider2").value);
+            data.fontScale1 = scale1;
+            data.fontScale2 = scale2;
+            document.getElementById("scaleLabel1").textContent = scale1.toFixed(2) + "x";
+            document.getElementById("scaleLabel2").textContent = scale2.toFixed(2) + "x";
+
+            renderIndividualEditorCanvas();
+        }
+
+        function resetIndividualAdjustments() {
+            const defaultLangScale = LANGUAGES.find(l => l.id === currentCountryId)?.fontScale || 1.0;
+            const data = styleData[currentCountryId];
+            if (!data) return;
+            
+            const val1 = document.getElementById("ptText1").value.toUpperCase();
+            const val2 = document.getElementById("ptText2").value.toUpperCase();
+
+            data.text1 = (hasBeenTranslated && fallbackTimeskipTranslations[currentCountryId]) ? fallbackTimeskipTranslations[currentCountryId].text1 : val1;
+            data.text2 = (hasBeenTranslated && fallbackTimeskipTranslations[currentCountryId]) ? fallbackTimeskipTranslations[currentCountryId].text2 : val2;
+            data.text1Pos = { x: 640, y: 220 };
+            data.text2Pos = { x: 640, y: 390 };
+            data.fontScale1 = defaultLangScale;
+            data.fontScale2 = defaultLangScale;
+            data.bold1 = true;
+            data.italic1 = false;
+            data.bold2 = true;
+            data.italic2 = false;
+
+            data.t1Color = "#ffffff";
+            data.t1GradientType = "solid";
+            data.t1Color2 = "#94a3b8";
+            data.t1Color3 = "#475569";
+            data.t1MidStop = 80;
+            data.t1Stroke = "#000000";
+            data.t1StrokeWidth = 10;
+            data.t1StrokeOuter = "#ffffff";
+            data.t1StrokeOuterWidth = 0;
+            data.t1ShadowColor = "#000000";
+            data.t1ShadowBlur = 15;
+            data.t1ShadowX = 8;
+            data.t1ShadowY = 8;
+            
+            data.t2Color = "#facc15";
+            data.t2GradientType = "solid";
+            data.t2Color2 = "#ebac28";
+            data.t2Color3 = "#ea580c";
+            data.t2MidStop = 80;
+            data.t2Stroke = "#000000";
+            data.t2StrokeWidth = 10;
+            data.t2StrokeOuter = "#ffffff";
+            data.t2StrokeOuterWidth = 0;
+            data.t2ShadowColor = "#000000";
+            data.t2ShadowBlur = 15;
+            data.t2ShadowX = 10;
+            data.t2ShadowY = 10;
+
+            document.getElementById("overrideText1").value = data.text1;
+            document.getElementById("overrideText2").value = data.text2;
+            
+            document.getElementById("indScaleSlider1").value = defaultLangScale;
+            document.getElementById("scaleLabel1").textContent = defaultLangScale.toFixed(2) + "x";
+            document.getElementById("indScaleSlider2").value = defaultLangScale;
+            document.getElementById("scaleLabel2").textContent = defaultLangScale.toFixed(2) + "x";
+
+            syncUIStates();
+            updateStyleTogglesUI();
+            renderIndividualEditorCanvas();
+            showToast("Ajustes individuais restaurados para o padrão.", "info");
+        }
+
+        function selectBadge(type) {
+            selectedBadgeType = type;
+            document.querySelectorAll(".badge-opt").forEach(btn => {
+                btn.className = "badge-opt bg-slate-950 border border-slate-800 text-slate-400 hover:text-white py-1.5 px-2 rounded-lg text-xs font-bold transition";
+            });
+            const badgeBtn = document.getElementById(`badge_${type}`);
+            if (badgeBtn) {
+                badgeBtn.className = "badge-opt bg-indigo-500/10 border border-indigo-500 text-indigo-400 py-1.5 px-2 rounded-lg text-xs font-bold transition";
             }
             requestRenderAll();
         }
