@@ -107,7 +107,11 @@
                             <input type="text" id="ptText2" value="QUE VOCÊ NÃO SABIA" oninput="handleManualTextInput()" 
                                 class="w-full bg-slate-900 border border-slate-800 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-indigo-500 text-white font-bold">
                         </div>
-                        
+                        <div>
+                            <label class="block text-xs text-slate-400 font-semibold mb-1">Instruções Extras para a IA (Opcional)</label>
+                            <textarea id="aiInstructions" placeholder="Ex: É sobre o anime One Piece; manter termos originais; tom dramático..." 
+                                class="w-full bg-slate-900 border border-slate-800 rounded-lg px-3 py-2 text-xs focus:outline-none focus:ring-1 focus:ring-indigo-500 text-slate-300 h-16 resize-none placeholder:text-slate-600 font-medium"></textarea>
+                        </div>
                         <div class="pt-2">
                             <button onclick="translateAllWithAI()" id="btnTranslate" 
                                 class="w-full bg-gradient-to-r from-indigo-500 to-violet-600 hover:from-indigo-600 hover:to-violet-700 text-white text-xs font-bold py-2.5 px-4 rounded-lg shadow-lg shadow-indigo-500/20 transition-all flex items-center justify-center gap-2">
@@ -209,7 +213,7 @@
                                 <select id="t1GradientType" onchange="updateGlobalStyle('t1GradientType', this.value)" class="w-full bg-slate-900 border border-slate-800 rounded px-2 py-1 text-xs text-indigo-300 focus:outline-none">
                                     <option value="solid" selected>Cor Sólida Única</option>
                                     <option value="2colors">Gradiente Simples (2 Cores)</option>
-                                    <option value="3colors">Gradiente MrBeast Premium (3 Cores)</option>
+                                    <option value="3colors">Gradiente 3 Cores</option>
                                 </select>
                             </div>
 
@@ -316,7 +320,7 @@
                                 <select id="t2GradientType" onchange="updateGlobalStyle('t2GradientType', this.value)" class="w-full bg-slate-900 border border-slate-800 rounded px-2 py-1 text-xs text-indigo-300 focus:outline-none">
                                     <option value="solid" selected>Cor Sólida Única</option>
                                     <option value="2colors">Gradiente Simples (2 Cores)</option>
-                                    <option value="3colors">Gradiente MrBeast Premium (3 Cores)</option>
+                                    <option value="3colors">Gradiente 3 Cores</option>
                                 </select>
                             </div>
 
@@ -615,7 +619,7 @@
                                     <select id="indT1GradientType" onchange="updateIndividualStyle('t1GradientType', this.value); syncIndividualUIInputs()" class="w-full bg-slate-950 border border-slate-800 rounded px-2 py-1 text-xs text-indigo-300 focus:outline-none">
                                         <option value="solid">Cor Sólida Única</option>
                                         <option value="2colors">Gradiente Simples (2 Cores)</option>
-                                        <option value="3colors">Gradiente MrBeast Premium (3 Cores)</option>
+                                        <option value="3colors">Gradiente 3 Cores</option>
                                     </select>
                                 </div>
 
@@ -686,7 +690,7 @@
                                     <select id="indT2GradientType" onchange="updateIndividualStyle('t2GradientType', this.value); syncIndividualUIInputs()" class="w-full bg-slate-950 border border-slate-800 rounded px-2 py-1 text-xs text-indigo-300 focus:outline-none">
                                         <option value="solid">Cor Sólida Única</option>
                                         <option value="2colors">Gradiente Simples (2 Cores)</option>
-                                        <option value="3colors">Gradiente MrBeast Premium (3 Cores)</option>
+                                        <option value="3colors">Gradiente 3 Cores</option>
                                     </select>
                                 </div>
 
@@ -870,21 +874,20 @@
             "fr": { text1: "100 SECRETS", text2: "QUE VOUS NE SAVIEZ PAS" },
             "id": { text1: "100 RAHASIA", text2: "YANG TIDAK KAMU KETAHUI" },
             "ar": { text1: "100 سر", text2: "لم تكن تعرفها" },
-            "hi": { text1: "100 रहस्य", text2: "जो você não sabia" },
-            "ru": { text1: "100 СЕKРЕТОВ", text2: "О КОТОРЫХ ВЫ НЕ ZНАЛИ" },
+            "hi": { text1: "100 रहस्य", text2: "जो आप नहीं जानते थे" },
+            "ru": { text1: "100 СЕКРЕТОВ", text2: "О КОТОРЫХ ВЫ НЕ ЗНАЛИ" },
             "de": { text1: "100 GEHEIMNISSE", text2: "DIE DU NICHT WUSSTEST" },
-            "ja": { text1: "あなたが知らない", text2: "100ของความลับ" },
+            "ja": { text1: "あなたが知らない", text2: "100の秘密" },
             "it": { text1: "100 SEGRETI", text2: "CHE NON SAPEVI" },
             "ko": { text1: "당신이 몰랐던", text2: "100가지 비밀" },
-            "th": { text1: "100 ความลับ", text2: "ที่คุณ không เคยรู้" },
+            "th": { text1: "100 ความลับ", text2: "ที่คุณไม่เคยรู้" },
             "vn": { text1: "100 BÍ MẬT", text2: "MÀ BẠN KHÔNG BIẾT" },
             "tr": { text1: "BİLMEDİĞİNİZ", text2: "100 SIR" },
             "pl": { text1: "100 SEKRETÓW", text2: "O KTÓRYCH NIE WIEDZIAŁEŚ" },
-            "tw": { text1: "释放 100", text2: "你不知道的秘密" },
+            "tw": { text1: "你不知道的", text2: "100個秘密" },
             "se": { text1: "100 HEMLIGHETER", text2: "SOM DU INTE VISSTE" },
-            "nl": { text1: "100 GEHEIMEN", text2: "DIE JE NIET WUSST" }
+            "nl": { text1: "100 GEHEIMEN", text2: "DIE JE NIET WIST" }
         };
-
         // Estado do Editor
         let activeTab = "grid"; 
         let currentCountryId = "us"; 
@@ -1458,21 +1461,21 @@
             const gridContainer = document.getElementById("gridContainer");
             if (!gridContainer) return;
             gridContainer.innerHTML = "";
+        // AI Integration to perform cultural translation and copy localization
+        async function translateAllWithAI() {
+            const envApiKey = ""; // Mandated by Gemini API guidelines
+            let apiKey = document.getElementById("apiKeyInput").value.trim() || envApiKey;
+            const ptText1 = document.getElementById("ptText1").value.trim();
+            const ptText2 = document.getElementById("ptText2").value.trim();
+            const selectedModel = document.getElementById("apiModelSelect").value;
+            
+            const aiInstructions = document.getElementById("aiInstructions") ? document.getElementById("aiInstructions").value.trim() : "";
 
+            // Only fetch currently active checked languages
             const activeLanguages = LANGUAGES.filter(l => l.active);
 
             if (activeLanguages.length === 0) {
-                gridContainer.innerHTML = `
-                    <div class="col-span-full py-16 text-center bg-slate-900 border border-slate-800/80 rounded-2xl flex flex-col items-center justify-center gap-4">
-                        <div class="bg-indigo-500/10 p-4 rounded-full text-indigo-400">
-                            <i class="fa-solid fa-earth-americas text-4xl animate-spin"></i>
-                        </div>
-                        <div class="space-y-1">
-                            <h4 class="font-bold text-sm text-slate-200">Nenhum Idioma Selecionado</h4>
-                            <p class="text-xs text-slate-500 max-w-sm mx-auto">Ative os países desejados no Passo 1.5 para poder renderizar as thumbnails.</p>
-                        </div>
-                    </div>
-                `;
+                showToast("Por favor, ative pelo menos um idioma no Passo 1.5 para poder traduzir.", "error");
                 return;
             }
 
@@ -1756,13 +1759,18 @@ CRITICAL CONTEXT RULES:
 8. Output strict JSON with schema matching exactly the specified structure below. No explanation, markdown ticks, or other text outside the JSON.`;
 
                 const langCodes = activeLanguages.map(l => l.code).join(", ");
-                const userQuery = `Original Portuguese texts:
+                let userQuery = `Original Portuguese texts:
 Line 1: "${ptText1}"
 Line 2: "${ptText2}"
 
 Generate localized translations for these exact language codes:
 ${langCodes}.`;
 
+                if (aiInstructions) {
+                    userQuery += `\n\nCRITICAL CONTEXT / TERMINOLOGY INSTRUCTIONS PROVIDED BY USER:\n"${aiInstructions}"\n\nPlease strictly respect and follow these instructions when translating and splitting!`;
+                }
+
+                // Exponential backoff runner using the chosen stable model
                 const makeApiCall = async (retryCount = 0) => {
                     const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${selectedModel}:generateContent?key=${apiKey}`;
                     const response = await fetch(apiUrl, {
