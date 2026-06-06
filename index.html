@@ -107,11 +107,13 @@
                             <input type="text" id="ptText2" value="QUE VOCÊ NÃO SABIA" oninput="handleManualTextInput()" 
                                 class="w-full bg-slate-900 border border-slate-800 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-indigo-500 text-white font-bold">
                         </div>
+                        
                         <div>
                             <label class="block text-xs text-slate-400 font-semibold mb-1">Instruções Extras para a IA (Opcional)</label>
                             <textarea id="aiInstructions" placeholder="Ex: É sobre o anime One Piece; manter termos originais; tom dramático..." 
                                 class="w-full bg-slate-900 border border-slate-800 rounded-lg px-3 py-2 text-xs focus:outline-none focus:ring-1 focus:ring-indigo-500 text-slate-300 h-16 resize-none placeholder:text-slate-600 font-medium"></textarea>
                         </div>
+                        
                         <div class="pt-2">
                             <button onclick="translateAllWithAI()" id="btnTranslate" 
                                 class="w-full bg-gradient-to-r from-indigo-500 to-violet-600 hover:from-indigo-600 hover:to-violet-700 text-white text-xs font-bold py-2.5 px-4 rounded-lg shadow-lg shadow-indigo-500/20 transition-all flex items-center justify-center gap-2">
@@ -213,7 +215,7 @@
                                 <select id="t1GradientType" onchange="updateGlobalStyle('t1GradientType', this.value)" class="w-full bg-slate-900 border border-slate-800 rounded px-2 py-1 text-xs text-indigo-300 focus:outline-none">
                                     <option value="solid" selected>Cor Sólida Única</option>
                                     <option value="2colors">Gradiente Simples (2 Cores)</option>
-                                    <option value="3colors">Gradiente 3 Cores</option>
+                                    <option value="3colors">Gradiente 3 cores</option>
                                 </select>
                             </div>
 
@@ -320,7 +322,7 @@
                                 <select id="t2GradientType" onchange="updateGlobalStyle('t2GradientType', this.value)" class="w-full bg-slate-900 border border-slate-800 rounded px-2 py-1 text-xs text-indigo-300 focus:outline-none">
                                     <option value="solid" selected>Cor Sólida Única</option>
                                     <option value="2colors">Gradiente Simples (2 Cores)</option>
-                                    <option value="3colors">Gradiente 3 Cores</option>
+                                    <option value="3colors">Gradiente 3 cores</option>
                                 </select>
                             </div>
 
@@ -619,7 +621,7 @@
                                     <select id="indT1GradientType" onchange="updateIndividualStyle('t1GradientType', this.value); syncIndividualUIInputs()" class="w-full bg-slate-950 border border-slate-800 rounded px-2 py-1 text-xs text-indigo-300 focus:outline-none">
                                         <option value="solid">Cor Sólida Única</option>
                                         <option value="2colors">Gradiente Simples (2 Cores)</option>
-                                        <option value="3colors">Gradiente 3 Cores</option>
+                                        <option value="3colors">Gradiente 3 cores</option>
                                     </select>
                                 </div>
 
@@ -690,7 +692,7 @@
                                     <select id="indT2GradientType" onchange="updateIndividualStyle('t2GradientType', this.value); syncIndividualUIInputs()" class="w-full bg-slate-950 border border-slate-800 rounded px-2 py-1 text-xs text-indigo-300 focus:outline-none">
                                         <option value="solid">Cor Sólida Única</option>
                                         <option value="2colors">Gradiente Simples (2 Cores)</option>
-                                        <option value="3colors">Gradiente 3 Cores</option>
+                                        <option value="3colors">Gradiente 3 cores</option>
                                     </select>
                                 </div>
 
@@ -888,6 +890,7 @@
             "se": { text1: "100 HEMLIGHETER", text2: "SOM DU INTE VISSTE" },
             "nl": { text1: "100 GEHEIMEN", text2: "DIE JE NIET WIST" }
         };
+
         // Estado do Editor
         let activeTab = "grid"; 
         let currentCountryId = "us"; 
