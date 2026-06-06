@@ -207,9 +207,9 @@
                             <div>
                                 <label class="block text-[10px] text-slate-500 mb-1">Estilo do Preenchimento</label>
                                 <select id="t1GradientType" onchange="updateGlobalStyle('t1GradientType', this.value)" class="w-full bg-slate-900 border border-slate-800 rounded px-2 py-1 text-xs text-indigo-300 focus:outline-none">
-                                    <option value="solid">Cor Sólida Única</option>
+                                    <option value="solid" selected>Cor Sólida Única</option>
                                     <option value="2colors">Gradiente Simples (2 Cores)</option>
-                                    <option value="3colors">Gradiente 3 Cores</option>
+                                    <option value="3colors">Gradiente MrBeast Premium (3 Cores)</option>
                                 </select>
                             </div>
 
@@ -249,7 +249,7 @@
                                 </div>
                             </div>
 
-                            <!-- Borda Externa Adicional (Fazer a Borda Branca) -->
+                            <!-- Borda Externa Adicional -->
                             <div class="grid grid-cols-3 gap-2">
                                 <div class="col-span-2">
                                     <label class="block text-[10px] text-slate-500 mb-0.5">Borda Externa (Contorno)</label>
@@ -314,9 +314,9 @@
                             <div>
                                 <label class="block text-[10px] text-slate-500 mb-1">Estilo do Preenchimento</label>
                                 <select id="t2GradientType" onchange="updateGlobalStyle('t2GradientType', this.value)" class="w-full bg-slate-900 border border-slate-800 rounded px-2 py-1 text-xs text-indigo-300 focus:outline-none">
-                                    <option value="solid">Cor Sólida Única</option>
+                                    <option value="solid" selected>Cor Sólida Única</option>
                                     <option value="2colors">Gradiente Simples (2 Cores)</option>
-                                    <option value="3colors" selected>Gradiente 3 Cores</option>
+                                    <option value="3colors">Gradiente MrBeast Premium (3 Cores)</option>
                                 </select>
                             </div>
 
@@ -324,7 +324,7 @@
                             <div class="grid grid-cols-3 gap-2">
                                 <div>
                                     <label class="block text-[10px] text-slate-500 mb-0.5" id="t2ColorLabel">Cor 1 (Topo)</label>
-                                    <input type="color" id="t2Color" value="#ffffd3" onchange="updateGlobalStyle('t2Color', this.value)" class="w-full h-7 bg-transparent cursor-pointer border border-slate-800 rounded">
+                                    <input type="color" id="t2Color" value="#facc15" onchange="updateGlobalStyle('t2Color', this.value)" class="w-full h-7 bg-transparent cursor-pointer border border-slate-800 rounded">
                                 </div>
                                 <div id="t2Color2Container">
                                     <label class="block text-[10px] text-slate-500 mb-0.5">Cor 2 (Meio)</label>
@@ -413,15 +413,6 @@
                             </div>
                         </div>
 
-                        <!-- Selos e Adesivos -->
-                        <div class="border-t border-slate-800/50 pt-3">
-                            <label class="block text-xs text-slate-400 font-semibold mb-1.5">Selo/Adesivo de Destaque</label>
-                            <div class="grid grid-cols-3 gap-2">
-                                <button onclick="selectBadge('none')" id="badge_none" class="badge-opt bg-indigo-500/10 border border-indigo-500 text-indigo-400 py-1.5 px-2 rounded-lg text-xs font-bold transition">Nenhum</button>
-                                <button onclick="selectBadge('new')" id="badge_new" class="badge-opt bg-slate-950 border border-slate-800 text-slate-400 hover:text-white py-1.5 px-2 rounded-lg text-xs font-bold transition">NEW!</button>
-                                <button onclick="selectBadge('play')" id="badge_play" class="badge-opt bg-slate-950 border border-slate-800 text-slate-400 hover:text-white py-1.5 px-2 rounded-lg text-xs font-bold transition"><i class="fa-solid fa-play mr-1"></i> PLAY</button>
-                            </div>
-                        </div>
                     </div>
                 </div>
 
@@ -624,7 +615,7 @@
                                     <select id="indT1GradientType" onchange="updateIndividualStyle('t1GradientType', this.value); syncIndividualUIInputs()" class="w-full bg-slate-950 border border-slate-800 rounded px-2 py-1 text-xs text-indigo-300 focus:outline-none">
                                         <option value="solid">Cor Sólida Única</option>
                                         <option value="2colors">Gradiente Simples (2 Cores)</option>
-                                        <option value="3colors">Gradiente 3 Cores</option>
+                                        <option value="3colors">Gradiente MrBeast Premium (3 Cores)</option>
                                     </select>
                                 </div>
 
@@ -695,7 +686,7 @@
                                     <select id="indT2GradientType" onchange="updateIndividualStyle('t2GradientType', this.value); syncIndividualUIInputs()" class="w-full bg-slate-950 border border-slate-800 rounded px-2 py-1 text-xs text-indigo-300 focus:outline-none">
                                         <option value="solid">Cor Sólida Única</option>
                                         <option value="2colors">Gradiente Simples (2 Cores)</option>
-                                        <option value="3colors">Gradiente 3 Cores</option>
+                                        <option value="3colors">Gradiente MrBeast Premium (3 Cores)</option>
                                     </select>
                                 </div>
 
@@ -874,24 +865,24 @@
         };
 
         const fallbackTimeskipTranslations = {
-"us": { text1: "100 SECRETS", text2: "THAT YOU DIDN'T KNOW" },
-    "es": { text1: "100 SECRETOS", text2: "QUE NO SABÍAS" },
-    "fr": { text1: "100 SECRETS", text2: "QUE VOUS NE SAVIEZ PAS" },
-    "id": { text1: "100 RAHASIA", text2: "YANG TIDAK KAMU KETAHUI" },
-    "ar": { text1: "100 سر", text2: "لم تكن تعرفها" },
-    "hi": { text1: "100 रहस्य", text2: "जो आप नहीं जानते थे" },
-    "ru": { text1: "100 СЕКРЕТОВ", text2: "О КОТОРЫХ ВЫ НЕ ЗНАЛИ" },
-    "de": { text1: "100 GEHEIMNISSE", text2: "DIE DU NICHT WUSSTEST" },
-    "ja": { text1: "あなたが知らない", text2: "100の秘密" },
-    "it": { text1: "100 SEGRETI", text2: "CHE NON SAPEVI" },
-    "ko": { text1: "당신이 몰랐던", text2: "100가지 비밀" },
-    "th": { text1: "100 ความลับ", text2: "ที่คุณไม่เคยรู้" },
-    "vn": { text1: "100 BÍ MẬT", text2: "MÀ BẠN KHÔNG BIẾT" },
-    "tr": { text1: "BİLMEDİĞİNİZ", text2: "100 SIR" },
-    "pl": { text1: "100 SEKRETÓW", text2: "O KTÓRYCH NIE WIEDZIAŁEŚ" },
-    "tw": { text1: "你不知道的", text2: "100個秘密" },
-    "se": { text1: "100 HEMLIGHETER", text2: "SOM DU INTE VISSTE" },
-    "nl": { text1: "100 GEHEIMEN", text2: "DIE JE NIET WIST" }
+            "us": { text1: "100 SECRETS", text2: "THAT YOU DIDN'T KNOW" },
+            "es": { text1: "100 SECRETOS", text2: "QUE NO SABÍAS" },
+            "fr": { text1: "100 SECRETS", text2: "QUE VOUS NE SAVIEZ PAS" },
+            "id": { text1: "100 RAHASIA", text2: "YANG TIDAK KAMU KETAHUI" },
+            "ar": { text1: "100 سر", text2: "لم تكن تعرفها" },
+            "hi": { text1: "100 रहस्य", text2: "जो você não sabia" },
+            "ru": { text1: "100 СЕKРЕТОВ", text2: "О КОТОРЫХ ВЫ НЕ ZНАЛИ" },
+            "de": { text1: "100 GEHEIMNISSE", text2: "DIE DU NICHT WUSSTEST" },
+            "ja": { text1: "あなたが知らない", text2: "100ของความลับ" },
+            "it": { text1: "100 SEGRETI", text2: "CHE NON SAPEVI" },
+            "ko": { text1: "당신이 몰랐던", text2: "100가지 비밀" },
+            "th": { text1: "100 ความลับ", text2: "ที่คุณ không เคยรู้" },
+            "vn": { text1: "100 BÍ MẬT", text2: "MÀ BẠN KHÔNG BIẾT" },
+            "tr": { text1: "BİLMEDİĞİNİZ", text2: "100 SIR" },
+            "pl": { text1: "100 SEKRETÓW", text2: "O KTÓRYCH NIE WIEDZIAŁEŚ" },
+            "tw": { text1: "你不知道 of", text2: "100個秘密" },
+            "se": { text1: "100 HEMLIGHETER", text2: "SOM DU INTE VISSTE" },
+            "nl": { text1: "100 GEHEIMEN", text2: "DIE JE NIET WUSST" }
         };
 
         // Estado do Editor
@@ -914,26 +905,12 @@
         // Estrutura dinâmica de estilos e efeitos
         let styleData = {};
 
-        function showToast(message, type = 'info') {
-            const toast = document.createElement("div");
-            const bgColor = type === 'error' ? 'bg-rose-600' : type === 'success' ? 'bg-emerald-600' : 'bg-indigo-600';
-            const icon = type === 'error' ? 'fa-triangle-exclamation' : type === 'success' ? 'fa-circle-check' : 'fa-info-circle';
-            
-            toast.className = `fixed bottom-5 right-5 ${bgColor} text-white font-semibold text-xs px-5 py-3 rounded-xl shadow-2xl z-[200] border border-white/10 transition duration-500 animate-bounce flex items-center gap-2`;
-            toast.innerHTML = `<i class="fa-solid ${icon}"></i> ${message}`;
-            document.body.appendChild(toast);
-            
-            setTimeout(() => {
-                toast.classList.add("opacity-0", "translate-y-2");
-                setTimeout(() => toast.remove(), 500);
-            }, 4000);
-        }
-
+        // Cross-platform Flag Preloading pipeline (CORS supported)
         const flagImages = {};
         function preloadFlags() {
             LANGUAGES.forEach(lang => {
                 const img = new Image();
-                img.crossOrigin = "anonymous"; 
+                img.crossOrigin = "anonymous"; // Prevents canvas staining when downloading ZIP
                 img.src = `https://flagcdn.com/w40/${lang.flagCode}.png`;
                 img.onload = () => {
                     requestRenderAll();
@@ -983,7 +960,7 @@
                     text2Pos: { x: 640, y: 390 },
                     fontScale1: lang.fontScale, 
                     fontScale2: lang.fontScale, 
-                    textAlignment: lang.rtl ? "right" : "center",
+                    textAlignment: "center", // CENTRALIZADO POR PADRÃO EM TODOS OS IDIOMAS
                     bold1: true,
                     italic1: false,
                     bold2: true,
@@ -991,10 +968,10 @@
                     
                     // Cores, Contorno Interno e Gradientes Avançados
                     t1Color: "#ffffff",
-                    t1GradientType: "solid", // 'solid', '2colors', '3colors'
+                    t1GradientType: "solid", // SOLID POR PADRÃO
                     t1Color2: "#94a3b8", 
                     t1Color3: "#475569",
-                    t1MidStop: 80, // ALTERADO: De 50 para 80 por padrão
+                    t1MidStop: 80, 
                     t1Stroke: "#000000",
                     t1StrokeWidth: 10,
                     t1StrokeOuter: "#ffffff",
@@ -1006,12 +983,12 @@
                     t1ShadowX: 8,
                     t1ShadowY: 8,
 
-                    // Texto Inferior (Predefinido como Gradiente Viral de 3 cores no estilo MrBeast!)
-                    t2Color: "#ffffd3", // Cor do Topo (Creme/Amarelo Claro do preset da imagem)
-                    t2GradientType: "3colors", 
-                    t2Color2: "#ebac28", // Cor do Meio (Amarelo Ouro de destaque do preset)
-                    t2Color3: "#ea580c", // Cor da Base (Laranja forte)
-                    t2MidStop: 80, // ALTERADO: De 50 para 80 por padrão para o laranja ficar bem sutil no rodapé
+                    // Texto Inferior
+                    t2Color: "#facc15", // SOLID POR PADRÃO
+                    t2GradientType: "solid", // SOLID POR PADRÃO
+                    t2Color2: "#ebac28", 
+                    t2Color3: "#ea580c", 
+                    t2MidStop: 80, 
                     t2Stroke: "#000000",
                     t2StrokeWidth: 10,
                     t2StrokeOuter: "#ffffff",
@@ -1160,6 +1137,7 @@
             let metrics = ctx.measureText(processedText);
             let textWidth = metrics.width;
             
+            // Margem de segurança de 1120px para impedir corte em thumbnails esticadas
             const maxAllowedWidth = 1120;
             let finalFontSize = fontSize;
             if (textWidth > maxAllowedWidth) {
@@ -1301,7 +1279,7 @@
                     const topY = posY - (t1Size * scaleFactor) / 2;
                     const bottomY = posY + (t1Size * scaleFactor) / 2;
                     const grad = ctx.createLinearGradient(0, topY, 0, bottomY);
-                    const midStopOffset = (data.t1MidStop !== undefined ? data.t1MidStop : 50) / 100;
+                    const midStopOffset = (data.t1MidStop !== undefined ? data.t1MidStop : 80) / 100;
                     grad.addColorStop(0, fillCol1);
                     grad.addColorStop(midStopOffset, fillCol2);
                     grad.addColorStop(1, fillCol3);
@@ -1371,7 +1349,7 @@
                     const topY = posY - (t2Size * scaleFactor) / 2;
                     const bottomY = posY + (t2Size * scaleFactor) / 2;
                     const grad = ctx.createLinearGradient(0, topY, 0, bottomY);
-                    const midStopOffset = (data.t2MidStop !== undefined ? data.t2MidStop : 50) / 100;
+                    const midStopOffset = (data.t2MidStop !== undefined ? data.t2MidStop : 80) / 100;
                     grad.addColorStop(0, fillCol1);
                     grad.addColorStop(midStopOffset, fillCol2);
                     grad.addColorStop(1, fillCol3);
@@ -1609,12 +1587,17 @@
                     if (!data) return;
                     canvas.style.cursor = "grabbing";
 
+                    // MATEMATICAMENTE TRAVADO: Impede que os textos fujam fisicamente dos limites do Canvas (1280x720) ao arrastar
                     if (dragTarget === "text1") {
-                        data.text1Pos.x = Math.round(mousePos.x - dragOffset.x);
-                        data.text1Pos.y = Math.round(mousePos.y - dragOffset.y);
+                        let newX = Math.round(mousePos.x - dragOffset.x);
+                        let newY = Math.round(mousePos.y - dragOffset.y);
+                        data.text1Pos.x = Math.max(100, Math.min(1180, newX));
+                        data.text1Pos.y = Math.max(50, Math.min(670, newY));
                     } else if (dragTarget === "text2") {
-                        data.text2Pos.x = Math.round(mousePos.x - dragOffset.x);
-                        data.text2Pos.y = Math.round(mousePos.y - dragOffset.y);
+                        let newX = Math.round(mousePos.x - dragOffset.x);
+                        let newY = Math.round(mousePos.y - dragOffset.y);
+                        data.text2Pos.x = Math.max(100, Math.min(1180, newX));
+                        data.text2Pos.y = Math.max(50, Math.min(670, newY));
                     }
 
                     renderIndividualEditorCanvas();
@@ -1869,7 +1852,7 @@ ${langCodes}.`;
             const originalHtml = btn.innerHTML;
             btn.disabled = true;
             btn.innerHTML = `<i class="fa-solid fa-spinner animate-spin mr-2"></i> A gerar ZIP...`;
-            showToast(`A renderizar ${activeLanguages.length} thumbnails. Por favor, aguarde...`, "info");
+            showToast("A renderizar as thumbnails. Por favor, aguarde...", "info");
 
             try {
                 const zip = new JSZip();
@@ -2069,7 +2052,7 @@ ${langCodes}.`;
             document.getElementById("t2MidStopContainer").style.display = (t2Type === '3colors') ? 'block' : 'none';
 
             // Sincronizar rótulos de offset de meio degradê
-            const t1Offset = data.t1MidStop !== undefined ? data.t1MidStop : 80; // ALTERADO: De 50 para 80
+            const t1Offset = data.t1MidStop !== undefined ? data.t1MidStop : 80;
             const t1OffsetLabel = document.getElementById("t1MidStopLabel");
             const t1OffsetSlider = document.getElementById("t1MidStop");
             if (t1OffsetLabel && t1OffsetSlider) {
@@ -2077,7 +2060,7 @@ ${langCodes}.`;
                 t1OffsetSlider.value = t1Offset;
             }
 
-            const t2Offset = data.t2MidStop !== undefined ? data.t2MidStop : 80; // ALTERADO: De 50 para 80
+            const t2Offset = data.t2MidStop !== undefined ? data.t2MidStop : 80;
             const t2OffsetLabel = document.getElementById("t2MidStopLabel");
             const t2OffsetSlider = document.getElementById("t2MidStop");
             if (t2OffsetLabel && t2OffsetSlider) {
@@ -2111,10 +2094,10 @@ ${langCodes}.`;
             const indT1Type = data.t1GradientType || "solid";
             if (document.getElementById("indT1GradientType")) document.getElementById("indT1GradientType").value = indT1Type;
             
-            const indT2Type = data.t2GradientType || "3colors";
+            const indT2Type = data.t2GradientType || "solid";
             if (document.getElementById("indT2GradientType")) document.getElementById("indT2GradientType").value = indT2Type;
 
-            // Exibir/Ocultar elementos suplementares de degradê individuais
+            // Exibir/Ocultar elementos de degradê individuais
             if (document.getElementById("indT1Color2Container")) document.getElementById("indT1Color2Container").style.display = (indT1Type === '2colors' || indT1Type === '3colors') ? 'block' : 'none';
             if (document.getElementById("indT1Color3Container")) document.getElementById("indT1Color3Container").style.display = (indT1Type === '3colors') ? 'block' : 'none';
             if (document.getElementById("indT1MidStopContainer")) document.getElementById("indT1MidStopContainer").style.display = (indT1Type === '3colors') ? 'block' : 'none';
@@ -2123,11 +2106,11 @@ ${langCodes}.`;
             if (document.getElementById("indT2Color3Container")) document.getElementById("indT2Color3Container").style.display = (indT2Type === '3colors') ? 'block' : 'none';
             if (document.getElementById("indT2MidStopContainer")) document.getElementById("indT2MidStopContainer").style.display = (indT2Type === '3colors') ? 'block' : 'none';
 
-            const indT1Offset = data.t1MidStop !== undefined ? data.t1MidStop : 80; // ALTERADO: De 50 para 80
+            const indT1Offset = data.t1MidStop !== undefined ? data.t1MidStop : 80;
             if (document.getElementById("indT1MidStopLabel")) document.getElementById("indT1MidStopLabel").textContent = indT1Offset + "%";
             if (document.getElementById("indT1MidStop")) document.getElementById("indT1MidStop").value = indT1Offset;
 
-            const indT2Offset = data.t2MidStop !== undefined ? data.t2MidStop : 80; // ALTERADO: De 50 para 80
+            const indT2Offset = data.t2MidStop !== undefined ? data.t2MidStop : 80;
             if (document.getElementById("indT2MidStopLabel")) document.getElementById("indT2MidStopLabel").textContent = indT2Offset + "%";
             if (document.getElementById("indT2MidStop")) document.getElementById("indT2MidStop").value = indT2Offset;
 
@@ -2216,191 +2199,32 @@ ${langCodes}.`;
             document.getElementById("globalT2X").value = sourceData.text2Pos.x;
             document.getElementById("globalT2XLabel").textContent = sourceData.text2Pos.x + "px";
 
+            // Sincronizar seletores globais de degradê
+            document.getElementById("t1GradientType").value = sourceData.t1GradientType;
+            document.getElementById("t2GradientType").value = sourceData.t2GradientType;
+
+            // Sync global pickers
+            document.getElementById("t1Color").value = sourceData.t1Color;
+            document.getElementById("t1Stroke").value = sourceData.t1Stroke;
+            document.getElementById("t1StrokeWidth").value = sourceData.t1StrokeWidth;
+            document.getElementById("t1StrokeOuter").value = sourceData.t1StrokeOuter;
+            document.getElementById("t1StrokeOuterWidth").value = sourceData.t1StrokeOuterWidth;
+
+            document.getElementById("t2Color").value = sourceData.t2Color;
+            document.getElementById("t2Stroke").value = sourceData.t2Stroke;
+            document.getElementById("t2StrokeWidth").value = sourceData.t2StrokeWidth;
+            document.getElementById("t2StrokeOuter").value = sourceData.t2StrokeOuter;
+            document.getElementById("t2StrokeOuterWidth").value = sourceData.t2StrokeOuterWidth;
+
             applyGlobalAlignment(sourceData.textAlignment);
             updateStyleTogglesUI();
             syncUIStates();
 
-            showToast("Design e efeitos aplicados em todas as thumbnails com sucesso!", "success");
+            showToast("Design e estilos aplicados em todas as thumbnails com sucesso!", "success");
             requestRenderAll();
         }
 
-        function updateGlobalScale(line, value) {
-            const val = parseFloat(value);
-            if (line === 1) {
-                globalFontScale1 = val;
-                document.getElementById("globalScale1Label").textContent = val.toFixed(2) + "x";
-            } else {
-                globalFontScale2 = val;
-                document.getElementById("globalScale2Label").textContent = val.toFixed(2) + "x";
-            }
-            requestRenderAll();
-        }
-
-        function handleBgUpload(event) {
-            const file = event.target.files[0];
-            if (file) {
-                document.getElementById("bgFileName").textContent = file.name;
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const img = new Image();
-                    img.onload = function() {
-                        uploadedBgImage = img;
-                        requestRenderAll();
-                        showToast("Fundo importado com sucesso!", "success");
-                    };
-                    img.src = e.target.result;
-                };
-                reader.readAsDataURL(file);
-            }
-        }
-
-        function handleManualTextInput() {
-            const val1 = document.getElementById("ptText1").value.toUpperCase();
-            const val2 = document.getElementById("ptText2").value.toUpperCase();
-            
-            LANGUAGES.forEach(lang => {
-                if (!hasBeenTranslated) {
-                    styleData[lang.id].text1 = val1;
-                    styleData[lang.id].text2 = val2;
-                }
-            });
-
-            const activeData = styleData[currentCountryId];
-            if (activeData) {
-                document.getElementById("overrideText1").value = activeData.text1;
-                document.getElementById("overrideText2").value = activeData.text2;
-            }
-
-            requestRenderAll();
-        }
-
-        function applyOverride() {
-            const data = styleData[currentCountryId];
-            if (!data) return;
-            data.text1 = document.getElementById("overrideText1").value;
-            data.text2 = document.getElementById("overrideText2").value;
-            
-            const scale1 = parseFloat(document.getElementById("indScaleSlider1").value);
-            const scale2 = parseFloat(document.getElementById("indScaleSlider2").value);
-            data.fontScale1 = scale1;
-            data.fontScale2 = scale2;
-            document.getElementById("scaleLabel1").textContent = scale1.toFixed(2) + "x";
-            document.getElementById("scaleLabel2").textContent = scale2.toFixed(2) + "x";
-
-            renderIndividualEditorCanvas();
-        }
-
-        function resetIndividualAdjustments() {
-            const defaultLangScale = LANGUAGES.find(l => l.id === currentCountryId)?.fontScale || 1.0;
-            const data = styleData[currentCountryId];
-            if (!data) return;
-            
-            const val1 = document.getElementById("ptText1").value.toUpperCase();
-            const val2 = document.getElementById("ptText2").value.toUpperCase();
-
-            data.text1 = (hasBeenTranslated && fallbackTimeskipTranslations[currentCountryId]) ? fallbackTimeskipTranslations[currentCountryId].text1 : val1;
-            data.text2 = (hasBeenTranslated && fallbackTimeskipTranslations[currentCountryId]) ? fallbackTimeskipTranslations[currentCountryId].text2 : val2;
-            data.text1Pos = { x: 640, y: 220 };
-            data.text2Pos = { x: 640, y: 390 };
-            data.fontScale1 = defaultLangScale;
-            data.fontScale2 = defaultLangScale;
-            data.bold1 = true;
-            data.italic1 = false;
-            data.bold2 = true;
-            data.italic2 = false;
-
-            data.t1Color = "#ffffff";
-            data.t1GradientType = "solid";
-            data.t1Color2 = "#94a3b8";
-            data.t1Color3 = "#475569";
-            data.t1MidStop = 80; // ALTERADO: De 50 para 80
-            data.t1Stroke = "#000000";
-            data.t1StrokeWidth = 10;
-            data.t1StrokeOuter = "#ffffff";
-            data.t1StrokeOuterWidth = 0;
-            data.t1ShadowColor = "#000000";
-            data.t1ShadowBlur = 15;
-            data.t1ShadowX = 8;
-            data.t1ShadowY = 8;
-            
-            data.t2Color = "#ffffd3";
-            data.t2GradientType = "3colors";
-            data.t2Color2 = "#ebac28";
-            data.t2Color3 = "#ea580c";
-            data.t2MidStop = 80; // ALTERADO: De 50 para 80
-            data.t2Stroke = "#000000";
-            data.t2StrokeWidth = 10;
-            data.t2StrokeOuter = "#ffffff";
-            data.t2StrokeOuterWidth = 0;
-            data.t2ShadowColor = "#000000";
-            data.t2ShadowBlur = 15;
-            data.t2ShadowX = 10;
-            data.t2ShadowY = 10;
-
-            document.getElementById("overrideText1").value = data.text1;
-            document.getElementById("overrideText2").value = data.text2;
-            
-            document.getElementById("indScaleSlider1").value = defaultLangScale;
-            document.getElementById("scaleLabel1").textContent = defaultLangScale.toFixed(2) + "x";
-            document.getElementById("indScaleSlider2").value = defaultLangScale;
-            document.getElementById("scaleLabel2").textContent = defaultLangScale.toFixed(2) + "x";
-
-            syncUIStates();
-            updateStyleTogglesUI();
-            renderIndividualEditorCanvas();
-            showToast("Ajustes individuais restaurados para o padrão.", "info");
-        }
-
-        function selectBadge(type) {
-            selectedBadgeType = type;
-            document.querySelectorAll(".badge-opt").forEach(btn => {
-                btn.className = "badge-opt bg-slate-950 border border-slate-800 text-slate-400 hover:text-white py-1.5 px-2 rounded-lg text-xs font-bold transition";
-            });
-            const badgeBtn = document.getElementById(`badge_${type}`);
-            if (badgeBtn) {
-                badgeBtn.className = "badge-opt bg-indigo-500/10 border border-indigo-500 text-indigo-400 py-1.5 px-2 rounded-lg text-xs font-bold transition";
-            }
-            requestRenderAll();
-        }
-
-        function switchTab(tab) {
-            if (tab === "editor") {
-                const activeCount = LANGUAGES.filter(l => l.active).length;
-                if (activeCount === 0) {
-                    showToast("Ative pelo menos um país no Passo 1.5 para poder editar.", "error");
-                    return;
-                }
-            }
-
-            activeTab = tab;
-            const gridBtn = document.getElementById("tabGridBtn");
-            const editorBtn = document.getElementById("tabEditorBtn");
-            const gridTab = document.getElementById("tabGrid");
-            const editorTab = document.getElementById("tabEditor");
-
-            if (tab === "grid") {
-                gridBtn.className = "px-4 py-2 rounded-lg text-xs font-black bg-indigo-500 text-white transition flex items-center gap-2";
-                editorBtn.className = "px-4 py-2 rounded-lg text-xs font-bold text-slate-400 hover:text-white transition flex items-center gap-2";
-                gridTab.classList.remove("hidden");
-                editorTab.classList.add("hidden");
-                renderGrid(); 
-            } else {
-                gridBtn.className = "px-4 py-2 rounded-lg text-xs font-bold text-slate-400 hover:text-white transition flex items-center gap-2";
-                editorBtn.className = "px-4 py-2 rounded-lg text-xs font-black bg-indigo-500 text-white transition flex items-center gap-2";
-                gridTab.classList.add("hidden");
-                editorTab.classList.remove("hidden");
-                
-                if (!LANGUAGES.find(l => l.id === currentCountryId)?.active) {
-                    const firstActive = LANGUAGES.find(l => l.active);
-                    if (firstActive) {
-                        currentCountryId = firstActive.id;
-                    }
-                }
-                
-                loadCountryToEditor(currentCountryId);
-            }
-        }
-
+        // Window entry point
         window.onload = function() {
             initApp();
         };
