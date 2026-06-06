@@ -249,7 +249,7 @@
                                 </div>
                             </div>
 
-                            <!-- Borda Externa Adicional -->
+                            <!-- Borda Externa Adicional (Fazer a Borda Branca) -->
                             <div class="grid grid-cols-3 gap-2">
                                 <div class="col-span-2">
                                     <label class="block text-[10px] text-slate-500 mb-0.5">Borda Externa (Contorno)</label>
@@ -488,7 +488,7 @@
             </div>
             
             <!-- BOTÃO DE EXPORTAÇÃO -->
-            <div class="p-5 mt-auto bg-slate-950/80 border-t border-slate-800 flex flex-col gap-3 sticky bottom-0 shrink-0">
+            <div class="p-5 mt-auto bg-slate-950/80 border-t border-slate-800 flex flex-col gap-3 sticky bottom-0 shrink-0 select-none">
                 <div class="flex justify-between items-center text-xs">
                     <span class="text-slate-400">Total Adaptadas:</span>
                     <span id="activeCountriesStatus" class="font-bold text-indigo-400">18 Países Ativos</span>
@@ -505,7 +505,7 @@
         <section class="flex-1 bg-slate-950 p-6 flex flex-col gap-6 lg:h-full overflow-y-auto">
             
             <!-- SELETOR DE MODO DE VISUALIZAÇÃO -->
-            <div class="flex flex-wrap items-center justify-between gap-4 bg-slate-900 p-3 rounded-xl border border-slate-800">
+            <div class="flex flex-wrap items-center justify-between gap-4 bg-slate-900 p-3 rounded-xl border border-slate-800 shrink-0">
                 <div class="flex items-center gap-2">
                     <button id="tabGridBtn" onclick="switchTab('grid')" class="px-4 py-2 rounded-lg text-xs font-black bg-indigo-500 text-white transition flex items-center gap-2">
                         <i class="fa-solid fa-grip"></i> Grid Global (18 Idiomas)
@@ -532,7 +532,7 @@
                 <div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
                     <!-- Canvas de Alta Resolução -->
                     <div class="xl:col-span-2 flex flex-col items-center justify-center bg-slate-900 border border-slate-800 rounded-2xl p-6">
-                        <div class="flex justify-between items-center w-full mb-4">
+                        <div class="flex justify-between items-center w-full mb-4 shrink-0">
                             <div class="flex items-center gap-2">
                                 <span id="currentEditingFlag" class="inline-flex items-center"></span>
                                 <div>
@@ -543,7 +543,7 @@
                             <span class="text-xs font-mono bg-slate-950 px-2 py-1 rounded text-indigo-400" id="currentEditingCode">US</span>
                         </div>
                         
-                        <div class="relative max-w-full aspect-video bg-black rounded-lg overflow-hidden shadow-2xl border border-slate-700/50" style="width: 640px;">
+                        <div class="relative max-w-full aspect-video bg-black rounded-lg overflow-hidden shadow-2xl border border-slate-700/50 shrink-0" style="width: 640px;">
                             <canvas id="interactiveCanvas" width="1280" height="720" class="w-full h-full cursor-default"></canvas>
                         </div>
                     </div>
@@ -880,7 +880,7 @@
             "vn": { text1: "100 BÍ MẬT", text2: "MÀ BẠN KHÔNG BIẾT" },
             "tr": { text1: "BİLMEDİĞİNİZ", text2: "100 SIR" },
             "pl": { text1: "100 SEKRETÓW", text2: "O KTÓRYCH NIE WIEDZIAŁEŚ" },
-            "tw": { text1: "你不知道 of", text2: "100個秘密" },
+            "tw": { text1: "释放 100", text2: "你不知道的秘密" },
             "se": { text1: "100 HEMLIGHETER", text2: "SOM DU INTE VISSTE" },
             "nl": { text1: "100 GEHEIMEN", text2: "DIE JE NIET WUSST" }
         };
@@ -902,15 +902,34 @@
         let dragOffset = { x: 0, y: 0 };
         let boundingBoxes = { text1: null, text2: null }; 
 
+        // Trava matemática de segurança contra concorrência assíncrona inicializadora
+        let appInitialized = false;
+
         // Estrutura dinâmica de estilos e efeitos
         let styleData = {};
 
-        // Cross-platform Flag Preloading pipeline (CORS supported)
+        // Custom toast notification system
+        function showToast(message, type = 'info') {
+            const toast = document.createElement("div");
+            const bgColor = type === 'error' ? 'bg-rose-600' : type === 'success' ? 'bg-emerald-600' : 'bg-indigo-600';
+            const icon = type === 'error' ? 'fa-triangle-exclamation' : type === 'success' ? 'fa-circle-check' : 'fa-info-circle';
+            
+            toast.className = `fixed bottom-5 right-5 ${bgColor} text-white font-semibold text-xs px-5 py-3 rounded-xl shadow-2xl z-[200] border border-white/10 transition duration-500 animate-bounce flex items-center gap-2`;
+            toast.innerHTML = `<i class="fa-solid ${icon}"></i> ${message}`;
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.classList.add("opacity-0", "translate-y-2");
+                setTimeout(() => toast.remove(), 500);
+            }, 4000);
+        }
+
+        // Cross-platform Flag Preloading pipeline (CORS de alta performance)
         const flagImages = {};
         function preloadFlags() {
             LANGUAGES.forEach(lang => {
                 const img = new Image();
-                img.crossOrigin = "anonymous"; // Prevents canvas staining when downloading ZIP
+                img.crossOrigin = "anonymous"; 
                 img.src = `https://flagcdn.com/w40/${lang.flagCode}.png`;
                 img.onload = () => {
                     requestRenderAll();
@@ -920,13 +939,24 @@
         }
 
         function initApp() {
+            // 1. Aplica o setup e populamento de estilo estrutural na memória
             initDefaultLayout();
+
+            // 2. Dispara o pré-carregamento das bandeiras de alta resolução CORS
             preloadFlags();
+
+            // 3. Renderiza o grid interativo de status e checkboxes
             renderLanguagesSelectorGrid();
+
+            // 4. Preenche os seletores individuais da aba de edição
             updateCountryEditorSelect();
-            renderGrid();
-            loadCountryToEditor("us");
+
+            // 5. Ativa as diretivas de ouvinte interativo de arrastar
             setupInteractiveCanvasEvents();
+
+            // 6. Confirma a inicialização e libera a renderização do Grid de thumbnails
+            appInitialized = true;
+            requestRenderAll();
         }
 
         function initDefaultLayout() {
@@ -966,9 +996,9 @@
                     bold2: true,
                     italic2: false,
                     
-                    // Cores, Contorno Interno e Gradientes Avançados
+                    // Cores, Contorno Interno e Gradientes Avançados (SOLID POR PADRÃO)
                     t1Color: "#ffffff",
-                    t1GradientType: "solid", // SOLID POR PADRÃO
+                    t1GradientType: "solid", 
                     t1Color2: "#94a3b8", 
                     t1Color3: "#475569",
                     t1MidStop: 80, 
@@ -983,9 +1013,9 @@
                     t1ShadowX: 8,
                     t1ShadowY: 8,
 
-                    // Texto Inferior
-                    t2Color: "#facc15", // SOLID POR PADRÃO
-                    t2GradientType: "solid", // SOLID POR PADRÃO
+                    // Texto Inferior (Cor Sólida por padrão comercial do YouTube)
+                    t2Color: "#facc15", 
+                    t2GradientType: "solid", 
                     t2Color2: "#ebac28", 
                     t2Color3: "#ea580c", 
                     t2MidStop: 80, 
@@ -1014,7 +1044,6 @@
                 applyGlobalAlignment('center');
             }
             updateStyleTogglesUI();
-            syncUIStates();
         }
 
         function renderLanguagesSelectorGrid() {
@@ -1413,8 +1442,9 @@
             }
         }
 
-        // Funções de Sincronização e Renderização
+        // Funções de Sincronização e Renderização com Tratamento Anti-Erros
         function requestRenderAll() {
+            if (!appInitialized) return;
             if (activeTab === "grid") {
                 renderGrid();
             } else {
@@ -1460,7 +1490,7 @@
                             <p class="text-[9px] text-slate-500">${lang.lang}</p>
                         </div>
                     </div>
-                    <button onclick="goToCountryDetail('${lang.id}')" class="text-slate-400 hover:text-indigo-400 p-1.5 hover:bg-slate-800 rounded-lg transition text-xs flex items-center gap-1">
+                    <button onclick="goToCountryDetail('${lang.id}')" class="text-slate-400 hover:text-indigo-400 p-1.5 hover:bg-slate-850 rounded-lg transition text-xs flex items-center gap-1">
                         <i class="fa-solid fa-pen-to-square"></i> Ajustar
                     </button>
                 `;
@@ -2037,19 +2067,28 @@ ${langCodes}.`;
             if (t1Selector) t1Selector.value = t1Type;
 
             // Sincronizar select de tipo de preenchimento Inferior
-            const t2Type = data.t2GradientType || "3colors";
+            const t2Type = data.t2GradientType || "solid";
             const t2Selector = document.getElementById("t2GradientType");
             if (t2Selector) t2Selector.value = t2Type;
             
-            // Exibir/ocultar inputs do Texto 1 com base no tipo
-            document.getElementById("t1Color2Container").style.display = (t1Type === '2colors' || t1Type === '3colors') ? 'block' : 'none';
-            document.getElementById("t1Color3Container").style.display = (t1Type === '3colors') ? 'block' : 'none';
-            document.getElementById("t1MidStopContainer").style.display = (t1Type === '3colors') ? 'block' : 'none';
+            // Exibir/ocultar de forma protegida contra valores nulos
+            const t1C2 = document.getElementById("t1Color2Container");
+            if (t1C2) t1C2.style.display = (t1Type === '2colors' || t1Type === '3colors') ? 'block' : 'none';
             
-            // Exibir/ocultar inputs do Texto 2 com base no tipo
-            document.getElementById("t2Color2Container").style.display = (t2Type === '2colors' || t2Type === '3colors') ? 'block' : 'none';
-            document.getElementById("t2Color3Container").style.display = (t2Type === '3colors') ? 'block' : 'none';
-            document.getElementById("t2MidStopContainer").style.display = (t2Type === '3colors') ? 'block' : 'none';
+            const t1C3 = document.getElementById("t1Color3Container");
+            if (t1C3) t1C3.style.display = (t1Type === '3colors') ? 'block' : 'none';
+            
+            const t1MSC = document.getElementById("t1MidStopContainer");
+            if (t1MSC) t1MSC.style.display = (t1Type === '3colors') ? 'block' : 'none';
+            
+            const t2C2 = document.getElementById("t2Color2Container");
+            if (t2C2) t2C2.style.display = (t2Type === '2colors' || t2Type === '3colors') ? 'block' : 'none';
+            
+            const t2C3 = document.getElementById("t2Color3Container");
+            if (t2C3) t2C3.style.display = (t2Type === '3colors') ? 'block' : 'none';
+            
+            const t2MSC = document.getElementById("t2MidStopContainer");
+            if (t2MSC) t2MSC.style.display = (t2Type === '3colors') ? 'block' : 'none';
 
             // Sincronizar rótulos de offset de meio degradê
             const t1Offset = data.t1MidStop !== undefined ? data.t1MidStop : 80;
@@ -2092,36 +2131,52 @@ ${langCodes}.`;
 
             // Sincronizar tipo de degradê individual
             const indT1Type = data.t1GradientType || "solid";
-            if (document.getElementById("indT1GradientType")) document.getElementById("indT1GradientType").value = indT1Type;
+            const indT1Selector = document.getElementById("indT1GradientType");
+            if (indT1Selector) indT1Selector.value = indT1Type;
             
             const indT2Type = data.t2GradientType || "solid";
-            if (document.getElementById("indT2GradientType")) document.getElementById("indT2GradientType").value = indT2Type;
+            const indT2Selector = document.getElementById("indT2GradientType");
+            if (indT2Selector) indT2Selector.value = indT2Type;
 
-            // Exibir/Ocultar elementos de degradê individuais
-            if (document.getElementById("indT1Color2Container")) document.getElementById("indT1Color2Container").style.display = (indT1Type === '2colors' || indT1Type === '3colors') ? 'block' : 'none';
-            if (document.getElementById("indT1Color3Container")) document.getElementById("indT1Color3Container").style.display = (indT1Type === '3colors') ? 'block' : 'none';
-            if (document.getElementById("indT1MidStopContainer")) document.getElementById("indT1MidStopContainer").style.display = (indT1Type === '3colors') ? 'block' : 'none';
+            // Exibir/Ocultar elementos de degradê individuais de forma protegida (evitando SyntaxError de colisões de variáveis)
+            const indT1C2Container = document.getElementById("indT1Color2Container");
+            if (indT1C2Container) indT1C2Container.style.display = (indT1Type === '2colors' || indT1Type === '3colors') ? 'block' : 'none';
+            
+            const indT1C3Container = document.getElementById("indT1Color3Container");
+            if (indT1C3Container) indT1C3Container.style.display = (indT1Type === '3colors') ? 'block' : 'none';
+            
+            const indT1MSCContainer = document.getElementById("indT1MidStopContainer");
+            if (indT1MSCContainer) indT1MSCContainer.style.display = (indT1Type === '3colors') ? 'block' : 'none';
 
-            if (document.getElementById("indT2Color2Container")) document.getElementById("indT2Color2Container").style.display = (indT2Type === '2colors' || indT2Type === '3colors') ? 'block' : 'none';
-            if (document.getElementById("indT2Color3Container")) document.getElementById("indT2Color3Container").style.display = (indT2Type === '3colors') ? 'block' : 'none';
-            if (document.getElementById("indT2MidStopContainer")) document.getElementById("indT2MidStopContainer").style.display = (indT2Type === '3colors') ? 'block' : 'none';
+            const indT2C2Container = document.getElementById("indT2Color2Container");
+            if (indT2C2Container) indT2C2Container.style.display = (indT2Type === '2colors' || indT2Type === '3colors') ? 'block' : 'none';
+            
+            const indT2C3Container = document.getElementById("indT2Color3Container");
+            if (indT2C3Container) indT2C3Container.style.display = (indT2Type === '3colors') ? 'block' : 'none';
+            
+            const indT2MSCContainer = document.getElementById("indT2MidStopContainer");
+            if (indT2MSCContainer) indT2MSCContainer.style.display = (indT2Type === '3colors') ? 'block' : 'none';
 
             const indT1Offset = data.t1MidStop !== undefined ? data.t1MidStop : 80;
-            if (document.getElementById("indT1MidStopLabel")) document.getElementById("indT1MidStopLabel").textContent = indT1Offset + "%";
-            if (document.getElementById("indT1MidStop")) document.getElementById("indT1MidStop").value = indT1Offset;
+            const indT1OffsetLabel = document.getElementById("indT1MidStopLabel");
+            if (indT1OffsetLabel) indT1OffsetLabel.textContent = indT1Offset + "%";
+            const indT1OffsetSlider = document.getElementById("indT1MidStop");
+            if (indT1OffsetSlider) indT1OffsetSlider.value = indT1Offset;
 
             const indT2Offset = data.t2MidStop !== undefined ? data.t2MidStop : 80;
-            if (document.getElementById("indT2MidStopLabel")) document.getElementById("indT2MidStopLabel").textContent = indT2Offset + "%";
-            if (document.getElementById("indT2MidStop")) document.getElementById("indT2MidStop").value = indT2Offset;
+            const indT2OffsetLabel = document.getElementById("indT2MidStopLabel");
+            if (indT2OffsetLabel) indT2OffsetLabel.textContent = indT2Offset + "%";
+            const indT2OffsetSlider = document.getElementById("indT2MidStop");
+            if (indT2OffsetSlider) indT2OffsetSlider.value = indT2Offset;
 
             // Sincronizar Texto 1 Individual
             if (document.getElementById("indT1Color")) document.getElementById("indT1Color").value = data.t1Color || "#ffffff";
             if (document.getElementById("indT1Color2")) document.getElementById("indT1Color2").value = data.t1Color2 || "#94a3b8";
             if (document.getElementById("indT1Color3")) document.getElementById("indT1Color3").value = data.t1Color3 || "#475569";
             if (document.getElementById("indT1Stroke")) document.getElementById("indT1Stroke").value = data.t1Stroke || "#000000";
-            if (document.getElementById("indT1StrokeWidth")) document.getElementById("indT1StrokeWidth").value = data.t1StrokeWidth || 10;
+            if (document.getElementById("indT1StrokeWidth")) document.getElementById("indT1StrokeWidth").value = data.t1StrokeWidth !== undefined ? data.t1StrokeWidth : 10;
             if (document.getElementById("indT1StrokeOuter")) document.getElementById("indT1StrokeOuter").value = data.t1StrokeOuter || "#ffffff";
-            if (document.getElementById("indT1StrokeOuterWidth")) document.getElementById("indT1StrokeOuterWidth").value = data.t1StrokeOuterWidth || 0;
+            if (document.getElementById("indT1StrokeOuterWidth")) document.getElementById("indT1StrokeOuterWidth").value = data.t1StrokeOuterWidth !== undefined ? data.t1StrokeOuterWidth : 0;
 
             if (document.getElementById("indT1ShadowColor")) document.getElementById("indT1ShadowColor").value = data.t1ShadowColor || "#000000";
             if (document.getElementById("indT1ShadowBlur")) document.getElementById("indT1ShadowBlur").value = data.t1ShadowBlur !== undefined ? data.t1ShadowBlur : 15;
@@ -2133,9 +2188,9 @@ ${langCodes}.`;
             if (document.getElementById("indT2Color2")) document.getElementById("indT2Color2").value = data.t2Color2 || "#ebac28";
             if (document.getElementById("indT2Color3")) document.getElementById("indT2Color3").value = data.t2Color3 || "#ea580c";
             if (document.getElementById("indT2Stroke")) document.getElementById("indT2Stroke").value = data.t2Stroke || "#000000";
-            if (document.getElementById("indT2StrokeWidth")) document.getElementById("indT2StrokeWidth").value = data.t2StrokeWidth || 10;
+            if (document.getElementById("indT2StrokeWidth")) document.getElementById("indT2StrokeWidth").value = data.t2StrokeWidth !== undefined ? data.t2StrokeWidth : 10;
             if (document.getElementById("indT2StrokeOuter")) document.getElementById("indT2StrokeOuter").value = data.t2StrokeOuter || "#ffffff";
-            if (document.getElementById("indT2StrokeOuterWidth")) document.getElementById("indT2StrokeOuterWidth").value = data.t2StrokeOuterWidth || 0;
+            if (document.getElementById("indT2StrokeOuterWidth")) document.getElementById("indT2StrokeOuterWidth").value = data.t2StrokeOuterWidth !== undefined ? data.t2StrokeOuterWidth : 0;
 
             if (document.getElementById("indT2ShadowColor")) document.getElementById("indT2ShadowColor").value = data.t2ShadowColor || "#000000";
             if (document.getElementById("indT2ShadowBlur")) document.getElementById("indT2ShadowBlur").value = data.t2ShadowBlur !== undefined ? data.t2ShadowBlur : 15;
@@ -2159,7 +2214,6 @@ ${langCodes}.`;
                     styleData[lang.id].bold2 = sourceData.bold2;
                     styleData[lang.id].italic2 = sourceData.italic2;
                     
-                    // Sincronização avançada de cores, gradientes e sombras
                     styleData[lang.id].t1Color = sourceData.t1Color;
                     styleData[lang.id].t1GradientType = sourceData.t1GradientType;
                     styleData[lang.id].t1Color2 = sourceData.t1Color2;
@@ -2199,32 +2253,64 @@ ${langCodes}.`;
             document.getElementById("globalT2X").value = sourceData.text2Pos.x;
             document.getElementById("globalT2XLabel").textContent = sourceData.text2Pos.x + "px";
 
-            // Sincronizar seletores globais de degradê
-            document.getElementById("t1GradientType").value = sourceData.t1GradientType;
-            document.getElementById("t2GradientType").value = sourceData.t2GradientType;
-
-            // Sync global pickers
-            document.getElementById("t1Color").value = sourceData.t1Color;
-            document.getElementById("t1Stroke").value = sourceData.t1Stroke;
-            document.getElementById("t1StrokeWidth").value = sourceData.t1StrokeWidth;
-            document.getElementById("t1StrokeOuter").value = sourceData.t1StrokeOuter;
-            document.getElementById("t1StrokeOuterWidth").value = sourceData.t1StrokeOuterWidth;
-
-            document.getElementById("t2Color").value = sourceData.t2Color;
-            document.getElementById("t2Stroke").value = sourceData.t2Stroke;
-            document.getElementById("t2StrokeWidth").value = sourceData.t2StrokeWidth;
-            document.getElementById("t2StrokeOuter").value = sourceData.t2StrokeOuter;
-            document.getElementById("t2StrokeOuterWidth").value = sourceData.t2StrokeOuterWidth;
-
             applyGlobalAlignment(sourceData.textAlignment);
             updateStyleTogglesUI();
             syncUIStates();
 
-            showToast("Design e estilos aplicados em todas as thumbnails com sucesso!", "success");
+            showToast("Design e efeitos aplicados em todas as thumbnails com sucesso!", "success");
             requestRenderAll();
         }
 
-        // Window entry point
+        function updateGlobalScale(line, value) {
+            const val = parseFloat(value);
+            if (line === 1) {
+                globalFontScale1 = val;
+                document.getElementById("globalScale1Label").textContent = val.toFixed(2) + "x";
+            } else {
+                globalFontScale2 = val;
+                document.getElementById("globalScale2Label").textContent = val.toFixed(2) + "x";
+            }
+            requestRenderAll();
+        }
+
+        function switchTab(tab) {
+            if (tab === "editor") {
+                const activeCount = LANGUAGES.filter(l => l.active).length;
+                if (activeCount === 0) {
+                    showToast("Ative pelo menos um país no Passo 1.5 para poder editar.", "error");
+                    return;
+                }
+            }
+
+            activeTab = tab;
+            const gridBtn = document.getElementById("tabGridBtn");
+            const editorBtn = document.getElementById("tabEditorBtn");
+            const gridTab = document.getElementById("tabGrid");
+            const editorTab = document.getElementById("tabEditor");
+
+            if (tab === "grid") {
+                gridBtn.className = "px-4 py-2 rounded-lg text-xs font-black bg-indigo-500 text-white transition flex items-center gap-2";
+                editorBtn.className = "px-4 py-2 rounded-lg text-xs font-bold text-slate-400 hover:text-white transition flex items-center gap-2";
+                gridTab.classList.remove("hidden");
+                editorTab.classList.add("hidden");
+                renderGrid(); 
+            } else {
+                gridBtn.className = "px-4 py-2 rounded-lg text-xs font-bold text-slate-400 hover:text-white transition flex items-center gap-2";
+                editorBtn.className = "px-4 py-2 rounded-lg text-xs font-black bg-indigo-500 text-white transition flex items-center gap-2";
+                gridTab.classList.add("hidden");
+                editorTab.classList.remove("hidden");
+                
+                if (!LANGUAGES.find(l => l.id === currentCountryId)?.active) {
+                    const firstActive = LANGUAGES.find(l => l.active);
+                    if (firstActive) {
+                        currentCountryId = firstActive.id;
+                    }
+                }
+                
+                loadCountryToEditor(currentCountryId);
+            }
+        }
+
         window.onload = function() {
             initApp();
         };
