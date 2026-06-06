@@ -233,9 +233,9 @@
                             <div id="t1MidStopContainer" class="space-y-1 bg-slate-950/40 p-2 rounded border border-slate-800/40">
                                 <div class="flex justify-between text-[9px] text-slate-500">
                                     <span>Offset do Degradê Médio</span>
-                                    <span id="t1MidStopLabel" class="text-indigo-400 font-mono">50%</span>
+                                    <span id="t1MidStopLabel" class="text-indigo-400 font-mono">80%</span>
                                 </div>
-                                <input type="range" id="t1MidStop" min="15" max="85" value="50" oninput="updateGlobalStyle('t1MidStop', parseInt(this.value)); document.getElementById('t1MidStopLabel').textContent = this.value + '%'" class="w-full accent-indigo-500 h-1 bg-slate-800 rounded cursor-pointer">
+                                <input type="range" id="t1MidStop" min="15" max="95" value="80" oninput="updateGlobalStyle('t1MidStop', parseInt(this.value)); document.getElementById('t1MidStopLabel').textContent = this.value + '%'" class="w-full accent-indigo-500 h-1 bg-slate-800 rounded cursor-pointer">
                             </div>
 
                             <div class="grid grid-cols-3 gap-2">
@@ -340,9 +340,9 @@
                             <div id="t2MidStopContainer" class="space-y-1 bg-slate-950/40 p-2 rounded border border-slate-800/40">
                                 <div class="flex justify-between text-[9px] text-slate-500">
                                     <span>Offset do Degradê Médio</span>
-                                    <span id="t2MidStopLabel" class="text-indigo-400 font-mono">50%</span>
+                                    <span id="t2MidStopLabel" class="text-indigo-400 font-mono">80%</span>
                                 </div>
-                                <input type="range" id="t2MidStop" min="15" max="85" value="50" oninput="updateGlobalStyle('t2MidStop', parseInt(this.value)); document.getElementById('t2MidStopLabel').textContent = this.value + '%'" class="w-full accent-indigo-500 h-1 bg-slate-800 rounded cursor-pointer">
+                                <input type="range" id="t2MidStop" min="15" max="95" value="80" oninput="updateGlobalStyle('t2MidStop', parseInt(this.value)); document.getElementById('t2MidStopLabel').textContent = this.value + '%'" class="w-full accent-indigo-500 h-1 bg-slate-800 rounded cursor-pointer">
                             </div>
 
                             <div class="grid grid-cols-3 gap-2">
@@ -646,9 +646,9 @@
                                 <div id="indT1MidStopContainer" class="space-y-1 bg-slate-950/40 p-2 rounded border border-slate-800/40">
                                     <div class="flex justify-between text-[9px] text-slate-500">
                                         <span>Offset do Degradê Médio</span>
-                                        <span id="indT1MidStopLabel" class="text-indigo-400 font-mono">50%</span>
+                                        <span id="indT1MidStopLabel" class="text-indigo-400 font-mono">80%</span>
                                     </div>
-                                    <input type="range" id="indT1MidStop" min="15" max="85" value="50" oninput="updateIndividualStyle('t1MidStop', parseInt(this.value)); document.getElementById('indT1MidStopLabel').textContent = this.value + '%'" class="w-full accent-indigo-500 h-1 bg-slate-800 rounded cursor-pointer">
+                                    <input type="range" id="indT1MidStop" min="15" max="95" value="80" oninput="updateIndividualStyle('t1MidStop', parseInt(this.value)); document.getElementById('indT1MidStopLabel').textContent = this.value + '%'" class="w-full accent-indigo-500 h-1 bg-slate-800 rounded cursor-pointer">
                                 </div>
 
                                 <div class="grid grid-cols-3 gap-2">
@@ -717,9 +717,9 @@
                                 <div id="indT2MidStopContainer" class="space-y-1 bg-slate-950/40 p-2 rounded border border-slate-800/40">
                                     <div class="flex justify-between text-[9px] text-slate-500">
                                         <span>Offset do Degradê Médio</span>
-                                        <span id="indT2MidStopLabel" class="text-indigo-400 font-mono">50%</span>
+                                        <span id="indT2MidStopLabel" class="text-indigo-400 font-mono">80%</span>
                                     </div>
-                                    <input type="range" id="indT2MidStop" min="15" max="85" value="50" oninput="updateIndividualStyle('t2MidStop', parseInt(this.value)); document.getElementById('indT2MidStopLabel').textContent = this.value + '%'" class="w-full accent-indigo-500 h-1 bg-slate-800 rounded cursor-pointer">
+                                    <input type="range" id="indT2MidStop" min="15" max="95" value="80" oninput="updateIndividualStyle('t2MidStop', parseInt(this.value)); document.getElementById('indT2MidStopLabel').textContent = this.value + '%'" class="w-full accent-indigo-500 h-1 bg-slate-800 rounded cursor-pointer">
                                 </div>
 
                                 <div class="grid grid-cols-3 gap-2">
@@ -874,24 +874,24 @@
         };
 
         const fallbackTimeskipTranslations = {
-            "us": { text1: "100 SECRETS", text2: "THAT YOU DIDN'T KNOW" },
-            "es": { text1: "100 SECRETOS", text2: "QUE NO SABÍAS" },
-            "fr": { text1: "100 SECRETS", text2: "QUE VOUS NE SAVIEZ PAS" },
-            "id": { text1: "100 RAHASIA", text2: "YANG TIDAK KAMU KETAHUI" },
-            "ar": { text1: "100 سر", text2: "لم تكن تعرفها" },
-            "hi": { text1: "100 रहस्य", text2: "जो você não sabia" },
-            "ru": { text1: "100 СЕKРЕТОВ", text2: "О КОТОРЫХ ВЫ НЕ ZНАЛИ" },
-            "de": { text1: "100 GEHEIMNISSE", text2: "DIE DU NICHT WUSSTEST" },
-            "ja": { text1: "あなたが知らない", text2: "100ของความลับ" },
-            "it": { text1: "100 SEGRETI", text2: "CHE NON SAPEVI" },
-            "ko": { text1: "당신이 몰랐던", text2: "100가지 비밀" },
-            "th": { text1: "100 ความลับ", text2: "ที่คุณ không เคยรู้" },
-            "vn": { text1: "100 BÍ MẬT", text2: "MÀ BẠN KHÔNG BIẾT" },
-            "tr": { text1: "BİLMEDİĞİNİZ", text2: "100 SIR" },
-            "pl": { text1: "100 SEKRETÓW", text2: "O KTÓRYCH NIE WIEDZIAŁEŚ" },
-            "tw": { text1: "你不知道 of", text2: "100個秘密" },
-            "se": { text1: "100 HEMLIGHETER", text2: "SOM DU INTE VISSTE" },
-            "nl": { text1: "100 GEHEIMEN", text2: "DIE JE NIET WUSST" }
+"us": { text1: "100 SECRETS", text2: "THAT YOU DIDN'T KNOW" },
+    "es": { text1: "100 SECRETOS", text2: "QUE NO SABÍAS" },
+    "fr": { text1: "100 SECRETS", text2: "QUE VOUS NE SAVIEZ PAS" },
+    "id": { text1: "100 RAHASIA", text2: "YANG TIDAK KAMU KETAHUI" },
+    "ar": { text1: "100 سر", text2: "لم تكن تعرفها" },
+    "hi": { text1: "100 रहस्य", text2: "जो आप नहीं जानते थे" },
+    "ru": { text1: "100 СЕКРЕТОВ", text2: "О КОТОРЫХ ВЫ НЕ ЗНАЛИ" },
+    "de": { text1: "100 GEHEIMNISSE", text2: "DIE DU NICHT WUSSTEST" },
+    "ja": { text1: "あなたが知らない", text2: "100の秘密" },
+    "it": { text1: "100 SEGRETI", text2: "CHE NON SAPEVI" },
+    "ko": { text1: "당신이 몰랐던", text2: "100가지 비밀" },
+    "th": { text1: "100 ความลับ", text2: "ที่คุณไม่เคยรู้" },
+    "vn": { text1: "100 BÍ MẬT", text2: "MÀ BẠN KHÔNG BIẾT" },
+    "tr": { text1: "BİLMEDİĞİNİZ", text2: "100 SIR" },
+    "pl": { text1: "100 SEKRETÓW", text2: "O KTÓRYCH NIE WIEDZIAŁEŚ" },
+    "tw": { text1: "你不知道的", text2: "100個秘密" },
+    "se": { text1: "100 HEMLIGHETER", text2: "SOM DU INTE VISSTE" },
+    "nl": { text1: "100 GEHEIMEN", text2: "DIE JE NIET WIST" }
         };
 
         // Estado do Editor
@@ -991,10 +991,10 @@
                     
                     // Cores, Contorno Interno e Gradientes Avançados
                     t1Color: "#ffffff",
-                    t1GradientType: "solid", // 'solid', '2colors', '3colors' (MrBeast)
+                    t1GradientType: "solid", // 'solid', '2colors', '3colors'
                     t1Color2: "#94a3b8", 
                     t1Color3: "#475569",
-                    t1MidStop: 50,
+                    t1MidStop: 80, // ALTERADO: De 50 para 80 por padrão
                     t1Stroke: "#000000",
                     t1StrokeWidth: 10,
                     t1StrokeOuter: "#ffffff",
@@ -1011,7 +1011,7 @@
                     t2GradientType: "3colors", 
                     t2Color2: "#ebac28", // Cor do Meio (Amarelo Ouro de destaque do preset)
                     t2Color3: "#ea580c", // Cor da Base (Laranja forte)
-                    t2MidStop: 50,
+                    t2MidStop: 80, // ALTERADO: De 50 para 80 por padrão para o laranja ficar bem sutil no rodapé
                     t2Stroke: "#000000",
                     t2StrokeWidth: 10,
                     t2StrokeOuter: "#ffffff",
@@ -2069,7 +2069,7 @@ ${langCodes}.`;
             document.getElementById("t2MidStopContainer").style.display = (t2Type === '3colors') ? 'block' : 'none';
 
             // Sincronizar rótulos de offset de meio degradê
-            const t1Offset = data.t1MidStop !== undefined ? data.t1MidStop : 50;
+            const t1Offset = data.t1MidStop !== undefined ? data.t1MidStop : 80; // ALTERADO: De 50 para 80
             const t1OffsetLabel = document.getElementById("t1MidStopLabel");
             const t1OffsetSlider = document.getElementById("t1MidStop");
             if (t1OffsetLabel && t1OffsetSlider) {
@@ -2077,7 +2077,7 @@ ${langCodes}.`;
                 t1OffsetSlider.value = t1Offset;
             }
 
-            const t2Offset = data.t2MidStop !== undefined ? data.t2MidStop : 50;
+            const t2Offset = data.t2MidStop !== undefined ? data.t2MidStop : 80; // ALTERADO: De 50 para 80
             const t2OffsetLabel = document.getElementById("t2MidStopLabel");
             const t2OffsetSlider = document.getElementById("t2MidStop");
             if (t2OffsetLabel && t2OffsetSlider) {
@@ -2123,11 +2123,11 @@ ${langCodes}.`;
             if (document.getElementById("indT2Color3Container")) document.getElementById("indT2Color3Container").style.display = (indT2Type === '3colors') ? 'block' : 'none';
             if (document.getElementById("indT2MidStopContainer")) document.getElementById("indT2MidStopContainer").style.display = (indT2Type === '3colors') ? 'block' : 'none';
 
-            const indT1Offset = data.t1MidStop !== undefined ? data.t1MidStop : 50;
+            const indT1Offset = data.t1MidStop !== undefined ? data.t1MidStop : 80; // ALTERADO: De 50 para 80
             if (document.getElementById("indT1MidStopLabel")) document.getElementById("indT1MidStopLabel").textContent = indT1Offset + "%";
             if (document.getElementById("indT1MidStop")) document.getElementById("indT1MidStop").value = indT1Offset;
 
-            const indT2Offset = data.t2MidStop !== undefined ? data.t2MidStop : 50;
+            const indT2Offset = data.t2MidStop !== undefined ? data.t2MidStop : 80; // ALTERADO: De 50 para 80
             if (document.getElementById("indT2MidStopLabel")) document.getElementById("indT2MidStopLabel").textContent = indT2Offset + "%";
             if (document.getElementById("indT2MidStop")) document.getElementById("indT2MidStop").value = indT2Offset;
 
@@ -2313,7 +2313,7 @@ ${langCodes}.`;
             data.t1GradientType = "solid";
             data.t1Color2 = "#94a3b8";
             data.t1Color3 = "#475569";
-            data.t1MidStop = 50;
+            data.t1MidStop = 80; // ALTERADO: De 50 para 80
             data.t1Stroke = "#000000";
             data.t1StrokeWidth = 10;
             data.t1StrokeOuter = "#ffffff";
@@ -2327,7 +2327,7 @@ ${langCodes}.`;
             data.t2GradientType = "3colors";
             data.t2Color2 = "#ebac28";
             data.t2Color3 = "#ea580c";
-            data.t2MidStop = 50;
+            data.t2MidStop = 80; // ALTERADO: De 50 para 80
             data.t2Stroke = "#000000";
             data.t2StrokeWidth = 10;
             data.t2StrokeOuter = "#ffffff";
