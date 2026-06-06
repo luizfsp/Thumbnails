@@ -40,10 +40,10 @@
         }
     </style>
 </head>
-<body class="text-slate-100 min-h-screen flex flex-col overflow-x-hidden">
+<body class="text-slate-100 min-h-screen lg:h-screen flex flex-col lg:overflow-hidden">
 
     <!-- HEADER -->
-    <header class="border-b border-slate-800 bg-slate-900/80 backdrop-blur-md px-6 py-4 sticky top-0 z-50 flex flex-wrap justify-between items-center gap-4">
+    <header class="border-b border-slate-800 bg-slate-900/80 backdrop-blur-md px-6 py-4 sticky top-0 z-50 flex flex-wrap justify-between items-center gap-4 shrink-0">
         <div class="flex items-center gap-3">
             <div class="bg-gradient-to-tr from-indigo-500 to-violet-600 p-2.5 rounded-xl shadow-lg shadow-indigo-500/20">
                 <i class="fa-solid fa-earth-americas text-xl text-white"></i>
@@ -79,10 +79,10 @@
     </header>
 
     <!-- WORKSPACE PRINCIPAL -->
-    <main class="flex-1 flex flex-col lg:flex-row min-h-0">
+    <main class="flex-1 flex flex-col lg:flex-row min-h-0 lg:overflow-hidden">
         
         <!-- PAINEL ESQUERDO: CENTRO DE CONTROLO -->
-        <aside class="w-full lg:w-[420px] bg-slate-900 border-r border-slate-800 flex flex-col shrink-0 overflow-y-auto">
+        <aside class="w-full lg:w-[420px] bg-slate-900 border-r border-slate-800 flex flex-col shrink-0 lg:h-full overflow-y-auto">
             
             <!-- ACORDEÃO DE CONTROLOS -->
             <div class="p-5 space-y-6">
@@ -156,7 +156,7 @@
                                     <div class="flex flex-col items-center justify-center pt-3 pb-4 px-2 text-center">
                                         <i class="fa-solid fa-images text-xl text-indigo-400 mb-1.5 animate-pulse"></i>
                                         <p class="text-[10px] text-slate-300 font-bold">Enviar Imagem de Template</p>
-                                        <p class="text-[9px] text-slate-500 mt-1" id="bgFileName">Nenhuma imagem carregada - Tela preto ativo</p>
+                                        <p class="text-[9px] text-slate-500 mt-1" id="bgFileName">Nenhuma imagem carregada - Ecrã preto ativo</p>
                                     </div>
                                     <input type="file" id="bgUpload" accept="image/*" class="hidden" onchange="handleBgUpload(event)">
                                 </label>
@@ -443,7 +443,7 @@
             </div>
             
             <!-- BOTÃO DE EXPORTAÇÃO -->
-            <div class="p-5 mt-auto bg-slate-950/80 border-t border-slate-800 flex flex-col gap-3 sticky bottom-0">
+            <div class="p-5 mt-auto bg-slate-950/80 border-t border-slate-800 flex flex-col gap-3 sticky bottom-0 shrink-0">
                 <div class="flex justify-between items-center text-xs">
                     <span class="text-slate-400">Total Adaptadas:</span>
                     <span id="activeCountriesStatus" class="font-bold text-indigo-400">18 Países Ativos</span>
@@ -451,13 +451,13 @@
                 <button id="zipExportBtn" onclick="downloadAllThumbnails()" 
                     class="w-full bg-emerald-500 hover:bg-emerald-600 text-slate-950 text-sm font-black py-3 px-4 rounded-xl transition shadow-lg shadow-emerald-500/10 flex items-center justify-center gap-2">
                     <i class="fa-solid fa-file-zipper text-lg"></i>
-                    EXPORTAR ZIP (18 IMAGENS)
+                    EXPORTAR ZIP (18 IDIOMAS)
                 </button>
             </div>
         </aside>
 
         <!-- PAINEL DIREITO: PREVIEW & LOCALIZATION GRID -->
-        <section class="flex-1 bg-slate-950 p-6 flex flex-col gap-6 overflow-y-auto">
+        <section class="flex-1 bg-slate-950 p-6 flex flex-col gap-6 lg:h-full overflow-y-auto">
             
             <!-- SELETOR DE MODO DE VISUALIZAÇÃO -->
             <div class="flex flex-wrap items-center justify-between gap-4 bg-slate-900 p-3 rounded-xl border border-slate-800">
@@ -531,7 +531,7 @@
                             </div>
                         </div>
 
-                        <!-- Estilos Individuais Superior -->
+                        <!-- Estilos do Texto Superior -->
                         <div class="space-y-3 pt-3 border-t border-slate-800/60">
                             <span class="text-[11px] font-black uppercase text-slate-500 tracking-wider block">Estilos do Texto Superior</span>
                             <div class="flex gap-2">
@@ -544,7 +544,7 @@
                             </div>
                         </div>
 
-                        <!-- Estilos Individuais Inferior -->
+                        <!-- Estilos do Texto Inferior -->
                         <div class="space-y-3 pt-2">
                             <span class="text-[11px] font-black uppercase text-slate-500 tracking-wider block">Estilos do Texto Inferior</span>
                             <div class="flex gap-2">
@@ -793,8 +793,8 @@
             "fr": { text1: "100 SECRETS", text2: "QUE VOUS NE SAVIEZ PAS" },
             "id": { text1: "100 RAHASIA", text2: "YANG TIDAK KAMU KETAHUI" },
             "ar": { text1: "100 سر", text2: "لم تكن تعرفها" },
-            "hi": { text1: "100 रहस्य", text2: "जजो आप नहीं जानते थे" },
-            "ru": { text1: "100 СЕКРЕТОВ", text2: "О КОТОРЫХ ВЫ НЕ ZНАЛИ" },
+            "hi": { text1: "100 रहस्य", text2: "जो आप नहीं जानते थे" },
+            "ru": { text1: "100 СЕKРЕТОВ", text2: "О КОТОРЫХ ВЫ НЕ ZНАЛИ" },
             "de": { text1: "100 GEHEIMNISSE", text2: "DIE DU NICHT WUSSTEST" },
             "ja": { text1: "あなたが知らない", text2: "100ของความลับ" },
             "it": { text1: "100 SEGRETI", text2: "CHE NON SAPEVI" },
@@ -906,7 +906,7 @@
                     // Cores, Gradientes e Contornos Base
                     t1Color: "#ffffff",
                     t1Gradient: false,
-                    t1Color2: "#94a3b8", // Prateado/Metálico por defeito para gradiente elegante
+                    t1Color2: "#94a3b8", 
                     t1Stroke: "#000000",
                     t1StrokeWidth: 10,
                     t1StrokeOuter: "#ffffff",
@@ -918,7 +918,7 @@
                     t1ShadowX: 8,
                     t1ShadowY: 8,
 
-                    // Texto Inferior (Ativo Gradiente Amarelo -> Laranja por padrão comercial YouTube)
+                    // Texto Inferior
                     t2Color: "#facc15",
                     t2Gradient: true,
                     t2Color2: "#ea580c",
@@ -1100,7 +1100,6 @@
             };
         }
 
-        // Algoritmo de desenho otimizado com suporte para degradês e sombras dinâmicas
         function drawThumbnailOnCanvas(canvas, countryId, width = 1280, height = 720, isInteractive = false) {
             const ctx = canvas.getContext("2d");
             const data = styleData[countryId];
@@ -1182,7 +1181,6 @@
                 const outerCol = data.t1StrokeOuter;
                 const outerW = data.t1StrokeOuterWidth * scaleFactor;
 
-                // Sombras Inteligentes Personalizáveis
                 ctx.shadowColor = data.t1ShadowColor || "#000000";
                 ctx.shadowBlur = (data.t1ShadowBlur !== undefined ? data.t1ShadowBlur : 15) * scaleFactor;
                 ctx.shadowOffsetX = (data.t1ShadowX !== undefined ? data.t1ShadowX : 8) * scaleFactor;
@@ -1207,7 +1205,7 @@
                     ctx.strokeText(processedText, posX, posY);
                 }
 
-                // 3. Draw Interior Fill (Suporte de Degradê Inteligente)
+                // 3. Draw Interior Fill
                 if (data.t1Gradient && fillCol2) {
                     const topY = posY - (t1Size * scaleFactor) / 2;
                     const bottomY = posY + (t1Size * scaleFactor) / 2;
@@ -1243,7 +1241,6 @@
                 const outerCol = data.t2StrokeOuter;
                 const outerW = data.t2StrokeOuterWidth * scaleFactor;
 
-                // Sombras Inteligentes Personalizáveis
                 ctx.shadowColor = data.t2ShadowColor || "#000000";
                 ctx.shadowBlur = (data.t2ShadowBlur !== undefined ? data.t2ShadowBlur : 15) * scaleFactor;
                 ctx.shadowOffsetX = (data.t2ShadowX !== undefined ? data.t2ShadowX : 10) * scaleFactor;
@@ -1268,7 +1265,7 @@
                     ctx.strokeText(processedText, posX, posY);
                 }
 
-                // 3. Draw Interior Fill (Amarelo Degradê por defeito)
+                // 3. Draw Interior Fill
                 if (data.t2Gradient && fillCol2) {
                     const topY = posY - (t2Size * scaleFactor) / 2;
                     const bottomY = posY + (t2Size * scaleFactor) / 2;
@@ -1732,6 +1729,7 @@ ${langCodes}.`;
             downloadCountryPNG(currentCountryId);
         }
 
+        // Renderiza e exporta uma imagem individual em qualidade total (1280x720)
         function downloadCountryPNG(countryId) {
             const tempCanvas = document.createElement("canvas");
             tempCanvas.width = 1280;
@@ -1747,6 +1745,7 @@ ${langCodes}.`;
             link.click();
         }
 
+        // Geração assíncrona do empacotamento ZIP
         async function downloadAllThumbnails() {
             const activeLanguages = LANGUAGES.filter(l => l.active);
             if (activeLanguages.length === 0) {
@@ -1983,22 +1982,23 @@ ${langCodes}.`;
             }
         }
 
+        // Preenche com segurança todos os controles da barra lateral individual
         function syncIndividualUIInputs() {
             const data = styleData[currentCountryId];
             if (!data) return;
 
             // Sincronizar Texto 1 Individual
-            document.getElementById("indT1Color").value = data.t1Color;
-            document.getElementById("indT1Stroke").value = data.t1Stroke;
-            document.getElementById("indT1StrokeWidth").value = data.t1StrokeWidth;
-            document.getElementById("indT1StrokeOuter").value = data.t1StrokeOuter;
-            document.getElementById("indT1StrokeOuterWidth").value = data.t1StrokeOuterWidth;
+            if (document.getElementById("indT1Color")) document.getElementById("indT1Color").value = data.t1Color || "#ffffff";
+            if (document.getElementById("indT1Stroke")) document.getElementById("indT1Stroke").value = data.t1Stroke || "#000000";
+            if (document.getElementById("indT1StrokeWidth")) document.getElementById("indT1StrokeWidth").value = data.t1StrokeWidth || 10;
+            if (document.getElementById("indT1StrokeOuter")) document.getElementById("indT1StrokeOuter").value = data.t1StrokeOuter || "#ffffff";
+            if (document.getElementById("indT1StrokeOuterWidth")) document.getElementById("indT1StrokeOuterWidth").value = data.t1StrokeOuterWidth || 0;
 
             const indT1G = document.getElementById("indT1GradientToggle");
             const indT1C2 = document.getElementById("indT1Color2");
             if (indT1G && indT1C2) {
-                indT1G.checked = data.t1Gradient;
-                indT1C2.value = data.t1Color2;
+                indT1G.checked = !!data.t1Gradient;
+                indT1C2.value = data.t1Color2 || "#94a3b8";
                 if (data.t1Gradient) {
                     indT1C2.classList.remove("opacity-50");
                     indT1C2.removeAttribute("disabled");
@@ -2008,27 +2008,23 @@ ${langCodes}.`;
                 }
             }
 
-            ['indT1ShadowColor', 'indT1ShadowBlur', 'indT1ShadowX', 'indT1ShadowY'].forEach(prop => {
-                const el = document.getElementById(prop);
-                if (el) {
-                    const baseProp = prop.replace('ind', '');
-                    const propName = baseProp.charAt(0).toLowerCase() + baseProp.slice(1);
-                    el.value = data[propName];
-                }
-            });
+            if (document.getElementById("indT1ShadowColor")) document.getElementById("indT1ShadowColor").value = data.t1ShadowColor || "#000000";
+            if (document.getElementById("indT1ShadowBlur")) document.getElementById("indT1ShadowBlur").value = data.t1ShadowBlur !== undefined ? data.t1ShadowBlur : 15;
+            if (document.getElementById("indT1ShadowX")) document.getElementById("indT1ShadowX").value = data.t1ShadowX !== undefined ? data.t1ShadowX : 8;
+            if (document.getElementById("indT1ShadowY")) document.getElementById("indT1ShadowY").value = data.t1ShadowY !== undefined ? data.t1ShadowY : 8;
 
             // Sincronizar Texto 2 Individual
-            document.getElementById("indT2Color").value = data.t2Color;
-            document.getElementById("indT2Stroke").value = data.t2Stroke;
-            document.getElementById("indT2StrokeWidth").value = data.t2StrokeWidth;
-            document.getElementById("indT2StrokeOuter").value = data.t2StrokeOuter;
-            document.getElementById("indT2StrokeOuterWidth").value = data.t2StrokeOuterWidth;
+            if (document.getElementById("indT2Color")) document.getElementById("indT2Color").value = data.t2Color || "#facc15";
+            if (document.getElementById("indT2Stroke")) document.getElementById("indT2Stroke").value = data.t2Stroke || "#000000";
+            if (document.getElementById("indT2StrokeWidth")) document.getElementById("indT2StrokeWidth").value = data.t2StrokeWidth || 10;
+            if (document.getElementById("indT2StrokeOuter")) document.getElementById("indT2StrokeOuter").value = data.t2StrokeOuter || "#ffffff";
+            if (document.getElementById("indT2StrokeOuterWidth")) document.getElementById("indT2StrokeOuterWidth").value = data.t2StrokeOuterWidth || 0;
 
             const indT2G = document.getElementById("indT2GradientToggle");
             const indT2C2 = document.getElementById("indT2Color2");
             if (indT2G && indT2C2) {
-                indT2G.checked = data.t2Gradient;
-                indT2C2.value = data.t2Color2;
+                indT2G.checked = !!data.t2Gradient;
+                indT2C2.value = data.t2Color2 || "#ea580c";
                 if (data.t2Gradient) {
                     indT2C2.classList.remove("opacity-50");
                     indT2C2.removeAttribute("disabled");
@@ -2038,14 +2034,10 @@ ${langCodes}.`;
                 }
             }
 
-            ['indT2ShadowColor', 'indT2ShadowBlur', 'indT2ShadowX', 'indT2ShadowY'].forEach(prop => {
-                const el = document.getElementById(prop);
-                if (el) {
-                    const baseProp = prop.replace('ind', '');
-                    const propName = baseProp.charAt(0).toLowerCase() + baseProp.slice(1);
-                    el.value = data[propName];
-                }
-            });
+            if (document.getElementById("indT2ShadowColor")) document.getElementById("indT2ShadowColor").value = data.t2ShadowColor || "#000000";
+            if (document.getElementById("indT2ShadowBlur")) document.getElementById("indT2ShadowBlur").value = data.t2ShadowBlur !== undefined ? data.t2ShadowBlur : 15;
+            if (document.getElementById("indT2ShadowX")) document.getElementById("indT2ShadowX").value = data.t2ShadowX !== undefined ? data.t2ShadowX : 10;
+            if (document.getElementById("indT2ShadowY")) document.getElementById("indT2ShadowY").value = data.t2ShadowY !== undefined ? data.t2ShadowY : 10;
         }
 
         function syncCurrentLayoutToAll() {
@@ -2064,7 +2056,6 @@ ${langCodes}.`;
                     styleData[lang.id].bold2 = sourceData.bold2;
                     styleData[lang.id].italic2 = sourceData.italic2;
                     
-                    // Sincronização avançada de cores, gradientes e sombras
                     styleData[lang.id].t1Color = sourceData.t1Color;
                     styleData[lang.id].t1Gradient = sourceData.t1Gradient;
                     styleData[lang.id].t1Color2 = sourceData.t1Color2;
