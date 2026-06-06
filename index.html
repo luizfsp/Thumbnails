@@ -203,33 +203,60 @@
                         <div class="space-y-3 border-t border-slate-800/50 pt-3">
                             <h4 class="text-[11px] font-black uppercase text-indigo-400 tracking-wider">Texto Superior</h4>
                             
-                            <!-- Preenchimento Primário & Degradê Inteligente -->
+                            <!-- Tipo de Preenchimento Superior -->
+                            <div>
+                                <label class="block text-[10px] text-slate-500 mb-1">Estilo do Preenchimento</label>
+                                <select id="t1GradientType" onchange="updateGlobalStyle('t1GradientType', this.value)" class="w-full bg-slate-900 border border-slate-800 rounded px-2 py-1 text-xs text-indigo-300 focus:outline-none">
+                                    <option value="solid">Cor Sólida Única</option>
+                                    <option value="2colors">Gradiente Simples (2 Cores)</option>
+                                    <option value="3colors">Gradiente 3 Cores</option>
+                                </select>
+                            </div>
+
+                            <!-- Paletas de Cores Dinâmicas Superior -->
                             <div class="grid grid-cols-3 gap-2">
                                 <div>
-                                    <label class="block text-[10px] text-slate-500 mb-0.5">Cor 1 (Topo)</label>
+                                    <label class="block text-[10px] text-slate-500 mb-0.5" id="t1ColorLabel">Cor 1 (Topo)</label>
                                     <input type="color" id="t1Color" value="#ffffff" onchange="updateGlobalStyle('t1Color', this.value)" class="w-full h-7 bg-transparent cursor-pointer border border-slate-800 rounded">
                                 </div>
-                                <div>
-                                    <label class="block text-[10px] text-slate-500 mb-0.5 flex items-center gap-1">
-                                        <input type="checkbox" id="t1GradientToggle" onchange="updateGlobalStyle('t1Gradient', this.checked)" class="accent-indigo-500 rounded">
-                                        <span>Gradiente</span>
-                                    </label>
-                                    <input type="color" id="t1Color2" value="#94a3b8" onchange="updateGlobalStyle('t1Color2', this.value)" class="w-full h-7 bg-transparent cursor-pointer border border-slate-800 rounded opacity-50" disabled>
+                                <div id="t1Color2Container">
+                                    <label class="block text-[10px] text-slate-500 mb-0.5">Cor 2 (Meio)</label>
+                                    <input type="color" id="t1Color2" value="#94a3b8" onchange="updateGlobalStyle('t1Color2', this.value)" class="w-full h-7 bg-transparent cursor-pointer border border-slate-800 rounded">
                                 </div>
-                                <div>
-                                    <label class="block text-[10px] text-slate-500 mb-0.5">Borda Int.</label>
-                                    <input type="color" id="t1Stroke" value="#000000" onchange="updateGlobalStyle('t1Stroke', this.value)" class="w-full h-7 bg-transparent cursor-pointer border border-slate-800 rounded">
+                                <div id="t1Color3Container">
+                                    <label class="block text-[10px] text-slate-500 mb-0.5">Cor 3 (Base)</label>
+                                    <input type="color" id="t1Color3" value="#475569" onchange="updateGlobalStyle('t1Color3', this.value)" class="w-full h-7 bg-transparent cursor-pointer border border-slate-800 rounded">
                                 </div>
                             </div>
 
-                            <!-- Borda Externa Adicional -->
+                            <!-- Controle da transição do degradê de 3 cores -->
+                            <div id="t1MidStopContainer" class="space-y-1 bg-slate-950/40 p-2 rounded border border-slate-800/40">
+                                <div class="flex justify-between text-[9px] text-slate-500">
+                                    <span>Offset do Degradê Médio</span>
+                                    <span id="t1MidStopLabel" class="text-indigo-400 font-mono">50%</span>
+                                </div>
+                                <input type="range" id="t1MidStop" min="15" max="85" value="50" oninput="updateGlobalStyle('t1MidStop', parseInt(this.value)); document.getElementById('t1MidStopLabel').textContent = this.value + '%'" class="w-full accent-indigo-500 h-1 bg-slate-800 rounded cursor-pointer">
+                            </div>
+
                             <div class="grid grid-cols-3 gap-2">
                                 <div class="col-span-2">
-                                    <label class="block text-[10px] text-slate-500 mb-0.5">Borda Externa</label>
+                                    <label class="block text-[10px] text-slate-500 mb-0.5">Borda Interna (Preta)</label>
+                                    <input type="color" id="t1Stroke" value="#000000" onchange="updateGlobalStyle('t1Stroke', this.value)" class="w-full h-7 bg-transparent cursor-pointer border border-slate-800 rounded">
+                                </div>
+                                <div>
+                                    <label class="block text-[10px] text-slate-500 mb-0.5">Espessura Int.</label>
+                                    <input type="number" id="t1StrokeWidth" value="10" min="0" max="25" oninput="updateGlobalStyle('t1StrokeWidth', parseInt(this.value) || 0)" class="w-full bg-slate-900 text-xs border border-slate-800 rounded px-2 py-1">
+                                </div>
+                            </div>
+
+                            <!-- Borda Externa Adicional (Fazer a Borda Branca) -->
+                            <div class="grid grid-cols-3 gap-2">
+                                <div class="col-span-2">
+                                    <label class="block text-[10px] text-slate-500 mb-0.5">Borda Externa (Contorno)</label>
                                     <input type="color" id="t1StrokeOuter" value="#ffffff" onchange="updateGlobalStyle('t1StrokeOuter', this.value)" class="w-full h-7 bg-transparent cursor-pointer border border-slate-800 rounded">
                                 </div>
                                 <div>
-                                    <label class="block text-[10px] text-slate-500 mb-0.5">Espessura</label>
+                                    <label class="block text-[10px] text-slate-500 mb-0.5">Espessura Ext.</label>
                                     <input type="number" id="t1StrokeOuterWidth" value="0" min="0" max="25" oninput="updateGlobalStyle('t1StrokeOuterWidth', parseInt(this.value) || 0)" class="w-full bg-slate-900 text-xs border border-slate-800 rounded px-2 py-1">
                                 </div>
                             </div>
@@ -283,33 +310,60 @@
                         <div class="space-y-3 border-t border-slate-800/50 pt-3">
                             <h4 class="text-[11px] font-black uppercase text-indigo-400 tracking-wider">Texto Inferior</h4>
                             
-                            <!-- Preenchimento Primário & Degradê Inteligente -->
+                            <!-- Tipo de Preenchimento Inferior -->
+                            <div>
+                                <label class="block text-[10px] text-slate-500 mb-1">Estilo do Preenchimento</label>
+                                <select id="t2GradientType" onchange="updateGlobalStyle('t2GradientType', this.value)" class="w-full bg-slate-900 border border-slate-800 rounded px-2 py-1 text-xs text-indigo-300 focus:outline-none">
+                                    <option value="solid">Cor Sólida Única</option>
+                                    <option value="2colors">Gradiente Simples (2 Cores)</option>
+                                    <option value="3colors" selected>Gradiente 3 Cores</option>
+                                </select>
+                            </div>
+
+                            <!-- Paletas de Cores Dinâmicas Inferior -->
                             <div class="grid grid-cols-3 gap-2">
                                 <div>
-                                    <label class="block text-[10px] text-slate-500 mb-0.5">Cor 1 (Topo)</label>
-                                    <input type="color" id="t2Color" value="#facc15" onchange="updateGlobalStyle('t2Color', this.value)" class="w-full h-7 bg-transparent cursor-pointer border border-slate-800 rounded">
+                                    <label class="block text-[10px] text-slate-500 mb-0.5" id="t2ColorLabel">Cor 1 (Topo)</label>
+                                    <input type="color" id="t2Color" value="#ffffd3" onchange="updateGlobalStyle('t2Color', this.value)" class="w-full h-7 bg-transparent cursor-pointer border border-slate-800 rounded">
                                 </div>
-                                <div>
-                                    <label class="block text-[10px] text-slate-500 mb-0.5 flex items-center gap-1">
-                                        <input type="checkbox" id="t2GradientToggle" onchange="updateGlobalStyle('t2Gradient', this.checked)" class="accent-indigo-500 rounded">
-                                        <span>Gradiente</span>
-                                    </label>
-                                    <input type="color" id="t2Color2" value="#ea580c" onchange="updateGlobalStyle('t2Color2', this.value)" class="w-full h-7 bg-transparent cursor-pointer border border-slate-800 rounded opacity-50" disabled>
+                                <div id="t2Color2Container">
+                                    <label class="block text-[10px] text-slate-500 mb-0.5">Cor 2 (Meio)</label>
+                                    <input type="color" id="t2Color2" value="#ebac28" onchange="updateGlobalStyle('t2Color2', this.value)" class="w-full h-7 bg-transparent cursor-pointer border border-slate-800 rounded">
                                 </div>
-                                <div>
-                                    <label class="block text-[10px] text-slate-500 mb-0.5">Borda Int.</label>
-                                    <input type="color" id="t2Stroke" value="#000000" onchange="updateGlobalStyle('t2Stroke', this.value)" class="w-full h-7 bg-transparent cursor-pointer border border-slate-800 rounded">
+                                <div id="t2Color3Container">
+                                    <label class="block text-[10px] text-slate-500 mb-0.5">Cor 3 (Base)</label>
+                                    <input type="color" id="t2Color3" value="#ea580c" onchange="updateGlobalStyle('t2Color3', this.value)" class="w-full h-7 bg-transparent cursor-pointer border border-slate-800 rounded">
                                 </div>
                             </div>
 
-                            <!-- Borda Externa Adicional -->
+                            <!-- Controle da transição do degradê de 3 cores -->
+                            <div id="t2MidStopContainer" class="space-y-1 bg-slate-950/40 p-2 rounded border border-slate-800/40">
+                                <div class="flex justify-between text-[9px] text-slate-500">
+                                    <span>Offset do Degradê Médio</span>
+                                    <span id="t2MidStopLabel" class="text-indigo-400 font-mono">50%</span>
+                                </div>
+                                <input type="range" id="t2MidStop" min="15" max="85" value="50" oninput="updateGlobalStyle('t2MidStop', parseInt(this.value)); document.getElementById('t2MidStopLabel').textContent = this.value + '%'" class="w-full accent-indigo-500 h-1 bg-slate-800 rounded cursor-pointer">
+                            </div>
+
                             <div class="grid grid-cols-3 gap-2">
                                 <div class="col-span-2">
-                                    <label class="block text-[10px] text-slate-500 mb-0.5">Borda Externa</label>
+                                    <label class="block text-[10px] text-slate-500 mb-0.5">Borda Interna (Preta)</label>
+                                    <input type="color" id="t2Stroke" value="#000000" onchange="updateGlobalStyle('t2Stroke', this.value)" class="w-full h-7 bg-transparent cursor-pointer border border-slate-800 rounded">
+                                </div>
+                                <div>
+                                    <label class="block text-[10px] text-slate-500 mb-0.5">Espessura Int.</label>
+                                    <input type="number" id="t2StrokeWidth" value="10" min="0" max="25" oninput="updateGlobalStyle('t2StrokeWidth', parseInt(this.value) || 0)" class="w-full bg-slate-900 text-xs border border-slate-800 rounded px-2 py-1">
+                                </div>
+                            </div>
+
+                            <!-- Borda Externa Adicional (Fazer a Borda Branca) -->
+                            <div class="grid grid-cols-3 gap-2">
+                                <div class="col-span-2">
+                                    <label class="block text-[10px] text-slate-500 mb-0.5">Borda Externa (Contorno)</label>
                                     <input type="color" id="t2StrokeOuter" value="#ffffff" onchange="updateGlobalStyle('t2StrokeOuter', this.value)" class="w-full h-7 bg-transparent cursor-pointer border border-slate-800 rounded">
                                 </div>
                                 <div>
-                                    <label class="block text-[10px] text-slate-500 mb-0.5">Espessura</label>
+                                    <label class="block text-[10px] text-slate-500 mb-0.5">Espessura Ext.</label>
                                     <input type="number" id="t2StrokeOuterWidth" value="0" min="0" max="25" oninput="updateGlobalStyle('t2StrokeOuterWidth', parseInt(this.value) || 0)" class="w-full bg-slate-900 text-xs border border-slate-800 rounded px-2 py-1">
                                 </div>
                             </div>
@@ -564,27 +618,43 @@
                             <!-- Caixa de Estilo do Texto Superior -->
                             <div class="space-y-3 bg-slate-950/40 p-3 rounded-xl border border-slate-800/50">
                                 <span class="text-[10px] font-bold text-indigo-400 block uppercase">Texto Superior</span>
+                                
+                                <div>
+                                    <label class="block text-[9px] text-slate-500 mb-1">Estilo do Preenchimento</label>
+                                    <select id="indT1GradientType" onchange="updateIndividualStyle('t1GradientType', this.value); syncIndividualUIInputs()" class="w-full bg-slate-950 border border-slate-800 rounded px-2 py-1 text-xs text-indigo-300 focus:outline-none">
+                                        <option value="solid">Cor Sólida Única</option>
+                                        <option value="2colors">Gradiente Simples (2 Cores)</option>
+                                        <option value="3colors">Gradiente 3 Cores</option>
+                                    </select>
+                                </div>
+
                                 <div class="grid grid-cols-3 gap-2">
                                     <div>
-                                        <label class="block text-[9px] text-slate-500 mb-0.5">Cor 1 (Topo)</label>
+                                        <label class="block text-[9px] text-slate-500 mb-0.5" id="indT1ColorLabel">Cor 1 (Topo)</label>
                                         <input type="color" id="indT1Color" onchange="updateIndividualStyle('t1Color', this.value)" class="w-full h-7 bg-transparent cursor-pointer border border-slate-800 rounded">
                                     </div>
-                                    <div>
-                                        <label class="block text-[9px] text-slate-500 mb-0.5 flex items-center gap-1">
-                                            <input type="checkbox" id="indT1GradientToggle" onchange="updateIndividualStyle('t1Gradient', this.checked); syncIndividualUIInputs()" class="accent-indigo-500 rounded scale-90">
-                                            <span>Grad.</span>
-                                        </label>
+                                    <div id="indT1Color2Container">
+                                        <label class="block text-[9px] text-slate-500 mb-0.5">Cor 2 (Meio)</label>
                                         <input type="color" id="indT1Color2" onchange="updateIndividualStyle('t1Color2', this.value)" class="w-full h-7 bg-transparent cursor-pointer border border-slate-800 rounded">
                                     </div>
-                                    <div>
-                                        <label class="block text-[9px] text-slate-500 mb-0.5">Borda Int.</label>
-                                        <input type="color" id="indT1Stroke" onchange="updateIndividualStyle('t1Stroke', this.value)" class="w-full h-7 bg-transparent cursor-pointer border border-slate-800 rounded">
+                                    <div id="indT1Color3Container">
+                                        <label class="block text-[9px] text-slate-500 mb-0.5">Cor 3 (Base)</label>
+                                        <input type="color" id="indT1Color3" onchange="updateIndividualStyle('t1Color3', this.value)" class="w-full h-7 bg-transparent cursor-pointer border border-slate-800 rounded">
                                     </div>
                                 </div>
+
+                                <div id="indT1MidStopContainer" class="space-y-1 bg-slate-950/40 p-2 rounded border border-slate-800/40">
+                                    <div class="flex justify-between text-[9px] text-slate-500">
+                                        <span>Offset do Degradê Médio</span>
+                                        <span id="indT1MidStopLabel" class="text-indigo-400 font-mono">50%</span>
+                                    </div>
+                                    <input type="range" id="indT1MidStop" min="15" max="85" value="50" oninput="updateIndividualStyle('t1MidStop', parseInt(this.value)); document.getElementById('indT1MidStopLabel').textContent = this.value + '%'" class="w-full accent-indigo-500 h-1 bg-slate-800 rounded cursor-pointer">
+                                </div>
+
                                 <div class="grid grid-cols-3 gap-2">
                                     <div class="col-span-2">
-                                        <label class="block text-[9px] text-slate-500 mb-0.5">Borda Ext.</label>
-                                        <input type="color" id="indT1StrokeOuter" onchange="updateIndividualStyle('t1StrokeOuter', this.value)" class="w-full h-7 bg-transparent cursor-pointer border border-slate-800 rounded">
+                                        <label class="block text-[9px] text-slate-500 mb-0.5">Borda Int.</label>
+                                        <input type="color" id="indT1Stroke" onchange="updateIndividualStyle('t1Stroke', this.value)" class="w-full h-7 bg-transparent cursor-pointer border border-slate-800 rounded">
                                     </div>
                                     <div>
                                         <label class="block text-[9px] text-slate-500 mb-0.5">Borda Int. (px)</label>
@@ -619,27 +689,43 @@
                             <!-- Caixa de Estilo do Texto Inferior -->
                             <div class="space-y-3 bg-slate-950/40 p-3 rounded-xl border border-slate-800/50">
                                 <span class="text-[10px] font-bold text-indigo-400 block uppercase">Texto Inferior</span>
+                                
+                                <div>
+                                    <label class="block text-[9px] text-slate-500 mb-1">Estilo do Preenchimento</label>
+                                    <select id="indT2GradientType" onchange="updateIndividualStyle('t2GradientType', this.value); syncIndividualUIInputs()" class="w-full bg-slate-950 border border-slate-800 rounded px-2 py-1 text-xs text-indigo-300 focus:outline-none">
+                                        <option value="solid">Cor Sólida Única</option>
+                                        <option value="2colors">Gradiente Simples (2 Cores)</option>
+                                        <option value="3colors">Gradiente 3 Cores</option>
+                                    </select>
+                                </div>
+
                                 <div class="grid grid-cols-3 gap-2">
                                     <div>
-                                        <label class="block text-[9px] text-slate-500 mb-0.5">Cor 1 (Topo)</label>
+                                        <label class="block text-[9px] text-slate-500 mb-0.5" id="indT2ColorLabel">Cor 1 (Topo)</label>
                                         <input type="color" id="indT2Color" onchange="updateIndividualStyle('t2Color', this.value)" class="w-full h-7 bg-transparent cursor-pointer border border-slate-800 rounded">
                                     </div>
-                                    <div>
-                                        <label class="block text-[9px] text-slate-500 mb-0.5 flex items-center gap-1">
-                                            <input type="checkbox" id="indT2GradientToggle" onchange="updateIndividualStyle('t2Gradient', this.checked); syncIndividualUIInputs()" class="accent-indigo-500 rounded scale-90">
-                                            <span>Grad.</span>
-                                        </label>
+                                    <div id="indT2Color2Container">
+                                        <label class="block text-[9px] text-slate-500 mb-0.5">Cor 2 (Meio)</label>
                                         <input type="color" id="indT2Color2" onchange="updateIndividualStyle('t2Color2', this.value)" class="w-full h-7 bg-transparent cursor-pointer border border-slate-800 rounded">
                                     </div>
-                                    <div>
-                                        <label class="block text-[9px] text-slate-500 mb-0.5">Borda Int.</label>
-                                        <input type="color" id="indT2Stroke" onchange="updateIndividualStyle('t2Stroke', this.value)" class="w-full h-7 bg-transparent cursor-pointer border border-slate-800 rounded">
+                                    <div id="indT2Color3Container">
+                                        <label class="block text-[9px] text-slate-500 mb-0.5">Cor 3 (Base)</label>
+                                        <input type="color" id="indT2Color3" onchange="updateIndividualStyle('t2Color3', this.value)" class="w-full h-7 bg-transparent cursor-pointer border border-slate-800 rounded">
                                     </div>
                                 </div>
+
+                                <div id="indT2MidStopContainer" class="space-y-1 bg-slate-950/40 p-2 rounded border border-slate-800/40">
+                                    <div class="flex justify-between text-[9px] text-slate-500">
+                                        <span>Offset do Degradê Médio</span>
+                                        <span id="indT2MidStopLabel" class="text-indigo-400 font-mono">50%</span>
+                                    </div>
+                                    <input type="range" id="indT2MidStop" min="15" max="85" value="50" oninput="updateIndividualStyle('t2MidStop', parseInt(this.value)); document.getElementById('indT2MidStopLabel').textContent = this.value + '%'" class="w-full accent-indigo-500 h-1 bg-slate-800 rounded cursor-pointer">
+                                </div>
+
                                 <div class="grid grid-cols-3 gap-2">
                                     <div class="col-span-2">
-                                        <label class="block text-[9px] text-slate-500 mb-0.5">Borda Ext.</label>
-                                        <input type="color" id="indT2StrokeOuter" onchange="updateIndividualStyle('t2StrokeOuter', this.value)" class="w-full h-7 bg-transparent cursor-pointer border border-slate-800 rounded">
+                                        <label class="block text-[9px] text-slate-500 mb-0.5">Borda Int.</label>
+                                        <input type="color" id="indT2Stroke" onchange="updateIndividualStyle('t2Stroke', this.value)" class="w-full h-7 bg-transparent cursor-pointer border border-slate-800 rounded">
                                     </div>
                                     <div>
                                         <label class="block text-[9px] text-slate-500 mb-0.5">Borda Int. (px)</label>
@@ -793,7 +879,7 @@
             "fr": { text1: "100 SECRETS", text2: "QUE VOUS NE SAVIEZ PAS" },
             "id": { text1: "100 RAHASIA", text2: "YANG TIDAK KAMU KETAHUI" },
             "ar": { text1: "100 سر", text2: "لم تكن تعرفها" },
-            "hi": { text1: "100 रहस्य", text2: "जो आप नहीं जानते थे" },
+            "hi": { text1: "100 रहस्य", text2: "जो você não sabia" },
             "ru": { text1: "100 СЕKРЕТОВ", text2: "О КОТОРЫХ ВЫ НЕ ZНАЛИ" },
             "de": { text1: "100 GEHEIMNISSE", text2: "DIE DU NICHT WUSSTEST" },
             "ja": { text1: "あなたが知らない", text2: "100ของความลับ" },
@@ -903,10 +989,12 @@
                     bold2: true,
                     italic2: false,
                     
-                    // Cores, Gradientes e Contornos Base
+                    // Cores, Contorno Interno e Gradientes Avançados
                     t1Color: "#ffffff",
-                    t1Gradient: false,
+                    t1GradientType: "solid", // 'solid', '2colors', '3colors' (MrBeast)
                     t1Color2: "#94a3b8", 
+                    t1Color3: "#475569",
+                    t1MidStop: 50,
                     t1Stroke: "#000000",
                     t1StrokeWidth: 10,
                     t1StrokeOuter: "#ffffff",
@@ -918,10 +1006,12 @@
                     t1ShadowX: 8,
                     t1ShadowY: 8,
 
-                    // Texto Inferior
-                    t2Color: "#facc15",
-                    t2Gradient: true,
-                    t2Color2: "#ea580c",
+                    // Texto Inferior (Predefinido como Gradiente Viral de 3 cores no estilo MrBeast!)
+                    t2Color: "#ffffd3", // Cor do Topo (Creme/Amarelo Claro do preset da imagem)
+                    t2GradientType: "3colors", 
+                    t2Color2: "#ebac28", // Cor do Meio (Amarelo Ouro de destaque do preset)
+                    t2Color3: "#ea580c", // Cor da Base (Laranja forte)
+                    t2MidStop: 50,
                     t2Stroke: "#000000",
                     t2StrokeWidth: 10,
                     t2StrokeOuter: "#ffffff",
@@ -1176,6 +1266,7 @@
                 
                 const fillCol1 = data.t1Color;
                 const fillCol2 = data.t1Color2;
+                const fillCol3 = data.t1Color3;
                 const innerCol = data.t1Stroke;
                 const innerW = data.t1StrokeWidth * scaleFactor;
                 const outerCol = data.t1StrokeOuter;
@@ -1191,22 +1282,31 @@
 
                 const processedText = resolveBidi(data.text1, langInfo.rtl);
 
-                // 1. Draw Outer Border
+                // 1. Draw Outer Border (Para o contorno branco saltar)
                 if (outerW > 0) {
                     ctx.strokeStyle = outerCol;
                     ctx.lineWidth = innerW + (outerW * 2);
                     ctx.strokeText(processedText, posX, posY);
                 }
 
-                // 2. Draw Inner Border
+                // 2. Draw Inner Border (Borda preta tradicional)
                 if (innerW > 0) {
                     ctx.strokeStyle = innerCol;
                     ctx.lineWidth = innerW;
                     ctx.strokeText(processedText, posX, posY);
                 }
 
-                // 3. Draw Interior Fill
-                if (data.t1Gradient && fillCol2) {
+                // 3. Draw Interior Fill (Suporte a Degradê Multi-Stop de 3 Cores)
+                if (data.t1GradientType === '3colors' && fillCol2 && fillCol3) {
+                    const topY = posY - (t1Size * scaleFactor) / 2;
+                    const bottomY = posY + (t1Size * scaleFactor) / 2;
+                    const grad = ctx.createLinearGradient(0, topY, 0, bottomY);
+                    const midStopOffset = (data.t1MidStop !== undefined ? data.t1MidStop : 50) / 100;
+                    grad.addColorStop(0, fillCol1);
+                    grad.addColorStop(midStopOffset, fillCol2);
+                    grad.addColorStop(1, fillCol3);
+                    ctx.fillStyle = grad;
+                } else if (data.t1GradientType === '2colors' && fillCol2) {
                     const topY = posY - (t1Size * scaleFactor) / 2;
                     const bottomY = posY + (t1Size * scaleFactor) / 2;
                     const grad = ctx.createLinearGradient(0, topY, 0, bottomY);
@@ -1236,6 +1336,7 @@
                 
                 const fillCol1 = data.t2Color;
                 const fillCol2 = data.t2Color2;
+                const fillCol3 = data.t2Color3;
                 const innerCol = data.t2Stroke;
                 const innerW = data.t2StrokeWidth * scaleFactor;
                 const outerCol = data.t2StrokeOuter;
@@ -1265,8 +1366,17 @@
                     ctx.strokeText(processedText, posX, posY);
                 }
 
-                // 3. Draw Interior Fill
-                if (data.t2Gradient && fillCol2) {
+                // 3. Draw Interior Fill (Suporte a Degradê Multi-Stop de 3 Cores)
+                if (data.t2GradientType === '3colors' && fillCol2 && fillCol3) {
+                    const topY = posY - (t2Size * scaleFactor) / 2;
+                    const bottomY = posY + (t2Size * scaleFactor) / 2;
+                    const grad = ctx.createLinearGradient(0, topY, 0, bottomY);
+                    const midStopOffset = (data.t2MidStop !== undefined ? data.t2MidStop : 50) / 100;
+                    grad.addColorStop(0, fillCol1);
+                    grad.addColorStop(midStopOffset, fillCol2);
+                    grad.addColorStop(1, fillCol3);
+                    ctx.fillStyle = grad;
+                } else if (data.t2GradientType === '2colors' && fillCol2) {
                     const topY = posY - (t2Size * scaleFactor) / 2;
                     const bottomY = posY + (t2Size * scaleFactor) / 2;
                     const grad = ctx.createLinearGradient(0, topY, 0, bottomY);
@@ -1536,6 +1646,9 @@
                 renderIndividualEditorCanvas();
             }
 
+            // Ouvinte global seguro para largar cliques fora do Canvas
+            window.addEventListener("mouseup", handleMouseUp);
+
             function handleMouseUp() {
                 if (isDragging) {
                     isDragging = false;
@@ -1547,7 +1660,6 @@
 
             canvas.addEventListener("mousedown", (e) => handleMouseDown(e.clientX, e.clientY));
             window.addEventListener("mousemove", (e) => handleMouseMove(e.clientX, e.clientY));
-            window.addEventListener("mouseup", handleMouseUp);
 
             canvas.addEventListener("touchstart", (e) => {
                 if (e.touches.length > 0) {
@@ -1936,40 +2048,48 @@ ${langCodes}.`;
             const data = styleData[currentCountryId];
             if (!data) return;
 
-            // Sincronizar controlos globais
-            const t1G = document.getElementById("t1GradientToggle");
-            const t1C2 = document.getElementById("t1Color2");
-            if (t1G && t1C2) {
-                t1G.checked = data.t1Gradient;
-                t1C2.value = data.t1Color2;
-                if (data.t1Gradient) {
-                    t1C2.classList.remove("opacity-50");
-                    t1C2.removeAttribute("disabled");
-                } else {
-                    t1C2.classList.add("opacity-50");
-                    t1C2.setAttribute("disabled", "true");
-                }
-            }
+            // Sincronizar select de tipo de preenchimento Superior
+            const t1Type = data.t1GradientType || "solid";
+            const t1Selector = document.getElementById("t1GradientType");
+            if (t1Selector) t1Selector.value = t1Type;
+
+            // Sincronizar select de tipo de preenchimento Inferior
+            const t2Type = data.t2GradientType || "3colors";
+            const t2Selector = document.getElementById("t2GradientType");
+            if (t2Selector) t2Selector.value = t2Type;
             
+            // Exibir/ocultar inputs do Texto 1 com base no tipo
+            document.getElementById("t1Color2Container").style.display = (t1Type === '2colors' || t1Type === '3colors') ? 'block' : 'none';
+            document.getElementById("t1Color3Container").style.display = (t1Type === '3colors') ? 'block' : 'none';
+            document.getElementById("t1MidStopContainer").style.display = (t1Type === '3colors') ? 'block' : 'none';
+            
+            // Exibir/ocultar inputs do Texto 2 com base no tipo
+            document.getElementById("t2Color2Container").style.display = (t2Type === '2colors' || t2Type === '3colors') ? 'block' : 'none';
+            document.getElementById("t2Color3Container").style.display = (t2Type === '3colors') ? 'block' : 'none';
+            document.getElementById("t2MidStopContainer").style.display = (t2Type === '3colors') ? 'block' : 'none';
+
+            // Sincronizar rótulos de offset de meio degradê
+            const t1Offset = data.t1MidStop !== undefined ? data.t1MidStop : 50;
+            const t1OffsetLabel = document.getElementById("t1MidStopLabel");
+            const t1OffsetSlider = document.getElementById("t1MidStop");
+            if (t1OffsetLabel && t1OffsetSlider) {
+                t1OffsetLabel.textContent = t1Offset + "%";
+                t1OffsetSlider.value = t1Offset;
+            }
+
+            const t2Offset = data.t2MidStop !== undefined ? data.t2MidStop : 50;
+            const t2OffsetLabel = document.getElementById("t2MidStopLabel");
+            const t2OffsetSlider = document.getElementById("t2MidStop");
+            if (t2OffsetLabel && t2OffsetSlider) {
+                t2OffsetLabel.textContent = t2Offset + "%";
+                t2OffsetSlider.value = t2Offset;
+            }
+
             const t1Props = ['t1ShadowColor', 't1ShadowBlur', 't1ShadowX', 't1ShadowY', 't1Color', 't1Stroke', 't1StrokeWidth', 't1StrokeOuter', 't1StrokeOuterWidth'];
             t1Props.forEach(prop => {
                 const el = document.getElementById(prop);
                 if (el) el.value = data[prop];
             });
-
-            const t2G = document.getElementById("t2GradientToggle");
-            const t2C2 = document.getElementById("t2Color2");
-            if (t2G && t2C2) {
-                t2G.checked = data.t2Gradient;
-                t2C2.value = data.t2Color2;
-                if (data.t2Gradient) {
-                    t2C2.classList.remove("opacity-50");
-                    t2C2.removeAttribute("disabled");
-                } else {
-                    t2C2.classList.add("opacity-50");
-                    t2C2.setAttribute("disabled", "true");
-                }
-            }
 
             const t2Props = ['t2ShadowColor', 't2ShadowBlur', 't2ShadowX', 't2ShadowY', 't2Color', 't2Stroke', 't2StrokeWidth', 't2StrokeOuter', 't2StrokeOuterWidth'];
             t2Props.forEach(prop => {
@@ -1987,26 +2107,38 @@ ${langCodes}.`;
             const data = styleData[currentCountryId];
             if (!data) return;
 
+            // Sincronizar tipo de degradê individual
+            const indT1Type = data.t1GradientType || "solid";
+            if (document.getElementById("indT1GradientType")) document.getElementById("indT1GradientType").value = indT1Type;
+            
+            const indT2Type = data.t2GradientType || "3colors";
+            if (document.getElementById("indT2GradientType")) document.getElementById("indT2GradientType").value = indT2Type;
+
+            // Exibir/Ocultar elementos suplementares de degradê individuais
+            if (document.getElementById("indT1Color2Container")) document.getElementById("indT1Color2Container").style.display = (indT1Type === '2colors' || indT1Type === '3colors') ? 'block' : 'none';
+            if (document.getElementById("indT1Color3Container")) document.getElementById("indT1Color3Container").style.display = (indT1Type === '3colors') ? 'block' : 'none';
+            if (document.getElementById("indT1MidStopContainer")) document.getElementById("indT1MidStopContainer").style.display = (indT1Type === '3colors') ? 'block' : 'none';
+
+            if (document.getElementById("indT2Color2Container")) document.getElementById("indT2Color2Container").style.display = (indT2Type === '2colors' || indT2Type === '3colors') ? 'block' : 'none';
+            if (document.getElementById("indT2Color3Container")) document.getElementById("indT2Color3Container").style.display = (indT2Type === '3colors') ? 'block' : 'none';
+            if (document.getElementById("indT2MidStopContainer")) document.getElementById("indT2MidStopContainer").style.display = (indT2Type === '3colors') ? 'block' : 'none';
+
+            const indT1Offset = data.t1MidStop !== undefined ? data.t1MidStop : 50;
+            if (document.getElementById("indT1MidStopLabel")) document.getElementById("indT1MidStopLabel").textContent = indT1Offset + "%";
+            if (document.getElementById("indT1MidStop")) document.getElementById("indT1MidStop").value = indT1Offset;
+
+            const indT2Offset = data.t2MidStop !== undefined ? data.t2MidStop : 50;
+            if (document.getElementById("indT2MidStopLabel")) document.getElementById("indT2MidStopLabel").textContent = indT2Offset + "%";
+            if (document.getElementById("indT2MidStop")) document.getElementById("indT2MidStop").value = indT2Offset;
+
             // Sincronizar Texto 1 Individual
             if (document.getElementById("indT1Color")) document.getElementById("indT1Color").value = data.t1Color || "#ffffff";
+            if (document.getElementById("indT1Color2")) document.getElementById("indT1Color2").value = data.t1Color2 || "#94a3b8";
+            if (document.getElementById("indT1Color3")) document.getElementById("indT1Color3").value = data.t1Color3 || "#475569";
             if (document.getElementById("indT1Stroke")) document.getElementById("indT1Stroke").value = data.t1Stroke || "#000000";
             if (document.getElementById("indT1StrokeWidth")) document.getElementById("indT1StrokeWidth").value = data.t1StrokeWidth || 10;
             if (document.getElementById("indT1StrokeOuter")) document.getElementById("indT1StrokeOuter").value = data.t1StrokeOuter || "#ffffff";
             if (document.getElementById("indT1StrokeOuterWidth")) document.getElementById("indT1StrokeOuterWidth").value = data.t1StrokeOuterWidth || 0;
-
-            const indT1G = document.getElementById("indT1GradientToggle");
-            const indT1C2 = document.getElementById("indT1Color2");
-            if (indT1G && indT1C2) {
-                indT1G.checked = !!data.t1Gradient;
-                indT1C2.value = data.t1Color2 || "#94a3b8";
-                if (data.t1Gradient) {
-                    indT1C2.classList.remove("opacity-50");
-                    indT1C2.removeAttribute("disabled");
-                } else {
-                    indT1C2.classList.add("opacity-50");
-                    indT1C2.setAttribute("disabled", "true");
-                }
-            }
 
             if (document.getElementById("indT1ShadowColor")) document.getElementById("indT1ShadowColor").value = data.t1ShadowColor || "#000000";
             if (document.getElementById("indT1ShadowBlur")) document.getElementById("indT1ShadowBlur").value = data.t1ShadowBlur !== undefined ? data.t1ShadowBlur : 15;
@@ -2014,25 +2146,13 @@ ${langCodes}.`;
             if (document.getElementById("indT1ShadowY")) document.getElementById("indT1ShadowY").value = data.t1ShadowY !== undefined ? data.t1ShadowY : 8;
 
             // Sincronizar Texto 2 Individual
-            if (document.getElementById("indT2Color")) document.getElementById("indT2Color").value = data.t2Color || "#facc15";
+            if (document.getElementById("indT2Color")) document.getElementById("indT2Color").value = data.t2Color || "#ffffd3";
+            if (document.getElementById("indT2Color2")) document.getElementById("indT2Color2").value = data.t2Color2 || "#ebac28";
+            if (document.getElementById("indT2Color3")) document.getElementById("indT2Color3").value = data.t2Color3 || "#ea580c";
             if (document.getElementById("indT2Stroke")) document.getElementById("indT2Stroke").value = data.t2Stroke || "#000000";
             if (document.getElementById("indT2StrokeWidth")) document.getElementById("indT2StrokeWidth").value = data.t2StrokeWidth || 10;
             if (document.getElementById("indT2StrokeOuter")) document.getElementById("indT2StrokeOuter").value = data.t2StrokeOuter || "#ffffff";
             if (document.getElementById("indT2StrokeOuterWidth")) document.getElementById("indT2StrokeOuterWidth").value = data.t2StrokeOuterWidth || 0;
-
-            const indT2G = document.getElementById("indT2GradientToggle");
-            const indT2C2 = document.getElementById("indT2Color2");
-            if (indT2G && indT2C2) {
-                indT2G.checked = !!data.t2Gradient;
-                indT2C2.value = data.t2Color2 || "#ea580c";
-                if (data.t2Gradient) {
-                    indT2C2.classList.remove("opacity-50");
-                    indT2C2.removeAttribute("disabled");
-                } else {
-                    indT2C2.classList.add("opacity-50");
-                    indT2C2.setAttribute("disabled", "true");
-                }
-            }
 
             if (document.getElementById("indT2ShadowColor")) document.getElementById("indT2ShadowColor").value = data.t2ShadowColor || "#000000";
             if (document.getElementById("indT2ShadowBlur")) document.getElementById("indT2ShadowBlur").value = data.t2ShadowBlur !== undefined ? data.t2ShadowBlur : 15;
@@ -2056,9 +2176,12 @@ ${langCodes}.`;
                     styleData[lang.id].bold2 = sourceData.bold2;
                     styleData[lang.id].italic2 = sourceData.italic2;
                     
+                    // Sincronização avançada de cores, gradientes e sombras
                     styleData[lang.id].t1Color = sourceData.t1Color;
-                    styleData[lang.id].t1Gradient = sourceData.t1Gradient;
+                    styleData[lang.id].t1GradientType = sourceData.t1GradientType;
                     styleData[lang.id].t1Color2 = sourceData.t1Color2;
+                    styleData[lang.id].t1Color3 = sourceData.t1Color3;
+                    styleData[lang.id].t1MidStop = sourceData.t1MidStop;
                     styleData[lang.id].t1Stroke = sourceData.t1Stroke;
                     styleData[lang.id].t1StrokeWidth = sourceData.t1StrokeWidth;
                     styleData[lang.id].t1StrokeOuter = sourceData.t1StrokeOuter;
@@ -2069,8 +2192,10 @@ ${langCodes}.`;
                     styleData[lang.id].t1ShadowY = sourceData.t1ShadowY;
 
                     styleData[lang.id].t2Color = sourceData.t2Color;
-                    styleData[lang.id].t2Gradient = sourceData.t2Gradient;
+                    styleData[lang.id].t2GradientType = sourceData.t2GradientType;
                     styleData[lang.id].t2Color2 = sourceData.t2Color2;
+                    styleData[lang.id].t2Color3 = sourceData.t2Color3;
+                    styleData[lang.id].t2MidStop = sourceData.t2MidStop;
                     styleData[lang.id].t2Stroke = sourceData.t2Stroke;
                     styleData[lang.id].t2StrokeWidth = sourceData.t2StrokeWidth;
                     styleData[lang.id].t2StrokeOuter = sourceData.t2StrokeOuter;
@@ -2185,8 +2310,10 @@ ${langCodes}.`;
             data.italic2 = false;
 
             data.t1Color = "#ffffff";
-            data.t1Gradient = false;
+            data.t1GradientType = "solid";
             data.t1Color2 = "#94a3b8";
+            data.t1Color3 = "#475569";
+            data.t1MidStop = 50;
             data.t1Stroke = "#000000";
             data.t1StrokeWidth = 10;
             data.t1StrokeOuter = "#ffffff";
@@ -2196,9 +2323,11 @@ ${langCodes}.`;
             data.t1ShadowX = 8;
             data.t1ShadowY = 8;
             
-            data.t2Color = "#facc15";
-            data.t2Gradient = true;
-            data.t2Color2 = "#ea580c";
+            data.t2Color = "#ffffd3";
+            data.t2GradientType = "3colors";
+            data.t2Color2 = "#ebac28";
+            data.t2Color3 = "#ea580c";
+            data.t2MidStop = 50;
             data.t2Stroke = "#000000";
             data.t2StrokeWidth = 10;
             data.t2StrokeOuter = "#ffffff";
