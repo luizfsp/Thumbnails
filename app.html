@@ -104,24 +104,23 @@
                             <i class="fa-solid fa-palette text-[11px]"></i>
                             Estilos de Thumbs (Slots 1-10)
                         </h3>
-                        <span id="syncStatusIndicator" class="text-[9px] px-2 py-0.5 rounded-full font-bold flex items-center gap-1 bg-amber-500/10 text-amber-400">
-                            <span class="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse"></span> Local
-                        </span>
                     </div>
                     
                     <div class="space-y-2 max-h-52 overflow-y-auto pr-1 mb-2" id="clientSlotsContainer">
                         <!-- Gerado dinamicamente via JS -->
                     </div>
-                    
 
-                    <div class="flex gap-2 border-t border-slate-800/30 pt-2">
-                        <button onclick="exportSlotsBackup()" class="flex-1 bg-slate-900 hover:bg-slate-850 border border-slate-800 hover:border-slate-700 text-[9px] font-bold py-1 px-1.5 rounded transition flex items-center justify-center gap-1 text-slate-300 uppercase tracking-wider" title="Salvar arquivo de backup no computador">
-                            <i class="fa-solid fa-file-export text-indigo-400"></i> Backup
+                    <div class="flex gap-2 border-t border-slate-800/50 pt-3 mt-1">
+                        <button onclick="exportSlotsBackup()" class="flex-1 bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white text-[10px] font-bold py-2 px-3 rounded-lg transition-all shadow-md shadow-indigo-950/50 flex items-center justify-center gap-1.5 uppercase tracking-wider" title="Salvar arquivo de backup de todos os estilos no computador">
+                            <i class="fa-solid fa-download"></i> Backup dos Estilos
                         </button>
-                        <button onclick="triggerImportSlots()" class="flex-1 bg-slate-900 hover:bg-slate-850 border border-slate-800 hover:border-slate-700 text-[9px] font-bold py-1 px-1.5 rounded transition flex items-center justify-center gap-1 text-slate-300 uppercase tracking-wider" title="Restaurar backup do computador">
-                            <i class="fa-solid fa-file-import text-indigo-400"></i> Restaurar
+                        <button onclick="triggerImportSlots()" class="flex-1 bg-slate-800 hover:bg-slate-700 border border-slate-750 hover:border-slate-650 text-white text-[10px] font-bold py-2 px-3 rounded-lg transition-all flex items-center justify-center gap-1.5 uppercase tracking-wider" title="Restaurar backup de todos os estilos do computador">
+                            <i class="fa-solid fa-upload"></i> Restaurar Backup
                         </button>
                         <input type="file" id="slotsImportFile" accept=".json" class="hidden" onchange="importSlotsBackup(event)">
+                    </div>
+                    <div class="text-[9px] text-slate-500 mt-2 text-center">
+                        <i class="fa-solid fa-circle-info mr-0.5"></i> Salva fontes, contornos, posições, cores e línguas selecionadas de todos os slots.
                     </div>
                 </div>
 
@@ -1007,9 +1006,8 @@
             // 2. Dispara o pré-carregamento das bandeiras de alta resolução CORS
             preloadFlags();
 
-            // 3. Inicializa e sincroniza os slots de clientes
-            initSlots();
-            syncCloudSlots();
+            // 3. Inicializa os slots de estilos e carrega do localStorage
+            loadFromLocalStorage();
 
             // 4. Renderiza o grid interativo de status e checkboxes
             renderLanguagesSelectorGrid();
@@ -2704,7 +2702,7 @@ ${langCodes}.`;
                     } else {
                         clientSlots[i - 1].clientName = e.target.value;
                     }
-                    saveSlotsToLocalAndCloudSilent();
+                    saveSlotsToLocal();
                 };
                 div.appendChild(input);
 
@@ -2752,28 +2750,9 @@ ${langCodes}.`;
             }
         }
 
-        async function syncCloudSlots() {
-            updateSyncStatusUI("sincronizando");
-            try {
-                const response = await fetch("https://kvdb.io/9W6Z9eC6b3zLwQfP4oDk/viralfx_client_slots", {
-                    method: 'GET',
-                    headers: { 'Accept': 'application/json' }
-                });
-
-                if (response.ok) {
-                    const cloudData = await response.json();
-                    if (Array.isArray(cloudData) && cloudData.length === 10) {
-                        clientSlots = cloudData;
-                        localStorage.setItem("viralfx_client_slots", JSON.stringify(clientSlots));
-                        updateSyncStatusUI("nuvem");
-                        renderClientSlots();
-                        return;
-                    }
-                }
-            } catch (err) {
-                console.warn("Erro ao carregar da nuvem, usando local:", err);
-            }
-            loadFromLocalStorage();
+        function saveSlotsToLocal() {
+            localStorage.setItem("viralfx_client_slots", JSON.stringify(clientSlots));
+            renderClientSlots();
         }
 
         function loadFromLocalStorage() {
@@ -2783,7 +2762,6 @@ ${langCodes}.`;
                     const parsed = JSON.parse(localData);
                     if (Array.isArray(parsed) && parsed.length === 10) {
                         clientSlots = parsed;
-                        updateSyncStatusUI("local");
                         renderClientSlots();
                         return;
                     }
@@ -2792,61 +2770,7 @@ ${langCodes}.`;
                 console.error(e);
             }
             initSlots();
-            updateSyncStatusUI("local");
             renderClientSlots();
-        }
-
-        async function saveSlotsToLocalAndCloud() {
-            localStorage.setItem("viralfx_client_slots", JSON.stringify(clientSlots));
-            renderClientSlots();
-            updateSyncStatusUI("sincronizando");
-            try {
-                const response = await fetch("https://kvdb.io/9W6Z9eC6b3zLwQfP4oDk/viralfx_client_slots", {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(clientSlots)
-                });
-                if (response.ok) {
-                    updateSyncStatusUI("nuvem");
-                    return;
-                }
-            } catch (err) {
-                console.error(err);
-            }
-            updateSyncStatusUI("local");
-        }
-
-        function saveSlotsToLocalAndCloudSilent() {
-            localStorage.setItem("viralfx_client_slots", JSON.stringify(clientSlots));
-            fetch("https://kvdb.io/9W6Z9eC6b3zLwQfP4oDk/viralfx_client_slots", {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(clientSlots)
-            }).then(response => {
-                if (response.ok) {
-                    updateSyncStatusUI("nuvem");
-                } else {
-                    updateSyncStatusUI("local");
-                }
-            }).catch(() => {
-                updateSyncStatusUI("local");
-            });
-        }
-
-        function updateSyncStatusUI(status) {
-            const indicator = document.getElementById("syncStatusIndicator");
-            if (!indicator) return;
-
-            if (status === "nuvem") {
-                indicator.className = "text-[9px] px-2 py-0.5 rounded-full font-bold flex items-center gap-1 bg-emerald-500/10 text-emerald-400";
-                indicator.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Sincronizado`;
-            } else if (status === "sincronizando") {
-                indicator.className = "text-[9px] px-2 py-0.5 rounded-full font-bold flex items-center gap-1 bg-indigo-500/10 text-indigo-400";
-                indicator.innerHTML = `<i class="fa-solid fa-spinner animate-spin text-[8px]"></i> Sincronizando`;
-            } else {
-                indicator.className = "text-[9px] px-2 py-0.5 rounded-full font-bold flex items-center gap-1 bg-amber-500/10 text-amber-400";
-                indicator.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse"></span> Local (Offline)`;
-            }
         }
 
         function saveSlot(index) {
@@ -2894,7 +2818,7 @@ ${langCodes}.`;
                 }
             };
 
-            saveSlotsToLocalAndCloud();
+            saveSlotsToLocal();
             showToast(`Estilo "${clientName}" salvo no Slot ${index}!`, "success");
         }
 
@@ -3003,7 +2927,7 @@ ${langCodes}.`;
                     active: false,
                     data: null
                 };
-                saveSlotsToLocalAndCloud();
+                saveSlotsToLocal();
                 showToast(`Slot ${index} limpo com sucesso.`, "info");
             }
         }
@@ -3045,8 +2969,8 @@ ${langCodes}.`;
                         const isValid = parsed.every(slot => slot && typeof slot.id === 'number');
                         if (isValid) {
                             clientSlots = parsed;
-                            saveSlotsToLocalAndCloud();
-                            showToast("Backup de estilos importado e sincronizado!", "success");
+                            saveSlotsToLocal();
+                            showToast("Backup de estilos importado com sucesso!", "success");
                         } else {
                             showToast("Arquivo de backup com formato inválido.", "error");
                         }
