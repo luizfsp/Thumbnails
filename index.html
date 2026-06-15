@@ -104,20 +104,23 @@
                             <i class="fa-solid fa-palette text-[11px]"></i>
                             Estilos de Thumbs (Slots 1-10)
                         </h3>
-                        <span id="syncStatusIndicator" class="text-[9px] px-2 py-0.5 rounded-full font-bold flex items-center gap-1 bg-amber-500/10 text-amber-400">
-                            <span class="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse"></span> Local
-                        </span>
                     </div>
                     
                     <div class="space-y-2 max-h-52 overflow-y-auto pr-1 mb-2" id="clientSlotsContainer">
                         <!-- Gerado dinamicamente via JS -->
                     </div>
-                    
-                    <div class="flex justify-between items-center text-[9px] text-slate-500 leading-normal border-t border-slate-800/40 pt-2">
-                        <span><i class="fa-solid fa-circle-info mr-1"></i> Salva fontes, contornos, posições e cores.</span>
-                        <button onclick="syncCloudSlots()" class="text-indigo-400 hover:text-indigo-300 font-bold flex items-center gap-0.5 shrink-0">
-                            <i class="fa-solid fa-rotate text-[8px]"></i> Sincronizar
+
+                    <div class="flex gap-2 border-t border-slate-800/50 pt-3 mt-1">
+                        <button onclick="exportSlotsBackup()" class="flex-1 bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white text-[10px] font-bold py-2 px-3 rounded-lg transition-all shadow-md shadow-indigo-950/50 flex items-center justify-center gap-1.5 uppercase tracking-wider" title="Salvar arquivo de backup de todos os estilos no computador">
+                            <i class="fa-solid fa-download"></i> Backup dos Estilos
                         </button>
+                        <button onclick="triggerImportSlots()" class="flex-1 bg-slate-800 hover:bg-slate-700 border border-slate-750 hover:border-slate-650 text-white text-[10px] font-bold py-2 px-3 rounded-lg transition-all flex items-center justify-center gap-1.5 uppercase tracking-wider" title="Restaurar backup de todos os estilos do computador">
+                            <i class="fa-solid fa-upload"></i> Restaurar Backup
+                        </button>
+                        <input type="file" id="slotsImportFile" accept=".json" class="hidden" onchange="importSlotsBackup(event)">
+                    </div>
+                    <div class="text-[9px] text-slate-500 mt-2 text-center">
+                        <i class="fa-solid fa-circle-info mr-0.5"></i> Salva fontes, contornos, posições, cores e línguas selecionadas de todos os slots.
                     </div>
                 </div>
 
@@ -874,7 +877,7 @@
             { id: "it", code: "IT", flagCode: "it", name: "Italy", lang: "Italian", rtl: false, fontScale: 0.9, active: true },
             { id: "ko", code: "KO", flagCode: "kr", name: "South Korea", lang: "Korean", rtl: false, fontScale: 1.05, active: true },
             { id: "th", code: "TH", flagCode: "th", name: "Thailand", lang: "Thai", rtl: false, fontScale: 0.95, active: true },
-            { id: "vi", code: "VI", flagCode: "vi", name: "Vietnam", lang: "Vietnamese", rtl: false, fontScale: 0.9, active: true },
+            { id: "vn", code: "VN", flagCode: "vn", name: "Vietnam", lang: "Vietnamese", rtl: false, fontScale: 0.9, active: true },
             { id: "tr", code: "TR", flagCode: "tr", name: "Turkey", lang: "Turkish", rtl: false, fontScale: 0.9, active: true },
             { id: "pl", code: "PL", flagCode: "pl", name: "Poland", lang: "Polish", rtl: false, fontScale: 0.75, active: true },
             { id: "tw", code: "TW", flagCode: "tw", name: "Taiwan", lang: "Traditional Chinese", rtl: false, fontScale: 1.05, active: true },
@@ -896,7 +899,7 @@
             "it": { text1: "STRATEGIA SEGRETA", text2: "SVELATA OGGI" },
             "ko": { text1: "비밀 전략", text2: "오늘 전격 공개!" },
             "th": { text1: "กลยุทธ์ลับ", text2: "เปิดเผยวันนี้" },
-            "vi": { text1: "CHIẾN THUẬT BÍ MẬT", text2: "HÉ LỘ HÔM NAY" },
+            "vn": { text1: "CHIẾN THUẬT BÍ MẬT", text2: "HÉ LỘ HÔM NAY" },
             "tr": { text1: "GİZLİ STRATEJİ", text2: "BUGÜN AÇIKLANDI" },
             "pl": { text1: "TAJNA STRATEGIA", text2: "ODKRYTA DZISIAJ" },
             "tw": { text1: "全新秘密策略", text2: "今天正式公開" },
@@ -917,7 +920,7 @@
             "it": { text1: "100 SEGRETI", text2: "CHE NON SAPEVI" },
             "ko": { text1: "당신이 몰랐던", text2: "100가지 비밀" },
             "th": { text1: "100 ความลับ", text2: "ที่คุณไม่เคยรู้" },
-            "vi": { text1: "100 BÍ MẬT", text2: "MÀ BẠN KHÔNG BIẾT" },
+            "vn": { text1: "100 BÍ MẬT", text2: "MÀ BẠN KHÔNG BIẾT" },
             "tr": { text1: "BİLMEDİĞİNİZ", text2: "100 SIR" },
             "pl": { text1: "100 SEKRETÓW", text2: "O KTÓRYCH NIE WIEDZIAŁEŚ" },
             "tw": { text1: "你不知道的", text2: "100個秘密" },
@@ -982,15 +985,29 @@
         }
 
         function initApp() {
+            // Carrega a chave da API do localStorage se existir
+            const savedApiKey = localStorage.getItem("gemini_api_key");
+            if (savedApiKey) {
+                const input = document.getElementById("apiKeyInput");
+                if (input) input.value = savedApiKey;
+            }
+
+            // Escuta mudanças na chave de API para salvar no localStorage
+            const apiKeyInput = document.getElementById("apiKeyInput");
+            if (apiKeyInput) {
+                apiKeyInput.addEventListener("input", (e) => {
+                    localStorage.setItem("gemini_api_key", e.target.value.trim());
+                });
+            }
+
             // 1. Aplica o setup e populamento de estilo estrutural na memória
             initDefaultLayout();
 
             // 2. Dispara o pré-carregamento das bandeiras de alta resolução CORS
             preloadFlags();
 
-            // 3. Inicializa e sincroniza os slots de clientes
-            initSlots();
-            syncCloudSlots();
+            // 3. Inicializa os slots de estilos e carrega do localStorage
+            loadFromLocalStorage();
 
             // 4. Renderiza o grid interativo de status e checkboxes
             renderLanguagesSelectorGrid();
@@ -1907,18 +1924,56 @@
             }
 
             try {
-                const systemPrompt = `You are a world-class global marketing and YouTube optimization copywriter. 
-Your task is to take a YouTube Thumbnail text originally in Portuguese, and adapt it into the target languages.
+                const systemPrompt = `You are an expert YouTube Thumbnail Localization and CTR (Click-Through Rate) Optimization AI specializing in anime (One Piece) and gaming (Roblox) communities. Your job is to adapt a base Portuguese headline into specific target languages, optimizing for local algorithm triggers and community slang while maintaining strict visual layout rules.
 
-CRITICAL CONTEXT RULES:
-1. SISTER STRINGS CONNECTION: The input consists of two lines: Line 1 (Main Text) and Line 2 (Secondary Text). These two lines are often a SINGLE, CONTINUOUS SENTENCE or cohesive phrase split for layout constraints.
-2. You MUST translate them together as a unified semantic block to preserve proper grammatical flow, gender agreements, number agreements, prepositions, and localized case declensions.
-3. Once translated cohesively, split the resulting translation logically back into two lines (text1 and text2). Ensure that reading Line 1 then Line 2 feels like a single, seamless, natural sentence in the target language. Do not isolate them into disconnected hooks unless the input itself represents two unrelated hooks.
-4. Capitalization must remain bold, impactful, and expressive.
-5. Translate the HOOK, the CATCHY impact, matching the local internet culture slang of that specific target country - if applicable.
-6. PUNCTUATION FIDELITY: Never add exclamation marks (!) or question marks (?) if they are not explicitly present in the user's input.
-7. REGIONAL PUNCTUATION RESTRICTIONS: Never use exclamation marks (!) for languages that do not use the roman alphabet under any circumstances.
-8. Output strict JSON with schema matching exactly the specified structure below. No explanation, markdown ticks, or other text outside the JSON.`;
+### 1. SISTER STRINGS CONNECTION: The input consists of two lines: Line 1 (Main Text) and Line 2 (Secondary Text). These two lines are often a SINGLE, CONTINUOUS SENTENCE or cohesive phrase split for layout constraints.
+
+### 2. SEMANTIC INTEGRITY: You MUST translate them together as a unified semantic block to preserve proper grammatical flow, gender/number agreements, prepositions, and localized case declensions.
+
+### 3. COHESIVE SPLIT & CHARACTER BALANCE:
+* Once translated cohesively, split the resulting translation logically back into two lines (text1 and text2).
+* Ensure that reading Line 1 then Line 2 feels like a single, seamless, natural sentence in the target language. Do not isolate them into disconnected hooks unless the input itself represents two unrelated hooks.
+* **VISUAL LENGTH BALANCE**: Ensure that the character counts of Line 1 and Line 2 are reasonably balanced (e.g., avoid a 4-character line paired with a 35-character line, as this breaks thumbnail typography grids). Distribute words evenly between both lines where grammatically sound.
+
+### 4. THE PUNCTUATION SYMMETRY CONSTRAINT
+* For JA (Japanese), KO (Korean), and TW (Traditional Chinese): ABSOLUTELY FORBIDDEN to use exclamation marks ("!" or "！") or question marks ("?" or "？"). These characters break the optical centering and grid symmetry of East Asian typography. Text for JA, KO, TW must end cleanly without any punctuation.
+* Other languages can use "!" normally for impact.
+
+### 5. ULTRA-VIRAL LOCALIZATION RULES (ANTI-LITERAL TRANSLATION)
+* NEVER translate literally. You must LOCALIZE using high-CTR YouTube meta-language and gaming community triggers.
+* BANNED WORDS: Avoid passive, textbook, or educational translations. For example, never use "설명" (explanation) in Korean or "เฉลย" (didactic answer) in Thai. They destroy hype.
+* MANDATORY CTR TRIGGERS:
+  - Japanese (JA): Wrap revelations/theories with "徹底解説" (Deep Dossier / Full Analysis).
+  - Korean (KO): Wrap shocking news/revelations with "대공개" (Grand Reveal) or "진실 대공개".
+  - Traditional Chinese (TW): Use "徹底解密" (Completely Deciphered) or "真相揭曉".
+  - Thai (TH): Always try to prefix shocking reveals with "เผย" (Exposed/Revealed).
+  - English (US): Wrap revelations/theories with "EXPOSED", "REVEALED" or "FULL ANALYSIS".
+  - Spanish (ES): Wrap revelations/theories with "¡REVELADO!", "¡CONFIRMADO!" or "ANÁLISIS COMPLETO".
+  - French (FR): Use "RÉVÉLATIONS", "L'EXPLICATION COMPLETE", or "CONFIRMÉ".
+  - German (DE): Use "ENTHÜLLT" or "KOMPLETTE ERKLÄRUNG".
+  - Hindi (HI): Use "खुलासा" (Revealed) or "बड़ा सच" (Big Truth).
+  - Russian (RU): Use "РАЗОБЛАЧЕНИЕ" (Expose) or "ПОЛНЫЙ РАЗБОР".
+  - Vietnamese (VN): Use "LỘ DIỆN" or "GIẢI MÃ CHI TIẾT".
+  - Indonesian (ID): Use "TERBONGKAR" or "KUPAS TUNTAS".
+
+### 6. CANON ACCURACY & GAMING SLANG
+* Use correct regional terminology for anime lore:
+  - "Clã D" must be translated as: "Ｄの一族" (JA), "D의 일족" (KO), "Ｄ的一族" (TW), "Gia tộc D" (VN).
+  - "Akuma no Mi" (Fruta do Diabo) must be: "悪魔の実" (JA), "악마의 열매" (KO), "惡魔果實" (TW), "Buah Iblis" (ID), "Teufelsfrucht" (DE), "Fruta del Diablo" (ES), "Fruit du Démon" (FR).
+  - "Gear 5" / "Quinta Marcha" must be: "ギア5" (JA), "기어 5" (KO), "五檔" (TW), "Gear 5" (Latin/Others).
+  - "Gorosei" / "Cinco Anciãos" must be: "五老星" (JA/TW), "오로성" (KO), "Five Elders" (US/EN).
+  - "Luffy" must be: "ルフィ" (JA), "루피" (KO), "路飛" (TW), "Luffy" (Latin/Others).
+  - "Imu" must be: "イム様" (JA), "임" (KO), "伊姆" (TW), "Imu" (Latin/Others).
+* Keep Roblox gaming slang natural:
+  - Words like "Robux", "Hacker", "Mod", "Noob", "Pro", "Admin" should remain as standard gaming slang rather than textbook translations.
+
+### 7. RTL (RIGHT-TO-LEFT) FORMATTING
+* For Arabic (ar), ensure the text flows correctly from Right-to-Left. If any English acronyms (e.g., ROBLOX) or numbers (e.g., GEAR 5, 100) are mixed, format the sentence so that it preserves correct reading and display order in RTL layouts.
+
+### 8. TONALITY
+All texts must be in ALL CAPS for Latin-based alphabets to fit heavy thumbnail fonts. Tone must be urgent, mysterious, and high-impact.
+
+### 9. Output strict JSON with schema matching exactly the specified structure below. No explanation, markdown ticks, or other text outside the JSON. Use the language codes provided in the query.`;
 
                 const langCodes = activeLanguages.map(l => l.code).join(", ");
                 let userQuery = `Original Portuguese texts:
@@ -2647,7 +2702,7 @@ ${langCodes}.`;
                     } else {
                         clientSlots[i - 1].clientName = e.target.value;
                     }
-                    saveSlotsToLocalAndCloudSilent();
+                    saveSlotsToLocal();
                 };
                 div.appendChild(input);
 
@@ -2695,28 +2750,9 @@ ${langCodes}.`;
             }
         }
 
-        async function syncCloudSlots() {
-            updateSyncStatusUI("sincronizando");
-            try {
-                const response = await fetch("https://kvdb.io/9W6Z9eC6b3zLwQfP4oDk/viralfx_client_slots", {
-                    method: 'GET',
-                    headers: { 'Accept': 'application/json' }
-                });
-
-                if (response.ok) {
-                    const cloudData = await response.json();
-                    if (Array.isArray(cloudData) && cloudData.length === 10) {
-                        clientSlots = cloudData;
-                        localStorage.setItem("viralfx_client_slots", JSON.stringify(clientSlots));
-                        updateSyncStatusUI("nuvem");
-                        renderClientSlots();
-                        return;
-                    }
-                }
-            } catch (err) {
-                console.warn("Erro ao carregar da nuvem, usando local:", err);
-            }
-            loadFromLocalStorage();
+        function saveSlotsToLocal() {
+            localStorage.setItem("viralfx_client_slots", JSON.stringify(clientSlots));
+            renderClientSlots();
         }
 
         function loadFromLocalStorage() {
@@ -2726,7 +2762,6 @@ ${langCodes}.`;
                     const parsed = JSON.parse(localData);
                     if (Array.isArray(parsed) && parsed.length === 10) {
                         clientSlots = parsed;
-                        updateSyncStatusUI("local");
                         renderClientSlots();
                         return;
                     }
@@ -2735,61 +2770,7 @@ ${langCodes}.`;
                 console.error(e);
             }
             initSlots();
-            updateSyncStatusUI("local");
             renderClientSlots();
-        }
-
-        async function saveSlotsToLocalAndCloud() {
-            localStorage.setItem("viralfx_client_slots", JSON.stringify(clientSlots));
-            renderClientSlots();
-            updateSyncStatusUI("sincronizando");
-            try {
-                const response = await fetch("https://kvdb.io/9W6Z9eC6b3zLwQfP4oDk/viralfx_client_slots", {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(clientSlots)
-                });
-                if (response.ok) {
-                    updateSyncStatusUI("nuvem");
-                    return;
-                }
-            } catch (err) {
-                console.error(err);
-            }
-            updateSyncStatusUI("local");
-        }
-
-        function saveSlotsToLocalAndCloudSilent() {
-            localStorage.setItem("viralfx_client_slots", JSON.stringify(clientSlots));
-            fetch("https://kvdb.io/9W6Z9eC6b3zLwQfP4oDk/viralfx_client_slots", {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(clientSlots)
-            }).then(response => {
-                if (response.ok) {
-                    updateSyncStatusUI("nuvem");
-                } else {
-                    updateSyncStatusUI("local");
-                }
-            }).catch(() => {
-                updateSyncStatusUI("local");
-            });
-        }
-
-        function updateSyncStatusUI(status) {
-            const indicator = document.getElementById("syncStatusIndicator");
-            if (!indicator) return;
-
-            if (status === "nuvem") {
-                indicator.className = "text-[9px] px-2 py-0.5 rounded-full font-bold flex items-center gap-1 bg-emerald-500/10 text-emerald-400";
-                indicator.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Sincronizado`;
-            } else if (status === "sincronizando") {
-                indicator.className = "text-[9px] px-2 py-0.5 rounded-full font-bold flex items-center gap-1 bg-indigo-500/10 text-indigo-400";
-                indicator.innerHTML = `<i class="fa-solid fa-spinner animate-spin text-[8px]"></i> Sincronizando`;
-            } else {
-                indicator.className = "text-[9px] px-2 py-0.5 rounded-full font-bold flex items-center gap-1 bg-amber-500/10 text-amber-400";
-                indicator.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse"></span> Local (Offline)`;
-            }
         }
 
         function saveSlot(index) {
@@ -2837,7 +2818,7 @@ ${langCodes}.`;
                 }
             };
 
-            saveSlotsToLocalAndCloud();
+            saveSlotsToLocal();
             showToast(`Estilo "${clientName}" salvo no Slot ${index}!`, "success");
         }
 
@@ -2946,9 +2927,63 @@ ${langCodes}.`;
                     active: false,
                     data: null
                 };
-                saveSlotsToLocalAndCloud();
+                saveSlotsToLocal();
                 showToast(`Slot ${index} limpo com sucesso.`, "info");
             }
+        }
+
+        // Lógica de Exportação e Importação de Backup de Estilos em JSON
+        function exportSlotsBackup() {
+            try {
+                const jsonStr = JSON.stringify(clientSlots, null, 2);
+                const blob = new Blob([jsonStr], { type: "application/json" });
+                const url = URL.createObjectURL(blob);
+                
+                const link = document.createElement("a");
+                link.download = "viralfx_thumbs_styles_backup.json";
+                link.href = url;
+                link.click();
+                
+                URL.revokeObjectURL(url);
+                showToast("Backup de estilos exportado com sucesso!", "success");
+            } catch (err) {
+                console.error(err);
+                showToast("Erro ao exportar arquivo de backup.", "error");
+            }
+        }
+
+        function triggerImportSlots() {
+            const fileInput = document.getElementById("slotsImportFile");
+            if (fileInput) fileInput.click();
+        }
+
+        function importSlotsBackup(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const parsed = JSON.parse(e.target.result);
+                    if (Array.isArray(parsed) && parsed.length === 10) {
+                        const isValid = parsed.every(slot => slot && typeof slot.id === 'number');
+                        if (isValid) {
+                            clientSlots = parsed;
+                            saveSlotsToLocal();
+                            showToast("Backup de estilos importado com sucesso!", "success");
+                        } else {
+                            showToast("Arquivo de backup com formato inválido.", "error");
+                        }
+                    } else {
+                        showToast("O backup deve conter exatamente 10 slots.", "error");
+                    }
+                } catch (err) {
+                    console.error(err);
+                    showToast("Erro ao ler o arquivo JSON de backup.", "error");
+                }
+                event.target.value = "";
+            };
+            reader.readAsText(file);
         }
 
         window.onload = function() {
