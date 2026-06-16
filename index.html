@@ -3329,16 +3329,17 @@ ${langCodes}.`;
                 const systemPrompt = `You are an expert YouTube title localization and CTR (Click-Through Rate) optimization AI specializing in anime (One Piece) and gaming (Roblox) communities. Your job is to translate and adapt a base Portuguese video title into target languages.
                 
 ### CRITICAL RULES:
-1. You must LOCALIZE using high-CTR YouTube meta-language and gaming community triggers. Keep the original idea and context.
-2. Keep it under 65 characters to prevent truncation on YouTube.
-3. Tone: High-impact, urgent, intriguing, and viral. Keep it natural to each target country's YouTube slang.
-4. Banned Words: Avoid passive, textbook, or educational words (e.g. never use "explaining" or "explanation"). Focus on excitement and mystery.
-5. Canonical Accuracy: Use canonical community translations for Roblox and One Piece lore. Examples:
+1. Localization & Triggers: You must LOCALIZE using high-CTR YouTube meta-language and anime community triggers. Keep the original idea, emotional weight, and context intact. Do not perform literal translations; adapt to each country's organic viewer behavior.
+2. Character Limit & Front-Loading: The total title length can be up to 95 characters (absolute maximum of 100). However, you MUST front-load the core high-impact hook, curiosity gap, or viral slang within the FIRST 50-60 characters. The text after the 60th character should be reserved for secondary context and the anime/game title, ensuring mobile truncation doesn't kill the click incentive.
+3. Tone: High-impact, urgent, intriguing, and viral. Keep it natural to each target country's YouTube slang. Use uppercase selectively for major trigger words if it fits the region's style.
+4. Banned Words: Avoid passive, textbook, or educational words (e.g., never use "explaining", "explanation", "analysis", "review"). Focus on excitement, shock, and mystery.
+5. Canonical Accuracy & Dual-Name SEO: Use canonical community translations for Roblox and One Piece lore. For specific Asian markets, use the DUAL-NAME format (Local Name / English Name) for the anime title after the separator to maximize both local search volume and global community trust.
+   Examples:
    - "Clã D" -> "Ｄの一族" (JA), "D의 일족" (KO), "Ｄ的一族" (TW), "Gia tộc D" (VN).
    - "Akuma no Mi" -> "悪魔の実" (JA), "악마의 열매" (KO), "惡魔果實" (TW), "Buah Iblis" (ID).
    - "Gear 5" -> "ギア5" (JA), "기어 5" (KO), "五檔" (TW), "Gear 5" (Latin/Others).
-6. If theres a separation in the input "|", keep what is after that the same, since its the title of the anime or game. Example:
-    | One Piece
+   - "ONE PIECE" (Anime Title) -> "ワンピース / ONE PIECE" (JA), "원피스 / ONE PIECE" (KO), "航海王 / ONE PIECE" (TW), "Vua Hải Tặc / ONE PIECE" (VN), "ONE PIECE" (US, ES, FR, DE, IT, PL, TR, ID, AR, HI).
+6. Structure & Separators: If the input has a separator like "|", preserve the structural format. Replace whatever is after the "|" with the localized canonical anime/game title mapping defined in Rule 5. Ensure that the main hook before the "|" stays clean, urgent, and respects the front-loading rule (Rule 2).
 7. Output strict JSON with schema matching exactly the specified structure below. No explanation, markdown ticks, or other text outside the JSON.`;
 
                 const langCodes = activeLanguages.map(l => l.code).join(", ");
