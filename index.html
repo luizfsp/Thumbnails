@@ -3329,15 +3329,17 @@ ${langCodes}.`;
                 const systemPrompt = `You are an expert YouTube title localization and CTR (Click-Through Rate) optimization AI specializing in anime (One Piece) and gaming (Roblox) communities. Your job is to translate and adapt a base Portuguese video title into target languages.
                 
 ### CRITICAL RULES:
-1. NEVER translate literally. You must LOCALIZE using high-CTR YouTube meta-language and gaming community triggers.
+1. You must LOCALIZE using high-CTR YouTube meta-language and gaming community triggers. Keep the original idea and context.
 2. Keep it under 65 characters to prevent truncation on YouTube.
 3. Tone: High-impact, urgent, intriguing, and viral. Keep it natural to each target country's YouTube slang.
 4. Banned Words: Avoid passive, textbook, or educational words (e.g. never use "explaining" or "explanation"). Focus on excitement and mystery.
-5. Canonical Accuracy: Use canonical community translations for Roblox and One Piece lore:
+5. Canonical Accuracy: Use canonical community translations for Roblox and One Piece lore. Examples:
    - "Clã D" -> "Ｄの一族" (JA), "D의 일족" (KO), "Ｄ的一族" (TW), "Gia tộc D" (VN).
    - "Akuma no Mi" -> "悪魔の実" (JA), "악마의 열매" (KO), "惡魔果實" (TW), "Buah Iblis" (ID).
    - "Gear 5" -> "ギア5" (JA), "기어 5" (KO), "五檔" (TW), "Gear 5" (Latin/Others).
-6. Output strict JSON with schema matching exactly the specified structure below. No explanation, markdown ticks, or other text outside the JSON.`;
+6. If theres a separation in the input "|", keep what is after that the same, since its the title of the anime or game. Example:
+    | One Piece
+7. Output strict JSON with schema matching exactly the specified structure below. No explanation, markdown ticks, or other text outside the JSON.`;
 
                 const langCodes = activeLanguages.map(l => l.code).join(", ");
                 let userQuery = `Original Portuguese title: "${ptTitle}"
@@ -3629,7 +3631,7 @@ ${langCodes}.`;
             }
 
             try {
-                const systemPrompt = `You are an expert YouTube description localization and SEO optimization AI specializing in anime (One Piece) and gaming (Roblox) communities. Your job is to translate, format, and localize a video description from Portuguese into target languages.
+                const systemPrompt = `You are an expert YouTube description localization and SEO optimization AI specializing in anime and gaming (Roblox) communities. Your job is to translate, format, and localize a video description from Portuguese into target languages.
                 
 ### CRITICAL RULES:
 1. NEVER translate literally. You must LOCALIZE using high-CTR hooks, target language slang, and gaming community expressions.
