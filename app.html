@@ -556,6 +556,12 @@
                     <button id="tabEditorBtn" onclick="switchTab('editor')" class="px-4 py-2 rounded-lg text-xs font-bold text-slate-400 hover:text-white transition flex items-center gap-2">
                         <i class="fa-solid fa-sliders"></i> Ajuste Fino Individual
                     </button>
+                    <button id="tabTitlesBtn" onclick="switchTab('titles')" class="px-4 py-2 rounded-lg text-xs font-bold text-slate-400 hover:text-white transition flex items-center gap-2">
+                        <i class="fa-solid fa-heading"></i> Criador de Títulos
+                    </button>
+                    <button id="tabDescriptionsBtn" onclick="switchTab('descriptions')" class="px-4 py-2 rounded-lg text-xs font-bold text-slate-400 hover:text-white transition flex items-center gap-2">
+                        <i class="fa-solid fa-file-lines"></i> Criador de Descrições
+                    </button>
                 </div>
                 <div class="text-xs text-slate-400 flex items-center gap-2">
                     <span class="inline-block w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
@@ -833,6 +839,126 @@
                 </div>
             </div>
 
+            <!-- TABELA 3: CRIADOR DE TÍTULOS -->
+            <div id="tabTitles" class="hidden">
+                <div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
+                    <!-- Painel de Entrada (Lado Esquerdo / 1 Coluna em XL) -->
+                    <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 space-y-6 h-fit">
+                        <div class="border-b border-slate-800 pb-3">
+                            <h4 class="font-black text-sm text-slate-200 flex items-center gap-2">
+                                <i class="fa-solid fa-wand-magic-sparkles text-indigo-400"></i>
+                                Criar Título Viral
+                            </h4>
+                            <p class="text-[10px] text-slate-400 mt-1">Gere e localize títulos com foco em CTR e engajamento local.</p>
+                        </div>
+                        
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-xs text-slate-400 font-semibold mb-1">Título Original em Português (PT-BR)</label>
+                                <textarea id="originalTitleInput" rows="3" placeholder="Ex: A ESTRATÉGIA SECRETA DO MEU NOVO JOGO NO ROBLOX!" 
+                                    class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-sm text-white placeholder:text-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 font-bold resize-none"></textarea>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-xs text-slate-400 font-semibold mb-1">Instruções Extras de Contexto (Opcional)</label>
+                                <textarea id="titleAiInstructions" rows="3" placeholder="Ex: Focar no mistério do Gear 5 / Mencionar que dá Robux grátis" 
+                                    class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-300 placeholder:text-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 font-medium resize-none"></textarea>
+                            </div>
+                        </div>
+
+                        <button id="btnTranslateTitles" onclick="translateTitlesWithAI()"
+                            class="w-full bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white text-xs font-black py-3 px-4 rounded-xl transition shadow-lg shadow-indigo-500/10 flex items-center justify-center gap-2 uppercase tracking-wider">
+                            <i class="fa-solid fa-wand-magic-sparkles text-sm"></i>
+                            Gerar e Localizar Títulos
+                        </button>
+                    </div>
+
+                    <!-- Painel de Resultados (Lado Direito / 2 Colunas em XL) -->
+                    <div class="xl:col-span-2 bg-slate-900 border border-slate-800 rounded-2xl p-6 flex flex-col min-h-[400px]">
+                        <div class="border-b border-slate-800 pb-3 mb-4 flex justify-between items-center">
+                            <div>
+                                <h4 class="font-black text-sm text-slate-200">Resultados Localizados</h4>
+                                <p class="text-[10px] text-slate-400 mt-1">Traduções otimizadas para os países ativos</p>
+                            </div>
+                            <button onclick="copyAllTitles()" id="btnCopyAllTitles" class="px-3 py-1.5 bg-slate-950 border border-slate-800 hover:border-slate-700 text-[10px] font-bold rounded-lg transition text-slate-300 hover:text-white flex items-center gap-1.5 uppercase">
+                                <i class="fa-solid fa-copy text-indigo-400"></i> Copiar Todos
+                            </button>
+                        </div>
+                        
+                        <div id="titlesResultsList" class="space-y-3 flex-1 overflow-y-auto pr-1 max-h-[600px] custom-scrollbar">
+                            <div class="flex flex-col items-center justify-center text-slate-500 h-full py-12 text-center">
+                                <i class="fa-solid fa-heading text-4xl mb-3 text-slate-700"></i>
+                                <p class="text-xs font-semibold">Nenhum título gerado ainda.</p>
+                                <p class="text-[10px] text-slate-600 max-w-xs mt-1">Digite um título em português à esquerda e clique em gerar.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TABELA 4: CRIADOR DE DESCRIÇÕES -->
+            <div id="tabDescriptions" class="hidden">
+                <div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
+                    <!-- Painel de Entrada (Lado Esquerdo / 1 Coluna em XL) -->
+                    <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 space-y-6 h-fit">
+                        <div class="border-b border-slate-800 pb-3">
+                            <h4 class="font-black text-sm text-slate-200 flex items-center gap-2">
+                                <i class="fa-solid fa-wand-magic-sparkles text-indigo-400"></i>
+                                Criar Descrição Viral
+                            </h4>
+                            <p class="text-[10px] text-slate-400 mt-1">Localize a descrição do vídeo para engajamento e SEO regional.</p>
+                        </div>
+                        
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-xs text-slate-400 font-semibold mb-1">Descrição Original em Português (PT-BR)</label>
+                                <textarea id="originalDescriptionInput" rows="6" placeholder="Escreva a descrição do seu vídeo com links, redes sociais, hashtags..." 
+                                    class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-300 placeholder:text-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 font-medium font-sans resize-y"></textarea>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-xs text-slate-400 font-semibold mb-1">Instruções Extras de Contexto (Opcional)</label>
+                                <textarea id="descriptionAiInstructions" rows="3" placeholder="Ex: Manter links de redes sociais intactos / Usar hashtags locais no final" 
+                                    class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-300 placeholder:text-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 font-medium resize-none"></textarea>
+                            </div>
+                        </div>
+
+                        <button id="btnTranslateDescriptions" onclick="translateDescriptionsWithAI()"
+                            class="w-full bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white text-xs font-black py-3 px-4 rounded-xl transition shadow-lg shadow-indigo-500/10 flex items-center justify-center gap-2 uppercase tracking-wider">
+                            <i class="fa-solid fa-wand-magic-sparkles text-sm"></i>
+                            Gerar e Localizar Descrições
+                        </button>
+                    </div>
+
+                    <!-- Painel de Resultados (Lado Direito / 2 Colunas em XL) -->
+                    <div class="xl:col-span-2 bg-slate-900 border border-slate-800 rounded-2xl p-6 flex flex-col min-h-[500px]">
+                        <div class="border-b border-slate-800 pb-3 mb-4 flex justify-between items-center">
+                            <div>
+                                <h4 class="font-black text-sm text-slate-200">Resultados Localizados</h4>
+                                <p class="text-[10px] text-slate-400 mt-1">Descrições completas organizadas em painéis colapsáveis</p>
+                            </div>
+                            <div class="flex gap-2">
+                                <button onclick="toggleAllDescriptionPanels(true)" class="px-2.5 py-1.5 bg-slate-950 border border-slate-800 hover:border-slate-700 text-[9px] font-bold rounded-lg text-slate-300 hover:text-white uppercase transition">
+                                    Expandir Tudo
+                                </button>
+                                <button onclick="toggleAllDescriptionPanels(false)" class="px-2.5 py-1.5 bg-slate-950 border border-slate-800 hover:border-slate-700 text-[9px] font-bold rounded-lg text-slate-300 hover:text-white uppercase transition">
+                                    Recolher Tudo
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div id="descriptionsResultsList" class="space-y-3 flex-1 overflow-y-auto pr-1 max-h-[600px] custom-scrollbar">
+                            <div class="flex flex-col items-center justify-center text-slate-500 h-full py-12 text-center">
+                                <i class="fa-solid fa-file-lines text-4xl mb-3 text-slate-700"></i>
+                                <p class="text-xs font-semibold">Nenhuma descrição gerada ainda.</p>
+                                <p class="text-[10px] text-slate-600 max-w-xs mt-1">Digite a descrição à esquerda e clique em gerar.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
         </section>
     </main>
 
@@ -935,6 +1061,8 @@
         let globalTextAlignment = "center";
         let hasBeenTranslated = false;
         let selectedBadgeType = "none";
+        let titleTranslations = {};
+        let descriptionTranslations = {};
         
         let globalFontScale1 = 1.0;
         let globalFontScale2 = 1.0;
@@ -1149,6 +1277,11 @@
             const zipBtn = document.getElementById("zipExportBtn");
             if (zipBtn) {
                 zipBtn.textContent = `EXPORTAR ZIP (${activeCount} IDIOMAS)`;
+            }
+
+            if (typeof activeTab !== 'undefined') {
+                if (activeTab === "titles") renderTitlesResults();
+                else if (activeTab === "descriptions") renderDescriptionsResults();
             }
         }
 
@@ -1926,7 +2059,7 @@
             try {
                 const systemPrompt = `You are an expert YouTube Thumbnail Localization and CTR (Click-Through Rate) Optimization AI specializing in anime (One Piece) and gaming (Roblox) communities. Your job is to adapt a base Portuguese headline into specific target languages, optimizing for local algorithm triggers and community slang while maintaining strict visual layout rules.
 
-### 1. SISTER STRINGS CONNECTION: The input consists of two lines: Line 1 (Main Text) and Line 2 (Secondary Text). These two lines are often a SINGLE, CONTINUOUS SENTENCE or cohesive phrase split for layout constraints.
+### 1. SISTER STRINGS CONNECTION: The input consists of one or two lines: Line 1 (Main Text) and Line 2 (Secondary Text). These two lines are often a SINGLE, CONTINUOUS SENTENCE or cohesive phrase split for layout constraints. When there's only one line as input, NEVER add another one.
 
 ### 2. SEMANTIC INTEGRITY: You MUST translate them together as a unified semantic block to preserve proper grammatical flow, gender/number agreements, prepositions, and localized case declensions.
 
@@ -2640,19 +2773,32 @@ ${langCodes}.`;
             activeTab = tab;
             const gridBtn = document.getElementById("tabGridBtn");
             const editorBtn = document.getElementById("tabEditorBtn");
+            const titlesBtn = document.getElementById("tabTitlesBtn");
+            const descriptionsBtn = document.getElementById("tabDescriptionsBtn");
+            
             const gridTab = document.getElementById("tabGrid");
             const editorTab = document.getElementById("tabEditor");
+            const titlesTab = document.getElementById("tabTitles");
+            const descriptionsTab = document.getElementById("tabDescriptions");
+
+            // Reset buttons to inactive style
+            gridBtn.className = "px-4 py-2 rounded-lg text-xs font-bold text-slate-400 hover:text-white transition flex items-center gap-2";
+            editorBtn.className = "px-4 py-2 rounded-lg text-xs font-bold text-slate-400 hover:text-white transition flex items-center gap-2";
+            titlesBtn.className = "px-4 py-2 rounded-lg text-xs font-bold text-slate-400 hover:text-white transition flex items-center gap-2";
+            descriptionsBtn.className = "px-4 py-2 rounded-lg text-xs font-bold text-slate-400 hover:text-white transition flex items-center gap-2";
+
+            // Hide all tabs
+            gridTab.classList.add("hidden");
+            editorTab.classList.add("hidden");
+            titlesTab.classList.add("hidden");
+            descriptionsTab.classList.add("hidden");
 
             if (tab === "grid") {
                 gridBtn.className = "px-4 py-2 rounded-lg text-xs font-black bg-indigo-500 text-white transition flex items-center gap-2";
-                editorBtn.className = "px-4 py-2 rounded-lg text-xs font-bold text-slate-400 hover:text-white transition flex items-center gap-2";
                 gridTab.classList.remove("hidden");
-                editorTab.classList.add("hidden");
                 renderGrid(); 
-            } else {
-                gridBtn.className = "px-4 py-2 rounded-lg text-xs font-bold text-slate-400 hover:text-white transition flex items-center gap-2";
+            } else if (tab === "editor") {
                 editorBtn.className = "px-4 py-2 rounded-lg text-xs font-black bg-indigo-500 text-white transition flex items-center gap-2";
-                gridTab.classList.add("hidden");
                 editorTab.classList.remove("hidden");
                 
                 if (!LANGUAGES.find(l => l.id === currentCountryId)?.active) {
@@ -2661,8 +2807,15 @@ ${langCodes}.`;
                         currentCountryId = firstActive.id;
                     }
                 }
-                
                 loadCountryToEditor(currentCountryId);
+            } else if (tab === "titles") {
+                titlesBtn.className = "px-4 py-2 rounded-lg text-xs font-black bg-indigo-500 text-white transition flex items-center gap-2";
+                titlesTab.classList.remove("hidden");
+                renderTitlesResults();
+            } else if (tab === "descriptions") {
+                descriptionsBtn.className = "px-4 py-2 rounded-lg text-xs font-black bg-indigo-500 text-white transition flex items-center gap-2";
+                descriptionsTab.classList.remove("hidden");
+                renderDescriptionsResults();
             }
         }
 
@@ -2984,6 +3137,599 @@ ${langCodes}.`;
                 event.target.value = "";
             };
             reader.readAsText(file);
+        }
+
+        // Lógica de Tradução e Cópia do Criador de Títulos (Aba 3)
+        function renderTitlesResults() {
+            const container = document.getElementById("titlesResultsList");
+            if (!container) return;
+
+            const activeLanguages = LANGUAGES.filter(l => l.active);
+            if (activeLanguages.length === 0) {
+                container.innerHTML = `
+                    <div class="flex flex-col items-center justify-center text-slate-500 h-full py-12 text-center">
+                        <i class="fa-solid fa-circle-exclamation text-4xl mb-3 text-slate-700"></i>
+                        <p class="text-xs font-semibold">Nenhum idioma selecionado.</p>
+                        <p class="text-[10px] text-slate-600 max-w-xs mt-1">Por favor, ative pelo menos um idioma no Passo 1.5 no painel lateral.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = "";
+            activeLanguages.forEach(lang => {
+                const titleText = titleTranslations[lang.id] || "";
+                
+                const div = document.createElement("div");
+                div.className = "flex items-center justify-between bg-slate-950/60 p-3 rounded-xl border border-slate-850 hover:border-slate-800 transition duration-150";
+                
+                const mainInfo = document.createElement("div");
+                mainInfo.className = "flex items-center gap-3 min-w-0 flex-1 mr-4";
+                
+                const flagSpan = document.createElement("span");
+                flagSpan.className = "inline-flex items-center shrink-0";
+                flagSpan.innerHTML = `<img src="https://flagcdn.com/w40/${lang.flagCode}.png" class="w-6 h-4 rounded shadow-sm border border-slate-800/50 object-cover" alt="">`;
+                mainInfo.appendChild(flagSpan);
+                
+                const textContainer = document.createElement("div");
+                textContainer.className = "min-w-0 flex-1";
+                
+                const metaContainer = document.createElement("div");
+                metaContainer.className = "flex items-center gap-1.5";
+                
+                const nameSpan = document.createElement("span");
+                nameSpan.className = "font-extrabold text-[10px] text-indigo-400 uppercase tracking-wider";
+                nameSpan.textContent = lang.name;
+                metaContainer.appendChild(nameSpan);
+                
+                const codeSpan = document.createElement("span");
+                codeSpan.className = "text-[9px] font-mono text-slate-500 uppercase";
+                codeSpan.textContent = lang.code;
+                metaContainer.appendChild(codeSpan);
+                
+                textContainer.appendChild(metaContainer);
+                
+                const titleP = document.createElement("p");
+                if (titleText) {
+                    titleP.className = "font-bold text-xs text-white mt-1 break-words select-all";
+                    titleP.textContent = titleText;
+                } else {
+                    titleP.className = "text-xs text-slate-600 mt-1 italic";
+                    titleP.textContent = "Aguardando tradução...";
+                }
+                textContainer.appendChild(titleP);
+                
+                mainInfo.appendChild(textContainer);
+                div.appendChild(mainInfo);
+                
+                if (titleText) {
+                    const btnCopy = document.createElement("button");
+                    btnCopy.onclick = () => copyTitleText(lang.id);
+                    btnCopy.id = `copyBtn_${lang.id}`;
+                    btnCopy.className = "p-2 bg-slate-900 border border-slate-800 hover:border-slate-750 text-slate-400 hover:text-white rounded-lg transition shrink-0";
+                    btnCopy.title = "Copiar Título";
+                    btnCopy.innerHTML = `<i class="fa-solid fa-copy text-xs"></i>`;
+                    div.appendChild(btnCopy);
+                }
+                
+                container.appendChild(div);
+            });
+        }
+
+        function copyTitleText(langId) {
+            const text = titleTranslations[langId];
+            if (!text) return;
+            navigator.clipboard.writeText(text).then(() => {
+                showToast("Título copiado!", "success");
+                const btn = document.getElementById(`copyBtn_${langId}`);
+                if (btn) {
+                    const originalHtml = btn.innerHTML;
+                    btn.innerHTML = `<i class="fa-solid fa-check text-emerald-400 text-xs"></i>`;
+                    setTimeout(() => {
+                        btn.innerHTML = originalHtml;
+                    }, 1500);
+                }
+            }).catch(err => {
+                console.error("Erro ao copiar:", err);
+                showToast("Erro ao copiar título.", "error");
+            });
+        }
+
+        function copyAllTitles() {
+            const activeLanguages = LANGUAGES.filter(l => l.active);
+            const lines = [];
+            activeLanguages.forEach(lang => {
+                const titleText = titleTranslations[lang.id];
+                if (titleText) {
+                    lines.push(`${lang.name} (${lang.code}): ${titleText}`);
+                }
+            });
+
+            if (lines.length === 0) {
+                showToast("Nenhum título disponível para copiar.", "error");
+                return;
+            }
+
+            navigator.clipboard.writeText(lines.join("\n")).then(() => {
+                showToast("Todos os títulos copiados!", "success");
+                const btn = document.getElementById("btnCopyAllTitles");
+                if (btn) {
+                    const originalHtml = btn.innerHTML;
+                    btn.innerHTML = `<i class="fa-solid fa-check text-emerald-400"></i> Copiado!`;
+                    setTimeout(() => {
+                        btn.innerHTML = originalHtml;
+                    }, 1500);
+                }
+            }).catch(err => {
+                console.error("Erro ao copiar todos:", err);
+                showToast("Erro ao copiar todos os títulos.", "error");
+            });
+        }
+
+        async function translateTitlesWithAI() {
+            const apiKey = document.getElementById("apiKeyInput").value.trim();
+            const ptTitle = document.getElementById("originalTitleInput").value.trim();
+            const titleInstructions = document.getElementById("titleAiInstructions") ? document.getElementById("titleAiInstructions").value.trim() : "";
+            const selectedModel = document.getElementById("apiModelSelect").value;
+            const activeLanguages = LANGUAGES.filter(l => l.active);
+
+            if (!ptTitle) {
+                showToast("Por favor, digite o título em português.", "error");
+                return;
+            }
+            if (activeLanguages.length === 0) {
+                showToast("Por favor, ative pelo menos um idioma no painel lateral.", "error");
+                return;
+            }
+
+            const btn = document.getElementById("btnTranslateTitles");
+            const originalHtml = btn.innerHTML;
+            btn.disabled = true;
+            btn.innerHTML = `<i class="fa-solid fa-spinner animate-spin mr-2"></i> Traduzindo...`;
+
+            if (!apiKey) {
+                setTimeout(() => {
+                    activeLanguages.forEach(lang => {
+                        const clean = ptTitle.toUpperCase().trim();
+                        if (clean === "A ESTRATÉGIA SECRETA DO MEU NOVO JOGO NO ROBLOX!" || clean.includes("ROBLOX")) {
+                            const mockTranslations = {
+                                "us": "THE SECRET STRATEGY OF MY NEW ROBLOX GAME!",
+                                "es": "¡LA ESTRATEGIA SECRETA DE MI NUEVO JUEGO DE ROBLOX!",
+                                "fr": "LA STRATÉGIE SECRÈTE DE MON NOUVEAU JEU ROBLOX !",
+                                "id": "STRATEGI RAHASIA GAME ROBLOX BARUKU!",
+                                "ar": "الاستراتيجية السرية للعبتي الجديدة في روبلوكس!",
+                                "hi": "मेरे नए रोब्लॉक्स गेम की गुप्त रणनीति!",
+                                "ru": "СЕКРЕТНАЯ СТРАТЕГИЯ МОЕЙ НОВОЙ ИГРЫ В ROBLOX!",
+                                "de": "DIE GEHEIME STRATEGIE MEINES NEUEN ROBLOX-SPIELS!",
+                                "ja": "【徹底解説】ロブロックス新作ゲームの秘密の攻略法！",
+                                "it": "LA STRATEGIA SEGRETA DEL MIO NUOVO GIOCO SU ROBLOX!",
+                                "ko": "【대공개】내 새로운 로블็อก스 게임의 비밀 전략!",
+                                "th": "เผยกลยุทธ์ลับในเกม ROBLOX ใหม่ของฉัน!",
+                                "vn": "CHIẾN THUẬT BÍ MẬT TRONG GAME ROBLOX MỚI CỦA TÔI!",
+                                "tr": "YENİ ROBLOX OYUNUMUN GİZLİ STRATEJİSİ!",
+                                "pl": "SEKRETNA STRATEGIA MOJEJ NOWEJ GRY ROBLOX!",
+                                "tw": "【徹底解密】我的全新 ROBLOX 遊戲秘密策略！",
+                                "se": "DEN HEMLIGA STRATEGIN FÖR MITT NYA ROBLOX-SPEL!",
+                                "nl": "DE GEHEIME STRATEGIE VAN MIJN NIEUWE ROBLOX GAME!"
+                            };
+                            titleTranslations[lang.id] = mockTranslations[lang.id] || `${ptTitle} (${lang.code})`;
+                        } else {
+                            titleTranslations[lang.id] = `${ptTitle} (${lang.code})`;
+                        }
+                    });
+                    btn.disabled = false;
+                    btn.innerHTML = originalHtml;
+                    renderTitlesResults();
+                    showToast("Simulação de tradução concluída! Adicione a chave Gemini para autenticidade total.", "info");
+                }, 1200);
+                return;
+            }
+
+            try {
+                const systemPrompt = `You are an expert YouTube title localization and CTR (Click-Through Rate) optimization AI specializing in anime (One Piece) and gaming (Roblox) communities. Your job is to translate and adapt a base Portuguese video title into target languages.
+                
+### CRITICAL RULES:
+1. Localization & Triggers: You must LOCALIZE using high-CTR YouTube meta-language and anime community triggers. Keep the original idea, emotional weight, and context intact. Do not perform literal translations; adapt to each country's organic viewer behavior.
+2. Character Limit & Front-Loading: The total title length MUST BE STRICTLY UNDER 95 characters (Absolute hard limit of 98 characters including spaces). YouTube will reject any title with 100+ characters. You MUST front-load the core high-impact hook within the FIRST 50-60 characters, keeping the rest for the anime title. If the localized anime title is long (e.g., Dual-Name SEO), shorten the main hook text before the "|" to compensate.
+3. Tone: High-impact, urgent, intriguing, and viral. Keep it natural to each target country's YouTube slang. Use uppercase selectively for major trigger words if it fits the region's style.
+4. Banned Words: Avoid passive, textbook, or educational words (e.g., never use "explaining", "explanation", "analysis", "review"). Focus on excitement, shock, and mystery.
+5. Canonical Accuracy & Dual-Name SEO: Use canonical community translations for Roblox and One Piece lore. For specific Asian markets, use the DUAL-NAME format (Local Name / English Name) for the anime title after the separator to maximize both local search volume and global community trust.
+   Examples:
+   - "Clã D" -> "Ｄの一族" (JA), "D의 일족" (KO), "Ｄ的一族" (TW), "Gia tộc D" (VN).
+   - "Akuma no Mi" -> "悪魔の実" (JA), "악마의 열매" (KO), "惡魔果實" (TW), "Buah Iblis" (ID).
+   - "Gear 5" -> "ギア5" (JA), "기어 5" (KO), "五檔" (TW), "Gear 5" (Latin/Others).
+   - "ONE PIECE" (Anime Title) -> "ワンピース / ONE PIECE" (JA), "원피스 / ONE PIECE" (KO), "航海王 / ONE PIECE" (TW), "Vua Hải Tặc / ONE PIECE" (VN), "ONE PIECE" (US, ES, FR, DE, IT, PL, TR, ID, AR, HI).
+6. Structure & Separators: If the input has a separator like "|", preserve the structural format. Replace whatever is after the "|" with the localized canonical anime/game title mapping defined in Rule 5. Ensure that the main hook before the "|" stays clean, urgent, and respects the front-loading rule (Rule 2).
+7. Output strict JSON with schema matching exactly the specified structure below. No explanation, markdown ticks, or other text outside the JSON.`;
+
+                const langCodes = activeLanguages.map(l => l.code).join(", ");
+                let userQuery = `Original Portuguese title: "${ptTitle}"
+                
+Generate localized titles for these exact language codes:
+${langCodes}.`;
+
+                if (titleInstructions) {
+                    userQuery += `\n\nCRITICAL CONTEXT / TERMINOLOGY INSTRUCTIONS PROVIDED BY USER:\n"${titleInstructions}"\n\nPlease strictly respect and follow these instructions when translating!`;
+                }
+
+                const makeApiCall = async (retryCount = 0) => {
+                    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${selectedModel}:generateContent?key=${apiKey}`;
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            contents: [{ parts: [{ text: userQuery }] }],
+                            systemInstruction: { parts: [{ text: systemPrompt }] },
+                            generationConfig: {
+                                responseMimeType: "application/json",
+                                responseSchema: {
+                                    type: "OBJECT",
+                                    properties: {
+                                        translations: {
+                                            type: "ARRAY",
+                                            items: {
+                                                type: "OBJECT",
+                                                properties: {
+                                                    code: { type: "STRING", description: "Language code (US, ES, etc)" },
+                                                    title: { type: "STRING", description: "Localized version of the video title" }
+                                                },
+                                                required: ["code", "title"]
+                                            }
+                                        }
+                                    },
+                                    required: ["translations"]
+                                }
+                            }
+                        })
+                    });
+
+                    if (response.status === 429 && retryCount < 5) {
+                        const delay = Math.pow(2, retryCount) * 1000;
+                        await new Promise(resolve => setTimeout(resolve, delay));
+                        return makeApiCall(retryCount + 1);
+                    }
+                    return response;
+                };
+
+                const res = await makeApiCall();
+                if (!res.ok) {
+                    const errData = await res.json().catch(() => ({}));
+                    const errMsg = errData.error?.message || `Erro HTTP ${res.status}`;
+                    throw new Error(errMsg);
+                }
+
+                const result = await res.json();
+                const candidate = result.candidates?.[0];
+                if (candidate && candidate.content?.parts?.[0]?.text) {
+                    let rawText = candidate.content.parts[0].text.trim();
+                    if (rawText.startsWith("```json")) {
+                        rawText = rawText.replace(/^```json/, "").replace(/```$/, "").trim();
+                    } else if (rawText.startsWith("```")) {
+                        rawText = rawText.replace(/^```/, "").replace(/```$/, "").trim();
+                    }
+
+                    const parsedJson = JSON.parse(rawText);
+                    if (parsedJson.translations && Array.isArray(parsedJson.translations)) {
+                        parsedJson.translations.forEach(t => {
+                            const langId = t.code.toLowerCase();
+                            titleTranslations[langId] = t.title;
+                        });
+                        renderTitlesResults();
+                        showToast("Títulos traduzidos com sucesso!", "success");
+                    } else {
+                        showToast("Formato de resposta da IA inválido.", "error");
+                    }
+                } else {
+                    showToast("A IA retornou uma resposta vazia.", "error");
+                }
+            } catch (err) {
+                console.error(err);
+                showToast(`Erro na tradução: ${err.message}`, "error");
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = originalHtml;
+            }
+        }
+
+        // Lógica de Tradução e Cópia do Criador de Descrições (Aba 4)
+        function renderDescriptionsResults() {
+            const container = document.getElementById("descriptionsResultsList");
+            if (!container) return;
+
+            const activeLanguages = LANGUAGES.filter(l => l.active);
+            if (activeLanguages.length === 0) {
+                container.innerHTML = `
+                    <div class="flex flex-col items-center justify-center text-slate-500 h-full py-12 text-center">
+                        <i class="fa-solid fa-circle-exclamation text-4xl mb-3 text-slate-700"></i>
+                        <p class="text-xs font-semibold">Nenhum idioma selecionado.</p>
+                        <p class="text-[10px] text-slate-600 max-w-xs mt-1">Por favor, ative pelo menos um idioma no Passo 1.5 no painel lateral.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = "";
+            activeLanguages.forEach(lang => {
+                const descText = descriptionTranslations[lang.id] || "";
+                
+                // Container principal do card
+                const card = document.createElement("div");
+                card.className = "bg-slate-950/60 rounded-xl border border-slate-850 hover:border-slate-800 transition duration-150 overflow-hidden";
+                
+                // Cabeçalho (Sempre visível)
+                const header = document.createElement("div");
+                header.className = "flex items-center justify-between p-3.5 cursor-pointer select-none bg-slate-950/40 hover:bg-slate-950/80 transition";
+                header.onclick = () => toggleDescriptionPanel(lang.id);
+                
+                const leftPart = document.createElement("div");
+                leftPart.className = "flex items-center gap-3 min-w-0";
+                
+                const flagImg = document.createElement("img");
+                flagImg.src = `https://flagcdn.com/w40/${lang.flagCode}.png`;
+                flagImg.className = "w-6 h-4 rounded shadow-sm border border-slate-850 object-cover shrink-0";
+                leftPart.appendChild(flagImg);
+                
+                const meta = document.createElement("div");
+                meta.className = "min-w-0";
+                const langTitle = document.createElement("span");
+                langTitle.className = "font-extrabold text-[10px] text-indigo-400 uppercase tracking-wider block";
+                langTitle.textContent = lang.name;
+                meta.appendChild(langTitle);
+                
+                const codeSpan = document.createElement("span");
+                codeSpan.className = "text-[9px] font-mono text-slate-500 uppercase";
+                codeSpan.textContent = lang.code;
+                meta.appendChild(codeSpan);
+                leftPart.appendChild(meta);
+                header.appendChild(leftPart);
+                
+                const rightPart = document.createElement("div");
+                rightPart.className = "flex items-center gap-2 shrink-0";
+                
+                if (descText) {
+                    // Botão de Cópia
+                    const btnCopy = document.createElement("button");
+                    btnCopy.onclick = (e) => {
+                        e.stopPropagation(); // Impede de expandir/recolher ao copiar
+                        copyDescriptionText(lang.id);
+                    };
+                    btnCopy.id = `descCopyBtn_${lang.id}`;
+                    btnCopy.className = "p-1.5 bg-slate-900 border border-slate-800 hover:border-slate-750 text-slate-400 hover:text-white rounded-lg transition";
+                    btnCopy.title = "Copiar Descrição";
+                    btnCopy.innerHTML = `<i class="fa-solid fa-copy text-[10.5px]"></i>`;
+                    rightPart.appendChild(btnCopy);
+                }
+                
+                // Ícone de seta (Chevron)
+                const chevron = document.createElement("i");
+                chevron.id = `descChevron_${lang.id}`;
+                chevron.className = "fa-solid fa-chevron-down text-xs text-slate-500 transition-transform duration-250 ml-1";
+                rightPart.appendChild(chevron);
+                
+                rightPart.appendChild(chevron);
+                header.appendChild(rightPart);
+                card.appendChild(header);
+                
+                // Conteúdo (Colapsável)
+                const contentDiv = document.createElement("div");
+                contentDiv.id = `descContent_${lang.id}`;
+                contentDiv.className = "hidden border-t border-slate-900 bg-slate-950/20 p-3.5";
+                
+                if (descText) {
+                    const textarea = document.createElement("textarea");
+                    textarea.readOnly = true;
+                    textarea.rows = 8;
+                    textarea.className = "w-full bg-slate-950/80 border border-slate-900 rounded-lg p-3 text-xs text-slate-300 font-mono focus:outline-none resize-y custom-scrollbar";
+                    textarea.value = descText;
+                    contentDiv.appendChild(textarea);
+                } else {
+                    const placeholder = document.createElement("p");
+                    placeholder.className = "text-xs text-slate-600 italic";
+                    placeholder.textContent = "Aguardando tradução...";
+                    contentDiv.appendChild(placeholder);
+                }
+                
+                card.appendChild(contentDiv);
+                container.appendChild(card);
+            });
+        }
+
+        function toggleDescriptionPanel(langId) {
+            const panel = document.getElementById(`descContent_${langId}`);
+            const chevron = document.getElementById(`descChevron_${langId}`);
+            if (!panel || !chevron) return;
+            
+            if (panel.classList.contains("hidden")) {
+                panel.classList.remove("hidden");
+                chevron.classList.add("rotate-180");
+            } else {
+                panel.classList.add("hidden");
+                chevron.classList.remove("rotate-180");
+            }
+        }
+
+        function toggleAllDescriptionPanels(expand) {
+            const activeLanguages = LANGUAGES.filter(l => l.active);
+            activeLanguages.forEach(lang => {
+                const panel = document.getElementById(`descContent_${lang.id}`);
+                const chevron = document.getElementById(`descChevron_${lang.id}`);
+                if (panel && chevron) {
+                    if (expand) {
+                        panel.classList.remove("hidden");
+                        chevron.classList.add("rotate-180");
+                    } else {
+                        panel.classList.add("hidden");
+                        chevron.classList.remove("rotate-180");
+                    }
+                }
+            });
+        }
+
+        function copyDescriptionText(langId) {
+            const text = descriptionTranslations[langId];
+            if (!text) return;
+            navigator.clipboard.writeText(text).then(() => {
+                showToast("Descrição copiada!", "success");
+                const btn = document.getElementById(`descCopyBtn_${langId}`);
+                if (btn) {
+                    const originalHtml = btn.innerHTML;
+                    btn.innerHTML = `<i class="fa-solid fa-check text-emerald-400 text-[10.5px]"></i>`;
+                    setTimeout(() => {
+                        btn.innerHTML = originalHtml;
+                    }, 1500);
+                }
+            }).catch(err => {
+                console.error("Erro ao copiar:", err);
+                showToast("Erro ao copiar descrição.", "error");
+            });
+        }
+
+        async function translateDescriptionsWithAI() {
+            const apiKey = document.getElementById("apiKeyInput").value.trim();
+            const ptDesc = document.getElementById("originalDescriptionInput").value.trim();
+            const descInstructions = document.getElementById("descriptionAiInstructions") ? document.getElementById("descriptionAiInstructions").value.trim() : "";
+            const selectedModel = document.getElementById("apiModelSelect").value;
+            const activeLanguages = LANGUAGES.filter(l => l.active);
+
+            if (!ptDesc) {
+                showToast("Por favor, digite a descrição em português.", "error");
+                return;
+            }
+            if (activeLanguages.length === 0) {
+                showToast("Por favor, ative pelo menos um idioma no painel lateral.", "error");
+                return;
+            }
+
+            const btn = document.getElementById("btnTranslateDescriptions");
+            const originalHtml = btn.innerHTML;
+            btn.disabled = true;
+            btn.innerHTML = `<i class="fa-solid fa-spinner animate-spin mr-2"></i> Traduzindo...`;
+
+            if (!apiKey) {
+                setTimeout(() => {
+                    activeLanguages.forEach(lang => {
+                        const clean = ptDesc.toUpperCase().trim();
+                        if (clean.includes("ROBLOX")) {
+                            const mockTranslations = {
+                                "us": "🔥 TODAY I'M SHOWING YOU THE BEST STRATEGY FOR MY NEW GAME IN ROBLOX!\nMake sure to follow every single step to get unlimited advantages.\n\n👉 Join my group: roblox.com/groups/example\n\n#Roblox #Robux #RobloxGame",
+                                "es": "🔥 ¡HOY TE MUESTRO LA MEJOR ESTRATEGIA PARA MI NUEVO JUEGO DE ROBLOX!\nAsegúrate de seguir cada paso para obtener ventajas ilimitadas.\n\n👉 Únete a mi grupo: roblox.com/groups/example\n\n#Roblox #Robux #RobloxEspanol",
+                                "fr": "🔥 LA STRATÉGIE SECRÈTE DE MON NOUVEAU JEU ROBLOX !\nSuivez chaque étape pour obtenir des avantages illimités.\n\n👉 Rejoignez mon groupe: roblox.com/groups/example\n\n#Roblox #Robux #RobloxFR",
+                                "ja": "🔥 本日はロブロックスの新しいゲームの秘密の攻略法をお見せします！\n無制限のアドバンテージを得るために、すべてのステップに従ってください。\n\n👉 グループに参加：roblox.com/groups/example\n\n#Roblox #Robux #ロブロックス",
+                                "ko": "🔥 오늘 제 새로운 로블็อก스 게임의 가장 완벽한 비밀 전략을 알려드립니다!\n모든 팁을 확인하여 무제한 혜택을 받아보세요.\n\n👉 제 그룹에 가입하세요: roblox.com/groups/example\n\n#로블็อก스 #로블록스 #Roblox",
+                                "tw": "🔥 今天我將為你展示全新 ROBLOX 遊戲的最強攻略秘籍！\n請務必跟著每一步，獲得無限優勢。\n\n👉 加入我的群組：roblox.com/groups/example\n\n#Roblox #Robux #ROBLOX中文"
+                            };
+                            descriptionTranslations[lang.id] = mockTranslations[lang.id] || `[LOCALIZED DESCRIPTION - ${lang.lang}]\n\n${ptDesc}\n\n#Roblox #${lang.code}`;
+                        } else {
+                            descriptionTranslations[lang.id] = `[LOCALIZED DESCRIPTION - ${lang.lang}]\n\n${ptDesc}\n\n#${lang.code} #SEO`;
+                        }
+                    });
+                    btn.disabled = false;
+                    btn.innerHTML = originalHtml;
+                    renderDescriptionsResults();
+                    showToast("Simulação de tradução concluída! Adicione a chave Gemini para autenticidade total.", "info");
+                }, 1200);
+                return;
+            }
+
+            try {
+                const systemPrompt = `You are an expert YouTube description localization and SEO optimization AI specializing in anime and gaming (Roblox) communities. Your job is to translate, format, and localize a video description from Portuguese into target languages.
+                
+### CRITICAL RULES:
+1. NEVER translate literally. You must LOCALIZE using high-CTR hooks, target language slang, and gaming community expressions.
+2. Preserve all links, URLs, social media handles, and timecodes (e.g. 02:30, 05:45) exactly as they are in the original.
+3. Optimize the first 1-2 lines (the SEO intro hook) to be highly engaging and clickable.
+4. Adapt search-optimized hashtags at the very bottom into the target language.
+5. Canonical Accuracy: Use canonical community translations for Roblox and One Piece lore.
+6. Output strict JSON with schema matching exactly the specified structure below. No explanation, markdown ticks, or other text outside the JSON.`;
+
+                const langCodes = activeLanguages.map(l => l.code).join(", ");
+                let userQuery = `Original Portuguese video description:
+"${ptDesc}"
+
+Generate localized descriptions for these exact language codes:
+${langCodes}.`;
+
+                if (descInstructions) {
+                    userQuery += `\n\nCRITICAL CONTEXT / TERMINOLOGY INSTRUCTIONS PROVIDED BY USER:\n"${descInstructions}"\n\nPlease strictly respect and follow these instructions when translating!`;
+                }
+
+                const makeApiCall = async (retryCount = 0) => {
+                    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${selectedModel}:generateContent?key=${apiKey}`;
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            contents: [{ parts: [{ text: userQuery }] }],
+                            systemInstruction: { parts: [{ text: systemPrompt }] },
+                            generationConfig: {
+                                responseMimeType: "application/json",
+                                responseSchema: {
+                                    type: "OBJECT",
+                                    properties: {
+                                        translations: {
+                                            type: "ARRAY",
+                                            items: {
+                                                type: "OBJECT",
+                                                properties: {
+                                                    code: { type: "STRING", description: "Language code (US, ES, etc)" },
+                                                    description: { type: "STRING", description: "Localized version of the video description" }
+                                                },
+                                                required: ["code", "description"]
+                                            }
+                                        }
+                                    },
+                                    required: ["translations"]
+                                }
+                            }
+                        })
+                    });
+
+                    if (response.status === 429 && retryCount < 5) {
+                        const delay = Math.pow(2, retryCount) * 1000;
+                        await new Promise(resolve => setTimeout(resolve, delay));
+                        return makeApiCall(retryCount + 1);
+                    }
+                    return response;
+                };
+
+                const res = await makeApiCall();
+                if (!res.ok) {
+                    const errData = await res.json().catch(() => ({}));
+                    const errMsg = errData.error?.message || `Erro HTTP ${res.status}`;
+                    throw new Error(errMsg);
+                }
+
+                const result = await res.json();
+                const candidate = result.candidates?.[0];
+                if (candidate && candidate.content?.parts?.[0]?.text) {
+                    let rawText = candidate.content.parts[0].text.trim();
+                    if (rawText.startsWith("```json")) {
+                        rawText = rawText.replace(/^```json/, "").replace(/```$/, "").trim();
+                    } else if (rawText.startsWith("```")) {
+                        rawText = rawText.replace(/^```/, "").replace(/```$/, "").trim();
+                    }
+
+                    const parsedJson = JSON.parse(rawText);
+                    if (parsedJson.translations && Array.isArray(parsedJson.translations)) {
+                        parsedJson.translations.forEach(t => {
+                            const langId = t.code.toLowerCase();
+                            descriptionTranslations[langId] = t.description;
+                        });
+                        renderDescriptionsResults();
+                        showToast("Descrições traduzidas com sucesso!", "success");
+                    } else {
+                        showToast("Formato de resposta da IA inválido.", "error");
+                    }
+                } else {
+                    showToast("A IA retornou uma resposta vazia.", "error");
+                }
+            } catch (err) {
+                console.error(err);
+                showToast(`Erro na tradução: ${err.message}`, "error");
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = originalHtml;
+            }
         }
 
         window.onload = function() {
