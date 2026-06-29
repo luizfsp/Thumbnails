@@ -1003,7 +1003,7 @@
             { id: "it", code: "IT", flagCode: "it", name: "Italy", lang: "Italian", rtl: false, fontScale: 0.9, active: true },
             { id: "ko", code: "KO", flagCode: "kr", name: "South Korea", lang: "Korean", rtl: false, fontScale: 1.05, active: true },
             { id: "th", code: "TH", flagCode: "th", name: "Thailand", lang: "Thai", rtl: false, fontScale: 0.95, active: true },
-            { id: "vn", code: "VN", flagCode: "vn", name: "Vietnam", lang: "Vietnamese", rtl: false, fontScale: 0.9, active: true },
+            { id: "vi", code: "VI", flagCode: "vi", name: "Vietnam", lang: "Vietnamese", rtl: false, fontScale: 0.9, active: true },
             { id: "tr", code: "TR", flagCode: "tr", name: "Turkey", lang: "Turkish", rtl: false, fontScale: 0.9, active: true },
             { id: "pl", code: "PL", flagCode: "pl", name: "Poland", lang: "Polish", rtl: false, fontScale: 0.75, active: true },
             { id: "tw", code: "TW", flagCode: "tw", name: "Taiwan", lang: "Traditional Chinese", rtl: false, fontScale: 1.05, active: true },
@@ -1025,7 +1025,7 @@
             "it": { text1: "STRATEGIA SEGRETA", text2: "SVELATA OGGI" },
             "ko": { text1: "비밀 전략", text2: "오늘 전격 공개!" },
             "th": { text1: "กลยุทธ์ลับ", text2: "เปิดเผยวันนี้" },
-            "vn": { text1: "CHIẾN THUẬT BÍ MẬT", text2: "HÉ LỘ HÔM NAY" },
+            "vi": { text1: "CHIẾN THUẬT BÍ MẬT", text2: "HÉ LỘ HÔM NAY" },
             "tr": { text1: "GİZLİ STRATEJİ", text2: "BUGÜN AÇIKLANDI" },
             "pl": { text1: "TAJNA STRATEGIA", text2: "ODKRYTA DZISIAJ" },
             "tw": { text1: "全新秘密策略", text2: "今天正式公開" },
@@ -1046,7 +1046,7 @@
             "it": { text1: "100 SEGRETI", text2: "CHE NON SAPEVI" },
             "ko": { text1: "당신이 몰랐던", text2: "100가지 비밀" },
             "th": { text1: "100 ความลับ", text2: "ที่คุณไม่เคยรู้" },
-            "vn": { text1: "100 BÍ MẬT", text2: "MÀ BẠN KHÔNG BIẾT" },
+            "vi": { text1: "100 BÍ MẬT", text2: "MÀ BẠN KHÔNG BIẾT" },
             "tr": { text1: "BİLMEDİĞİNİZ", text2: "100 SIR" },
             "pl": { text1: "100 SEKRETÓW", text2: "O KTÓRYCH NIE WIEDZIAŁEŚ" },
             "tw": { text1: "你不知道的", text2: "100個秘密" },
@@ -2228,7 +2228,7 @@ CRITICAL CONSTRAINT: If Line 1 is empty in the input, the output "text1" MUST be
             const link = document.createElement("a");
             const lang = LANGUAGES.find(l => l.id === countryId);
             const cleanName = lang.name.replace(/[\s\/\\|:?*<>]+/g, '_');
-            link.download = `thumb_${lang.code}_${cleanName}.png`;
+            link.download = `${lang.code.toUpperCase()}.png`;
             link.href = tempCanvas.toDataURL("image/png");
             link.click();
         }
@@ -2260,8 +2260,7 @@ CRITICAL CONSTRAINT: If Line 1 is empty in the input, the output "text1" MUST be
                     drawThumbnailOnCanvas(tempCanvas, lang.id, exportW, exportH, false);
                     const blob = await new Promise(resolve => tempCanvas.toBlob(resolve, "image/png"));
                     
-                    const cleanName = lang.name.replace(/[\s\/\\|:?*<>]+/g, '_');
-                    const filename = `thumb_${lang.code}_${cleanName}.png`;
+                    const filename = `${lang.code.toUpperCase()}.png`;
                     
                     zip.file(filename, blob);
                 }
@@ -2269,7 +2268,7 @@ CRITICAL CONSTRAINT: If Line 1 is empty in the input, the output "text1" MUST be
                 const content = await zip.generateAsync({ type: "blob" });
                 
                 const link = document.createElement("a");
-                link.download = "thumbnails_globais.zip";
+                link.download = "Thumbnails.zip";
                 link.href = URL.createObjectURL(content);
                 link.click();
                 
@@ -3309,7 +3308,7 @@ CRITICAL CONSTRAINT: If Line 1 is empty in the input, the output "text1" MUST be
                                 "it": "LA STRATEGIA SEGRETA DEL MIO NUOVO GIOCO SU ROBLOX!",
                                 "ko": "【대공개】내 새로운 로블็อก스 게임의 비밀 전략!",
                                 "th": "เผยกลยุทธ์ลับในเกม ROBLOX ใหม่ของฉัน!",
-                                "vn": "CHIẾN THUẬT BÍ MẬT TRONG GAME ROBLOX MỚI CỦA TÔI!",
+                                "vi": "CHIẾN THUẬT BÍ MẬT TRONG GAME ROBLOX MỚI CỦA TÔI!",
                                 "tr": "YENİ ROBLOX OYUNUMUN GİZLİ STRATEJİSİ!",
                                 "pl": "SEKRETNA STRATEGIA MOJEJ NOWEJ GRY ROBLOX!",
                                 "tw": "【徹底解密】我的全新 ROBLOX 遊戲秘密策略！",
