@@ -342,6 +342,16 @@
                                 <input type="range" id="globalScale1" min="0.4" max="1.8" step="0.05" value="1.0" oninput="updateGlobalScale(1, this.value)"
                                     class="w-full accent-indigo-500 bg-slate-800 h-1 rounded-lg cursor-pointer">
                             </div>
+                            
+                            <!-- Espaçamento de Letras Superior -->
+                            <div class="space-y-1 bg-slate-950/40 p-2 rounded-lg border border-slate-800/50">
+                                <div class="flex justify-between text-[10px] text-slate-500 font-bold">
+                                    <span>Espaçamento de Letras</span>
+                                    <span id="t1LetterSpacingLabel" class="text-indigo-400 font-mono">0px</span>
+                                </div>
+                                <input type="range" id="t1LetterSpacing" min="-10" max="40" step="1" value="0" oninput="updateGlobalStyle('t1LetterSpacing', parseInt(this.value)); document.getElementById('t1LetterSpacingLabel').textContent = this.value + 'px'"
+                                    class="w-full accent-indigo-500 bg-slate-800 h-1 rounded-lg cursor-pointer">
+                            </div>
                             <div class="flex gap-2">
                                 <button id="globalBold1Btn" onclick="toggleGlobalStyle('bold1')" class="flex-1 bg-slate-900 border border-slate-800 text-slate-400 py-1.5 px-2 rounded-lg text-xs font-bold transition flex items-center justify-center gap-1.5">
                                     <i class="fa-solid fa-bold text-[10px]"></i> Negrito
@@ -447,6 +457,16 @@
                                     <span id="globalScale2Label" class="text-indigo-400 font-mono">1.00x</span>
                                 </div>
                                 <input type="range" id="globalScale2" min="0.4" max="1.8" step="0.05" value="1.0" oninput="updateGlobalScale(2, this.value)"
+                                    class="w-full accent-indigo-500 bg-slate-800 h-1 rounded-lg cursor-pointer">
+                            </div>
+                            
+                            <!-- Espaçamento de Letras Inferior -->
+                            <div class="space-y-1 bg-slate-950/40 p-2 rounded-lg border border-slate-800/50">
+                                <div class="flex justify-between text-[10px] text-slate-500 font-bold">
+                                    <span>Espaçamento de Letras</span>
+                                    <span id="t2LetterSpacingLabel" class="text-indigo-400 font-mono">0px</span>
+                                </div>
+                                <input type="range" id="t2LetterSpacing" min="-10" max="40" step="1" value="0" oninput="updateGlobalStyle('t2LetterSpacing', parseInt(this.value)); document.getElementById('t2LetterSpacingLabel').textContent = this.value + 'px'"
                                     class="w-full accent-indigo-500 bg-slate-800 h-1 rounded-lg cursor-pointer">
                             </div>
                             <div class="flex gap-2">
@@ -1208,6 +1228,7 @@
                     t1StrokeWidth: 10,
                     t1StrokeOuter: "#ffffff",
                     t1StrokeOuterWidth: 0,
+                    t1LetterSpacing: 0,
                     
                     // Sombras Superior
                     t1ShadowColor: "#000000",
@@ -1225,6 +1246,7 @@
                     t2StrokeWidth: 10,
                     t2StrokeOuter: "#ffffff",
                     t2StrokeOuterWidth: 0,
+                    t2LetterSpacing: 0,
                     
                     // Sombras Inferior
                     t2ShadowColor: "#000000",
@@ -1280,6 +1302,11 @@
             const zipBtn = document.getElementById("zipExportBtn");
             if (zipBtn) {
                 zipBtn.textContent = `EXPORTAR ZIP (${activeCount} IDIOMAS)`;
+            }
+            
+            const translateBtn = document.getElementById("btnTranslate");
+            if (translateBtn) {
+                translateBtn.innerHTML = `<i class="fa-solid fa-wand-magic-sparkles"></i> Traduzir e Adaptar com IA (${activeCount} ${activeCount === 1 ? 'Idioma' : 'Idiomas'})`;
             }
 
             if (typeof activeTab !== 'undefined') {
@@ -1499,6 +1526,7 @@
                 const style1 = data.italic1 ? "italic" : "normal";
                 const weight1 = data.bold1 ? "900" : "400";
                 ctx.font = `${style1} ${weight1} ${t1Size * scaleFactor}px ${fontSelected}`;
+                ctx.letterSpacing = `${(data.t1LetterSpacing !== undefined ? data.t1LetterSpacing : 0) * scaleFactor}px`;
                 ctx.textAlign = data.textAlignment;
                 
                 const fillCol1 = data.t1Color;
@@ -1590,6 +1618,7 @@
                 const style2 = data.italic2 ? "italic" : "normal";
                 const weight2 = data.bold2 ? "900" : "400";
                 ctx.font = `${style2} ${weight2} ${t2Size * scaleFactor}px ${fontSelected}`;
+                ctx.letterSpacing = `${(data.t2LetterSpacing !== undefined ? data.t2LetterSpacing : 0) * scaleFactor}px`;
                 ctx.textAlign = data.textAlignment;
                 
                 const fillCol1 = data.t2Color;
@@ -2037,14 +2066,14 @@
                     LANGUAGES.forEach(lang => {
                         if (lang.active) {
                             if ((clean1 === "100 SEGREDOS" || clean1.includes("SEGREDOS")) && (clean2 === "QUE VOCÊ NÃO SABIA" || clean2.includes("SABIA")) && fallbackTimeskipTranslations[lang.id]) {
-                                styleData[lang.id].text1 = fallbackTimeskipTranslations[lang.id].text1;
-                                styleData[lang.id].text2 = fallbackTimeskipTranslations[lang.id].text2;
+                                styleData[lang.id].text1 = ptText1 ? fallbackTimeskipTranslations[lang.id].text1 : "";
+                                styleData[lang.id].text2 = ptText2 ? fallbackTimeskipTranslations[lang.id].text2 : "";
                             } else if (clean1 === "ESTRATÉGIA SECRETA" && clean2 === "REVELADA HOJE" && fallbackTranslations[lang.id]) {
-                                styleData[lang.id].text1 = fallbackTranslations[lang.id].text1;
-                                styleData[lang.id].text2 = fallbackTranslations[lang.id].text2;
+                                styleData[lang.id].text1 = ptText1 ? fallbackTranslations[lang.id].text1 : "";
+                                styleData[lang.id].text2 = ptText2 ? fallbackTranslations[lang.id].text2 : "";
                             } else {
-                                styleData[lang.id].text1 = `${ptText1} (${lang.code})`;
-                                styleData[lang.id].text2 = `${ptText2} (${lang.lang})`;
+                                styleData[lang.id].text1 = ptText1 ? `${ptText1} (${lang.code})` : "";
+                                styleData[lang.id].text2 = ptText2 ? `${ptText2} (${lang.lang})` : "";
                             }
                         }
                     });
@@ -2146,8 +2175,8 @@ CRITICAL CONSTRAINT: If Line 1 is empty in the input, the output "text1" MUST be
                                                 type: "OBJECT",
                                                 properties: {
                                                     code: { type: "STRING", description: "Language code (US, ES, etc)" },
-                                                    text1: { type: "STRING", description: "Localized version for line 1 text" },
-                                                    text2: { type: "STRING", description: "Localized version for line 2 text" }
+                                                    text1: { type: "STRING", description: "Localized version for line 1 text. If the input Line 1 was empty, this MUST be an empty string (\"\")." },
+                                                    text2: { type: "STRING", description: "Localized version for line 2 text. If the input Line 2 was empty, this MUST be an empty string (\"\")." }
                                                 },
                                                 required: ["code", "text1", "text2"]
                                             }
@@ -2190,8 +2219,8 @@ CRITICAL CONSTRAINT: If Line 1 is empty in the input, the output "text1" MUST be
                         parsedJson.translations.forEach(t => {
                             const langId = t.code.toLowerCase();
                             if (styleData[langId]) {
-                                styleData[langId].text1 = t.text1;
-                                styleData[langId].text2 = t.text2;
+                                styleData[langId].text1 = ptText1 ? t.text1 : "";
+                                styleData[langId].text2 = ptText2 ? t.text2 : "";
                             }
                         });
                         
@@ -2474,17 +2503,34 @@ CRITICAL CONSTRAINT: If Line 1 is empty in the input, the output "text1" MUST be
                 t2OffsetSlider.value = t2Offset;
             }
 
-            const t1Props = ['t1ShadowColor', 't1ShadowBlur', 't1ShadowX', 't1ShadowY', 't1Color', 't1Stroke', 't1StrokeWidth', 't1StrokeOuter', 't1StrokeOuterWidth'];
+            const t1Props = ['t1ShadowColor', 't1ShadowBlur', 't1ShadowX', 't1ShadowY', 't1Color', 't1Stroke', 't1StrokeWidth', 't1StrokeOuter', 't1StrokeOuterWidth', 't1LetterSpacing'];
             t1Props.forEach(prop => {
                 const el = document.getElementById(prop);
                 if (el) el.value = data[prop];
             });
 
-            const t2Props = ['t2ShadowColor', 't2ShadowBlur', 't2ShadowX', 't2ShadowY', 't2Color', 't2Stroke', 't2StrokeWidth', 't2StrokeOuter', 't2StrokeOuterWidth'];
+            const t2Props = ['t2ShadowColor', 't2ShadowBlur', 't2ShadowX', 't2ShadowY', 't2Color', 't2Stroke', 't2StrokeWidth', 't2StrokeOuter', 't2StrokeOuterWidth', 't2LetterSpacing'];
             t2Props.forEach(prop => {
                 const el = document.getElementById(prop);
                 if (el) el.value = data[prop];
             });
+
+            // Sync Letter Spacing Labels and Inputs
+            const t1Spacing = data.t1LetterSpacing !== undefined ? data.t1LetterSpacing : 0;
+            const t1SpacingLabel = document.getElementById("t1LetterSpacingLabel");
+            const t1SpacingSlider = document.getElementById("t1LetterSpacing");
+            if (t1SpacingLabel && t1SpacingSlider) {
+                t1SpacingLabel.textContent = t1Spacing + "px";
+                t1SpacingSlider.value = t1Spacing;
+            }
+
+            const t2Spacing = data.t2LetterSpacing !== undefined ? data.t2LetterSpacing : 0;
+            const t2SpacingLabel = document.getElementById("t2LetterSpacingLabel");
+            const t2SpacingSlider = document.getElementById("t2LetterSpacing");
+            if (t2SpacingLabel && t2SpacingSlider) {
+                t2SpacingLabel.textContent = t2Spacing + "px";
+                t2SpacingSlider.value = t2Spacing;
+            }
 
             if (activeTab === "editor") {
                 syncIndividualUIInputs();
@@ -2580,6 +2626,9 @@ CRITICAL CONSTRAINT: If Line 1 is empty in the input, the output "text1" MUST be
                     styleData[lang.id].italic1 = sourceData.italic1;
                     styleData[lang.id].bold2 = sourceData.bold2;
                     styleData[lang.id].italic2 = sourceData.italic2;
+                    
+                    styleData[lang.id].t1LetterSpacing = sourceData.t1LetterSpacing !== undefined ? sourceData.t1LetterSpacing : 0;
+                    styleData[lang.id].t2LetterSpacing = sourceData.t2LetterSpacing !== undefined ? sourceData.t2LetterSpacing : 0;
                     
                     styleData[lang.id].t1Color = sourceData.t1Color;
                     styleData[lang.id].t1GradientType = sourceData.t1GradientType;
@@ -2712,6 +2761,9 @@ CRITICAL CONSTRAINT: If Line 1 is empty in the input, the output "text1" MUST be
             data.italic1 = false;
             data.bold2 = true;
             data.italic2 = false;
+
+            data.t1LetterSpacing = 0;
+            data.t2LetterSpacing = 0;
 
             data.t1Color = "#ffffff";
             data.t1GradientType = "solid";
