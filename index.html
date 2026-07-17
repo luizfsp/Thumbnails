@@ -13,7 +13,7 @@
     <!-- Google Fonts (Suporte global para múltiplos scripts incluindo Barlow Black) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Barlow:ital,wght@0,400;0,900;1,400;1,900&family=Inter:wght@400;600;800;900&family=K2D:wght@700;800&family=Noto+Sans+JP:wght@700;900&family=Noto+Sans+KR:wght@700;900&family=Noto+Sans+SC:wght@700;900&family=Noto+Sans+TC:wght@700;900&family=Noto+Sans:wght@700;900&family=Rubik+Mono+One&family=Teko:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Barlow:ital,wght@0,400;0,900;1,400;1,900&family=Cinzel:wght@400;700;900&family=Inter:wght@400;600;800;900&family=K2D:wght@700;800&family=Noto+Sans+JP:wght@700;900&family=Noto+Sans+KR:wght@700;900&family=Noto+Sans+SC:wght@700;900&family=Noto+Sans+TC:wght@700;900&family=Noto+Sans:wght@700;900&family=Rubik+Mono+One&family=Teko:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://use.typekit.net/rnx8khj.css">
     <!-- Fonte Premium Komika Axis (Excelente para Gaming e canais estilo MrBeast/Virais) -->
     <link href="https://fonts.cdnfonts.com/css/komika-axis" rel="stylesheet">
@@ -236,6 +236,7 @@
                             <select id="fontFamilySelect" onchange="requestRenderAll()" 
                                 class="w-full bg-slate-900 border border-slate-800 rounded-lg px-3 py-2 text-xs focus:outline-none focus:ring-1 focus:ring-indigo-500 text-white font-semibold">
                                 <option value="'Komika Axis', sans-serif" selected>Komika Axis</option>
+                                <option value="'Cinzel', serif">Cinzel</option>
                                 <option value="'Barlow', sans-serif">Barlow Black</option>
                                 <option value="'Anton', 'Noto Sans', sans-serif">Anton</option>
                                 <option value="'Rubik Mono One', sans-serif">Rubik Mono One</option>
@@ -1039,7 +1040,9 @@
             { id: "pl", code: "PL", flagCode: "pl", name: "Poland", lang: "Polish", rtl: false, fontScale: 0.75, active: true },
             { id: "tw", code: "TW", flagCode: "tw", name: "Taiwan", lang: "Traditional Chinese", rtl: false, fontScale: 1.05, active: true },
             { id: "se", code: "SE", flagCode: "se", name: "Sweden", lang: "Swedish", rtl: false, fontScale: 0.85, active: true },
-            { id: "nl", code: "NL", flagCode: "nl", name: "Netherlands", lang: "Dutch", rtl: false, fontScale: 0.85, active: true }
+            { id: "nl", code: "NL", flagCode: "nl", name: "Netherlands", lang: "Dutch", rtl: false, fontScale: 0.85, active: true },
+            { id: "ro", code: "RO", flagCode: "ro", name: "Romania", lang: "Romanian", rtl: false, fontScale: 0.85, active: true },
+            { id: "ph", code: "PH", flagCode: "ph", name: "Philippines", lang: "Filipino", rtl: false, fontScale: 0.85, active: true }
         ];
 
         // Traduções de contingência (Fallback)
@@ -1061,7 +1064,9 @@
             "pl": { text1: "TAJNA STRATEGIA", text2: "ODKRYTA DZISIAJ" },
             "tw": { text1: "全新秘密策略", text2: "今天正式公開" },
             "se": { text1: "HEMLIG STRATEGI", text2: "AVSLÖJAD IDAG" },
-            "nl": { text1: "GEHEIME STRATEGIE", text2: "VANDAAG ONTHULD" }
+            "nl": { text1: "GEHEIME STRATEGIE", text2: "VANDAAG ONTHULD" },
+            "ro": { text1: "STRATEGIE SECRETĂ", text2: "DEZVĂLUITĂ ASTĂZI" },
+            "ph": { text1: "LIHIM NA ESTRATEHIYA", text2: "INIHAYAG NGAYONG ARAW" }
         };
 
         const fallbackTimeskipTranslations = {
@@ -1082,7 +1087,9 @@
             "pl": { text1: "100 SEKRETÓW", text2: "O KTÓRYCH NIE WIEDZIAŁEŚ" },
             "tw": { text1: "你不知道的", text2: "100個秘密" },
             "se": { text1: "100 HEMLIGHETER", text2: "SOM DU INTE VISSTE" },
-            "nl": { text1: "100 GEHEIMEN", text2: "DIE JE NIET WIST" }
+            "nl": { text1: "100 GEHEIMEN", text2: "DIE JE NIET WIST" },
+            "ro": { text1: "100 DE SECRETE", text2: "PE CARE NU LE ȘTIAI" },
+            "ph": { text1: "100 NA LIHIM", text2: "NA HINDI MO ALAM" }
         };
 
         // Estado do Editor
@@ -3452,7 +3459,9 @@ CRITICAL CONSTRAINT: If Line 1 is empty in the input, the output "text1" MUST be
                                 "pl": "SEKRETNA STRATEGIA MOJEJ NOWEJ GRY ROBLOX!",
                                 "tw": "【徹底解密】我的全新 ROBLOX 遊戲秘密策略！",
                                 "se": "DEN HEMLIGA STRATEGIN FÖR MITT NYA ROBLOX-SPEL!",
-                                "nl": "DE GEHEIME STRATEGIE VAN MIJN NIEUWE ROBLOX GAME!"
+                                "nl": "DE GEHEIME STRATEGIE VAN MIJN NIEUWE ROBLOX GAME!",
+                                "ro": "STRATEGIA SECRETĂ A NOULUI MEU JOC ROBLOX!",
+                                "ph": "ANG LIHIM NA ESTRATEHIYA NG AKING BAGONG LARONG ROBLOX!"
                             };
                             titleTranslations[lang.id] = mockTranslations[lang.id] || `${ptTitle} (${lang.code})`;
                         } else {
@@ -3758,7 +3767,9 @@ ${langCodes}.`;
                                 "fr": "🔥 LA STRATÉGIE SECRÈTE DE MON NOUVEAU JEU ROBLOX !\nSuivez chaque étape pour obtenir des avantages illimités.\n\n👉 Rejoignez mon groupe: roblox.com/groups/example\n\n#Roblox #Robux #RobloxFR",
                                 "ja": "🔥 本日はロブロックスの新しいゲームの秘密の攻略法をお見せします！\n無制限のアドバンテージを得るために、すべてのステップに従ってください。\n\n👉 グループに参加：roblox.com/groups/example\n\n#Roblox #Robux #ロブロックス",
                                 "ko": "🔥 오늘 제 새로운 로블็อก스 게임의 가장 완벽한 비밀 전략을 알려드립니다!\n모든 팁을 확인하여 무제한 혜택을 받아보세요.\n\n👉 제 그룹에 가입하세요: roblox.com/groups/example\n\n#로블็อก스 #로블록스 #Roblox",
-                                "tw": "🔥 今天我將為你展示全新 ROBLOX 遊戲的最強攻略秘籍！\n請務必跟著每一步，獲得無限優勢。\n\n👉 加入我的群組：roblox.com/groups/example\n\n#Roblox #Robux #ROBLOX中文"
+                                "tw": "🔥 今天我將為你展示全新 ROBLOX 遊戲的最強攻略秘籍！\n請務必跟著每一步，獲得無限優勢。\n\n👉 加入我的群組：roblox.com/groups/example\n\n#Roblox #Robux #ROBLOX中文",
+                                "ro": "🔥 ASTĂZI VĂ ARĂT CEA MAI BUNĂ STRATEGIE PENTRU NOUL MEU JOC ROBLOX!\nUrmăriți fiecare pas pentru avantaje nelimitate.\n\n👉 Alăturați-vă grupului: roblox.com/groups/example\n\n#Roblox #Robux #RobloxRomania",
+                                "ph": "🔥 NGAYONG ARAW AY IPAPAKITA KO SA INYO ANG PINAKAMAHUSAY NA ESTRATEHIYA PARA SA AKING BAGONG LARO SA ROBLOX!\nTiyaking sundin ang bawat hakbang para sa walang limitasyong mga bentahe.\n\n👉 Sumali sa aking grupo: roblox.com/groups/example\n\n#Roblox #Robux #RobloxPhilippines"
                             };
                             descriptionTranslations[lang.id] = mockTranslations[lang.id] || `[LOCALIZED DESCRIPTION - ${lang.lang}]\n\n${ptDesc}\n\n#Roblox #${lang.code}`;
                         } else {
