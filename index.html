@@ -17,8 +17,47 @@
     <link rel="stylesheet" href="https://use.typekit.net/rnx8khj.css">
     <!-- Fonte Premium Komika Axis (Excelente para Gaming e canais estilo MrBeast/Virais) -->
     <link href="https://fonts.cdnfonts.com/css/komika-axis" rel="stylesheet">
+    <!-- Fonte Gotham Black Regular -->
+    <link href="https://fonts.cdnfonts.com/css/gotham-black" rel="stylesheet">
+    <link href="https://fonts.cdnfonts.com/css/gotham" rel="stylesheet">
     
     <style>
+        @font-face {
+            font-family: 'Gotham Black Regular';
+            font-style: normal;
+            font-weight: 400;
+            src: local('Gotham Black Regular'), local('Gotham Black'), url('https://fonts.cdnfonts.com/s/13648/Gotham%20Black%20Regular.woff') format('woff'), url('https://fonts.cdnfonts.com/s/14898/Gotham-Black.woff') format('woff');
+        }
+        @font-face {
+            font-family: 'Gotham Black Regular';
+            font-style: normal;
+            font-weight: 700;
+            src: local('Gotham Black Regular'), local('Gotham Black'), url('https://fonts.cdnfonts.com/s/13648/Gotham%20Black%20Regular.woff') format('woff'), url('https://fonts.cdnfonts.com/s/14898/Gotham-Black.woff') format('woff');
+        }
+        @font-face {
+            font-family: 'Gotham Black Regular';
+            font-style: normal;
+            font-weight: 900;
+            src: local('Gotham Black Regular'), local('Gotham Black'), url('https://fonts.cdnfonts.com/s/13648/Gotham%20Black%20Regular.woff') format('woff'), url('https://fonts.cdnfonts.com/s/14898/Gotham-Black.woff') format('woff');
+        }
+        @font-face {
+            font-family: 'Gotham Black';
+            font-style: normal;
+            font-weight: 400;
+            src: local('Gotham Black'), local('Gotham Black Regular'), url('https://fonts.cdnfonts.com/s/13648/Gotham%20Black%20Regular.woff') format('woff'), url('https://fonts.cdnfonts.com/s/14898/Gotham-Black.woff') format('woff');
+        }
+        @font-face {
+            font-family: 'Gotham Black';
+            font-style: normal;
+            font-weight: 700;
+            src: local('Gotham Black'), local('Gotham Black Regular'), url('https://fonts.cdnfonts.com/s/13648/Gotham%20Black%20Regular.woff') format('woff'), url('https://fonts.cdnfonts.com/s/14898/Gotham-Black.woff') format('woff');
+        }
+        @font-face {
+            font-family: 'Gotham Black';
+            font-style: normal;
+            font-weight: 900;
+            src: local('Gotham Black'), local('Gotham Black Regular'), url('https://fonts.cdnfonts.com/s/13648/Gotham%20Black%20Regular.woff') format('woff'), url('https://fonts.cdnfonts.com/s/14898/Gotham-Black.woff') format('woff');
+        }
         body {
             font-family: 'Inter', sans-serif;
             background-color: #0b0f19;
@@ -45,6 +84,9 @@
     <!-- Pre-carregador de fontes invisível para evitar falhas no Canvas -->
     <div style="font-family: 'Inter', sans-serif; position: absolute; visibility: hidden; width: 0; height: 0; overflow: hidden; pointer-events: none;">
         <span style="font-family: 'Komika Axis'; font-weight: 900;">load</span>
+        <span style="font-family: 'Gotham Black Regular'; font-weight: 900;">load</span>
+        <span style="font-family: 'Gotham Black Regular'; font-weight: 400;">load</span>
+        <span style="font-family: 'Gotham Black'; font-weight: 900;">load</span>
         <span style="font-family: 'Barlow'; font-weight: 900;">load</span>
         <span style="font-family: 'Anton'; font-weight: 900;">load</span>
         <span style="font-family: 'Rubik Mono One'; font-weight: 900;">load</span>
@@ -157,7 +199,7 @@
                             <button onclick="translateAllWithAI()" id="btnTranslate" 
                                 class="w-full bg-gradient-to-r from-indigo-500 to-violet-600 hover:from-indigo-600 hover:to-violet-700 text-white text-xs font-bold py-2.5 px-4 rounded-lg shadow-lg shadow-indigo-500/20 transition-all flex items-center justify-center gap-2">
                                 <i class="fa-solid fa-wand-magic-sparkles"></i>
-                                Traduzir e Adaptar com IA
+                                Traduzir e Adaptar com IA (18 Idiomas)
                             </button>
                         </div>
                     </div>
@@ -236,6 +278,7 @@
                             <select id="fontFamilySelect" onchange="requestRenderAll()" 
                                 class="w-full bg-slate-900 border border-slate-800 rounded-lg px-3 py-2 text-xs focus:outline-none focus:ring-1 focus:ring-indigo-500 text-white font-semibold">
                                 <option value="'Komika Axis', sans-serif" selected>Komika Axis</option>
+                                <option value="'Gotham Black Regular', 'Gotham Black', 'Noto Sans', sans-serif">Gotham Black Regular</option>
                                 <option value="'Cinzel', serif">Cinzel</option>
                                 <option value="'Barlow', sans-serif">Barlow Black</option>
                                 <option value="'Anton', 'Noto Sans', sans-serif">Anton</option>
@@ -563,7 +606,7 @@
                 <button id="zipExportBtn" onclick="downloadAllThumbnails()" 
                     class="w-full bg-emerald-500 hover:bg-emerald-600 text-slate-950 text-sm font-black py-3 px-4 rounded-xl transition shadow-lg shadow-emerald-500/10 flex items-center justify-center gap-2">
                     <i class="fa-solid fa-file-zipper text-lg"></i>
-                    EXPORTAR ZIP
+                    EXPORTAR ZIP (18 IDIOMAS)
                 </button>
             </div>
         </aside>
@@ -575,7 +618,7 @@
             <div class="flex flex-wrap items-center justify-between gap-4 bg-slate-900 p-3 rounded-xl border border-slate-800 shrink-0">
                 <div class="flex items-center gap-2">
                     <button id="tabGridBtn" onclick="switchTab('grid')" class="px-4 py-2 rounded-lg text-xs font-black bg-indigo-500 text-white transition flex items-center gap-2">
-                        <i class="fa-solid fa-grip"></i> Grid Global
+                        <i class="fa-solid fa-grip"></i> Grid Global (18 Idiomas)
                     </button>
                     <button id="tabEditorBtn" onclick="switchTab('editor')" class="px-4 py-2 rounded-lg text-xs font-bold text-slate-400 hover:text-white transition flex items-center gap-2">
                         <i class="fa-solid fa-sliders"></i> Ajuste Fino Individual
