@@ -3609,6 +3609,20 @@ ${langCodes}.`;
             }
         }
 
+        // Função utilitária para limpar e formatar quebras de linha nas descrições
+        function sanitizeDescriptionText(text) {
+            if (!text || typeof text !== 'string') return "";
+            return text
+                .replace(/\\r\\n/g, '\n')
+                .replace(/\\n/g, '\n')
+                .replace(/\\r/g, '')
+                .replace(/n\/n\//gi, '\n\n')
+                .replace(/\/n\/n\//gi, '\n\n')
+                .replace(/\/n\//gi, '\n')
+                .replace(/\\/g, '')
+                .trim();
+        }
+
         // Lógica de Tradução e Cópia do Criador de Descrições (Aba 4)
         function renderDescriptionsResults() {
             const container = document.getElementById("descriptionsResultsList");
@@ -3628,7 +3642,8 @@ ${langCodes}.`;
 
             container.innerHTML = "";
             activeLanguages.forEach(lang => {
-                const descText = descriptionTranslations[lang.id] || "";
+                const descText = sanitizeDescriptionText(descriptionTranslations[lang.id]);
+                descriptionTranslations[lang.id] = descText;
                 
                 // Container principal do card
                 const card = document.createElement("div");
@@ -3820,7 +3835,8 @@ ${langCodes}.`;
 3. SEO First 2 Lines: Optimize the opening 2 lines (visible above the 'Show More' fold) to be engaging, readable, and keyword-rich for algorithm search and viewer retention.
 4. Localized Hashtags: Translate or adapt relevant search hashtags at the bottom to the target language/community tags while keeping universal tags (e.g. #Gaming, #Roblox, #OnePiece).
 5. Canonical Lore & Slang: Use established terminology for games, anime, and pop culture.
-6. Output strict JSON with schema matching exactly the specified structure below. No explanation, markdown ticks, or other text outside the JSON.`;
+6. Formatting & Clean Line Breaks: Format sections (hook, links, timestamps, hashtags) using real paragraph line breaks. NEVER output literal string escape artifacts like '\\n\\n', 'n/n/', or '/n/'.
+7. Output strict JSON with schema matching exactly the specified structure below. No explanation, markdown ticks, or other text outside the JSON.`;
 
                 const langCodes = activeLanguages.map(l => l.code).join(", ");
                 let userQuery = `Original Portuguese video description:
@@ -3893,7 +3909,7 @@ ${langCodes}.`;
                     if (parsedJson.translations && Array.isArray(parsedJson.translations)) {
                         parsedJson.translations.forEach(t => {
                             const langId = t.code.toLowerCase();
-                            descriptionTranslations[langId] = t.description;
+                            descriptionTranslations[langId] = sanitizeDescriptionText(t.description);
                         });
                         renderDescriptionsResults();
                         showToast("Descrições traduzidas com sucesso!", "success");
